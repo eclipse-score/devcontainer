@@ -25,13 +25,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check, Build, Test, Publish
+      # Use .devcontainer from THIS repo for building and testing
+      - name: Check, Build, Test
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ghcr.io/eclipse-score/devcontainer
-          cacheFrom: ghcr.io/eclipse-score/devcontainer
-          imageTag: ${{ github.ref_name }}
-          subFolder: src/s-core-devcontainer
           runCmd: |
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
@@ -41,3 +38,12 @@ jobs:
 
             # Test
             ./scripts/test.sh
+
+      # Upload devcontainer from src/s-core-devcontainer
+      - name: Publish
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/eclipse-score/devcontainer
+          cacheFrom: ghcr.io/eclipse-score/devcontainer
+          imageTag: ${{ github.ref_name }}
+          subFolder: src/s-core-devcontainer
