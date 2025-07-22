@@ -59,6 +59,7 @@
                 "bazelbuild.vscode-bazel",
                 "dbaeumer.vscode-eslint",
                 "EditorConfig.EditorConfig",
+                "ms-vscode.live-server", // for live preview of HTML files
                 "llvm-vs-code-extensions.vscode-clangd",
                 "jebbs.plantuml", //to preview PlantUML diagrams
                 "hediet.vscode-drawio", //for drawio integration
