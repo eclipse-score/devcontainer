@@ -91,7 +91,7 @@ They are used by the CI, but especially the build and test scripts can be run al
 ````console
 $ ./scripts/build.sh
 [... build output..]
-{"outcome":"success","imageName":["vsc-s-core-devcontainer-209943ec6ff795f57b20cdf85a70c904d1e3b4a329d1e01c79f0ffea615c6e40-features"]}
+{"outcome":"success","imageName":["ghcr.io/eclipse-score/devcontainer"]}
 
 $ ./scripts/test.sh
 [... test output...]
@@ -112,16 +112,15 @@ So in order to execute `S-CORE DevContainer` on your host (and test it as part o
 
 * export this newly built S-CORE DevContainer image
 * import the image on your host machine
-* use the image name in the `.devcontainer/devcontainer.json` of the targeted S-CORE module
+* use the image name and tag `latest` in the `.devcontainer/devcontainer.json` of the targeted S-CORE module
 
 Concretely, this can be done as follows:
 
-* Run `docker save <imageName> > export.img` in `Development Container A`.
-For example, given above build output, this would be `docker save vsc-s-core-devcontainer-209943ec6ff795f57b20cdf85a70c904d1e3b4a329d1e01c79f0ffea615c6e40-features > export.img`
+* Run `docker save "ghcr.io/eclipse-score/devcontainer" > export.img` in `Development Container A`.
 * On your **host machine** (!!), open a console and run `docker load < /path/to/export.img`.
-* In the working copy of the targeted S-CORE module, edit the file `.devcontainer/devcontainer.json` and change the `"image": "..."` entry to `"image": "<imageName>"`.
-Given above build output, this would be `"image": "vsc-s-core-devcontainer-209943ec6ff795f57b20cdf85a70c904d1e3b4a329d1e01c79f0ffea615c6e40-features"`.
+* In the working copy of the targeted S-CORE module, edit the file `.devcontainer/devcontainer.json` and change the `"image": "..."` entry to `"image": "ghcr.io/eclipse-score/devcontainer:latest"` (if not already set like this).
 The Visual Studio Code instance related to the targeted S-CORE module will now ask you to rebuild the DevContainer.
+If not, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> and run from there "Dev Containers: Rebuilt Container Without Cache".
 Do so, and you have a running instance of `S-CORE DevContainer` related to the targeted S-CORE module.
 
 ### Version Pinning
