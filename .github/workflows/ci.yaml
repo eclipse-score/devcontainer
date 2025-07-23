@@ -50,7 +50,7 @@ jobs:
       # Upload devcontainer from src/s-core-devcontainer
       - name: Publish
         uses: devcontainers/ci@v0.3
-        #if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         with:
           # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
           # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
