@@ -52,4 +52,3 @@ jobs:
           runCmd: |
             # Note: "${{ github.ref_name }}" will be the tag name, e.g., "1.0.0"
             ./scripts/publish.sh "${{ github.ref_name }}"
-
