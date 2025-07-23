@@ -15,10 +15,6 @@ devcontainer up \
   --workspace-folder "${PROJECT_DIR}/src/${IMAGE}/" \
   --remove-existing-container
 
-CONTAINER_ID=$(docker container ls --filter "label=${ID_LABEL}" --quiet)
-IMAGE_NAME=$(docker container inspect --format '{{ .Config.Image }}' "${CONTAINER_ID}")
-IMAGE_ID=$(docker image ls --filter "reference=${IMAGE_NAME}" --quiet)
-
 # Run actual test
 echo "(*) Running test..."
 devcontainer exec --workspace-folder "${PROJECT_DIR}/src/${IMAGE}" --id-label "${ID_LABEL}" \
