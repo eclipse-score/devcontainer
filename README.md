@@ -52,7 +52,7 @@ Open a Terminal, and - for example - type `bazel build ...` to execute the defau
 After you have build the code, create [compilation databases](https://clang.llvm.org/docs/JSONCompilationDatabase.html) via Visual Studio Code [Task](https://code.visualstudio.com/docs/debugtest/tasks):
 
 - C++: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update compile_commands.json`
-- Rust: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Generate rust-project.json`
+- Rust: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update rust-project.json`
 
 These databases are used by Visual Studio Code to support code navigation and auto-completion with the help of [language servers](https://microsoft.github.io/language-server-protocol/).
 

@@ -64,10 +64,10 @@
                 "bazelbuild.vscode-bazel", // Bazel support for Visual Studio Code; see also bazel.lsp.command below
                 "dbaeumer.vscode-eslint",
                 "EditorConfig.EditorConfig",
-                "ms-vscode.live-server", // for live preview of HTML files
+                "ms-vscode.live-server", // live preview of HTML files
                 "llvm-vs-code-extensions.vscode-clangd",
-                "jebbs.plantuml", //to preview PlantUML diagrams
-                "hediet.vscode-drawio", //for drawio integration
+                "jebbs.plantuml", // preview PlantUML diagrams
+                "hediet.vscode-drawio", // Draw.IO integration
                 "swyddfa.esbonio", // for Sphinx documentation support
                 "rust-lang.rust-analyzer" // Rust language support for Visual Studio Code; see also tasks below
             ],
@@ -108,7 +108,7 @@
                             }
                         },
                         { // see https://bazelbuild.github.io/rules_rust/rust_analyzer.html#vscode
-                            "label": "Generate rust-project.json",
+                            "label": "Update rust-project.json",
                             "command": "bazel",
                             "args": [
                                 "run",
@@ -117,15 +117,7 @@
                             "options": {
                                 "cwd": "${workspaceFolder}"
                             },
-                            "group": "build",
-                            "problemMatcher": [],
-                            "presentation": {
-                                "reveal": "never",
-                                "panel": "dedicated"
-                            },
-                            "runOptions": {
-                                "runOn": "folderOpen"
-                            }
+                            "group": "build"
                         }
                     ]
                 }
