@@ -65,6 +65,11 @@ curl -L "https://github.com/bazelbuild/buildtools/releases/download/v${BUILDIFIE
 echo "${BUILDIFIER_SHA256} /usr/local/bin/buildifier" | sha256sum -c - || exit -1
 chmod +x /usr/local/bin/buildifier
 
+# Starlark Language Server, directly from GitHub (apparently no APT repository available)
+curl -L "https://github.com/withered-magic/starpls/releases/download/v${STARPLS_VERSION}/starpls-linux-amd64" -o /usr/local/bin/starpls
+echo "${STARPLS_SHA256} /usr/local/bin/starpls" | sha256sum -c - || exit -1
+chmod +x /usr/local/bin/starpls
+
 # Code completion for C++ code of Bazel projects
 # (see https://github.com/kiron1/bazel-compile-commands)
 # The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
