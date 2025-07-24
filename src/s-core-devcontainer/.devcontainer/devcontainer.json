@@ -61,6 +61,10 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "usernamehw.errorlens",
+                "lextudio.restructuredtext",
+                "ms-python.python",
+                "charliermarsh.ruff",
                 "mads-hartmann.bash-ide-vscode",
                 "bazelbuild.vscode-bazel", // Bazel support for Visual Studio Code; see also bazel.lsp.command below
                 "dbaeumer.vscode-eslint",
