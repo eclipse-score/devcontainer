@@ -11,6 +11,7 @@
         },
         "ghcr.io/devcontainers/features/git-lfs": {
             // Installs the latest version from the Distribution
+            "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
         "ghcr.io/devcontainers/features/common-utils": {
             // Installs latest version from the Distribution
