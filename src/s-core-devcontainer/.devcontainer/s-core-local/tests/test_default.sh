@@ -15,3 +15,7 @@ check "validate rust-analyzer is working" bash -c "rust-analyzer --version"
 
 # Other build-related tools
 check "validate protoc is working" bash -c "protoc --version"
+
+# Qemu target-related tools
+check "validate qemu-system-aarch64 is working" bash -c "qemu-system-aarch64 --version"
+check "validate sshpass is working" bash -c "sshpass -V"
