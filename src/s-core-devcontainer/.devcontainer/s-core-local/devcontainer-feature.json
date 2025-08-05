@@ -31,10 +31,13 @@
         }
     },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
-	"mounts": [ {
+    // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed
+    "postCreateCommand": "if [ -f .bazelversion ]; then sudo apt update && sudo apt install bazel-$(cat .bazelversion); fi",
+    "mounts": [
+        {
             "source": "${localEnv:HOME}/.cache/bazel", // default Bazel cache directory
             "target": "/var/cache/bazel",
             "type": "bind"
         }
-	]
+    ]
 }
