@@ -90,6 +90,12 @@ gunzip -d /tmp/rust-analyzer.gz
 mv /tmp/rust-analyzer /usr/local/bin/rust-analyzer
 chmod +x /usr/local/bin/rust-analyzer
 
+# qemu-system-aarch64
+apt-get install -y qemu-system-aarch64
+
+# sshpass
+apt-get install -y sshpass
+
 # Cleanup
 apt-get autoremove -y
 apt-get clean
