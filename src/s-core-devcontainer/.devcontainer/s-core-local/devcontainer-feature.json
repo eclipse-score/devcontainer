@@ -6,7 +6,7 @@
     "options": {
         "BAZEL_VERSION": {
             "type": "string",
-            "default": "7.5.0",
+            "default": "8.3.0",
             "description": "Version of Bazel to install"
         },
         "BUILDIFIER_VERSION": {
