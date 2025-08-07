@@ -31,8 +31,9 @@
         }
     },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
-    // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed
-    "postCreateCommand": "if [ -f .bazelversion ]; then sudo apt update && sudo apt install bazel-$(cat .bazelversion); fi",
+    // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
+    // Should be removed once we provide versions of the devcontainer.
+    "postCreateCommand": "if [[ -f .bazelversion && \"$(cat .bazelversion)\" != \"$(dpkg --list | grep ' bazel ' | awk '{print $3}')\" ]]; then sudo apt update && sudo apt install bazel=$(cat .bazelversion); fi",
     "mounts": [
         {
             "source": "${localEnv:HOME}/.cache/bazel", // default Bazel cache directory
