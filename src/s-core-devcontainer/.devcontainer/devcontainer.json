@@ -17,8 +17,8 @@
             // Installs latest version from the Distribution
             "installZsh": "false",
             "username": "vscode",
-			"userUid": "1000",
-			"userGid": "1000",
+            "userUid": "1000",
+            "userGid": "1000",
             "upgradePackages": "false" // WARNING: do *not* enable; this would include packages also from other features, which may have been pinned to a specific version
         },
         "ghcr.io/devcontainers-community/features/llvm": {
@@ -30,7 +30,7 @@
             "version": "3.12.11"
         },
         "./s-core-local": {
-            "BAZEL_VERSION": "7.5.0",
+            "BAZEL_VERSION": "8.3.0",
             "BUILDIFIER_VERSION": "8.2.1",
             // The following sha256sum is for the binary buildifier-linux-amd64
             // from the GitHub release page of buildtools
