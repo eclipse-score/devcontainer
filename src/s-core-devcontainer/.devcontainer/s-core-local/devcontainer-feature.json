@@ -36,9 +36,9 @@
     "postCreateCommand": "if [ -f .bazelversion ] && [ \"$(cat .bazelversion)\" != \"$(dpkg --list | grep 'ii  bazel   ' | awk '{print $3}')\" ]; then sudo apt-get update && sudo apt-get install -y --allow-downgrades bazel=$(cat .bazelversion); fi",
     "mounts": [
         {
-            "source": "${localEnv:HOME}/.cache/bazel", // default Bazel cache directory
+            "source": "eclipse-s-core-bazel-cache",
             "target": "/var/cache/bazel",
-            "type": "bind"
+            "type": "volume"
         }
     ]
 }

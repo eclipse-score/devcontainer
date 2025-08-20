@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# In some scenarios (like CodeSpaces), apparently not all (or even any?)
-# bind mounts to the host are done and /var/cache/bazel does not exist.
-# See devcontainer-feature.json, where this mount is defined.
-# Hence, if /var/cache/bazel exists, it was mounted from the host,
-# and we configure Bazel to use /var/cache/bazel as cache.
-# This way, Bazel re-uses a bind-mounted cache from the host machine, while
-# still using the default cache (${HOME}/.cache/bazel) if no such cache exists.
+# Enable persistent Bazel cache
+#
+# Usually, a volume is mounted to /var/cache/bazel (see
+# devcontainer-feature.json). This shall be used as Bazel cache, which is then
+# preserved across container re-starts. Since the volume has a fixed
+# name ("eclipse-s-core-bazel-cache"), it is even used across all Eclipse
+# S-CORE DevContainer instances.
 if [ -d /var/cache/bazel ]; then
-  echo "Configuring Bazel to use /var/cache/bazel as cache..."
+  echo "Bazel Cache: /var/cache/bazel exists. Checking ownership and configuring Bazel to use it as cache..."
+  current_owner_group=$(stat -c "%U:%G" /var/cache/bazel)
+  current_user_group="$(id -un):$(id -gn)"
+  if [ "${current_owner_group}" = "${current_user_group}" ]; then
+    echo "Bazel Cache: /var/cache/bazel is already owned by ${current_user_group}. "
+  else
+    echo "Bazel Cache: /var/cache/bazel is not owned by ${current_owner_group}. Setting ownership (this may take a few seconds) ..."
+    sudo chown -R "${current_user_group}" /var/cache/bazel
+  fi
+  echo "Bazel Cache: Configuring Bazel to use /var/cache/bazel as cache..."
   echo "startup --output_user_root=/var/cache/bazel" >> ~/.bazelrc
 fi
 
