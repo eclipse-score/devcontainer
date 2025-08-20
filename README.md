@@ -24,14 +24,12 @@ It should contain the following:
 ````json
 {
     "name": "eclipse-s-core",
-    "image": "ghcr.io/eclipse-score/devcontainer:<version>",
-    "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/bazel"
+    "image": "ghcr.io/eclipse-score/devcontainer:<version>"
 }
 ````
 
 The `<version>` must be a [valid, published release](https://github.com/eclipse-score/devcontainer/tags).
 You can also use `latest` as `<version>` to automatically follow the `main` branch - but be aware that this can result in undesired updates.
-The `initializeCommand` is required to ensure the default Bazel cache directory exists on your host system.
 
 To start using the container, click the **Reopen in Container** button when prompted by Visual Studio Code:
 
