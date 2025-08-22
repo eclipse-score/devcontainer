@@ -36,11 +36,15 @@ DEBIAN_FRONTEND=noninteractive
 
 apt-get update
 
+# INSTALL CONTAINER BUILD DEPENDENCIES
+# These are not pinned, since they are removed again after container creation.
+apt-get install apt-transport-https -y
+
 # GraphViz
-apt-get install -y graphviz=2.42.2-*
+apt-get install -y graphviz=2.42.2*
 
 # Protobuf compiler, via APT (needed by FEO)
-apt-get install -y protobuf-compiler=3.21.12-*
+apt-get install -y protobuf-compiler=3.21.12*
 
 # Bazel, via APT
 # - ghcr.io/devcontainers-community/features/bazel uses bazelisk, which has a few problems:
@@ -49,7 +53,6 @@ apt-get install -y protobuf-compiler=3.21.12-*
 #   - In general, pre-built containers *shall not* download "more tools" from the internet.
 #     This is an operational risk (security, availability); it makes the build non-reproducible,
 #     and it prevents the container from working in air-gapped environments.
-apt-get install apt-transport-https=2.8.3 gnupg=2.4.4-* -y
 curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel-archive-keyring.gpg
 mv bazel-archive-keyring.gpg /usr/share/keyrings
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
@@ -88,12 +91,14 @@ mv /tmp/rust-analyzer /usr/local/bin/rust-analyzer
 chmod +x /usr/local/bin/rust-analyzer
 
 # qemu-system-arm
-apt-get install -y --no-install-recommends --fix-broken qemu-system-arm=1:8.2.2+ds-*
+apt-get install -y --no-install-recommends --fix-broken qemu-system-arm=1:8.2.2*
 
 # sshpass
 apt-get install -y sshpass=1.09-*
 
 # Cleanup
+# REMOVE CONTAINER BUILD DEPENDENCIES
+apt-get remove --purge -y apt-transport-https
 apt-get autoremove -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
