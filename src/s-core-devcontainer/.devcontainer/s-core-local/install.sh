@@ -34,10 +34,7 @@ fi
 
 DEBIAN_FRONTEND=noninteractive
 
-# Install "common" tools
 apt-get update
-apt-get install -y \
-    curl
 
 # GraphViz
 apt-get install -y graphviz
@@ -52,7 +49,7 @@ apt-get install -y protobuf-compiler
 #   - In general, pre-built containers *shall not* download "more tools" from the internet.
 #     This is an operational risk (security, availability); it makes the build non-reproducible,
 #     and it prevents the container from working in air-gapped environments.
-apt-get install apt-transport-https curl gnupg -y
+apt-get install apt-transport-https gnupg -y
 curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel-archive-keyring.gpg
 mv bazel-archive-keyring.gpg /usr/share/keyrings
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/bazel-archive-keyring.gpg] https://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
