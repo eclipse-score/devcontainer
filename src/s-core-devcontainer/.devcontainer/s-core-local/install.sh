@@ -87,8 +87,8 @@ gunzip -d /tmp/rust-analyzer.gz
 mv /tmp/rust-analyzer /usr/local/bin/rust-analyzer
 chmod +x /usr/local/bin/rust-analyzer
 
-# qemu-system-aarch64
-apt-get install -y qemu-system-arm=1:8.2.2+ds-*
+# qemu-system-arm
+apt-get install -y --no-install-recommends --fix-broken qemu-system-arm=1:8.2.2+ds-*
 
 # sshpass
 apt-get install -y sshpass=1.09-*
