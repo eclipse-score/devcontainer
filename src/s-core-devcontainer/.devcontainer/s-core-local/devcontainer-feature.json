@@ -3,33 +3,6 @@
     "id": "s-core-local",
     "version": "1.0.0",
     "description": "Tools which are not available as already existing development container feature",
-    "options": {
-        "BAZEL_VERSION": {
-            "type": "string",
-            "default": "8.3.0",
-            "description": "Version of Bazel to install"
-        },
-        "BUILDIFIER_VERSION": {
-            "type": "string",
-            "default": "8.2.1",
-            "description": "Version of Buildifier to install"
-        },
-        "BUILDIFIER_SHA256": {
-            "type": "string",
-            "default": "",
-            "description": "sha256sum of the Buildifier binary to verify the download"
-        },
-        "BAZEL_COMPILE_COMMANDS_VERSION": {
-            "type": "string",
-            "default": "0.17.2",
-            "description": "Version of Bazel Compile Commands to install"
-        },
-        "BAZEL_COMPILE_COMMANDS_SHA256": {
-            "type": "string",
-            "default": "",
-            "description": "sha256sums of Bazel Compile Commands to verify the download; format: <codename>:<sha256sum>;<codename>:<sha256sum>;..."
-        }
-    },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
     // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
     // Should be removed once we provide versions of the devcontainer.
