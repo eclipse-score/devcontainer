@@ -74,7 +74,8 @@
                 "jebbs.plantuml", // preview PlantUML diagrams
                 "hediet.vscode-drawio", // Draw.IO integration
                 "swyddfa.esbonio", // for Sphinx documentation support
-                "rust-lang.rust-analyzer" // Rust language support for Visual Studio Code; see also tasks below
+                "rust-lang.rust-analyzer",
+                "github.vscode-pull-request-github" // Rust language support for Visual Studio Code; see also tasks below
             ],
             "settings": {
                 "files.insertFinalNewline": true,
