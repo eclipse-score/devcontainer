@@ -50,7 +50,8 @@
                 "hediet.vscode-drawio", // Draw.IO integration
                 "swyddfa.esbonio", // for Sphinx documentation support
                 "rust-lang.rust-analyzer", // Rust language support for Visual Studio Code; see also tasks below
-                "github.vscode-pull-request-github"
+                "github.vscode-pull-request-github", // GitHub integration
+                "bierner.markdown-preview-github-styles" // GitHub style for Markdown preview
             ],
             "settings": {
                 "files.insertFinalNewline": true,
