@@ -4,13 +4,21 @@
     "version": "1.0.0",
     "description": "Tools which are not available as already existing development container feature",
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
-    // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
-    // Should be removed once we provide versions of the devcontainer.
-    "postCreateCommand": "if [ -f .bazelversion ] && [ \"$(cat .bazelversion)\" != \"$(dpkg --list | grep 'ii  bazel   ' | awk '{print $3}')\" ]; then sudo apt-get update && sudo apt-get install -y --allow-downgrades bazel=$(cat .bazelversion); fi",
+    "postCreateCommand": {
+        // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
+        // Should be removed once we provide versions of the devcontainer.
+        "Install matching Bazel version": "bash /devcontainer/features/s-core-local/install_matching_bazel_version.sh",
+        "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh"
+    },
     "mounts": [
         {
             "source": "eclipse-s-core-bazel-cache",
             "target": "/var/cache/bazel",
+            "type": "volume"
+        },
+        {
+            "source": "eclipse-s-core-bash-history-${devcontainerId}",
+            "target": "/commandhistory",
             "type": "volume"
         }
     ]
