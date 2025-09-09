@@ -50,5 +50,7 @@ jobs:
           # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
           push: "never"
           runCmd: |
+            # manually login to ghcr.io for publishing
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             # Note: "${{ github.ref_name }}" will be the tag name, e.g., "1.0.0"
             ./scripts/publish.sh "${{ github.ref_name }}"
