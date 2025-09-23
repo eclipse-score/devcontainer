@@ -13,6 +13,10 @@
             // Installs the latest version from the Distribution
             "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
+        "ghcr.io/devcontainers-community/features/bazel": {
+            "bazelisk_version": "v1.27.0",
+            "buildifier_version": "v8.2.1"
+        },
         "ghcr.io/devcontainers/features/common-utils": {
             // Installs latest version from the Distribution
             "installZsh": "false",

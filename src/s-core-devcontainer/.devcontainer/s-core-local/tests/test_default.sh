@@ -13,9 +13,7 @@ check "validate graphviz has the correct version" bash -c "dpkg -s graphviz | gr
 # Other build-related tools
 check "validate protoc is working and has the correct version" bash -c "protoc --version | grep 'libprotoc ${protobuf_compiler_version}'"
 
-# Bazel and related tools
-check "validate bazel is working and has the correct version" bash -c "bazel version | grep '${bazel_version}'"
-check "validate buildifier is working and has the correct version" bash -c "buildifier --version | grep '${buildifier_version}'"
+# Bazel-related tools
 check "validate starpls is working and has the correct version" bash -c "starpls version | grep '${starpls_version}'"
 check "validate bazel-compile-commands is working and has the correct version" bash -c "bazel-compile-commands --version 2>&1 | grep '${bazel_compile_commands_version}'"
 
