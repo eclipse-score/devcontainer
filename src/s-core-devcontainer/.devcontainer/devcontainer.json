@@ -29,6 +29,17 @@
         "ghcr.io/devcontainers/features/python": {
             "version": "3.12.11"
         },
+        "ghcr.io/devcontainers/features/rust:1.5.0": {
+            "version": "1.83.0",
+            "components": [
+                "cargo",
+                "clippy",
+                // "miri", // only available at nightly
+                "rust-analyzer",
+                "rust-src",
+                "rustfmt"
+            ]
+        },
         "./s-core-local": {}
     },
     "remoteUser": "vscode",
