@@ -30,6 +30,31 @@ apt-get install -y graphviz="${graphviz_version}*"
 # Protobuf compiler, via APT (needed by FEO)
 apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
 
+# Bazelisk, directly from GitHub
+# Using the existing devcontainer feature is not optimal:
+# - it does not check the SHA256 checksum of the downloaded file
+# - it cannot pre-install a specific version of Bazel, or prepare bash completion
+BAZELISK_VARIANT="amd64"
+SHA256SUM="${bazelisk_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    BAZELISK_VARIANT="aarch64"
+    SHA256SUM="${bazelisk_arm64_sha256}"
+fi
+curl -L "https://github.com/bazelbuild/bazelisk/releases/download/v${bazelisk_version}/bazelisk-${BAZELISK_VARIANT}.deb" -o /tmp/bazelisk.deb
+echo "${SHA256SUM} /tmp/bazelisk.deb" | sha256sum -c - || exit -1
+apt-get install -y --no-install-recommends --fix-broken /tmp/bazelisk.deb
+rm /tmp/bazelisk.deb
+
+# Pre-install a fixed Bazel version, setup the bash command completion
+USE_BAZEL_VERSION=${bazel_version}
+
+bazel help completion bash > /tmp/bazel-complete.bash
+ls -lah /tmp/bazel-complete.bash
+mkdir -p /etc/bash_completion.d
+mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
+sh -c "echo 'USE_BAZEL_VERSION=${bazel_version}' >> /etc/profile.d/bazel.sh"
+
+
 # Starlark Language Server, directly from GitHub (apparently no APT repository available)
 STARPLS_VARIANT="amd64"
 SHA256SUM="${starpls_amd64_sha256}"

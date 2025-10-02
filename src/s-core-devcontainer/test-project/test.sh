@@ -17,6 +17,7 @@ check "validate clang-tidy is working and has the correct version" bash -c "clan
 check "validate clang is working and has the correct version" bash -c "clang --version | grep '20.1.8'"
 
 # Bazel tooling
+check "validate bazel is working and has the correct version" bash -c "bazel version | grep '8.4.1'"
 check "validate bazelisk is working and has the correct version" bash -c "bazelisk version | grep '1.27.0'"
 check "validate buildifier is working and has the correct version" bash -c "buildifier --version | grep '8.2.1'"
 
