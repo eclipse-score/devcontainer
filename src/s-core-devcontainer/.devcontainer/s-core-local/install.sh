@@ -37,7 +37,7 @@ apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
 BAZELISK_VARIANT="amd64"
 SHA256SUM="${bazelisk_amd64_sha256}"
 if [ "${ARCHITECTURE}" = "arm64" ]; then
-    BAZELISK_VARIANT="aarch64"
+    BAZELISK_VARIANT="arm64"
     SHA256SUM="${bazelisk_arm64_sha256}"
 fi
 curl -L "https://github.com/bazelbuild/bazelisk/releases/download/v${bazelisk_version}/bazelisk-${BAZELISK_VARIANT}.deb" -o /tmp/bazelisk.deb
@@ -68,7 +68,6 @@ chmod +x /usr/local/bin/starpls
 
 # Code completion for C++ code of Bazel projects
 # (see https://github.com/kiron1/bazel-compile-commands)
-# The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
 source /etc/lsb-release
 curl -L "https://github.com/kiron1/bazel-compile-commands/releases/download/v${bazel_compile_commands_version}/bazel-compile-commands_${bazel_compile_commands_version}-${DISTRIB_CODENAME}_${ARCHITECTURE}.deb" -o /tmp/bazel-compile-commands.deb
 # Extract correct sha256 for current DISTRIB_CODENAME and check
@@ -82,7 +81,6 @@ rm /tmp/bazel-compile-commands.deb
 
 # Code completion for Rust code of Bazel projects (language server part)
 # (see https://bazelbuild.github.io/rules_rust/rust_analyzer.html and https://rust-analyzer.github.io/book/rust_analyzer_binary.html)
-# The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
 # NOTE: For an unknown reason, rust-analyzer uses dates for downloading of releases, while the executable reports an actual release.
 RUST_ANALYZER_VARIANT="x86_64"
 SHA256SUM="${rust_analyzer_amd64_sha256}"
