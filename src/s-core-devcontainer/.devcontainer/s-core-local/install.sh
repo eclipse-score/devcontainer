@@ -46,8 +46,7 @@ apt-get install -y --no-install-recommends --fix-broken /tmp/bazelisk.deb
 rm /tmp/bazelisk.deb
 
 # Pre-install a fixed Bazel version, setup the bash command completion
-USE_BAZEL_VERSION=${bazel_version}
-
+export USE_BAZEL_VERSION=${bazel_version}
 bazel help completion bash > /tmp/bazel-complete.bash
 ls -lah /tmp/bazel-complete.bash
 mkdir -p /etc/bash_completion.d
