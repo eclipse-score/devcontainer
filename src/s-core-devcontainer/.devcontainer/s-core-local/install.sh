@@ -53,6 +53,17 @@ mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'USE_BAZEL_VERSION=${bazel_version}' >> /etc/profile.d/bazel.sh"
 
+# Buildifier, directly from GitHub (apparently no APT repository available)
+# The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
+BUILDIFIER_VARIANT="amd64"
+SHA256SUM="${buildifier_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    BUILDIFIER_VARIANT="arm64"
+    SHA256SUM="${buildifier_arm64_sha256}"
+fi
+curl -L "https://github.com/bazelbuild/buildtools/releases/download/v${buildifier_version}/buildifier-linux-${BUILDIFIER_VARIANT}" -o /usr/local/bin/buildifier
+echo "${SHA256SUM} /usr/local/bin/buildifier" | sha256sum -c - || exit -1
+chmod +x /usr/local/bin/buildifier
 
 # Starlark Language Server, directly from GitHub (apparently no APT repository available)
 STARPLS_VARIANT="amd64"
