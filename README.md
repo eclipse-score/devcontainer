@@ -47,7 +47,7 @@ Afterwards, Visual Studio Code should show this in the lower left corner of your
 ### Bazel's `linux-sandbox`
 
 `linux-sandbox` makes use of [Linux user namespaces](https://man7.org/linux/man-pages/man7/user_namespaces.7.html).
-These only work for `linux-sandbox` as expected, if the following snipped is added to the `.devcontainer/devcontainer.json`:
+These only work for `linux-sandbox` as expected, if the following snippet is added to the `.devcontainer/devcontainer.json`:
 
 ```json
     "runArgs": [
