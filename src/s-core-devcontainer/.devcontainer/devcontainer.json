@@ -42,8 +42,18 @@
         },
         "./s-core-local": {}
     },
+    "overrideFeatureInstallOrder": [
+        // this order makes it more convenient to develop the s-core-local feature, since it will be installed last
+        // which means changes to it will be applied without needing to rebuild all other features
+        "ghcr.io/devcontainers/features/git",
+        "ghcr.io/devcontainers/features/git-lfs",
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers-community/features/llvm",
+        "ghcr.io/devcontainers/features/rust",
+        "ghcr.io/devcontainers/features/python",
+        "./s-core-local"
+    ],
     "remoteUser": "vscode",
-    "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/bazel",
     "customizations": {
         "vscode": {
             "extensions": [
