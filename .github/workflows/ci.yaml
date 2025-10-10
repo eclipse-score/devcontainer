@@ -41,6 +41,9 @@ jobs:
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
 
+            # Create builder for multi-arch builds
+            ./scripts/create_builder.sh
+
             # Build
             ./scripts/build.sh
 
@@ -58,4 +61,4 @@ jobs:
           runCmd: |
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh "latest"
+            ./scripts/publish.sh "main"

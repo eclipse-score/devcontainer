@@ -29,10 +29,31 @@
         "ghcr.io/devcontainers/features/python": {
             "version": "3.12.11"
         },
+        "ghcr.io/devcontainers/features/rust": {
+            "version": "1.83.0",
+            "components": [
+                "cargo",
+                "clippy",
+                // "miri", // only available at nightly
+                "rust-analyzer",
+                "rust-src",
+                "rustfmt"
+            ]
+        },
         "./s-core-local": {}
     },
+    "overrideFeatureInstallOrder": [
+        // this order makes it more convenient to develop the s-core-local feature, since it will be installed last
+        // which means changes to it will be applied without needing to rebuild all other features
+        "ghcr.io/devcontainers/features/git",
+        "ghcr.io/devcontainers/features/git-lfs",
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers-community/features/llvm",
+        "ghcr.io/devcontainers/features/rust",
+        "ghcr.io/devcontainers/features/python",
+        "./s-core-local"
+    ],
     "remoteUser": "vscode",
-    "initializeCommand": "mkdir -p ${localEnv:HOME}/.cache/bazel",
     "customizations": {
         "vscode": {
             "extensions": [

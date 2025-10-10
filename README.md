@@ -30,7 +30,7 @@ It should contain the following:
 ````
 
 The `<version>` must be a [valid, published release](https://github.com/eclipse-score/devcontainer/tags).
-You can also use `latest` as `<version>` to automatically follow the `main` branch - but be aware that this can result in undesired updates.
+You can also use `main` as `<version>` to automatically follow the `main` branch, and `latest` to follow release tags - but be aware that this can result in undesired updates.
 
 To start using the container, click the **Reopen in Container** button when prompted by Visual Studio Code:
 

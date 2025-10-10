@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-curl -L "https://github.com/mikefarah/yq/releases/download/v4.47.1/yq_linux_amd64" -o /tmp/yq
-echo "0fb28c6680193c41b364193d0c0fc4a03177aecde51cfc04d506b1517158c2fb /tmp/yq" | sha256sum -c - || exit -1
+ARCHITECTURE=$(dpkg --print-architecture)
+VERSION="v4.47.2"
+
+SHA256_FIELD="1bb99e1019e23de33c7e6afc23e93dad72aad6cf2cb03c797f068ea79814ddb0" # Default to amd64
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+  SHA256_FIELD="05df1f6aed334f223bb3e6a967db259f7185e33650c3b6447625e16fea0ed31f"
+fi
+
+curl -L "https://github.com/mikefarah/yq/releases/download/${VERSION}/yq_linux_${ARCHITECTURE}" -o /tmp/yq
+echo "${SHA256_FIELD} /tmp/yq" | sha256sum -c - || exit -1
 chmod +x /tmp/yq
 
 # Read tool versions and metadata into environment variables

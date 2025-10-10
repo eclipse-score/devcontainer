@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-TAG="${1:-latest}"
-
-if [[ "$TAG" != "latest" ]]; then
-    docker tag "ghcr.io/eclipse-score/devcontainer:latest" "ghcr.io/eclipse-score/devcontainer:${TAG}"
+IMAGES=("--image-name \"ghcr.io/eclipse-score/devcontainer:main\"")
+if [ "$#" -gt 0 ]; then
+    IMAGES=()
+    for arg in "$@"; do
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${arg}\"")
+    done
 fi
 
-docker push "ghcr.io/eclipse-score/devcontainer:${TAG}"
+DEVCONTAINER_CALL="devcontainer build --push --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
+
+for IMAGE in "${IMAGES[@]}"; do
+    DEVCONTAINER_CALL+=" $IMAGE"
+done
+
+eval "$DEVCONTAINER_CALL --platform linux/aarch64"
+eval "$DEVCONTAINER_CALL --platform linux/amd64"
