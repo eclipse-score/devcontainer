@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-TAG="${1:-latest}"
+IMAGES=("--image-name \"ghcr.io/eclipse-score/devcontainer:main\"")
+if [ "$#" -gt 0 ]; then
+    IMAGES=()
+    for arg in "$@"; do
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${arg}\"")
+    done
+fi
 
-devcontainer build --push --platform linux/aarch64 --workspace-folder src/s-core-devcontainer --image-name "ghcr.io/eclipse-score/devcontainer:${TAG}" --cache-from ghcr.io/eclipse-score/devcontainer
-devcontainer build --push --platform linux/amd64 --workspace-folder src/s-core-devcontainer --image-name "ghcr.io/eclipse-score/devcontainer:${TAG}" --cache-from ghcr.io/eclipse-score/devcontainer
+DEVCONTAINER_CALL="devcontainer build --push --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
+
+for IMAGE in "${IMAGES[@]}"; do
+    DEVCONTAINER_CALL+=" $IMAGE"
+done
+
+eval "$DEVCONTAINER_CALL --platform linux/amd64"
+eval "$DEVCONTAINER_CALL --platform linux/arm64"
