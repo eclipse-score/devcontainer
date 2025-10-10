@@ -89,21 +89,6 @@ echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit -1
 apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
 rm /tmp/bazel-compile-commands.deb
 
-# Code completion for Rust code of Bazel projects (language server part)
-# (see https://bazelbuild.github.io/rules_rust/rust_analyzer.html and https://rust-analyzer.github.io/book/rust_analyzer_binary.html)
-# NOTE: For an unknown reason, rust-analyzer uses dates for downloading of releases, while the executable reports an actual release.
-RUST_ANALYZER_VARIANT="x86_64"
-SHA256SUM="${rust_analyzer_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    RUST_ANALYZER_VARIANT="aarch64"
-    SHA256SUM="${rust_analyzer_arm64_sha256}"
-fi
-curl -L https://github.com/rust-lang/rust-analyzer/releases/download/${rust_analyzer_date}/rust-analyzer-${RUST_ANALYZER_VARIANT}-unknown-linux-gnu.gz > /tmp/rust-analyzer.gz
-echo "${SHA256SUM} /tmp/rust-analyzer.gz" | sha256sum -c - || exit -1
-gunzip -d /tmp/rust-analyzer.gz
-mv /tmp/rust-analyzer /usr/local/bin/rust-analyzer
-chmod +x /usr/local/bin/rust-analyzer
-
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
 

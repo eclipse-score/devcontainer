@@ -20,9 +20,6 @@ check "validate buildifier is working and has the correct version" bash -c "buil
 check "validate starpls is working and has the correct version" bash -c "starpls version | grep '${starpls_version}'"
 check "validate bazel-compile-commands is working and has the correct version" bash -c "bazel-compile-commands --version 2>&1 | grep '${bazel_compile_commands_version}'"
 
-# Rust tooling
-check "validate rust-analyzer is working and has the correct version" bash -c "rust-analyzer --version 2>&1 | grep '${rust_analyzer_version}'"
-
 # Qemu target-related tools
 check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_arm_version}'"
 check "validate sshpass is working and has the correct version" bash -c "sshpass -V | grep '${sshpass_version}'"
