@@ -62,16 +62,6 @@ echo "${bazel_compile_commands_amd64_sha256} /tmp/bazel-compile-commands.deb" | 
 apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
 rm /tmp/bazel-compile-commands.deb
 
-# Code completion for Rust code of Bazel projects (language server part)
-# (see https://bazelbuild.github.io/rules_rust/rust_analyzer.html and https://rust-analyzer.github.io/book/rust_analyzer_binary.html)
-# The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
-# NOTE: For an unknown reason, rust-analyzer uses dates for downloading of releases, while the executable reports an actual release.
-curl -L https://github.com/rust-lang/rust-analyzer/releases/download/${rust_analyzer_date}/rust-analyzer-x86_64-unknown-linux-gnu.gz > /tmp/rust-analyzer.gz
-echo "${rust_analyzer_amd64_sha256} /tmp/rust-analyzer.gz" | sha256sum -c - || exit -1
-gunzip -d /tmp/rust-analyzer.gz
-mv /tmp/rust-analyzer /usr/local/bin/rust-analyzer
-chmod +x /usr/local/bin/rust-analyzer
-
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
 

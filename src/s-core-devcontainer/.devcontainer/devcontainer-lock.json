@@ -24,6 +24,11 @@
       "version": "1.7.1",
       "resolved": "ghcr.io/devcontainers/features/python@sha256:cf9b6d879790a594b459845b207c5e1762a0c8f954bb8033ff396e497f9c301b",
       "integrity": "sha256:cf9b6d879790a594b459845b207c5e1762a0c8f954bb8033ff396e497f9c301b"
+    },
+    "ghcr.io/devcontainers/features/rust": {
+      "version": "1.5.0",
+      "resolved": "ghcr.io/devcontainers/features/rust@sha256:0c55e65f2e3df736e478f26ee4d5ed41bae6b54dac1318c443e31444c8ed283c",
+      "integrity": "sha256:0c55e65f2e3df736e478f26ee4d5ed41bae6b54dac1318c443e31444c8ed283c"
     }
   }
 }
