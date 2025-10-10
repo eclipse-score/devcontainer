@@ -49,6 +49,7 @@
         "ghcr.io/devcontainers/features/git-lfs",
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
+        "ghcr.io/devcontainers/features/rust",
         "ghcr.io/devcontainers/features/python",
         "./s-core-local"
     ],
