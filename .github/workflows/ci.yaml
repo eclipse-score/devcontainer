@@ -61,4 +61,4 @@ jobs:
           runCmd: |
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh "latest"
+            ./scripts/publish.sh "main"
