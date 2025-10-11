@@ -15,5 +15,5 @@ for IMAGE in "${IMAGES[@]}"; do
     DEVCONTAINER_CALL+=" $IMAGE"
 done
 
-eval "$DEVCONTAINER_CALL --platform linux/aarch64"
+eval "$DEVCONTAINER_CALL --platform linux/arm64"
 eval "$DEVCONTAINER_CALL --platform linux/amd64"
