@@ -47,7 +47,7 @@ rm /tmp/bazelisk.deb
 
 # Pre-install a fixed Bazel version, setup the bash command completion
 export USE_BAZEL_VERSION=${bazel_version}
-bazel help completion bash > /tmp/bazel-complete.bash
+bazel help completion > /tmp/bazel-complete.bash
 ls -lah /tmp/bazel-complete.bash
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
