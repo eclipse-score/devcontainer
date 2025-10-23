@@ -10,7 +10,8 @@ Modifying the content of the container is explained in the [Development](#develo
 
 ## Usage
 
-> **NOTE:** There are several development environments which support development containers; most notably [Visual Studio Code](https://code.visualstudio.com), but also [IntelliJ IDEA](https://www.jetbrains.com/idea) and others.
+> [!NOTE]
+> There are several development environments which support development containers; most notably [Visual Studio Code](https://code.visualstudio.com), but also [IntelliJ IDEA](https://www.jetbrains.com/idea) and others.
 > See [here](https://containers.dev/supporting) for a more complete list.
 > In the following, we assume that [Visual Studio Code](https://code.visualstudio.com) and its Dev Containers extension is used.
 The [Dev Containers extension homepage](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) has a description how to get up to speed on Windows, macOS and Linux operating systems.
@@ -43,6 +44,23 @@ Afterwards, Visual Studio Code should show this in the lower left corner of your
 
 ![Dev container success](resources/devcontainer_success.png)
 
+### Bazel's `linux-sandbox`
+
+`linux-sandbox` makes use of [Linux user namespaces](https://man7.org/linux/man-pages/man7/user_namespaces.7.html).
+These only work for `linux-sandbox` as expected, if the following snippet is added to the `.devcontainer/devcontainer.json`:
+
+```json
+    "runArgs": [
+        "--privileged"
+    ]
+```
+
+In this case using `--privileged` is [recommended by Bazel](https://bazel.build/docs/sandboxing#sandboxing-strategies),
+probably due to lack of alternatives.
+
+> [!NOTE]
+> If `linux-sandbox` is not needed, do not add this snippet.
+
 ### Inside the Container
 
 Open a Terminal, and - for example - type `bazel build ...` to execute the default build of the repository.
@@ -58,7 +76,8 @@ Congratulations, you are now a dev container enthusiast 😊.
 
 ## Development
 
-> **NOTE:** This is about the development *of the DevContainer*, not about development of Eclipse S-CORE *using* the DevContainer.
+> [!NOTE]
+> This is about the development *of the DevContainer*, not about development of Eclipse S-CORE *using* the DevContainer.
 
 The [Eclipse S-CORE](https://github.com/eclipse-score) development container is developed using - a development container!
 That means, the usage is similarly simple:
