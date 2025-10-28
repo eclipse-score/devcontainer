@@ -7,7 +7,7 @@ source "${SCRIPT_DIR}/../../../scripts/test-utils.sh" vscode
 
 # Common tooling
 check "validate git is working and has the correct version" bash -c "git --version | grep '2.49.0'"
-check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '3.7.0' "
+check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '3.7.0'"
 
 # C++ tooling
 check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '20.1.8'"
