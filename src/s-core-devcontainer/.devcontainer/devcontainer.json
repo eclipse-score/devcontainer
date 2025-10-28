@@ -10,7 +10,7 @@
             "ppa": "true"
         },
         "ghcr.io/devcontainers/features/git-lfs": {
-            // Installs the latest version from the Distribution
+            "version": "3.7.0",
             "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
         "ghcr.io/devcontainers/features/common-utils": {
