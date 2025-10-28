@@ -26,9 +26,6 @@
             // In case we want this, the feature needs to be replaced with a custom installation script.
             "version": "20"
         },
-        "ghcr.io/devcontainers/features/python": {
-            "version": "3.12.11"
-        },
         "ghcr.io/devcontainers/features/rust": {
             "version": "1.83.0",
             "components": [
@@ -50,7 +47,6 @@
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "ghcr.io/devcontainers/features/rust",
-        "ghcr.io/devcontainers/features/python",
         "./s-core-local"
     ],
     "remoteUser": "vscode",

@@ -30,6 +30,12 @@ apt-get install -y graphviz="${graphviz_version}*"
 # Protobuf compiler, via APT (needed by FEO)
 apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
 
+# Python, via APT
+apt-get install -y python${python_version} python3-pip python3-venv
+# The following packages correspond to the list of packages installed by the
+# devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
+apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
+
 # Bazelisk, directly from GitHub
 # Using the existing devcontainer feature is not optimal:
 # - it does not check the SHA256 checksum of the downloaded file
