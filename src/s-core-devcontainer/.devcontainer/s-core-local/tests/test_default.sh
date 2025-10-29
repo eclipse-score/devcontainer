@@ -13,6 +13,10 @@ check "validate graphviz has the correct version" bash -c "dpkg -s graphviz | gr
 # Other build-related tools
 check "validate protoc is working and has the correct version" bash -c "protoc --version | grep 'libprotoc ${protobuf_compiler_version}'"
 
+# Common tooling
+check "validate git is working and has the correct version" bash -c "git --version | grep '${git_version}'"
+check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '${git_lfs_version}'"
+
 # Python-related tools (a selected sub-set; others may be added later)
 check "validate python3 is working and has the correct version" bash -c "python3 --version | grep '${python_version}'"
 check "validate pip3 is working and has the correct version" bash -c "pip3 --version | grep '${python_version}'"

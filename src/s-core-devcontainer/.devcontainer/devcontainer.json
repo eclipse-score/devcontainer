@@ -5,14 +5,6 @@
         "context": "."
     },
     "features": {
-        "ghcr.io/devcontainers/features/git": {
-            "version": "2.49.0",
-            "ppa": "true"
-        },
-        "ghcr.io/devcontainers/features/git-lfs": {
-            "version": "3.7.0",
-            "autoPull": "false" // do not automatically pull LFS files when creating the container
-        },
         "ghcr.io/devcontainers/features/common-utils": {
             // Installs latest version from the Distribution
             "installZsh": "false",
@@ -42,8 +34,6 @@
     "overrideFeatureInstallOrder": [
         // this order makes it more convenient to develop the s-core-local feature, since it will be installed last
         // which means changes to it will be applied without needing to rebuild all other features
-        "ghcr.io/devcontainers/features/git",
-        "ghcr.io/devcontainers/features/git-lfs",
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "ghcr.io/devcontainers/features/rust",

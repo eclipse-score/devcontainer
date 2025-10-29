@@ -10,6 +10,12 @@ qemu_system_arm:
 sshpass:
   version: 1.09
 
+git:
+  version: "2.43.0"
+
+git_lfs:
+  version: "3.4.1"
+
 python:
   version: "3.12"
 

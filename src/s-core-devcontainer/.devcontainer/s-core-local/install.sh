@@ -30,6 +30,10 @@ apt-get install -y graphviz="${graphviz_version}*"
 # Protobuf compiler, via APT (needed by FEO)
 apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
 
+# Git and Git LFS, via APT
+apt-get install -y git
+apt-get install -y git-lfs
+
 # Python, via APT
 apt-get install -y python${python_version} python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
