@@ -10,7 +10,7 @@
             "ppa": "true"
         },
         "ghcr.io/devcontainers/features/git-lfs": {
-            // Installs the latest version from the Distribution
+            "version": "3.7.0",
             "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
         "ghcr.io/devcontainers/features/common-utils": {
@@ -25,9 +25,6 @@
             // Full semantic version pinning does not work with this feature.
             // In case we want this, the feature needs to be replaced with a custom installation script.
             "version": "20"
-        },
-        "ghcr.io/devcontainers/features/python": {
-            "version": "3.12.11"
         },
         "ghcr.io/devcontainers/features/rust": {
             "version": "1.83.0",
@@ -50,7 +47,6 @@
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "ghcr.io/devcontainers/features/rust",
-        "ghcr.io/devcontainers/features/python",
         "./s-core-local"
     ],
     "remoteUser": "vscode",
