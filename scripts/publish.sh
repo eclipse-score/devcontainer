@@ -32,7 +32,7 @@ for ARCH in "${ARCHITECTURES[@]}"; do
     eval "$DEVCONTAINER_CALL --platform linux/${ARCH}"
 
     # Append the architecture-specific image to the manifest creation command (those need to be merged into *one* manifest)
-    MANIFEST_MAIN_CALL+="ghcr.io/eclipse-score/devcontainer:main-${ARCH}"
+    MANIFEST_MAIN_CALL+=" ghcr.io/eclipse-score/devcontainer:main-${ARCH}"
 done
 
 # Create and push the manifest for 'main' tag
