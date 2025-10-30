@@ -21,11 +21,11 @@ for ARCH in "${ARCHITECTURES[@]}"; do
     # Prepare image names with tags (each tag includes a label and an architecture)
     IMAGES=()
     for LABEL in "${LABELS[@]}"; do
-        IMAGES+=("--image-name \"ghcr.io/opajonk/eclipse-score_devcontainer:${LABEL}-${ARCH}\"")
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
     done
 
     # Prepare devcontainer build command
-    DEVCONTAINER_CALL="devcontainer build --push --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/opajonk/eclipse-score_devcontainer"
+    DEVCONTAINER_CALL="devcontainer build --push --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
 
     # Append image names to the build command
     for IMAGE in "${IMAGES[@]}"; do
@@ -40,10 +40,10 @@ done
 for LABEL in "${LABELS[@]}"; do
     echo "Merging all architectures (${ARCHITECTURES[@]}) into single tag: ${LABEL}"
 
-    MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/opajonk/eclipse-score_devcontainer:${LABEL}"
+    MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/eclipse-score/devcontainer:${LABEL}"
 
     for ARCH in "${ARCHITECTURES[@]}"; do
-        MANIFEST_MERGE_CALL+=" ghcr.io/opajonk/eclipse-score_devcontainer:${LABEL}-${ARCH}"
+        MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
     done
 
     eval "$MANIFEST_MERGE_CALL"

@@ -21,11 +21,11 @@ for ARCH in "${ARCHITECTURES[@]}"; do
     # Prepare image names with tags (each tag includes a label and an architecture)
     IMAGES=()
     for LABEL in "${LABELS[@]}"; do
-        IMAGES+=("--image-name \"ghcr.io/opajonk/eclipse-score_devcontainer:${LABEL}-${ARCH}\"")
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
     done
 
     # Prepare devcontainer build command
-    DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/opajonk/eclipse-score_devcontainer"
+    DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
 
     # Append image names to the build command
     for IMAGE in "${IMAGES[@]}"; do
