@@ -16,7 +16,7 @@ for ARCH in "${ARCHITECTURES[@]}"; do
     if [ "$#" -gt 0 ]; then
         IMAGES=()
         for arg in "$@"; do
-            IMAGES+=("--image-name \"ghcr.io/opajonk/eclipse-score_devcontainer:${arg}\"")
+            IMAGES+=("--image-name \"ghcr.io/opajonk/eclipse-score_devcontainer:${arg}-${ARCH}\"")
         done
     fi
 
