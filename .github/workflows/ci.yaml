@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Use .devcontainer from THIS repo for building and testing
-      - name: Check, Build, Test
+      - name: Check, Build, Test, Publish
         uses: devcontainers/ci@v0.3
         with:
           # The .devcontainer is never published as pre-built container.
@@ -50,15 +50,11 @@ jobs:
             # Test
             ./scripts/test.sh
 
-      # Upload devcontainer from src/s-core-devcontainer
-      - name: Publish
-        uses: devcontainers/ci@v0.3
-        if: github.ref == 'refs/heads/main'
-        with:
-          # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
-          # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
-          push: "never"
-          runCmd: |
-            # manually login to ghcr.io for publishing
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh "main"
+            # Optionally: Publish
+            # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
+            # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
+            if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+              # manually login to ghcr.io for publishing
+              echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+              ./scripts/publish.sh "main"
+            fi
