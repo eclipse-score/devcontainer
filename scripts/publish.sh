@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
+if [ "$#" -eq 0 ]; then
+    echo "Error: At least one parameter (label) must be provided."
+    exit 1
+fi
+
+LABELS=()
+for LABEL in "$@"; do
+    LABELS+=("${LABEL}")
+done
+
 # Define target architectures
 ARCHITECTURES=("amd64" "arm64")
 
-# Prepare manifest creation command
-MANIFEST_MAIN_CALL="docker manifest create ghcr.io/eclipse-score/devcontainer:main"
-
+# Build and push for each architecture, creating all requested tags
 for ARCH in "${ARCHITECTURES[@]}"; do
-    echo "Building for architecture: ${ARCH}"
+    echo "Building all tags (${LABELS[@]}) for architecture: ${ARCH}"
 
-    # Prepare image names - they should include the architectures and also tags if provided
-    IMAGES=("--image-name \"ghcr.io/eclipse-score/devcontainer:main-${ARCH}\"")
-    # Handle additional tags if provided
-    if [ "$#" -gt 0 ]; then
-        IMAGES=()
-        for arg in "$@"; do
-            IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${arg}\"")
-        done
-    fi
+    # Prepare image names with tags (each tag includes a label and an architecture)
+    IMAGES=()
+    for LABEL in "${LABELS[@]}"; do
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
+    done
 
     # Prepare devcontainer build command
     DEVCONTAINER_CALL="devcontainer build --push --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
@@ -28,25 +32,19 @@ for ARCH in "${ARCHITECTURES[@]}"; do
         DEVCONTAINER_CALL+=" $IMAGE"
     done
 
-    # Execute the build for the specific architecture
+    # Execute the build and push all tags for the specific architecture
     eval "$DEVCONTAINER_CALL --platform linux/${ARCH}"
-
-    # Append the architecture-specific image to the manifest creation command (those need to be merged into *one* manifest)
-    MANIFEST_MAIN_CALL+=" ghcr.io/eclipse-score/devcontainer:main-${ARCH}"
 done
 
-# Create and push the manifest for 'main' tag
-eval "$MANIFEST_MAIN_CALL"
-docker manifest push ghcr.io/eclipse-score/devcontainer:main
+# Create and push the merged multiarch manifest for each tag; each tag combines all architecture-specific tags into one tag
+for LABEL in "${LABELS[@]}"; do
+    echo "Merging all architectures (${ARCHITECTURES[@]}) into single tag: ${LABEL}"
 
-# If additional tags are provided: merge metadata and push those as well
-if [ "$#" -gt 0 ]; then
-    for arg in "$@"; do
-        MANIFEST_TAG_CALL="docker manifest create ghcr.io/eclipse-score/devcontainer:${arg}"
-        for ARCH in "${ARCHITECTURES[@]}"; do
-            MANIFEST_TAG_CALL+=" ghcr.io/eclipse-score/devcontainer:${arg}-${ARCH}"
-        done
-        eval "$MANIFEST_TAG_CALL"
-        docker manifest push ghcr.io/eclipse-score/devcontainer:${arg}
+    MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/eclipse-score/devcontainer:${LABEL}"
+
+    for ARCH in "${ARCHITECTURES[@]}"; do
+        MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
     done
-fi
+
+    eval "$MANIFEST_MERGE_CALL"
+done
