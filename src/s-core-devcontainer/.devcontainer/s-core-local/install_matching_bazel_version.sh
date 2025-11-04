@@ -6,5 +6,5 @@ if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "$(bazel version | grep '
     USE_BAZEL_VERSION=$(cat .bazelversion)
     bazel help completion > /tmp/bazel-complete.bash
     sudo mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
-    sudo sed -i '/^USE_BAZEL_VERSION=/c\USE_BAZEL_VERSION=${USE_BAZEL_VERSION}' /etc/profile.d/bazel.sh || true
+    echo "export USE_BAZEL_VERSION=$USE_BAZEL_VERSION" | sudo tee /etc/profile.d/bazel.sh
 fi
