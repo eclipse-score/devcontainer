@@ -80,6 +80,7 @@
                     "--experimental_enable_label_completions"
                 ],
                 "C_Cpp.intelliSenseEngine": "disabled",
+                "rust-analyzer.testExplorer": true,
                 "tasks": {
                     "version": "2.0.0",
                     "tasks": [
