@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "$(bazel version | grep 'Build label:' | awk '{print $3}')" ]; then
+. /etc/profile.d/bazel.sh || true
+
+if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "$USE_BAZEL_VERSION" ]; then
     # Pre-install the matching Bazel version, setup the bash command completion
     USE_BAZEL_VERSION=$(cat .bazelversion)
     bazel help completion > /tmp/bazel-complete.bash
