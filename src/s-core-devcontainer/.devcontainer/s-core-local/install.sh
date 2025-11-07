@@ -61,7 +61,7 @@ bazel help completion > /tmp/bazel-complete.bash
 ls -lah /tmp/bazel-complete.bash
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
-sh -c "echo 'export USE_BAZEL_VERSION=${bazel_version}' >> /etc/profile.d/bazel.sh"
+sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/s-core-local/bazel_setup.sh"
 
 # Buildifier, directly from GitHub (apparently no APT repository available)
 # The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
