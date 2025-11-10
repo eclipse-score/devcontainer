@@ -48,6 +48,7 @@
                 "ms-python.python",
                 "charliermarsh.ruff",
                 "mads-hartmann.bash-ide-vscode",
+                "matepek.vscode-catch2-test-adapter",
                 "bazelbuild.vscode-bazel", // Bazel support for Visual Studio Code; see also bazel.lsp.command below
                 "dbaeumer.vscode-eslint",
                 "EditorConfig.EditorConfig",
@@ -80,6 +81,9 @@
                     "--experimental_enable_label_completions"
                 ],
                 "C_Cpp.intelliSenseEngine": "disabled",
+                // This only supports basic tests: https://github.com/matepek/vscode-catch2-test-adapter/issues/429
+                // More complex tests may need execution via bazel, which is not done yet.
+                "testMate.cpp.test.executables": "bazel-bin/**/*{test,Test,TEST}*",
                 "tasks": {
                     "version": "2.0.0",
                     "tasks": [
