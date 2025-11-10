@@ -105,6 +105,10 @@ apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 
+# Bash completion for rust tooling
+rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
+rustup completions bash cargo >> /etc/bash_completion.d/cargo.bash
+
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
 apt-get remove --purge -y apt-transport-https
