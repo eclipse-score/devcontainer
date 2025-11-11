@@ -48,29 +48,6 @@
         "./s-core-local"
     ],
     "remoteUser": "vscode",
-    "runArgs": [
-        "--add-host=host.docker.internal:host-gateway",
-        "--shm-size=16g",
-        "--cap-add=SYS_PTRACE",
-        "--cap-add=SYS_NICE",
-        "--ulimit=rtprio=99",
-        "--ulimit=nice=-20",
-        "--security-opt=seccomp=unconfined",
-        "--env=HTTP_PROXY",
-        "--env=HTTPS_PROXY",
-        "--env=http_proxy",
-        "--env=https_proxy",
-        "--env=NO_PROXY",
-        "--env=no_proxy",
-        "--env=DISPLAY",
-        "--env=WORKSPACE_FOLDER=/workspace",
-        "--volume=/var/run/docker.sock:/var/run/docker.sock",
-        "--volume=..:/workspace:cached",
-        "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
-        "--volume=/home/${USER}/.cache/uv:/home/user/.cache/uv"
-    ],
-    "workspaceFolder": "/workspace",
-    "postCreateCommand": "bash .devcontainer/setup-proxy.sh",
     "customizations": {
         "vscode": {
             "extensions": [
