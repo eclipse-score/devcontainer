@@ -48,6 +48,7 @@
         "./s-core-local"
     ],
     "remoteUser": "vscode",
+    "postStartCommand": "for var in HTTP_PROXY HTTPS_PROXY http_proxy https_proxy NO_PROXY no_proxy; do [ -z \"${!var}\" ] && unset $var || true; done",
     "customizations": {
         "vscode": {
             "extensions": [
