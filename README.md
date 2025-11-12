@@ -106,7 +106,7 @@ It is very simple to develop the development container.
 You can change files related to the container and then simply run the `scripts/*`.
 They are used by the CI, but especially the build and test scripts can be run also locally out of the box:
 ````console
-$ ./scripts/build.sh
+$ ./scripts/build.sh [labels]
 [... build output..]
 {"outcome":"success","imageName":["ghcr.io/eclipse-score/devcontainer"]}
 

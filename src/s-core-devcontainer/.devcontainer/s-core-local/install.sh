@@ -40,6 +40,10 @@ apt-get install -y python${python_version} python3-pip python3-venv
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
 
+# OpenJDK JRE and CA certificates, via APT
+# Required for Bazel to work with corporate proxy/CA certificates
+apt-get install -y --no-install-recommends ca-certificates-java openjdk-${openjdk_version}-jre-headless
+
 # Bazelisk, directly from GitHub
 # Using the existing devcontainer feature is not optimal:
 # - it does not check the SHA256 checksum of the downloaded file
@@ -62,6 +66,10 @@ ls -lah /tmp/bazel-complete.bash
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'export USE_BAZEL_VERSION=${bazel_version}' >> /etc/profile.d/bazel.sh"
+
+# Configure Bazel to use system trust store for SSL/TLS connections
+# This is required for corporate environments with custom CA certificates
+echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
 
 # Buildifier, directly from GitHub (apparently no APT repository available)
 # The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
