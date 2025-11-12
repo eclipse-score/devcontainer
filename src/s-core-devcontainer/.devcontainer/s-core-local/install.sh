@@ -113,6 +113,9 @@ apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 
+# gdb (GNU Debugger)
+apt-get install -y gdb="${gdb_version}*"
+
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
 apt-get remove --purge -y apt-transport-https
