@@ -43,7 +43,7 @@ apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle py
 
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
-apt-get install -y openjdk-21-jdk-headless="${openjdk_21_version}*"
+apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
 echo "export JAVA_HOME=\"$(dirname $(dirname $(realpath $(which javac))))\"" > /etc/profile.d/java_home.sh
 
@@ -69,6 +69,10 @@ ls -lah /tmp/bazel-complete.bash
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/s-core-local/bazel_setup.sh"
+
+# Configure Bazel to use system trust store for SSL/TLS connections
+# This is required for corporate environments with custom CA certificates
+echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
 
 # Buildifier, directly from GitHub (apparently no APT repository available)
 # The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
