@@ -10,6 +10,9 @@ qemu_system_arm:
 sshpass:
   version: 1.09
 
+gdb:
+  version: "15.0"
+
 git:
   version: "2.43.0"
 
