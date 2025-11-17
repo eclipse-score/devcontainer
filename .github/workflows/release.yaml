@@ -40,7 +40,7 @@ jobs:
             ./scripts/create_builder.sh
 
             # Build
-            ./scripts/build.sh
+            ./scripts/build.sh "${{ github.ref_name }}" "latest"
 
             # Test
             ./scripts/test.sh
