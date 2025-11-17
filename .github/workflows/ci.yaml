@@ -49,7 +49,7 @@ jobs:
             ./scripts/create_builder.sh
 
             # Build
-            ./scripts/build.sh "main"
+            ./scripts/build.sh
 
             # Test
             ./scripts/test.sh
