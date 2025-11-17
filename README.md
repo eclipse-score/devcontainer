@@ -1,5 +1,4 @@
 # Common DevContainer for Eclipse S-CORE
-blub
 This repository contains the common [development container](https://containers.dev) for [Eclipse S-CORE](https://github.com/eclipse-score).
 It contains all tools required to develop (modify, build, ...) Eclipse S-CORE.
 All tool version are well-defined, and all tools are pre-configured to work as expected for Eclipse S-CORE development.
