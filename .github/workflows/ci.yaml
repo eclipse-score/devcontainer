@@ -6,10 +6,6 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    shell: bash
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -42,6 +38,8 @@ jobs:
           # We want to only use it for building and testing the actual container, which resides in src/s-core-devcontainer.
           push: "never"
           runCmd: |
+            set -euxo pipefail # make sure bash fails fast on errors
+
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
 
