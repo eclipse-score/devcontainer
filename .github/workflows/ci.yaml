@@ -46,13 +46,10 @@ jobs:
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
 
-            # Build
-            ./scripts/build.sh "main"
-
-            # Test
+            # Build & Test (amd64-only for tests to be fast)
             ./scripts/test.sh
 
-            # Optionally: Publish
+            # Optionally (if on main branch): Publish (multi-arch: amd64, arm64)
             # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
             # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
             if [ "${{ github.ref }}" = "refs/heads/main" ]; then
