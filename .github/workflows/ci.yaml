@@ -47,7 +47,7 @@ jobs:
             ./scripts/create_builder.sh
 
             # Build
-            ./scripts/build.sh
+            ./scripts/build.sh "main"
 
             # Test
             ./scripts/test.sh
