@@ -25,7 +25,7 @@ It should contain the following:
 ````json
 {
     "name": "eclipse-s-core",
-    "image": "ghcr.io/eclipse-score/devcontainer:<version>"
+    "image": "ghcr.io/opajonk/eclipse-score_devcontainer:<version>"
 }
 ````
 
@@ -108,7 +108,7 @@ They are used by the CI, but especially the build and test scripts can be run al
 ````console
 $ ./scripts/build.sh
 [... build output..]
-{"outcome":"success","imageName":["ghcr.io/eclipse-score/devcontainer"]}
+{"outcome":"success","imageName":["ghcr.io/opajonk/eclipse-score_devcontainer"]}
 
 $ ./scripts/test.sh
 [... test output...]
@@ -133,9 +133,9 @@ So in order to execute `S-CORE DevContainer` on your host (and test it as part o
 
 Concretely, this can be done as follows:
 
-* Run `docker save "ghcr.io/eclipse-score/devcontainer" > export.img` in `Development Container A`.
+* Run `docker save "ghcr.io/opajonk/eclipse-score_devcontainer" > export.img` in `Development Container A`.
 * On your **host machine** (!!), open a console and run `docker load < /path/to/export.img`.
-* In the working copy of the targeted S-CORE module, edit the file `.devcontainer/devcontainer.json` and change the `"image": "..."` entry to `"image": "ghcr.io/eclipse-score/devcontainer:latest"` (if not already set like this).
+* In the working copy of the targeted S-CORE module, edit the file `.devcontainer/devcontainer.json` and change the `"image": "..."` entry to `"image": "ghcr.io/opajonk/eclipse-score_devcontainer:latest"` (if not already set like this).
 The Visual Studio Code instance related to the targeted S-CORE module will now ask you to rebuild the DevContainer.
 If not, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> and run from there "Dev Containers: Rebuilt Container Without Cache".
 Do so, and you have a running instance of `S-CORE DevContainer` related to the targeted S-CORE module.

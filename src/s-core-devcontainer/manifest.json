@@ -1,5 +1,5 @@
 {
   "version": "1.0.0",
-  "image_name": "ghcr.io/eclipse-score/devcontainer",
+  "image_name": "ghcr.io/opajonk/eclipse-score_devcontainer",
   "description": "Develop the Eclipse S-CORE project"
 }
