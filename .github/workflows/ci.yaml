@@ -38,18 +38,19 @@ jobs:
           # We want to only use it for building and testing the actual container, which resides in src/s-core-devcontainer.
           push: "never"
           runCmd: |
-            set -euxo pipefail # make sure bash fails fast on errors
-
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
 
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
 
-            # Build & Test (amd64-only for tests to be fast)
+            # Build
+            ./scripts/build.sh
+
+            # Test
             ./scripts/test.sh
 
-            # Optionally (if on main branch): Publish (multi-arch: amd64, arm64)
+            # Optionally: Publish
             # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
             # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
             if [ "${{ github.ref }}" = "refs/heads/main" ]; then
