@@ -11,9 +11,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: 'Check, Build, Test, Publish DevContainer'
-    runs-on: ubuntu-latest
+  build-x86_64:
+    name: 'Check, Build, Test, Publish DevContainer (x86_64)'
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -57,4 +57,52 @@ jobs:
               # manually login to ghcr.io for publishing
               echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
               ./scripts/publish.sh "main"
+            fi
+
+  build-arm64:
+    name: 'Check, Build, Test, Publish DevContainer (arm64)'
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Use .devcontainer from THIS repo for building and testing
+      - name: Check, Build, Test, Publish
+        uses: devcontainers/ci@v0.3
+        with:
+          # The .devcontainer is never published as pre-built container.
+          # We want to only use it for building and testing the actual container, which resides in src/s-core-devcontainer.
+          push: "never"
+          runCmd: |
+            # Check
+            pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
+
+            # Create builder for multi-arch builds
+            ./scripts/create_builder.sh
+
+            # Build
+            ./scripts/build-arm.sh
+
+            # Test
+            ./scripts/test.sh
+
+            # Optionally: Publish
+            # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
+            # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
+            if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+              # manually login to ghcr.io for publishing
+              echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+              ./scripts/publish-arm.sh "main"
             fi

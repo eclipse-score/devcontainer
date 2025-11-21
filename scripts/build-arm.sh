@@ -12,7 +12,7 @@ for LABEL in "$@"; do
 done
 
 # Define target architectures
-ARCHITECTURES=("amd64")
+ARCHITECTURES=("arm64")
 
 # Build for each architecture, creating all requested tags
 for ARCH in "${ARCHITECTURES[@]}"; do
