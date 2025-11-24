@@ -107,7 +107,7 @@ apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_
 apt-get install -y sshpass="${sshpass_version}*"
 
 # additional developer tools
-apt-get install -y --no-install-recommends --fix-broken gdb
+apt-get install -y gdb
 
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
