@@ -33,6 +33,7 @@ apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
 # Git and Git LFS, via APT
 apt-get install -y git
 apt-get install -y git-lfs
+apt-get install -y gh
 
 # Python, via APT
 apt-get install -y python${python_version} python3-pip python3-venv
@@ -104,6 +105,9 @@ apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_
 
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
+
+# additional developer tools
+apt-get install -y --no-install-recommends --fix-broken gdb
 
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
