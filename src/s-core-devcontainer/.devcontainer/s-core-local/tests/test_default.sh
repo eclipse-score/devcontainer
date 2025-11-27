@@ -41,6 +41,10 @@ check "validate buildifier is working and has the correct version" bash -c "buil
 check "validate starpls is working and has the correct version" bash -c "starpls version | grep '${starpls_version}'"
 check "validate bazel-compile-commands is working and has the correct version" bash -c "bazel-compile-commands --version 2>&1 | grep '${bazel_compile_commands_version}'"
 
+# OpenJDK
+check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
+check "validate JAVA_HOME is set correctly" bash -c 'echo $JAVA_HOME | xargs readlink -f | grep "java-21-openjdk"'
+
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
