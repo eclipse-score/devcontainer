@@ -3,7 +3,8 @@ set -euo pipefail
 
 SCRIPT_PATH=$(readlink -f "$0")
 SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
-source "${SCRIPT_DIR}/../../../scripts/test-utils.sh" vscode
+
+source "test-utils.sh" vscode
 
 # C++ tooling
 check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '20.1.8'"

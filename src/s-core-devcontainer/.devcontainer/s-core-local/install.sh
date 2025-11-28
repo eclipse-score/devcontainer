@@ -41,6 +41,12 @@ apt-get install -y python${python_version} python3-pip python3-venv
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
 
+# OpenJDK 21, via APT
+# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
+apt-get install -y openjdk-21-jdk-headless="${openjdk_21_version}*"
+export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
+echo "export JAVA_HOME=\"$(dirname $(dirname $(realpath $(which javac))))\"" > /etc/profile.d/java_home.sh
+
 # Bazelisk, directly from GitHub
 # Using the existing devcontainer feature is not optimal:
 # - it does not check the SHA256 checksum of the downloaded file
