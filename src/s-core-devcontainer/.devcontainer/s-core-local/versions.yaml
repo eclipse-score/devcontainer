@@ -11,7 +11,7 @@ sshpass:
   version: 1.09
 
 gdb:
-  version: "15.0"
+  version: "15.0.50"
 
 git:
   version: "2.43.0"
@@ -21,9 +21,6 @@ git_lfs:
 
 python:
   version: "3.12"
-
-gdb:
-  version: "15.0.50"
 
 gh:
   version: "2.45.0"
