@@ -115,6 +115,10 @@ apt-get install -y sshpass="${sshpass_version}*"
 # additional developer tools
 apt-get install -y gdb
 
+apt-get install -y valgrind=1:${valgrind_version}*
+apt-get install -y linux-tools-common=${linux_tools_common_version}*
+apt-get install -y linux-tools-generic=${linux_tools_generic_version}*
+
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
 rustup completions bash cargo >> /etc/bash_completion.d/cargo.bash

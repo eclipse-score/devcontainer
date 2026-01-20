@@ -29,13 +29,13 @@ openjdk_21:
   version: "21.0.9"
 
 valgrind:
-  version: 3.26.0
+  version: "3.22.0"
 
 linux_tools_common:
-  version: 6.8.0
+  version: "6.8.0"
 
 linux_tools_generic:
-  version: 6.8.0
+  version: "6.8.0"
 
 bazel:
   # https://github.com/bazelbuild/bazel/releases -- latest version as of 2025-09-24

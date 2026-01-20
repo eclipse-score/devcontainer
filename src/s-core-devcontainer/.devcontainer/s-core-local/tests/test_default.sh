@@ -48,9 +48,9 @@ check "validate JAVA_HOME is set correctly" bash -c 'echo $JAVA_HOME | xargs rea
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
-check "validate valgrind is working and has the correct version" bash -c "gh --version | grep '${valgrind_version}'"
-check "validate linux_tools_common is working and has the correct version" bash -c "gh --version | grep '${linux_tools_common_version}'"
-check "validate linux_tools_generic is working and has the correct version" bash -c "gh --version | grep '${linux_tools_generic_version}'"
+check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
+check "validate linux_tools_common is working and has the correct version" bash -c "dpkg -s linux-tools-common 2>/dev/null | grep -q 'Version: ${linux_tools_common_version}'"
+check "validate linux_tools_generic is working and has the correct version" bash -c "dpkg -s linux-tools-generic 2>/dev/null | grep -q 'Version: ${linux_tools_generic_version}'"
 
 # Qemu target-related tools
 check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_arm_version}'"
