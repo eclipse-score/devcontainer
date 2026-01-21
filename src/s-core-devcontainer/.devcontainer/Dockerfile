@@ -20,6 +20,10 @@ ENV no_proxy=${no_proxy}
 
 LABEL dev.containers.features="common"
 
+# Unset proxy variables for all login shells
+COPY unset-proxy.sh /etc/profile.d/unset-proxy.sh
+RUN chmod +x /etc/profile.d/unset-proxy.sh
+
 ARG VARIANT
 RUN if [ "$VARIANT" = "noble" ]; then \
         if id "ubuntu" &>/dev/null; then \
