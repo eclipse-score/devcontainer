@@ -1,14 +1,14 @@
 ARG VARIANT="noble"
 
-# Proxy arguments for build-time network access
-ARG HTTP_PROXY
-ARG HTTPS_PROXY
-ARG http_proxy
-ARG https_proxy
-ARG NO_PROXY
-ARG no_proxy
+FROM buildpack-deps:${VARIANT:-noble}-curl
 
-FROM buildpack-deps:${VARIANT}-curl
+# Proxy arguments for build-time network access
+ARG HTTP_PROXY=""
+ARG HTTPS_PROXY=""
+ARG http_proxy=""
+ARG https_proxy=""
+ARG NO_PROXY=""
+ARG no_proxy=""
 
 # Set proxy environment variables for the build process
 ENV HTTP_PROXY=${HTTP_PROXY}
