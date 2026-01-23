@@ -2,7 +2,15 @@
     "build": {
         // Installs latest version from the Distribution
         "dockerfile": "./Dockerfile",
-        "context": "."
+        "context": ".",
+        "args": {
+            "HTTP_PROXY": "${localEnv:HTTP_PROXY}",
+            "HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",
+            "http_proxy": "${localEnv:http_proxy}",
+            "https_proxy": "${localEnv:https_proxy}",
+            "NO_PROXY": "${localEnv:NO_PROXY}",
+            "no_proxy": "${localEnv:no_proxy}"
+        }
     },
     "features": {
         "ghcr.io/devcontainers/features/common-utils": {
@@ -40,6 +48,7 @@
         "./s-core-local"
     ],
     "remoteUser": "vscode",
+
     "customizations": {
         "vscode": {
             "extensions": [
