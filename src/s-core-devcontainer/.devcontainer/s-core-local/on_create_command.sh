@@ -23,7 +23,7 @@ if [ -d /var/cache/bazel ]; then
   echo "Bazel Cache: Configuring Bazel disk cache to be in /var/cache/bazel/diskcache..."
   echo "common --disk_cache=/var/cache/bazel/diskcache" >> ~/.bazelrc
 else
-  echo "Bazel Cache: Configuring Bazel disk cache to be in /var/cache/bazel/diskcache..."
+  echo "Bazel Cache: Configuring Bazel disk cache to be in ~/.cache/bazel/_diskcache..."
   # Assuming the default location for the output user root folder is used
   # Put disk cache folder within output user root folder
   echo "common --disk_cache=~/.cache/bazel/_disk_cache" >> ~/.bazelrc
