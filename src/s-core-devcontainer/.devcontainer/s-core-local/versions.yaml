@@ -28,6 +28,9 @@ gh:
 openjdk_21:
   version: "21.0.9"
 
+valgrind:
+  version: "3.22.0"
+
 bazel:
   # https://github.com/bazelbuild/bazel/releases -- latest version as of 2025-09-24
   version: 8.4.1
