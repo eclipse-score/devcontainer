@@ -1,11 +1,13 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:4-24",
     "features": {
         "ghcr.io/devcontainers/features/git:1": {},
         "ghcr.io/devcontainers/features/git-lfs:1": {
             "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "moby": "false" // does not work with Debian Trixie based images
+        },
         "ghcr.io/devcontainers-extra/features/pre-commit:2": {
             "version": "4.2.0"
         }
