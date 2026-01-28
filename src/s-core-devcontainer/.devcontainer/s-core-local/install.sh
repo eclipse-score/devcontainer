@@ -19,6 +19,10 @@ ARCHITECTURE=$(dpkg --print-architecture)
 
 apt-get update
 
+# Unminimize the image to include standard packages like man pages
+bash -c "yes || true" | unminimize
+apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-dev
+
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
