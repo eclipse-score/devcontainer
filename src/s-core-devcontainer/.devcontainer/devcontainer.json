@@ -48,7 +48,6 @@
         "./s-core-local"
     ],
     "remoteUser": "vscode",
-
     "customizations": {
         "vscode": {
             "extensions": [
