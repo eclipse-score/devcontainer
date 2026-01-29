@@ -22,7 +22,8 @@ One has to take ones own medicin and for that reason the [S-CORE devcontainer](.
 │  ┌─────────────────────────────────────────────────────────────────┐  │
 │  │ Build S-CORE DevContainer (src/s-core-devcontainer)             │  │
 │  │  - Dockerfile (Ubuntu base image)                               │  │
-│  │  - Pre-existing features (Git, LLVM/Clang, Rust, …)             │  │
+│  │  - Pre-existing features (Git, LLVM/Clang, Rust, pre-commit, …) │  │
+│  │  - bazel feature (available at /devcontainer/features/…)        │  │
 │  │  - S-CORE local feature (available at /devcontainer/features/…) │  │
 │  └─────────────────────────────────────────────────────────────────┘  │
 │            │                                                          │
@@ -48,7 +49,7 @@ The container images should be able to build all of S-CORE without extra setup.
 This requires that the needed tools are preinstalled, but not too much either to keep container image download times in check.
 
 To achieve this, a small base image [based on Ubuntu is chosen](https://github.com/docker-library/buildpack-deps/blob/master/ubuntu/noble/curl/Dockerfile).
-To this image, the tools needed to build S-CORE and run its tests are added - either via pre-existing devcontainer features, or our own [S-CORE feature](../src/s-core-devcontainer/.devcontainer/s-core-local/).
+To this image, the tools needed to build S-CORE and run its tests are added - either via pre-existing devcontainer features, or our own [S-CORE](../src/s-core-devcontainer/.devcontainer/s-core-local/) and [bazel](../src/s-core-devcontainer/.devcontainer/bazel-feature/) features.
 The tools also need to support typical IDE features like enabling code completion.
 All of these tools could have been added via a `Dockerfile` as well, but features are the mechanism to achieve composable devcontainer implementations and are preferred instead.
 
@@ -56,13 +57,15 @@ The decision whether to use a pre-existing feature or to add a tool using the S-
 The chosen features are installed quickly, without us having to maintain them.
 Other tools installed via the S-CORE feature either have no corresponding feature, or their feature took so much time to install, that it was quicker done using our own code (example: Python feature).
 
+Bazel and related tools have been moved into their own feature to have its setup better isolated.
+
 ### Proxy environments
 
 To support proxy environments, environment variables are set in the [`Dockerfile`](../src/s-core-devcontainer/.devcontainer/Dockerfile) and unset if empty to not interfere with non-proxy environments.
 
 ## Tests
 
-After an image build, tests check that each tool expected to be in the image is installed with the specified version for [pre-existing features](../src/s-core-devcontainer/test-project/test.sh) and the [S-CORE feature](../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh).
+After an image build, tests check that each tool expected to be in the image is installed with the specified version for [pre-existing features](../src/s-core-devcontainer/test-project/test.sh), the [S-CORE feature](../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh) and the [bazel feature](../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
 This may seem overly complex at first, but prevents (1) accidentially wrong versions, (2) completely broken tools that cannot even execute.
 Both cases can happen and have happened in the past already, e.g. due to unexpected interactions between devcontainer features.
 

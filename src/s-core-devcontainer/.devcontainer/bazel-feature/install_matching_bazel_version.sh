@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-. /devcontainer/features/s-core-local/bazel_setup.sh || true
+. /devcontainer/features/bazel/bazel_setup.sh || true
 
 if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "$INSTALLED_BAZEL_VERSION" ]; then
     # Pre-install the matching Bazel version, setup the bash command completion
@@ -15,5 +15,5 @@ if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "$INSTALLED_BAZEL_VERSION
 
     bazel help completion ${bash} > /tmp/bazel-complete.bash
     sudo mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
-    echo "INSTALLED_BAZEL_VERSION=$USE_BAZEL_VERSION" | sudo tee /devcontainer/features/s-core-local/bazel_setup.sh
+    echo "INSTALLED_BAZEL_VERSION=$USE_BAZEL_VERSION" | sudo tee /devcontainer/features/bazel/bazel_setup.sh
 fi
