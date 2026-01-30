@@ -24,7 +24,7 @@ for LABEL in "$@"; do
     LABELS+=("${LABEL}")
 done
 
-echo "Building all labels (${LABELS[@]}) for architecture: ${ARCH}"
+echo "Building all labels (" "${LABELS[@]}" ") for architecture: ${ARCH}"
 
 # Prepare image names with tags (each tag includes a label and the architecture)
 IMAGES=()
