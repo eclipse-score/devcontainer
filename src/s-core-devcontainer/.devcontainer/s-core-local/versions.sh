@@ -10,7 +10,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
 fi
 
 curl -L "https://github.com/mikefarah/yq/releases/download/${VERSION}/yq_linux_${ARCHITECTURE}" -o /tmp/yq
-echo "${SHA256_FIELD} /tmp/yq" | sha256sum -c - || exit -1
+echo "${SHA256_FIELD} /tmp/yq" | sha256sum -c - || exit 1
 chmod +x /tmp/yq
 
 # Read tool versions and metadata into environment variables
