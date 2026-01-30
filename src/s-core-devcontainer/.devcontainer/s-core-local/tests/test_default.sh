@@ -4,6 +4,9 @@ set -euo pipefail
 # Read tool versions + metadata into environment variables
 . /devcontainer/features/s-core-local/versions.sh
 
+# pre-commit, it is available via $PATH in login shells, but not in non-login shells
+check "validate pre-commit is working and has the correct version" bash -c "$PIPX_BIN_DIR/pre-commit --version | grep '4.5.1'"
+
 # Common tooling
 # For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
 # Hence, we have to work around that.
