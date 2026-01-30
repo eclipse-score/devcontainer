@@ -52,7 +52,7 @@ apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle py
 apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
 JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
 export JAVA_HOME
-echo -e "JAVA_HOME=$JAVA_HOME\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
+echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
 # Bazelisk, directly from GitHub
 # Using the existing devcontainer feature is not optimal:

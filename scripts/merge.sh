@@ -31,5 +31,5 @@ for LABEL in "${LABELS[@]}"; do
         MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
     done
 
-    eval "$MANIFEST_MERGE_CALL"
+    eval "${MANIFEST_MERGE_CALL}"
 done

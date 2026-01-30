@@ -8,14 +8,14 @@ check_proxy_config() {
 
   # Check if HTTP_PROXY is set in environment but not in builder
   if [ -n "${HTTP_PROXY:-}" ]; then
-    if ! echo "$builder_info" | grep -q "HTTP_PROXY=${HTTP_PROXY}"; then
+    if ! echo "${builder_info}" | grep -q "HTTP_PROXY=${HTTP_PROXY}"; then
       return 1
     fi
   fi
 
   # Check if HTTPS_PROXY is set in environment but not in builder
   if [ -n "${HTTPS_PROXY:-}" ]; then
-    if ! echo "$builder_info" | grep -q "HTTPS_PROXY=${HTTPS_PROXY}"; then
+    if ! echo "${builder_info}" | grep -q "HTTPS_PROXY=${HTTPS_PROXY}"; then
       return 1
     fi
   fi
