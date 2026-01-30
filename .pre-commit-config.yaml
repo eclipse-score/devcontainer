@@ -13,4 +13,4 @@ repos:
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
       - id: shellcheck
-        args: ["--enable", "all", "--exclude=SC1091,SC2292,SC2154,SC2248,SC2312,SC2086,SC2046"]
+        args: ["--enable", "all", "--exclude=SC1091,SC2292,SC2154,SC2248,SC2312,SC2046"]

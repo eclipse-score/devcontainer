@@ -42,7 +42,7 @@ apt-get install -y git-lfs
 apt-get install -y gh
 
 # Python, via APT
-apt-get install -y python${python_version} python3-pip python3-venv
+apt-get install -y "python${python_version}" python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
@@ -127,7 +127,7 @@ apt-get install -y sshpass="${sshpass_version}*"
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"
 
-apt-get install -y valgrind=1:${valgrind_version}*
+apt-get install -y valgrind="1:${valgrind_version}*"
 
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
