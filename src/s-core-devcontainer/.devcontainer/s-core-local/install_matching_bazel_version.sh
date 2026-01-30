@@ -13,7 +13,9 @@ if [ -f .bazelversion ] && [ "$(cat .bazelversion)" != "${INSTALLED_BAZEL_VERSIO
         bash="bash"
     fi
 
-    bazel help completion "${bash}" > /tmp/bazel-complete.bash
+    # $bash might be empty and then an empty string is passed to the command, which will fail
+    # shellcheck disable=SC2248
+    bazel help completion ${bash} > /tmp/bazel-complete.bash
     sudo mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
     echo "INSTALLED_BAZEL_VERSION=${USE_BAZEL_VERSION}" | sudo tee /devcontainer/features/s-core-local/bazel_setup.sh
 fi
