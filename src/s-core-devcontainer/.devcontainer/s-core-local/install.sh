@@ -73,7 +73,7 @@ rm /tmp/bazelisk.deb
 export USE_BAZEL_VERSION=${bazel_version}
 # bazelisk downloads Bazel into the home directory of the user running the command
 # lets assume there is only one user in the devcontainer
-su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
+su "$(ls /home)" -c "bazel help completion bash > /tmp/bazel-complete.bash"
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/s-core-local/bazel_setup.sh"
