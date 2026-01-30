@@ -12,5 +12,4 @@ repos:
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
-      - id: shellcheck #          required checks            optional checks
-        args: ["--enable", "all", "--exclude=SC1091,SC2046", "--exclude=SC2292,SC2154,SC2312"]
+      - id: shellcheck
