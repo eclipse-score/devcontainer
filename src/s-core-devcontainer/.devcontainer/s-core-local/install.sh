@@ -50,7 +50,7 @@ apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle py
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
 apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
-JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
+JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
 export JAVA_HOME
 echo -e "JAVA_HOME=$JAVA_HOME\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
