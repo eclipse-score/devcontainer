@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-SCRIPT_PATH=$(readlink -f "$0")
-SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
-
 source "test-utils.sh" vscode
 
 # C++ tooling

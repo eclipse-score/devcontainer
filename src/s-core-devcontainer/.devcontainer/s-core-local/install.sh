@@ -10,6 +10,8 @@ COPY_TARGET="${FEATURES_DIR}/$(basename "${SCRIPT_DIR%%_*}")"
 cp -R "${SCRIPT_DIR}" "${COPY_TARGET}"
 rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-features-install.sh"
 
+# used by apt-get only inside this script
+# shellcheck disable=SC2034
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
