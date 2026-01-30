@@ -1,0 +1,12 @@
+external-sources=true
+
+# Enable all checks as long as it works
+# This might create surprises when updating shellcheck and it adds new checks.
+# If this becomes annoying we have seletively enable checks
+enable=all
+
+# required checks, no reason not to fix them except difficulty and fear to break code
+disable=SC2046
+
+# optional checks, fixes might not be easy and better not break the code
+disable=SC2292,SC2154,SC2312
