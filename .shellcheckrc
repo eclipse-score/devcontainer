@@ -10,6 +10,3 @@ disable=SC2046
 
 # optional checks, fixes might not be easy and better not break the code
 disable=SC2292,SC2154,SC2312
-
-# to be fixed
-disable=SC2016,SC1091,SC2248,SC2086,SC2250,SC2242,SC2230,SC1008,SC2310,SC2145,SC2034,SC1113,SC2155

@@ -20,6 +20,5 @@ LABEL dev.containers.features="common"
 
 # Unset proxy variables for all login shells
 COPY unset-proxy.sh /etc/profile.d/unset-proxy.sh
-RUN chmod +x /etc/profile.d/unset-proxy.sh
 
 RUN userdel -f -r ubuntu

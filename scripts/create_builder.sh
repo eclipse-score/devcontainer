@@ -8,14 +8,14 @@ check_proxy_config() {
 
   # Check if HTTP_PROXY is set in environment but not in builder
   if [ -n "${HTTP_PROXY:-}" ]; then
-    if ! echo "$builder_info" | grep -q "HTTP_PROXY=${HTTP_PROXY}"; then
+    if ! echo "${builder_info}" | grep -q "HTTP_PROXY=${HTTP_PROXY}"; then
       return 1
     fi
   fi
 
   # Check if HTTPS_PROXY is set in environment but not in builder
   if [ -n "${HTTPS_PROXY:-}" ]; then
-    if ! echo "$builder_info" | grep -q "HTTPS_PROXY=${HTTPS_PROXY}"; then
+    if ! echo "${builder_info}" | grep -q "HTTPS_PROXY=${HTTPS_PROXY}"; then
       return 1
     fi
   fi
@@ -25,6 +25,8 @@ check_proxy_config() {
 
 # Check if builder exists and has correct proxy configuration
 if docker buildx inspect multiarch &>/dev/null; then
+  # shellcheck disable=SC2310
+  # it is an optional rule, enabled via --enable all
   if ! check_proxy_config; then
     echo "Builder 'multiarch' exists but has incorrect proxy configuration. Recreating..."
     docker buildx rm multiarch

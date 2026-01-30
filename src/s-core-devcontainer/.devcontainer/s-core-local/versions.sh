@@ -12,12 +12,12 @@ fi
 # if /tmp/yq does not exist, download yq
 if [ ! -f /tmp/yq ]; then
   curl -L "https://github.com/mikefarah/yq/releases/download/${VERSION}/yq_linux_${ARCHITECTURE}" -o /tmp/yq
-  echo "${SHA256_FIELD} /tmp/yq" | sha256sum -c - || exit -1
+  echo "${SHA256_FIELD} /tmp/yq" | sha256sum -c - || exit 1
   chmod +x /tmp/yq
 fi
 
 # Read tool versions and metadata into environment variables
-export $(/tmp/yq eval '.. | select((tag == "!!map" or tag == "!!seq") | not) | (path | join("_")) + "=" + .' $1 | awk '!/=$/{print }' | xargs)
+export $(/tmp/yq eval '.. | select((tag == "!!map" or tag == "!!seq") | not) | (path | join("_")) + "=" + .' "$1" | awk '!/=$/{print }' | xargs)
 
 # Clean up
 trap 'rm -f /tmp/yq' EXIT

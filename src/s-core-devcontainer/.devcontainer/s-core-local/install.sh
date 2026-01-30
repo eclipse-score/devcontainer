@@ -10,12 +10,12 @@ COPY_TARGET="${FEATURES_DIR}/$(basename "${SCRIPT_DIR%%_*}")"
 cp -R "${SCRIPT_DIR}" "${COPY_TARGET}"
 rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-features-install.sh"
 
+# shellcheck disable=SC2034
+# used by apt-get only inside this script
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
 . /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
-
-ARCHITECTURE=$(dpkg --print-architecture)
 
 apt-get update
 
@@ -43,7 +43,7 @@ apt-get install -y git-lfs
 apt-get install -y gh
 
 # Python, via APT
-apt-get install -y python${python_version} python3-pip python3-venv
+apt-get install -y "python${python_version}" python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
@@ -51,8 +51,9 @@ apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle py
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
 apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
-export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
-echo "export JAVA_HOME=\"$(dirname $(dirname $(realpath $(which javac))))\"" > /etc/profile.d/java_home.sh
+JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
+export JAVA_HOME
+echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
@@ -63,7 +64,7 @@ apt-get install -y sshpass="${sshpass_version}*"
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"
 
-apt-get install -y valgrind=1:${valgrind_version}*
+apt-get install -y valgrind="1:${valgrind_version}*"
 
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
