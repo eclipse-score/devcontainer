@@ -22,5 +22,8 @@ check "validate rust-analyzer is working and has the correct version" bash -c "r
 # Tests from the local s-core-local feature
 source /devcontainer/features/s-core-local/tests/test_default.sh
 
+# Tests from the local bazel feature
+source /devcontainer/features/bazel/tests/test_default.sh
+
 # Report result
 reportResults

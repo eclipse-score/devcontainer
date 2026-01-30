@@ -93,7 +93,7 @@ Ordered by importance:
 
 * `src/s-core-devcontainer/` contains the sources for the Eclipse S-CORE DevContainer.
 It uses pre-existing [DevContainer features](https://containers.dev/implementors/features/) to provide some standard tools like Git, LLVM, and others.
-In addition, it uses a so-called "local" feature (cf. `src/s-core-devcontainer/.devcontainer/s-core-local`) for the remaining tools and configuration.
+In addition, it uses so-called "local" features (cf. `src/s-core-devcontainer/.devcontainer/s-core-local`) for the remaining tools and configuration.
 * `scripts/` contains scripts to build and test the container.
 * `.devcontainer/` contains the definition of the DevContainer for **this** repository, i.e. the "devcontainer devcontainer".
 There should rarely be a need to modify this.

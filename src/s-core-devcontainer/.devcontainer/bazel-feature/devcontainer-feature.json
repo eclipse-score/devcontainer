@@ -1,0 +1,22 @@
+{
+    "name": "Bazel and tools",
+    "id": "bazel",
+    "version": "1.0.0",
+    "description": "Bazel and supplimentary tools for working with Bazel-based projects.",
+    "dependsOn": {
+        "./s-core-local": {} // needed for extracting versions (versions.sh)
+    },
+    "onCreateCommand": "/devcontainer/features/bazel/on_create_command.sh",
+    "postCreateCommand": {
+        // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
+        // Should be removed once we provide versions of the devcontainer.
+        "Install matching Bazel version": "bash /devcontainer/features/bazel/install_matching_bazel_version.sh"
+    },
+    "mounts": [
+        {
+            "source": "eclipse-s-core-bazel-cache",
+            "target": "/var/cache/bazel",
+            "type": "volume"
+        }
+    ]
+}

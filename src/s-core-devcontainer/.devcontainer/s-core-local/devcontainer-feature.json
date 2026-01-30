@@ -10,18 +10,10 @@
     },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
     "postCreateCommand": {
-        // The repos in S-CORE may use different Bazel versions. This ensures that the required version is installed.
-        // Should be removed once we provide versions of the devcontainer.
-        "Install matching Bazel version": "bash /devcontainer/features/s-core-local/install_matching_bazel_version.sh",
         "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh",
         "Enable pre-commit hooks": "bash /devcontainer/features/s-core-local/enable_pre_commit_hooks.sh"
     },
     "mounts": [
-        {
-            "source": "eclipse-s-core-bazel-cache",
-            "target": "/var/cache/bazel",
-            "type": "volume"
-        },
         {
             "source": "eclipse-s-core-bash-history-${devcontainerId}",
             "target": "/commandhistory",

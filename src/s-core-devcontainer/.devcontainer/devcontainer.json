@@ -37,15 +37,17 @@
                 "rustfmt"
             ]
         },
-        "./s-core-local": {}
+        "./s-core-local": {},
+        "./bazel-feature": {}
     },
     "overrideFeatureInstallOrder": [
-        // this order makes it more convenient to develop the s-core-local feature, since it will be installed last
+        // this order makes it more convenient to develop the local features, since they will be installed last
         // which means changes to it will be applied without needing to rebuild all other features
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "ghcr.io/devcontainers/features/rust",
-        "./s-core-local"
+        "./s-core-local",
+        "./bazel-feature"
     ],
     "remoteUser": "vscode",
     "customizations": {
