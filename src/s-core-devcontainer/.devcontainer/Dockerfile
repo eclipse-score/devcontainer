@@ -18,8 +18,7 @@ ENV no_proxy=${no_proxy}
 
 LABEL dev.containers.features="common"
 
-# Unset proxy variables for all login shells
-COPY unset-proxy.sh /etc/profile.d/unset-proxy.sh
-RUN chmod +x /etc/profile.d/unset-proxy.sh
+# Unset proxy variables for all bash login shells
+COPY unset-proxy.sh /etc/bash_completion.d/unset-proxy.sh
 
 RUN userdel -f -r ubuntu
