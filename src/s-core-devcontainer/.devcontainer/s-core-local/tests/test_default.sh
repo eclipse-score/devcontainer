@@ -8,6 +8,8 @@ set -euo pipefail
 check "validate pre-commit is working and has the correct version" bash -c "$PIPX_BIN_DIR/pre-commit --version | grep '4.5.1'"
 
 # Common tooling
+check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_version}'"
+
 # For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
 # Hence, we have to work around that.
 check "validate graphviz is working" bash -c "dot -V"

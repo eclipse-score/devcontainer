@@ -27,6 +27,9 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
 
+# static code anylysis for shell scripts
+apt-get install -y shellcheck="${shellcheck_version}*"
+
 # GraphViz
 # The Ubuntu Noble package of GraphViz
 apt-get install -y graphviz="${graphviz_version}*"
