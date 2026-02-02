@@ -1,3 +1,4 @@
+---
 graphviz:
   version: 2.42.2
 
@@ -11,22 +12,22 @@ sshpass:
   version: 1.09
 
 gdb:
-  version: "15.0.50"
+  version: 15.0.50
 
 git:
-  version: "2.43.0"
+  version: 2.43.0
 
 git_lfs:
-  version: "3.4.1"
+  version: 3.4.1
 
 python:
-  version: "3.12"
+  version: '3.12'
 
 gh:
-  version: "2.45.0"
+  version: 2.45.0
 
 openjdk_21:
-  version: "21.0.9"
+  version: 21.0.9
 
 valgrind:
-  version: "3.22.0"
+  version: 3.22.0
