@@ -25,6 +25,9 @@ SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 PROJECT_DIR=$(dirname -- "${SCRIPT_DIR}")
 ID_LABEL="test-container=${IMAGE}"
 
+. "${SCRIPT_DIR}/functions.sh"
+set_dockerfile_name
+
 devcontainer up \
   --id-label "${ID_LABEL}" \
   --workspace-folder "${PROJECT_DIR}/src/${IMAGE}/" \
