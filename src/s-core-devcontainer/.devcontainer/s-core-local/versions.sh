@@ -20,4 +20,4 @@ fi
 export $(/tmp/yq eval '.. | select((tag == "!!map" or tag == "!!seq") | not) | (path | join("_")) + "=" + .' $1 | awk '!/=$/{print }' | xargs)
 
 # Clean up
-rm -f /tmp/yq
+trap 'rm -f /tmp/yq' EXIT
