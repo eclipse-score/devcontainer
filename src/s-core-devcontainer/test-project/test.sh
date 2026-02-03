@@ -11,6 +11,7 @@ check "validate clangd is working and has the correct version" bash -c "clangd -
 check "validate clang-format is working and has the correct version" bash -c "clang-format --version | grep '20.1.8'"
 check "validate clang-tidy is working and has the correct version" bash -c "clang-tidy --version | grep '20.1.8'"
 check "validate clang is working and has the correct version" bash -c "clang --version | grep '20.1.8'"
+check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '2.21.4'"
 
 # Rust tooling
 check "validate rustc is working and has the correct version" bash -c "rustc --version | grep '1.83.0'"
