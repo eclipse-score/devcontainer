@@ -1,9 +1,10 @@
-name: 'Validate & Publish DevContainer'
-description: 'This workflow is checking that for releases, updates do not break stuff and publishes the released container.'
+---
+name: Validate & Publish DevContainer
+description: This workflow is checking that for releases, updates do not break stuff and publishes the released container.
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - v[0-9]+.[0-9]+.[0-9]+
 jobs:
   build:
     strategy:
@@ -11,13 +12,13 @@ jobs:
         os: [arm64, amd64]
         include:
           - os: amd64
-            name: 'DevContainer (amd64)'
+            name: DevContainer (amd64)
             runner: ubuntu-24.04
           - os: arm64
-            name: 'DevContainer (arm64)'
+            name: DevContainer (arm64)
             runner: ubuntu-24.04-arm
 
-    name: '${{ matrix.name }}'
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -41,7 +42,7 @@ jobs:
         with:
           # The .devcontainer is never published as pre-built container.
           # We want to only use it for building and testing the actual container, which resides in src/s-core-devcontainer.
-          push: "never"
+          push: never
           runCmd: |
             set -eux pipefail
 
@@ -65,8 +66,8 @@ jobs:
             ./scripts/publish.sh --${{ matrix.os }} "${{ github.ref_name }}" "latest"
 
   merge:
-    name: 'Merge Labels'
-    needs: ["build"]
+    name: Merge Labels
+    needs: [build]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -90,7 +91,7 @@ jobs:
         with:
           # The .devcontainer is never published as pre-built container.
           # We want to only use it for building and testing the actual container, which resides in src/s-core-devcontainer.
-          push: "never"
+          push: never
           runCmd: |
             set -eux pipefail
 
