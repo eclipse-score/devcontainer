@@ -10,6 +10,8 @@ COPY_TARGET="${FEATURES_DIR}/$(basename "${SCRIPT_DIR%%_*}")"
 cp -R "${SCRIPT_DIR}" "${COPY_TARGET}"
 rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-features-install.sh"
 
+# shellcheck disable=SC2034
+# used by apt-get only inside this script
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
@@ -34,7 +36,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
     SHA256SUM="${bazelisk_arm64_sha256}"
 fi
 curl -L "https://github.com/bazelbuild/bazelisk/releases/download/v${bazelisk_version}/bazelisk-${BAZELISK_VARIANT}.deb" -o /tmp/bazelisk.deb
-echo "${SHA256SUM} /tmp/bazelisk.deb" | sha256sum -c - || exit -1
+echo "${SHA256SUM} /tmp/bazelisk.deb" | sha256sum -c - || exit 1
 apt-get install -y --no-install-recommends --fix-broken /tmp/bazelisk.deb
 rm /tmp/bazelisk.deb
 
@@ -60,7 +62,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
     SHA256SUM="${buildifier_arm64_sha256}"
 fi
 curl -L "https://github.com/bazelbuild/buildtools/releases/download/v${buildifier_version}/buildifier-linux-${BUILDIFIER_VARIANT}" -o /usr/local/bin/buildifier
-echo "${SHA256SUM} /usr/local/bin/buildifier" | sha256sum -c - || exit -1
+echo "${SHA256SUM} /usr/local/bin/buildifier" | sha256sum -c - || exit 1
 chmod +x /usr/local/bin/buildifier
 
 # Starlark Language Server, directly from GitHub (apparently no APT repository available)
@@ -71,7 +73,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
     SHA256SUM="${starpls_arm64_sha256}"
 fi
 curl -L "https://github.com/withered-magic/starpls/releases/download/v${starpls_version}/starpls-linux-${STARPLS_VARIANT}" -o /usr/local/bin/starpls
-echo "${SHA256SUM} /usr/local/bin/starpls" | sha256sum -c - || exit -1
+echo "${SHA256SUM} /usr/local/bin/starpls" | sha256sum -c - || exit 1
 chmod +x /usr/local/bin/starpls
 
 # Code completion for C++ code of Bazel projects
@@ -83,7 +85,7 @@ SHA256SUM="${bazel_compile_commands_amd64_sha256}"
 if [ "${ARCHITECTURE}" = "arm64" ]; then
     SHA256SUM="${bazel_compile_commands_arm64_sha256}"
 fi
-echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit -1
+echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit 1
 apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
 rm /tmp/bazel-compile-commands.deb
 

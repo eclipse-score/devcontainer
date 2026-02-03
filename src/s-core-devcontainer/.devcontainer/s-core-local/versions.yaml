@@ -29,5 +29,8 @@ gh:
 openjdk_21:
   version: 21.0.10
 
+shellcheck:
+  version: 0.9.0
+
 valgrind:
   version: 3.22.0
