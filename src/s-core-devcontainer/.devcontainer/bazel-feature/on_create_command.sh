@@ -18,7 +18,7 @@ if [ -d /var/cache/bazel ]; then
     echo "Bazel Cache: /var/cache/bazel is not owned by ${current_owner_group}. Setting ownership (this may take a few seconds) ..."
     sudo chown -R "${current_user_group}" /var/cache/bazel
   fi
-  echo "Bazel Cache: Configuring Bazel to use /var/cache/bazel as cache (=output user root)..."
+  echo "Bazel Cache: Configuring Bazel to use /var/cache/bazel as cache (= output user root)..."
   echo "startup --output_user_root=/var/cache/bazel" >> ~/.bazelrc
   echo "Bazel Cache: Configuring Bazel disk cache to be in /var/cache/bazel/diskcache..."
   echo "common --disk_cache=/var/cache/bazel/diskcache" >> ~/.bazelrc
