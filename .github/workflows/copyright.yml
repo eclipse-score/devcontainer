@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
-
+---
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -13,10 +12,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# /etc/profile.d/unset-proxy.sh
-# Unset proxy variables for all login shells if they are empty
-for var in HTTP_PROXY HTTPS_PROXY http_proxy https_proxy NO_PROXY no_proxy; do
-    if [ -z "${!var}" ]; then
-        unset "${var}"
-    fi
-done
+name: Copyright checks
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
+jobs:
+  copyright-check:
+    uses: eclipse-score/cicd-workflows/.github/workflows/copyright.yml@main
+    with:
+      bazel-target: run //:copyright.check

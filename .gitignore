@@ -1,2 +1,3 @@
 # Exported image files shall never be committed.
 /export.img
+/bazel-*

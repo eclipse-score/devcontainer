@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # *******************************************************************************
 # Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
@@ -13,10 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# /etc/profile.d/unset-proxy.sh
-# Unset proxy variables for all login shells if they are empty
-for var in HTTP_PROXY HTTPS_PROXY http_proxy https_proxy NO_PROXY no_proxy; do
-    if [ -z "${!var}" ]; then
-        unset "${var}"
-    fi
-done
+"S-CORE devcontainer"
+
+module(name = "score_devcontainer")
+
+# ============================================================================
+# Tooling & Development
+# ============================================================================
+bazel_dep(name = "score_tooling", version = "1.0.4", dev_dependency = True)

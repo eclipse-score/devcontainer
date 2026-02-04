@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # *******************************************************************************
 # Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
@@ -13,10 +11,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# /etc/profile.d/unset-proxy.sh
-# Unset proxy variables for all login shells if they are empty
-for var in HTTP_PROXY HTTPS_PROXY http_proxy https_proxy NO_PROXY no_proxy; do
-    if [ -z "${!var}" ]; then
-        unset "${var}"
-    fi
-done
+load("@score_tooling//:defs.bzl", "copyright_checker", "use_format_targets")
+
+copyright_checker(
+    name = "copyright",
+    srcs = [
+        "src",
+        "//:BUILD.bazel",
+        "//:MODULE.bazel",
+    ],
+    config = "@score_tooling//cr_checker/resources:config",
+    template = "@score_tooling//cr_checker/resources:templates",
+    visibility = ["//visibility:public"],
+)
+
+# Add target for formatting checks
+use_format_targets()
