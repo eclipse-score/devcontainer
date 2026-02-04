@@ -1,0 +1,17 @@
+---
+rules:
+  - id: copyright_shell
+    patterns:
+      - pattern-regex: |
+          (?s)(.*)
+      - pattern-not-regex: (?m)^# \*{79}\n# Copyright \(c\) [0-9]{4} Contributors to the Eclipse Foundation\n#\n# See the NOTICE file\(s\) distributed with
+          this work for additional\n# information regarding copyright ownership.\n#\n# This program and the accompanying materials are made available under
+          the\n# terms of the Apache License Version 2.0 which is available at\n# https://www.apache.org/licenses/LICENSE-2.0\n#\n# SPDX-License-Identifier.
+          Apache-2.0\n# \*{79}$
+    message: All files must contain the mandatory copyright header.
+    languages:
+      - generic
+    severity: ERROR
+    paths:
+      include:
+        - '*.sh'
