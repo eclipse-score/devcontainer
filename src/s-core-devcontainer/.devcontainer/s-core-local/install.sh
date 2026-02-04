@@ -156,7 +156,7 @@ rustup completions bash cargo >> /etc/bash_completion.d/cargo.bash
 
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
-apt-get remove --purge -y apt-transport-https
+apt-get remove --purge -y apt-transport-https zstd
 apt-get autoremove -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
