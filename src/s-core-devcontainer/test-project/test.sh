@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_PATH=$(readlink -f "$0")
 SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 
-source "$SCRIPT_DIR/test-utils.sh" vscode
+source "${SCRIPT_DIR}/test-utils.sh" vscode
 
 # C++ tooling
 check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '20.1.8'"
@@ -28,10 +28,10 @@ source /devcontainer/features/bazel/tests/test_default.sh
 # Check that no environment variables are empty
 . /etc/bash_completion
 for var in $(compgen -e); do
-    if [[ "$var" == "LS_COLORS" ]]; then
+    if [[ "${var}" == "LS_COLORS" ]]; then
         continue
     fi
-    check "validate environment variable $var is not empty" bash -c "[ -n \"\${$var}\" ]"
+    check "validate environment variable ${var} is not empty" bash -c "[ -n \"\${${var}}\" ]"
 done
 
 # Report result

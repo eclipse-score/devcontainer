@@ -5,9 +5,11 @@ set -euo pipefail
 . /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
-check "validate pre-commit is working and has the correct version" bash -c "$PIPX_BIN_DIR/pre-commit --version | grep '4.5.1'"
+check "validate pre-commit is working and has the correct version" bash -c "${PIPX_BIN_DIR}/pre-commit --version | grep '4.5.1'"
 
 # Common tooling
+check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_version}'"
+
 # For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
 # Hence, we have to work around that.
 check "validate graphviz is working" bash -c "dot -V"
@@ -32,7 +34,7 @@ check "validate pylint is working" bash -c "pylint --version"
 
 # OpenJDK
 check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
-check "validate JAVA_HOME is set correctly" bash -c 'echo $JAVA_HOME | xargs readlink -f | grep "java-21-openjdk"'
+check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"

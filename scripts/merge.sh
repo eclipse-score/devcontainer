@@ -23,7 +23,7 @@ done
 
 # Create and push the merged multiarch manifest for each tag; each tag combines all architecture-specific tags into one tag
 for LABEL in "${LABELS[@]}"; do
-    echo "Merging all architectures (${ARCHITECTURES[@]}) into single tag: ${LABEL}"
+    echo "Merging all architectures (" "${ARCHITECTURES[@]}" ") into single tag: ${LABEL}"
 
     MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/eclipse-score/devcontainer:${LABEL}"
 
@@ -31,5 +31,5 @@ for LABEL in "${LABELS[@]}"; do
         MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
     done
 
-    eval "$MANIFEST_MERGE_CALL"
+    eval "${MANIFEST_MERGE_CALL}"
 done
