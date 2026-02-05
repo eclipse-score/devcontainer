@@ -10,14 +10,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-name: Copyright checks
+name: Formatting checks
 on:
   pull_request:
     types: [opened, reopened, synchronize]
   merge_group:
     types: [checks_requested]
 jobs:
-  copyright-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/copyright.yml@main
+  formatting-check:
+    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@main
     with:
-      bazel-target: run //:copyright.check
+      bazel-target: "test //:format.check" # optional, this is the default
