@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ARCHITECTURE=$(dpkg --print-architecture)
+KERNEL=$(uname -s)
+
 # Read tool versions + metadata into environment variables
 . /devcontainer/features/s-core-local/versions.sh
 
@@ -51,7 +54,9 @@ check "validate JAVA_HOME is set correctly" bash -c 'echo $JAVA_HOME | xargs rea
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
-check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
+if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
+    check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
+fi
 
 # Qemu target-related tools
 check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_arm_version}'"

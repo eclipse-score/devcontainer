@@ -16,6 +16,7 @@ DEBIAN_FRONTEND=noninteractive
 . /devcontainer/features/s-core-local/versions.sh
 
 ARCHITECTURE=$(dpkg --print-architecture)
+KERNEL=$(uname -s)
 
 apt-get update
 
@@ -132,23 +133,31 @@ if [ "${ARCHITECTURE}" = "amd64" ]; then
     VARIANT=linux64
     SHA256SUM="${codeql_amd64_sha256}"
 elif [ "${ARCHITECTURE}" = "arm64" ]; then
-    VARIANT=osx
-    SHA256SUM="${codeql_arm64_sha256}"
+    if [ "${KERNEL}" = "Darwin" ]; then
+        VARIANT=osx64
+        SHA256SUM="${codeql_arm64_sha256}"
+    else
+        echo "CodeQl unsupported architecture/os: ${ARCHITECTURE} on ${KERNEL}, skipping installation"
+        VARIANT=noinstall
+    fi
 else
     echo "Unsupported architecture: ${ARCHITECTURE} for CodeQL"
     exit 1
 fi
-curl -L "https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-${VARIANT}.tar.zst" -o /tmp/codeql.tar.zst
-echo "${SHA256SUM} /tmp/codeql.tar.zst" | sha256sum -c - || exit 1
-tar -I zstd -xf /tmp/codeql.tar.zst -C /usr/local
-ln -s /usr/local/codeql/codeql /usr/local/bin/codeql
-rm /tmp/codeql.tar.zst
-echo "export CODEQL_HOME=/usr/local/codeql" > /etc/profile.d/codeql.sh
 
-codeql pack download codeql/misra-cpp-coding-standards@${codeql_coding_standards_version}
-codeql pack download codeql/misra-c-coding-standards@${codeql_coding_standards_version}
-codeql pack download codeql/cert-cpp-coding-standards@${codeql_coding_standards_version}
-codeql pack download codeql/cert-c-coding-standards@${codeql_coding_standards_version}
+if [ "${VARIANT}" != "noinstall" ]; then
+    curl -L "https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-${VARIANT}.tar.zst" -o /tmp/codeql.tar.zst
+    echo "${SHA256SUM} /tmp/codeql.tar.zst" | sha256sum -c - || exit 1
+    tar -I zstd -xf /tmp/codeql.tar.zst -C /usr/local
+    ln -s /usr/local/codeql/codeql /usr/local/bin/codeql
+    rm /tmp/codeql.tar.zst
+    echo "export CODEQL_HOME=/usr/local/codeql" > /etc/profile.d/codeql.sh
+
+    codeql pack download codeql/misra-cpp-coding-standards@${codeql_coding_standards_version}
+    codeql pack download codeql/misra-c-coding-standards@${codeql_coding_standards_version}
+    codeql pack download codeql/cert-cpp-coding-standards@${codeql_coding_standards_version}
+    codeql pack download codeql/cert-c-coding-standards@${codeql_coding_standards_version}
+fi
 
 # Bash completion for rust tooling
 rustup completions bash rustup >> /etc/bash_completion.d/rustup.bash
