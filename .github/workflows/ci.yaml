@@ -53,7 +53,7 @@ jobs:
             set -eux pipefail
 
             # Check
-            pre-commit run --show-diff-on-failure --color=always --all-files || exit -1
+            pre-commit run --show-diff-on-failure --color=always --all-files || exit 1
 
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
