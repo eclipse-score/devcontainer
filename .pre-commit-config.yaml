@@ -12,3 +12,15 @@ repos:
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
       - id: shellcheck
+  - repo: local
+    hooks:
+      - id: formatting
+        name: Code formatting
+        entry: "bazel test //:format.check"
+        language: system
+        pass_filenames: false
+      - id: copyright
+        name: Copyright check
+        entry: bazel run //:copyright.check
+        language: system
+        pass_filenames: false
