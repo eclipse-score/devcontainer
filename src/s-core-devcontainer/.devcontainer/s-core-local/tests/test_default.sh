@@ -5,12 +5,14 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh
+. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
-check "validate pre-commit is working and has the correct version" bash -c "$PIPX_BIN_DIR/pre-commit --version | grep '4.5.1'"
+check "validate pre-commit is working and has the correct version" bash -c "${PIPX_BIN_DIR}/pre-commit --version | grep '4.5.1'"
 
 # Common tooling
+check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_version}'"
+
 # For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
 # Hence, we have to work around that.
 check "validate graphviz is working" bash -c "dot -V"
@@ -33,22 +35,9 @@ check "validate flake8 is working" bash -c "flake8 --version"
 check "validate pytest is working" bash -c "pytest --version"
 check "validate pylint is working" bash -c "pylint --version"
 
-# Bazel-related tools
-## This is the bazel version preinstalled in the devcontainer.
-## A solid test would disable the network interface first to prevent a different version from being downloaded,
-## but that requires CAP_NET_ADMIN, which is not yet added.
-export USE_BAZEL_VERSION=${bazel_version}
-check "validate bazelisk is working and has the correct version" bash -c "bazelisk version | grep '${bazelisk_version}'"
-check "validate bazel is working and has the correct version" bash -c "bazel version | grep '${bazel_version}'"
-unset USE_BAZEL_VERSION
-
-check "validate buildifier is working and has the correct version" bash -c "buildifier --version | grep '${buildifier_version}'"
-check "validate starpls is working and has the correct version" bash -c "starpls version | grep '${starpls_version}'"
-check "validate bazel-compile-commands is working and has the correct version" bash -c "bazel-compile-commands --version 2>&1 | grep '${bazel_compile_commands_version}'"
-
 # OpenJDK
 check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
-check "validate JAVA_HOME is set correctly" bash -c 'echo $JAVA_HOME | xargs readlink -f | grep "java-21-openjdk"'
+check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"

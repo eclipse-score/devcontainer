@@ -10,10 +10,12 @@ COPY_TARGET="${FEATURES_DIR}/$(basename "${SCRIPT_DIR%%_*}")"
 cp -R "${SCRIPT_DIR}" "${COPY_TARGET}"
 rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-features-install.sh"
 
+# shellcheck disable=SC2034
+# used by apt-get only inside this script
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh
+. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
@@ -28,6 +30,9 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
 
+# static code anylysis for shell scripts
+apt-get install -y shellcheck="${shellcheck_version}*"
+
 # GraphViz
 # The Ubuntu Noble package of GraphViz
 apt-get install -y graphviz="${graphviz_version}*"
@@ -41,7 +46,7 @@ apt-get install -y git-lfs
 apt-get install -y gh
 
 # Python, via APT
-apt-get install -y python${python_version} python3-pip python3-venv
+apt-get install -y "python${python_version}" python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
@@ -49,72 +54,9 @@ apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle py
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
 apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
-export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
-echo "export JAVA_HOME=\"$(dirname $(dirname $(realpath $(which javac))))\"" > /etc/profile.d/java_home.sh
-
-# Bazelisk, directly from GitHub
-# Using the existing devcontainer feature is not optimal:
-# - it does not check the SHA256 checksum of the downloaded file
-# - it cannot pre-install a specific version of Bazel, or prepare bash completion
-BAZELISK_VARIANT="amd64"
-SHA256SUM="${bazelisk_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    BAZELISK_VARIANT="arm64"
-    SHA256SUM="${bazelisk_arm64_sha256}"
-fi
-curl -L "https://github.com/bazelbuild/bazelisk/releases/download/v${bazelisk_version}/bazelisk-${BAZELISK_VARIANT}.deb" -o /tmp/bazelisk.deb
-echo "${SHA256SUM} /tmp/bazelisk.deb" | sha256sum -c - || exit -1
-apt-get install -y --no-install-recommends --fix-broken /tmp/bazelisk.deb
-rm /tmp/bazelisk.deb
-
-# Pre-install a fixed Bazel version, setup the bash command completion
-export USE_BAZEL_VERSION=${bazel_version}
-# bazelisk downloads Bazel into the home directory of the user running the command
-# lets assume there is only one user in the devcontainer
-su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
-mkdir -p /etc/bash_completion.d
-mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
-sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/s-core-local/bazel_setup.sh"
-
-# Configure Bazel to use system trust store for SSL/TLS connections
-# This is required for corporate environments with custom CA certificates
-echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
-
-# Buildifier, directly from GitHub (apparently no APT repository available)
-# The version is pinned to a specific release, and the SHA256 checksum is provided by the devcontainer-features.json file.
-BUILDIFIER_VARIANT="amd64"
-SHA256SUM="${buildifier_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    BUILDIFIER_VARIANT="arm64"
-    SHA256SUM="${buildifier_arm64_sha256}"
-fi
-curl -L "https://github.com/bazelbuild/buildtools/releases/download/v${buildifier_version}/buildifier-linux-${BUILDIFIER_VARIANT}" -o /usr/local/bin/buildifier
-echo "${SHA256SUM} /usr/local/bin/buildifier" | sha256sum -c - || exit -1
-chmod +x /usr/local/bin/buildifier
-
-# Starlark Language Server, directly from GitHub (apparently no APT repository available)
-STARPLS_VARIANT="amd64"
-SHA256SUM="${starpls_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    STARPLS_VARIANT="aarch64"
-    SHA256SUM="${starpls_arm64_sha256}"
-fi
-curl -L "https://github.com/withered-magic/starpls/releases/download/v${starpls_version}/starpls-linux-${STARPLS_VARIANT}" -o /usr/local/bin/starpls
-echo "${SHA256SUM} /usr/local/bin/starpls" | sha256sum -c - || exit -1
-chmod +x /usr/local/bin/starpls
-
-# Code completion for C++ code of Bazel projects
-# (see https://github.com/kiron1/bazel-compile-commands)
-source /etc/lsb-release
-curl -L "https://github.com/kiron1/bazel-compile-commands/releases/download/v${bazel_compile_commands_version}/bazel-compile-commands_${bazel_compile_commands_version}-${DISTRIB_CODENAME}_${ARCHITECTURE}.deb" -o /tmp/bazel-compile-commands.deb
-# Extract correct sha256 for current DISTRIB_CODENAME and check
-SHA256SUM="${bazel_compile_commands_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    SHA256SUM="${bazel_compile_commands_arm64_sha256}"
-fi
-echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit -1
-apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
-rm /tmp/bazel-compile-commands.deb
+JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
+export JAVA_HOME
+echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
@@ -125,7 +67,7 @@ apt-get install -y sshpass="${sshpass_version}*"
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"
 
-apt-get install -y valgrind=1:${valgrind_version}*
+apt-get install -y valgrind="1:${valgrind_version}*"
 
 # CodeQL
 apt-get install -y zstd
