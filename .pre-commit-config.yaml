@@ -27,4 +27,4 @@ repos:
         name: Check Mandatory OpenGrep Rules
         entry: ./opengrep/run_opengrep.sh
         language: system
-        types_or: [shell]
+        pass_filenames: false
