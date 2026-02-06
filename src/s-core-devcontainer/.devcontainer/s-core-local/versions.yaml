@@ -46,5 +46,18 @@ openjdk_21:
 shellcheck:
   version: 0.9.0
 
+codeql:
+  # the coding_standards_version below dictates the codeql version
+  version: 2.21.4
+  amd64:
+    # see https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-linux64.tar.zst.checksum.txt
+    sha256: 6da9f3df228d4e162af877569240a627c1af22f6adbd26352b22357fb8bd7545
+  arm64:
+    # see https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-osx64.tar.zst.checksum.txt
+    sha256: 810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399
+
+codeql_coding_standards:
+  version: 2.54.0
+
 valgrind:
   version: 3.22.0
