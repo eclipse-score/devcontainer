@@ -21,6 +21,24 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
+  pre-commit:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+      # code mostly taken from https://github.com/pre-commit/action/blob/main/action.yml
+      - run: python -m pip install pre-commit==4.5.1
+        shell: bash
+      - run: python -m pip freeze --local
+        shell: bash
+      - uses: actions/cache@v5
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      - run: pre-commit run --show-diff-on-failure --color=always --all-files
+        shell: bash
   build:
     strategy:
       matrix:
@@ -34,6 +52,7 @@ jobs:
             runner: ubuntu-24.04-arm
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.runner }}
+    needs: pre-commit
     permissions:
       contents: read
       packages: write
@@ -56,9 +75,6 @@ jobs:
           push: never
           runCmd: |
             set -eux pipefail
-
-            # Check
-            pre-commit run --show-diff-on-failure --color=always --all-files || exit 1
 
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
