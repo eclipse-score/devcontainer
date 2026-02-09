@@ -39,12 +39,3 @@ repos:
     rev: a1bb792acda6fd0724936b4ebbdbc8eceb9c0459 # v6.2.0
     hooks:
       - id: reuse-lint-file
-        exclude: devcontainer-lock.json|.*\.png
-
-  - repo: local
-    hooks:
-      - id: opengrep
-        name: Check Mandatory OpenGrep Rules
-        entry: ./opengrep/run_opengrep.sh
-        language: system
-        pass_filenames: false

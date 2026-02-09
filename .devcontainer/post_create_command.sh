@@ -20,5 +20,3 @@ pre-commit install
 scripts/create_builder.sh
 
 sudo apt-get update && sudo apt-get install -y shellcheck
-
-scripts/install_opengrep.sh
