@@ -116,6 +116,14 @@ There should rarely be a need to modify this.
 * `.github/` contains the regular GitHub setup, with code owners and CI.
 * `resources/` contains a few screenshots.
 
+### License and copyright checks
+
+This repo uses [`reuse`](https://codeberg.org/fsfe/reuse-tool) to check for and validate licenses and copyrights.
+Checks are performend via pre-commit hooks.
+
+If you want to run it standalone run `pipx run reuse lint` in a terminal.
+To fix found issues run `scripts/run_reuse_annotate.sh`.
+
 ### Modify, Build, Test, Use
 
 It is very simple to develop the development container.
