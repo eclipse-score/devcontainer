@@ -20,3 +20,11 @@ repos:
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
       - id: shellcheck
+
+  - repo: local
+    hooks:
+      - id: opengrep
+        name: Check Mandatory OpenGrep Rules
+        entry: ./opengrep/run_opengrep.sh
+        language: system
+        pass_filenames: false
