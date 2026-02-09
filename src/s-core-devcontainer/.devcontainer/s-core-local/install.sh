@@ -95,10 +95,10 @@ if [ "${VARIANT}" != "noinstall" ]; then
     rm /tmp/codeql.tar.zst
     echo "export CODEQL_HOME=/usr/local/codeql" > /etc/profile.d/codeql.sh
 
-    codeql pack download codeql/misra-cpp-coding-standards@${codeql_coding_standards_version} -d /usr/local/codeql/qlpacks/
-    codeql pack download codeql/misra-c-coding-standards@${codeql_coding_standards_version} -d /usr/local/codeql/qlpacks/
-    codeql pack download codeql/cert-cpp-coding-standards@${codeql_coding_standards_version} -d /usr/local/codeql/qlpacks/
-    codeql pack download codeql/cert-c-coding-standards@${codeql_coding_standards_version} -d /usr/local/codeql/qlpacks/
+    codeql pack download codeql/misra-cpp-coding-standards"@${codeql_coding_standards_version}" -d /usr/local/codeql/qlpacks/
+    codeql pack download codeql/misra-c-coding-standards@"${codeql_coding_standards_version}" -d /usr/local/codeql/qlpacks/
+    codeql pack download codeql/cert-cpp-coding-standards@"${codeql_coding_standards_version}" -d /usr/local/codeql/qlpacks/
+    codeql pack download codeql/cert-c-coding-standards@"${codeql_coding_standards_version}" -d /usr/local/codeql/qlpacks/
 fi
 
 # Bash completion for rust tooling
