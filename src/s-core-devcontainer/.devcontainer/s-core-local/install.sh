@@ -30,7 +30,7 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /devcontainer/features/s-core-build/versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
@@ -48,36 +48,10 @@ apt-get install apt-transport-https -y
 # static code anylysis for shell scripts
 apt-get install -y shellcheck="${shellcheck_version}*"
 
-# GraphViz
-# The Ubuntu Noble package of GraphViz
-apt-get install -y graphviz="${graphviz_version}*"
-
-# Protobuf compiler, via APT (needed by FEO)
-apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
-
 # Git and Git LFS, via APT
 apt-get install -y git
 apt-get install -y git-lfs
 apt-get install -y gh
-
-# Python, via APT
-apt-get install -y "python${python_version}" python3-pip python3-venv
-# The following packages correspond to the list of packages installed by the
-# devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
-apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
-
-# OpenJDK 21, via APT
-# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
-apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
-JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
-export JAVA_HOME
-echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
-
-# qemu-system-arm
-apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
-
-# sshpass
-apt-get install -y sshpass="${sshpass_version}*"
 
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"

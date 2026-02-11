@@ -41,19 +41,27 @@ done
 
 echo "Building all labels (" "${LABELS[@]}" ") for architecture: ${ARCH}"
 
-# Prepare image names with tags (each tag includes a label and the architecture)
-IMAGES=()
-for LABEL in "${LABELS[@]}"; do
-    IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
-done
+function build_container() {
+    local name="$1"
 
-# Prepare devcontainer build command
-DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
+    # Prepare image names with tags (each tag includes a label and the architecture)
+    IMAGES=()
+    for LABEL in "${LABELS[@]}"; do
+        IMAGES+=("--image-name \"ghcr.io/eclipse-score/${name}:${LABEL}-${ARCH}\"")
+    done
 
-# Append image names to the build command
-for IMAGE in "${IMAGES[@]}"; do
-    DEVCONTAINER_CALL+=" ${IMAGE}"
-done
+    # Prepare devcontainer build command
+    DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-${name} --cache-from ghcr.io/eclipse-score/${name}"
 
-# Execute the build for the specific architecture
-eval "${DEVCONTAINER_CALL} --platform linux/${ARCH}"
+    # Append image names to the build command
+    for IMAGE in "${IMAGES[@]}"; do
+        DEVCONTAINER_CALL+=" ${IMAGE}"
+    done
+
+    # Execute the build for the specific architecture
+    eval "${DEVCONTAINER_CALL} --platform linux/${ARCH}"
+}
+
+# Build the containers
+build_container "buildcontainer"
+build_container "devcontainer"

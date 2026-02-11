@@ -1,0 +1,14 @@
+{
+    "name": "Eclipse S-CORE-specific essential build tools",
+    "id": "s-core-build",
+    "version": "1.0.0",
+    "description": "Tools which are required for building and are not available as already existing development container feature",
+    "dependsOn": {
+        "ghcr.io/devcontainers-extra/features/pre-commit:2": {
+            "version": "4.5.1"
+        }
+    },
+    "postCreateCommand": {
+        "Enable pre-commit hooks": "bash /devcontainer/features/s-core-build/enable_pre_commit_hooks.sh"
+    }
+}

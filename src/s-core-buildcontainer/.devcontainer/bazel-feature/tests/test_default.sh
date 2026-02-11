@@ -17,7 +17,7 @@
 set -euo pipefail
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/bazel/versions.yaml
+. /devcontainer/features/s-core-build/versions.sh /devcontainer/features/bazel/versions.yaml
 
 # Bazel-related tools
 ## This is the bazel version preinstalled in the devcontainer.

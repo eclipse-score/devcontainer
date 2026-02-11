@@ -3,15 +3,9 @@
     "id": "s-core-local",
     "version": "1.0.0",
     "description": "Tools which are not available as already existing development container feature",
-    "dependsOn": {
-        "ghcr.io/devcontainers-extra/features/pre-commit:2": {
-            "version": "4.5.1"
-        }
-    },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
     "postCreateCommand": {
-        "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh",
-        "Enable pre-commit hooks": "bash /devcontainer/features/s-core-local/enable_pre_commit_hooks.sh"
+        "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh"
     },
     "mounts": [
         {

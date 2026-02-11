@@ -29,22 +29,30 @@ done
 # Define target architectures
 ARCHITECTURES=("amd64" "arm64")
 
-# Pull all architecture-specific images for each label
-for LABEL in "${LABELS[@]}"; do
-    for ARCH in "${ARCHITECTURES[@]}"; do
-        docker pull --platform "linux/${ARCH}" "ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
-    done
-done
+function merge_containers() {
+    local name="$1"
 
-# Create and push the merged multiarch manifest for each tag; each tag combines all architecture-specific tags into one tag
-for LABEL in "${LABELS[@]}"; do
-    echo "Merging all architectures (" "${ARCHITECTURES[@]}" ") into single tag: ${LABEL}"
-
-    MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/eclipse-score/devcontainer:${LABEL}"
-
-    for ARCH in "${ARCHITECTURES[@]}"; do
-        MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}"
+    # Pull all architecture-specific images for each label
+    for LABEL in "${LABELS[@]}"; do
+        for ARCH in "${ARCHITECTURES[@]}"; do
+            docker pull --platform "linux/${ARCH}" "ghcr.io/eclipse-score/${name}:${LABEL}-${ARCH}"
+        done
     done
 
-    eval "${MANIFEST_MERGE_CALL}"
-done
+    # Create and push the merged multiarch manifest for each tag; each tag combines all architecture-specific tags into one tag
+    for LABEL in "${LABELS[@]}"; do
+        echo "Merging all architectures (" "${ARCHITECTURES[@]}" ") into single tag: ${LABEL}"
+
+        MANIFEST_MERGE_CALL="docker buildx imagetools create -t ghcr.io/eclipse-score/${name}:${LABEL}"
+
+        for ARCH in "${ARCHITECTURES[@]}"; do
+            MANIFEST_MERGE_CALL+=" ghcr.io/eclipse-score/${name}:${LABEL}-${ARCH}"
+        done
+
+        eval "${MANIFEST_MERGE_CALL}"
+    done
+}
+
+# Merge containers
+merge_containers buildcontainer
+merge_containers devcontainer

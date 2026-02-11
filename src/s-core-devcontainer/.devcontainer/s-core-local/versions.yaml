@@ -13,18 +13,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-graphviz:
-  version: 2.42.2
-
-protobuf_compiler:
-  version: 3.21.12
-
-qemu_system_arm:
-  version: 1:8.2.2
-
-sshpass:
-  version: 1.09
-
 gdb:
   version: 15.0.50
 
@@ -34,14 +22,8 @@ git:
 git_lfs:
   version: 3.4.1
 
-python:
-  version: '3.12'
-
 gh:
   version: 2.45.0
-
-openjdk_21:
-  version: 21.0.10
 
 shellcheck:
   version: 0.9.0

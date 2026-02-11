@@ -1,26 +1,6 @@
 {
-    "build": {
-        // Installs latest version from the Distribution
-        "dockerfile": "./Dockerfile",
-        "context": ".",
-        "args": {
-            "HTTP_PROXY": "${localEnv:HTTP_PROXY}",
-            "HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",
-            "http_proxy": "${localEnv:http_proxy}",
-            "https_proxy": "${localEnv:https_proxy}",
-            "NO_PROXY": "${localEnv:NO_PROXY}",
-            "no_proxy": "${localEnv:no_proxy}"
-        }
-    },
+    "image": "ghcr.io/eclipse-score/buildcontainer:local-amd64",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils": {
-            // Installs latest version from the Distribution
-            "installZsh": "false",
-            "username": "vscode",
-            "userUid": "1000",
-            "userGid": "1000",
-            "upgradePackages": "false" // WARNING: do *not* enable; this would include packages also from other features, which may have been pinned to a specific version
-        },
         "ghcr.io/devcontainers-community/features/llvm": {
             // Full semantic version pinning does not work with this feature.
             // In case we want this, the feature needs to be replaced with a custom installation script.
@@ -37,17 +17,14 @@
                 "rustfmt"
             ]
         },
-        "./s-core-local": {},
-        "./bazel-feature": {}
+        "./s-core-local": {}
     },
     "overrideFeatureInstallOrder": [
         // this order makes it more convenient to develop the local features, since they will be installed last
         // which means changes to it will be applied without needing to rebuild all other features
-        "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "ghcr.io/devcontainers/features/rust",
-        "./s-core-local",
-        "./bazel-feature"
+        "./s-core-local"
     ],
     "remoteUser": "vscode",
     "customizations": {

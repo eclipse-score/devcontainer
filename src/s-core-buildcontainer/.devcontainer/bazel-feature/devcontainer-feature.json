@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Bazel and supplimentary tools for working with Bazel-based projects.",
     "dependsOn": {
-        "./s-core-local": {} // needed for extracting versions (versions.sh)
+        "./s-core-build": {} // needed for extracting versions (versions.sh)
     },
     "onCreateCommand": "/devcontainer/features/bazel/on_create_command.sh",
     "postCreateCommand": {
