@@ -22,6 +22,6 @@ SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 pushd "${SCRIPT_DIR}/.." > /dev/null
 
 pipx run reuse annotate --template apache-2.0 --merge-copyrights --recursive --skip-unrecognised \
- --copyright="Contributors to the Eclipse Foundation" --license=Apache-2.0 ./* ./.*
+ --copyright="Contributors to the Eclipse Foundation" --license=Apache-2.0 $(git ls-files)
 
 popd > /dev/null
