@@ -10,6 +10,7 @@
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
 #
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
@@ -19,5 +20,3 @@ pre-commit install
 scripts/create_builder.sh
 
 sudo apt-get update && sudo apt-get install -y shellcheck
-
-scripts/install_opengrep.sh

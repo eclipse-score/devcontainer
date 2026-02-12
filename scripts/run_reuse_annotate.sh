@@ -16,22 +16,20 @@
 
 set -euxo pipefail
 
-IMAGE="s-core-devcontainer"
-
-export DOCKER_BUILDKIT=1
-
 SCRIPT_PATH=$(readlink -f "$0")
 SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
-PROJECT_DIR=$(dirname -- "${SCRIPT_DIR}")
-ID_LABEL="test-container=${IMAGE}"
 
-devcontainer up \
-  --id-label "${ID_LABEL}" \
-  --workspace-folder "${PROJECT_DIR}/src/${IMAGE}/" \
-  --remove-existing-container
+pushd "${SCRIPT_DIR}/.." > /dev/null
 
-# Run actual test
-echo "(*) Running test..."
-devcontainer exec --workspace-folder "${PROJECT_DIR}/src/${IMAGE}" --id-label "${ID_LABEL}" \
-  /bin/sh -c 'set -e && cd test-project && \
-  ./test.sh'
+files_to_annotate=$(git ls-files)
+
+# remove deleted files from the list of files to annotate
+deleted_files=$(git ls-files --deleted)
+files_to_annotate=$(comm -23 <(git ls-files | sort) <(echo "${deleted_files}" | sort))
+
+# shellcheck disable=SC2086
+# Expansion of ${files_to_annotate} is intentional to pass the list of files as separate arguments to the reuse annotate command.
+pipx run reuse annotate --template apache-2.0 --merge-copyrights --recursive --skip-unrecognised \
+ --copyright="Contributors to the Eclipse Foundation" --license=Apache-2.0 ${files_to_annotate}
+
+popd > /dev/null

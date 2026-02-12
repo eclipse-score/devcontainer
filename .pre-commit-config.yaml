@@ -1,4 +1,18 @@
 ---
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c   # v6.0.0
@@ -23,8 +37,8 @@ repos:
 
   - repo: local
     hooks:
-      - id: opengrep
-        name: Check Mandatory OpenGrep Rules
-        entry: ./opengrep/run_opengrep.sh
+      - id: reuse annotate
+        name: Check and fix copyright headers with reuse annotate
+        entry: ./scripts/run_reuse_annotate.sh
         language: system
         pass_filenames: false
