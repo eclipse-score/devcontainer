@@ -52,6 +52,7 @@ function build_container() {
 
     # Prepare devcontainer build command
     DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-${name} --cache-from ghcr.io/eclipse-score/${name}"
+    # DEVCONTAINER_CALL+=" --output=type=docker,push=true,platform=linux/${ARCH}"
 
     # Append image names to the build command
     for IMAGE in "${IMAGES[@]}"; do
@@ -61,6 +62,10 @@ function build_container() {
     # Execute the build for the specific architecture
     eval "${DEVCONTAINER_CALL} --platform linux/${ARCH}"
 }
+
+# TODO: this is a workaround so that the devcontainer build can use the buildcontainer image
+#       but it reverts any action done in scripts/create_builder.sh and cannot be merged to main
+# docker buildx use default
 
 # Build the containers
 build_container "buildcontainer"

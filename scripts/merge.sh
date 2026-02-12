@@ -16,6 +16,9 @@
 
 set -euxo pipefail
 
+SCRIPT_PATH=$(readlink -f "$0")
+SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
+
 if [ "$#" -eq 0 ]; then
     echo "Error: At least one parameter (label) must be provided."
     exit 1
@@ -28,6 +31,8 @@ done
 
 # Define target architectures
 ARCHITECTURES=("amd64" "arm64")
+
+"${SCRIPT_DIR}/create_builder.sh"
 
 function merge_containers() {
     local name="$1"
