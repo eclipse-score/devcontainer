@@ -74,6 +74,34 @@ These databases are used by Visual Studio Code to support code navigation and au
 
 Congratulations, you are now a dev container enthusiast 😊.
 
+### How to use: codeql
+
+The devcontainer codeql installation supports C, C++ and Rust source code analysis. All publicly available
+"coding standards" are preloaded and codeql is already in PATH.
+
+Example:
+
+```sh
+git clone https://github.com/nlohmann/json.git
+cd json
+cmake -S . -B build -G Ninja
+
+# Step 1: Create database
+mkdir _sca
+codeql database create _sca/codeql_data \
+  --threads=0 \
+  --language=cpp \
+  --command="ninja -C build" \
+  --source-root=.
+
+# Step 2: Run rulechecker and create SARIF report
+codeql database analyze _sca/codeql_data \
+  codeql/misra-cpp-coding-standards \
+  --threads=0 \
+  --format=sarif-latest \
+  --output=_sca/codeql-results.sarif
+```
+
 ## Development
 
 > [!NOTE]
