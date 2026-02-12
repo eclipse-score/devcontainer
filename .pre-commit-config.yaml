@@ -41,3 +41,4 @@ repos:
         name: Check and fix copyright headers with reuse annotate
         entry: ./scripts/run_reuse_annotate.sh
         language: system
+        pass_filenames: false
