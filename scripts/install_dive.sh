@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -14,15 +16,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-set -euo pipefail
+echo "Installing dive..."
 
-source "test-utils.sh" vscode
+DIVE_NAME="/tmp/dive.deb"
 
-# Tests from the local s-core-local feature
-source /devcontainer/features/s-core-local/tests/test_default.sh
+VERSION="0.13.1"
 
-# Tests from the local bazel feature
-source /devcontainer/features/bazel/tests/test_default.sh
+ARCHITECTURE="$(uname -m)"
+if [ "${ARCHITECTURE}" = "x86_64" ]; then
+  ARCH="amd64"
+  SHA256SUM="0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
+else
+  ARCH="arm64"
+  SHA256SUM="80203401b3d7c4feffd13575755a07834a2d2f35f49e8612f0749b318c3f2fa5"
+fi
 
-# Report result
-reportResults
+curl -L "https://github.com/wagoodman/dive/releases/download/v${VERSION}/dive_${VERSION}_linux_${ARCH}.deb" -o "${DIVE_NAME}"
+echo "${SHA256SUM} /tmp/dive.deb" | sha256sum -c - || exit 1
+sudo dpkg -i "${DIVE_NAME}"
+rm -f "${DIVE_NAME}"
+
+# Verify installation
+dive --version
