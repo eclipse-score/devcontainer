@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -12,8 +14,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-FROM buildpack-deps:noble-curl
+set_dockerfile_name() {
+    DEVCONTAINER_DOCKERFILE_NAME="Dockerfile"
 
-LABEL dev.containers.features="common"
+    # Check if proxies are configured in the environment
+    set +u
+    if [ -n "${HTTP_PROXY}${HTTPS_PROXY}${http_proxy}${https_proxy}${NO_PROXY}${no_proxy}" ]; then
+        DEVCONTAINER_DOCKERFILE_NAME="Dockerfile-with-proxy-vars"
+        echo "Proxy environment detected."
+    fi
+    set -u
 
-RUN userdel -f -r ubuntu
+    export DEVCONTAINER_DOCKERFILE_NAME
+    echo "Using Dockerfile: ${DEVCONTAINER_DOCKERFILE_NAME}"
+}
