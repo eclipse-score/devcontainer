@@ -36,6 +36,6 @@ repos:
       - id: shellcheck
 
   - repo: ./.git
-    rev: 26d8ff519c7895937e3f5c255e2cbcb57c8937d3
+    rev: cf803d9dcf981a3596c2691d3be48ff7f3a8dff2
     hooks:
       - id: reuse-annotate
