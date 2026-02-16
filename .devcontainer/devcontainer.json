@@ -1,7 +1,7 @@
 {
     "image": "mcr.microsoft.com/devcontainers/javascript-node:4-24",
     "features": {
-        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/git:": {},
         "ghcr.io/devcontainers/features/git-lfs:1": {
             "autoPull": "false" // do not automatically pull LFS files when creating the container
         },
