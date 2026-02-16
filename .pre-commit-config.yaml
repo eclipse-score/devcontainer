@@ -37,7 +37,7 @@ repos:
     hooks:
       - id: shellcheck
 
-  - repo: ./.git
-    rev: 03973d8e5b02d40aabadbd9fb2c925099d524975
-    hooks:
-      - id: reuse-annotate
+  # - repo: ./.git
+  #   rev: 03973d8e5b02d40aabadbd9fb2c925099d524975
+  #   hooks:
+  #     - id: reuse-annotate
