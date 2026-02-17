@@ -37,7 +37,10 @@ repos:
     hooks:
       - id: shellcheck
 
-  # - repo: ./.git
-  #   rev: 03973d8e5b02d40aabadbd9fb2c925099d524975
+  # - repo: local
   #   hooks:
-  #     - id: reuse-annotate
+  #     - id: reuse annotate
+  #       name: Check and fix copyright headers with reuse annotate
+  #       entry: ./scripts/run_reuse_annotate.sh
+  #       language: unsupported_script
+  #       pass_filenames: false
