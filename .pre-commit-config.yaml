@@ -39,7 +39,8 @@ repos:
 
   - repo: local
     hooks:
-      - id: reuse annotate
+      # Keep in sync with .pre-commit-hooks.yaml, too much hazzle to reuse the same hook definition
+      - id: reuse-annotate
         name: Check and fix copyright headers with reuse annotate
         entry: ./scripts/run_reuse_annotate.sh
         language: unsupported_script

@@ -13,6 +13,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+  # Keep in sync with .pre-commit-config.yaml, too much hazzle to reuse the same hook definition
   - id: reuse-annotate
     name: Check and fix copyright headers with reuse annotate
     entry: scripts/run_reuse_annotate.sh
