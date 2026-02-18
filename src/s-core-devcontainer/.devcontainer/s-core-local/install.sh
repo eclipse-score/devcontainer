@@ -76,6 +76,18 @@ echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
 
+# ruff
+RUFF_VARIANT="x86_64"
+SHA256SUM="${ruff_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    RUFF_VARIANT="aarch64"
+    SHA256SUM="${ruff_arm64_sha256}"
+fi
+curl -L "https://github.com/astral-sh/ruff/releases/download/${ruff_version}/ruff-${RUFF_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/ruff.tar.gz
+echo "${SHA256SUM} /tmp/ruff.tar.gz" | sha256sum -c - || exit 1
+tar -xzf /tmp/ruff.tar.gz -C /usr/local/bin --strip-components=1
+rm /tmp/ruff.tar.gz
+
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 

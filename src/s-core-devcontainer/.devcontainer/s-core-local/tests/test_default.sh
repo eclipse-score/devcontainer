@@ -54,6 +54,9 @@ check "validate pylint is working" bash -c "pylint --version"
 check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
 check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
 
+# ruff
+check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_version}'"
+
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"

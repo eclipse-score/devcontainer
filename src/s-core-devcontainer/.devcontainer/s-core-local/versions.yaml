@@ -43,6 +43,13 @@ gh:
 openjdk_21:
   version: 21.0.10
 
+ruff:
+  version: 0.11.13
+  amd64:
+    sha256: 01aa32d29d00876b8d1429c617ed63a00b1fc81abfa4183bb05c9cb647fbc3d0
+  arm64:
+    sha256: bbc9e73e8e302ec2f6175165374aadfb15f5210ec12660aa444c1cc1e3058cfc
+
 shellcheck:
   version: 0.9.0
 
