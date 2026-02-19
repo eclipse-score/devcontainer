@@ -126,7 +126,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
     UV_VARIANT="aarch64"
     SHA256SUM="${uv_arm64_sha256}"
 fi
-curl -L "https://github.com/astral-sh/uv/releases/download/v${uv_version}/uv-${UV_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz
+curl -L "https://github.com/astral-sh/uv/releases/download/${uv_version}/uv-${UV_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz
 echo "${SHA256SUM} /tmp/uv.tar.gz" | sha256sum -c - || exit 1
 tar -xzf /tmp/uv.tar.gz -C /usr/local/bin --strip-components=1
 rm /tmp/uv.tar.gz
