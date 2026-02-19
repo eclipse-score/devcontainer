@@ -104,7 +104,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
 fi
 curl -L "https://github.com/rhysd/actionlint/releases/download/v${actionlint_version}/actionlint_${actionlint_version}_linux_${ARCHITECTURE}.tar.gz" -o /tmp/actionlint.tar.gz
 echo "${SHA256SUM} /tmp/actionlint.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin --strip-components=1
+tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin actionlint
 rm /tmp/actionlint.tar.gz
 
 # sshpass
