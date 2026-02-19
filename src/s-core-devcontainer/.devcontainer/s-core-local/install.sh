@@ -94,7 +94,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
 fi
 curl -L "https://github.com/astral-sh/ruff/releases/download/${ruff_version}/ruff-${RUFF_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/ruff.tar.gz
 echo "${SHA256SUM} /tmp/ruff.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/ruff.tar.gz -C /usr/local/bin --strip-components=1
+tar -xzf /tmp/ruff.tar.gz -C /usr/local/bin --strip-components=1 "ruff-${RUFF_VARIANT}-unknown-linux-gnu/ruff"
 rm /tmp/ruff.tar.gz
 
 # actionlint
@@ -128,7 +128,7 @@ if [ "${ARCHITECTURE}" = "arm64" ]; then
 fi
 curl -L "https://github.com/astral-sh/uv/releases/download/${uv_version}/uv-${UV_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz
 echo "${SHA256SUM} /tmp/uv.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/uv.tar.gz -C /usr/local/bin --strip-components=1
+tar -xzf /tmp/uv.tar.gz -C /usr/local/bin --strip-components=1 "uv-${UV_VARIANT}-unknown-linux-gnu/uv" "uv-${UV_VARIANT}-unknown-linux-gnu/uvx"
 rm /tmp/uv.tar.gz
 
 # sshpass
