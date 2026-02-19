@@ -154,7 +154,7 @@ download_and_extract_from_github \
 
 # uv
 download_and_extract_from_github \
-    'https://github.com/astral-sh/uv/releases/download/0.10.4/uv-x86_64-unknown-linux-gnu.tar.gz' \
+    'https://github.com/astral-sh/uv/releases/download/${version}/uv-${variant}-unknown-linux-gnu.tar.gz' \
     "uv" \
     "x86_64" "aarch64" \
     'uv-${variant}-unknown-linux-gnu/uv uv-${variant}-unknown-linux-gnu/uvx' \
