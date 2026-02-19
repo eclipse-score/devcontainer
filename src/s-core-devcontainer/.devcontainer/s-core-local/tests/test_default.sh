@@ -65,6 +65,7 @@ check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt
 
 # uv
 check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_version}'"
+check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uv_version}'"
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
