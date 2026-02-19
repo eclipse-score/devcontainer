@@ -46,7 +46,16 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 apt-get install apt-transport-https -y
 
 # static code anylysis for shell scripts
-apt-get install -y shellcheck="${shellcheck_version}*"
+SHELLCHECK_VARIANT="x86_64"
+SHA256SUM="${shellcheck_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    SHELLCHECK_VARIANT="aarch64"
+    SHA256SUM="${shellcheck_arm64_sha256}"
+fi
+curl -L "https://github.com/koalaman/shellcheck/releases/download/v${shellcheck_version}/shellcheck-v${shellcheck_version}.linux.${SHELLCHECK_VARIANT}.tar.xz" -o /tmp/shellcheck.tar.xz
+echo "${SHA256SUM} /tmp/shellcheck.tar.xz" | sha256sum -c - || exit 1
+tar -xf /tmp/shellcheck.tar.xz -C /usr/local/bin --strip-components=1 "shellcheck-v${shellcheck_version}/shellcheck"
+rm /tmp/shellcheck.tar.xz
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz

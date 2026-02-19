@@ -58,7 +58,11 @@ ruff:
     sha256: 551af2ebc439d8268dcaf871ea60ad035f688728d30943dcbb2bf775e105213e
 
 shellcheck:
-  version: 0.9.0
+  version: 0.10.0
+  amd64:
+    sha256: 6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87
+  arm64:
+    sha256: 324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb
 
 codeql:
   # the coding_standards_version below dictates the codeql version
