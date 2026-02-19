@@ -94,7 +94,7 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
 
-# static code anylysis for shell scripts
+# static code analysis for shell scripts
 download_and_extract_from_github \
     'https://github.com/koalaman/shellcheck/releases/download/v${version}/shellcheck-v${version}.linux.${variant}.tar.xz' \
     "shellcheck" \
@@ -118,7 +118,7 @@ apt-get install -y gh
 apt-get install -y "python${python_version}" python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
-apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
+apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
@@ -159,6 +159,12 @@ download_and_extract_from_github \
     "x86_64" "aarch64" \
     'uv-${variant}-unknown-linux-gnu/uv uv-${variant}-unknown-linux-gnu/uvx' \
     1
+
+# basedpyright
+su $(ls /home) -c "uv tool install basedpyright@\"${basedpyright_version}\""
+
+# pytest
+su $(ls /home) -c "uv tool install pytest@\"${pytest_version}\""
 
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"

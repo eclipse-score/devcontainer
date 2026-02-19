@@ -20,6 +20,9 @@ actionlint:
   arm64:
     sha256: 401942f9c24ed71e4fe71b76c7d638f66d8633575c4016efd2977ce7c28317d0
 
+basedpyright:
+  version: 1.35.0
+
 graphviz:
   version: 2.42.2
 
@@ -43,6 +46,9 @@ git_lfs:
 
 python:
   version: '3.12'
+
+pytest:
+  version: 9.0.2
 
 gh:
   version: 2.45.0
