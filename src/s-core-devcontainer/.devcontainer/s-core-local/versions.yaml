@@ -13,6 +13,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+actionlint:
+  version: 1.7.7
+  amd64:
+    sha256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+  arm64:
+    sha256: 401942f9c24ed71e4fe71b76c7d638f66d8633575c4016efd2977ce7c28317d0
+
 graphviz:
   version: 2.42.2
 

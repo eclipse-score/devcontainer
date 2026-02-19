@@ -57,6 +57,9 @@ check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs r
 # ruff
 check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_version}'"
 
+# actionlint
+check "validate actionlint is working and has the correct version" bash -c "actionlint --version | grep '${actionlint_version}'"
+
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"

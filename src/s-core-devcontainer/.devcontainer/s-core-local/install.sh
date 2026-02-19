@@ -88,6 +88,16 @@ echo "${SHA256SUM} /tmp/ruff.tar.gz" | sha256sum -c - || exit 1
 tar -xzf /tmp/ruff.tar.gz -C /usr/local/bin --strip-components=1
 rm /tmp/ruff.tar.gz
 
+# actionlint
+SHA256SUM="${actionlint_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    SHA256SUM="${actionlint_arm64_sha256}"
+fi
+curl -L "https://github.com/rhysd/actionlint/releases/download/v${actionlint_version}/actionlint_${actionlint_version}_linux_${ARCHITECTURE}.tar.gz" -o /tmp/actionlint.tar.gz
+echo "${SHA256SUM} /tmp/actionlint.tar.gz" | sha256sum -c - || exit 1
+tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin --strip-components=1
+rm /tmp/actionlint.tar.gz
+
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 
