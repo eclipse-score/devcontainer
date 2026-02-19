@@ -64,6 +64,13 @@ shellcheck:
   arm64:
     sha256: 324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb
 
+uv:
+  version: 0.10.4
+  amd64:
+    sha256: 6b52a47358deea1c5e173278bf46b2b489747a59ae31f2a4362ed5c6c1c269f7
+  arm64:
+    sha256: c84a6e6405715caa6e2f5ef8e5f29a5d0bc558a954e9f1b5c082b9d4708c222e
+
 codeql:
   # the coding_standards_version below dictates the codeql version
   version: 2.21.4

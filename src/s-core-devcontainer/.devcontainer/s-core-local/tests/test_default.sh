@@ -63,6 +63,9 @@ check "validate actionlint is working and has the correct version" bash -c "acti
 # yamlfmt
 check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_version}'"
 
+# uv
+check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_version}'"
+
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
