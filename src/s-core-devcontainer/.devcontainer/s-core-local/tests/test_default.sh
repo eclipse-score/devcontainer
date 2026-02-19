@@ -60,6 +60,9 @@ check "validate ruff is working and has the correct version" bash -c "ruff --ver
 # actionlint
 check "validate actionlint is working and has the correct version" bash -c "actionlint --version | grep '${actionlint_version}'"
 
+# yamlfmt
+check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_version}'"
+
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"

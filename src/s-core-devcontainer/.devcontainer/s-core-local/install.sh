@@ -107,6 +107,18 @@ echo "${SHA256SUM} /tmp/actionlint.tar.gz" | sha256sum -c - || exit 1
 tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin actionlint
 rm /tmp/actionlint.tar.gz
 
+# yamlfmt
+YAMLFMT_VARIANT="x86_64"
+SHA256SUM="${yamlfmt_amd64_sha256}"
+if [ "${ARCHITECTURE}" = "arm64" ]; then
+    YAMLFMT_VARIANT="arm64"
+    SHA256SUM="${yamlfmt_arm64_sha256}"
+fi
+curl -L "https://github.com/google/yamlfmt/releases/download/v${yamlfmt_version}/yamlfmt_${yamlfmt_version}_Linux_${YAMLFMT_VARIANT}.tar.gz" -o /tmp/yamlfmt.tar.gz
+echo "${SHA256SUM} /tmp/yamlfmt.tar.gz" | sha256sum -c - || exit 1
+tar -xzf /tmp/yamlfmt.tar.gz -C /usr/local/bin yamlfmt
+rm /tmp/yamlfmt.tar.gz
+
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 

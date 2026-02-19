@@ -79,3 +79,10 @@ codeql_coding_standards:
 
 valgrind:
   version: 3.22.0
+
+yamlfmt:
+  version: 0.17.0
+  amd64:
+    sha256: e91dd8722001596b8e4777a29d4a526a10ff276c4ff8a5ae39ff59be5a033054
+  arm64:
+    sha256: ebe78a5547dac68f05a01c9a2845901b3c658095432b107bef3084dfe0b2629d
