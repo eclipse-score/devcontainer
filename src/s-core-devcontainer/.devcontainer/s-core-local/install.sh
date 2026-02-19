@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
+# Variables in strings with single quotes are expected to be evaluated later by `eval`
 
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
@@ -35,6 +37,53 @@ DEBIAN_FRONTEND=noninteractive
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
+# Downloads and extracts a tool from GitHub releases, based on the provided URL pattern, version and architecture-specific checksums.
+# The URL pattern can include placeholders for version and architecture variant
+download_and_extract_from_github() {
+    local url_pattern="$1"
+    local tool_name="$2"
+    local amd64_name="$3"
+    local arm64_name="$4"
+    local extract_names="$5"
+    local strip_components="${6:-0}"
+    local temp_file="/tmp/${tool_name}"
+
+    local version_name="${tool_name}_version"
+    export version="${!version_name}"
+    variant="${amd64_name}"
+    local sha256sum_name="${tool_name}_amd64_sha256"
+    if [ "${ARCHITECTURE}" = "arm64" ]; then
+        variant="${arm64_name}"
+        sha256sum_name="${tool_name}_arm64_sha256"
+    fi
+    sha256sum="${!sha256sum_name}"
+    export variant
+
+    local url
+    url="$(eval "echo ${url_pattern}")"
+
+    curl -L "${url}" -o "${temp_file}"
+    echo "${sha256sum} ${temp_file}" | sha256sum -c - || exit 1
+
+    local tar_options=""
+    if [[ "${url}" == *.tar.gz ]]; then
+        tar_options="-xzf"
+    elif [[ "${url}" == *.tar.xz ]]; then
+        tar_options="-xf"
+    elif [[ "${url}" == *.tar.zst ]]; then
+        tar_options="-I zstd -xf"
+    fi
+
+    local extract_names_expanded
+    extract_names_expanded="$(eval "echo ${extract_names}")"
+
+    # shellcheck disable=SC2086
+    # tar_options and extract_names_expanded are expected to be word-split
+    tar ${tar_options} "${temp_file}" -C "/usr/local/bin" --strip-components="${strip_components}" ${extract_names_expanded}
+
+    rm "${temp_file}"
+}
+
 apt-get update
 
 # Unminimize the image to include standard packages like man pages
@@ -46,16 +95,12 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 apt-get install apt-transport-https -y
 
 # static code anylysis for shell scripts
-SHELLCHECK_VARIANT="x86_64"
-SHA256SUM="${shellcheck_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    SHELLCHECK_VARIANT="aarch64"
-    SHA256SUM="${shellcheck_arm64_sha256}"
-fi
-curl -L "https://github.com/koalaman/shellcheck/releases/download/v${shellcheck_version}/shellcheck-v${shellcheck_version}.linux.${SHELLCHECK_VARIANT}.tar.xz" -o /tmp/shellcheck.tar.xz
-echo "${SHA256SUM} /tmp/shellcheck.tar.xz" | sha256sum -c - || exit 1
-tar -xf /tmp/shellcheck.tar.xz -C /usr/local/bin --strip-components=1 "shellcheck-v${shellcheck_version}/shellcheck"
-rm /tmp/shellcheck.tar.xz
+download_and_extract_from_github \
+    'https://github.com/koalaman/shellcheck/releases/download/v${version}/shellcheck-v${version}.linux.${variant}.tar.xz' \
+    "shellcheck" \
+    "x86_64" "aarch64" \
+    'shellcheck-v${version}/shellcheck' \
+    1
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz
@@ -86,50 +131,34 @@ echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
 
 # ruff
-RUFF_VARIANT="x86_64"
-SHA256SUM="${ruff_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    RUFF_VARIANT="aarch64"
-    SHA256SUM="${ruff_arm64_sha256}"
-fi
-curl -L "https://github.com/astral-sh/ruff/releases/download/${ruff_version}/ruff-${RUFF_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/ruff.tar.gz
-echo "${SHA256SUM} /tmp/ruff.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/ruff.tar.gz -C /usr/local/bin --strip-components=1 "ruff-${RUFF_VARIANT}-unknown-linux-gnu/ruff"
-rm /tmp/ruff.tar.gz
+download_and_extract_from_github \
+    'https://github.com/astral-sh/ruff/releases/download/${version}/ruff-${variant}-unknown-linux-gnu.tar.gz' \
+    "ruff" \
+    "x86_64" "aarch64" \
+    'ruff-${variant}-unknown-linux-gnu/ruff' \
+    1
 
 # actionlint
-SHA256SUM="${actionlint_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    SHA256SUM="${actionlint_arm64_sha256}"
-fi
-curl -L "https://github.com/rhysd/actionlint/releases/download/v${actionlint_version}/actionlint_${actionlint_version}_linux_${ARCHITECTURE}.tar.gz" -o /tmp/actionlint.tar.gz
-echo "${SHA256SUM} /tmp/actionlint.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/actionlint.tar.gz -C /usr/local/bin actionlint
-rm /tmp/actionlint.tar.gz
+download_and_extract_from_github \
+    'https://github.com/rhysd/actionlint/releases/download/v${version}/actionlint_${version}_linux_${variant}.tar.gz' \
+    "actionlint" \
+    "amd64" "arm64" \
+    'actionlint'
 
 # yamlfmt
-YAMLFMT_VARIANT="x86_64"
-SHA256SUM="${yamlfmt_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    YAMLFMT_VARIANT="arm64"
-    SHA256SUM="${yamlfmt_arm64_sha256}"
-fi
-curl -L "https://github.com/google/yamlfmt/releases/download/v${yamlfmt_version}/yamlfmt_${yamlfmt_version}_Linux_${YAMLFMT_VARIANT}.tar.gz" -o /tmp/yamlfmt.tar.gz
-echo "${SHA256SUM} /tmp/yamlfmt.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/yamlfmt.tar.gz -C /usr/local/bin yamlfmt
-rm /tmp/yamlfmt.tar.gz
+download_and_extract_from_github \
+    'https://github.com/google/yamlfmt/releases/download/v${version}/yamlfmt_${version}_Linux_${variant}.tar.gz' \
+    "yamlfmt" \
+    "x86_64" "arm64" \
+    'yamlfmt'
 
 # uv
-UV_VARIANT="x86_64"
-SHA256SUM="${uv_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    UV_VARIANT="aarch64"
-    SHA256SUM="${uv_arm64_sha256}"
-fi
-curl -L "https://github.com/astral-sh/uv/releases/download/${uv_version}/uv-${UV_VARIANT}-unknown-linux-gnu.tar.gz" -o /tmp/uv.tar.gz
-echo "${SHA256SUM} /tmp/uv.tar.gz" | sha256sum -c - || exit 1
-tar -xzf /tmp/uv.tar.gz -C /usr/local/bin --strip-components=1 "uv-${UV_VARIANT}-unknown-linux-gnu/uv" "uv-${UV_VARIANT}-unknown-linux-gnu/uvx"
-rm /tmp/uv.tar.gz
+download_and_extract_from_github \
+    'https://github.com/astral-sh/uv/releases/download/0.10.4/uv-x86_64-unknown-linux-gnu.tar.gz' \
+    "uv" \
+    "x86_64" "aarch64" \
+    'uv-${variant}-unknown-linux-gnu/uv uv-${variant}-unknown-linux-gnu/uvx' \
+    1
 
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
