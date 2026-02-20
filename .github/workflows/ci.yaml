@@ -20,6 +20,7 @@ on:
   push:
     branches:
       - main
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -32,10 +33,12 @@ jobs:
         os: [arm64, amd64]
         include:
           - os: amd64
-            name: DevContainer (amd64)
+            name: build/amd64
+            description: DevContainer (amd64)
             runner: ubuntu-24.04
           - os: arm64
-            name: DevContainer (arm64)
+            name: build/arm64
+            description: DevContainer (arm64)
             runner: ubuntu-24.04-arm
 
     name: ${{ matrix.name }}
@@ -86,6 +89,20 @@ jobs:
               echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
               ./scripts/publish.sh --${{ matrix.os }} "main"
             fi
+
+  overall-result:
+    name: build/overall-result
+    description: Overall Result
+    runs-on: ubuntu-24.04
+    needs: [build/amd64, build/arm64]
+    if: ${{ !cancelled() }}
+    steps:
+      - name: Successful verification
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+      - name: Failing verification
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
 
   merge:
     name: Merge Labels (main only)
