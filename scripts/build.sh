@@ -16,6 +16,9 @@
 
 set -euxo pipefail
 
+SCRIPT_PATH=$(readlink -f "$0")
+SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
+
 if [[ "$#" -lt 1 || "${1}" != "--arm64" && "${1}" != "--amd64" ]]; then
     echo "Error: First parameter must be --arm64 or --amd64."
     exit 1
@@ -46,6 +49,9 @@ IMAGES=()
 for LABEL in "${LABELS[@]}"; do
     IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
 done
+
+. "${SCRIPT_DIR}/functions.sh"
+set_dockerfile_name
 
 # Prepare devcontainer build command
 DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"
