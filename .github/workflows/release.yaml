@@ -40,6 +40,7 @@ jobs:
       id-token: write
 
     steps:
+      - uses: eclipse-score/more-disk-space@v1
       - name: Checkout (GitHub)
         uses: actions/checkout@v6
 
@@ -89,6 +90,7 @@ jobs:
       id-token: write
 
     steps:
+      - uses: eclipse-score/more-disk-space@v1
       - name: Checkout (GitHub)
         uses: actions/checkout@v6
 
