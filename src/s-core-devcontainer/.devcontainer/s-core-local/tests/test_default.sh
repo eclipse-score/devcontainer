@@ -23,7 +23,7 @@ KERNEL=$(uname -s)
 . /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
-check "validate pre-commit is working and has the correct version" bash -c "${PIPX_BIN_DIR}/pre-commit --version | grep '4.5.1'"
+check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"
 
 # Common tooling
 check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_version}'"
@@ -75,6 +75,7 @@ check "validate gh is working and has the correct version" bash -c "gh --version
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
 if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
     check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
+    check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
 fi
 
 # Qemu target-related tools
