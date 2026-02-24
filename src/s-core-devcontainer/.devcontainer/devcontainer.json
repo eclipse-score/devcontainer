@@ -21,6 +21,11 @@
             "userGid": "1000",
             "upgradePackages": "false" // WARNING: do *not* enable; this would include packages also from other features, which may have been pinned to a specific version
         },
+        "ghcr.io/devcontainers-community/features/llvm": {
+            // Full semantic version pinning does not work with this feature.
+            // In case we want this, the feature needs to be replaced with a custom installation script.
+            "version": "20"
+        },
         "./s-core-local": {},
         "./bazel-feature": {}
     },
@@ -28,6 +33,7 @@
         // this order makes it more convenient to develop the local features, since they will be installed last
         // which means changes to it will be applied without needing to rebuild all other features
         "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers-community/features/llvm",
         "./s-core-local",
         "./bazel-feature"
     ],
@@ -60,6 +66,7 @@
                 "[cpp]": {
                     "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
                 },
+                "clangd.path": "/usr/bin/clangd",
                 "clangd.arguments": [
                     "--compile-commands-dir=${workspaceFolder}/",
                     "--pretty",
