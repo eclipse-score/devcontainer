@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
+# Variables in strings with single quotes are expected to be evaluated later by `eval`
 
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
@@ -35,6 +37,58 @@ DEBIAN_FRONTEND=noninteractive
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
+# Downloads and extracts a tool from GitHub releases, based on the provided URL pattern, version and architecture-specific checksums.
+# The URL pattern can include placeholders for version and architecture variant
+download_and_extract_from_github() {
+    local url_pattern="$1"
+    local tool_name="$2"
+    local amd64_name="$3"
+    local arm64_name="$4"
+    local extract_names="$5"
+    local strip_components="${6:-0}"
+    local temp_file="/tmp/${tool_name}"
+
+    local version_name="${tool_name}_version"
+    export version="${!version_name}"
+    variant="${amd64_name}"
+    local sha256sum_name="${tool_name}_amd64_sha256"
+    if [ "${ARCHITECTURE}" = "arm64" ]; then
+        variant="${arm64_name}"
+        sha256sum_name="${tool_name}_arm64_sha256"
+    fi
+    sha256sum="${!sha256sum_name}"
+    export variant
+
+    local url
+    url="$(eval "echo ${url_pattern}")"
+
+    curl -L "${url}" -o "${temp_file}"
+    echo "${sha256sum} ${temp_file}" | sha256sum -c - || exit 1
+
+    local tar_options=""
+    if [[ "${url}" == *.tar.gz ]]; then
+        tar_options="-xzf"
+    elif [[ "${url}" == *.tar.xz ]]; then
+        tar_options="-xf"
+    elif [[ "${url}" == *.tar.zst ]]; then
+        tar_options="-I zstd -xf"
+    fi
+
+    local extract_names_expanded
+    extract_names_expanded="$(eval "echo ${extract_names}")"
+
+    # shellcheck disable=SC2086
+    # tar_options and extract_names_expanded are expected to be word-split
+    tar ${tar_options} "${temp_file}" -C "/usr/local/bin" --strip-components="${strip_components}" ${extract_names_expanded}
+
+    rm "${temp_file}"
+}
+
+# always add PIPX_BIN_DIR to path
+PIPX_BIN_DIR_EXPORT="$(grep "export PIPX_BIN_DIR" /etc/bash.bashrc)"
+eval "${PIPX_BIN_DIR_EXPORT}"
+echo -e "PATH=\"${PIPX_BIN_DIR}:\$PATH\"\nexport PATH" >> /etc/profile.d/pipx_bin_dir.sh
+
 apt-get update
 
 # Unminimize the image to include standard packages like man pages
@@ -45,8 +99,13 @@ apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-de
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
 
-# static code anylysis for shell scripts
-apt-get install -y shellcheck="${shellcheck_version}*"
+# static code analysis for shell scripts
+download_and_extract_from_github \
+    'https://github.com/koalaman/shellcheck/releases/download/v${version}/shellcheck-v${version}.linux.${variant}.tar.xz' \
+    "shellcheck" \
+    "x86_64" "aarch64" \
+    'shellcheck-v${version}/shellcheck' \
+    1
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz
@@ -64,7 +123,7 @@ apt-get install -y gh
 apt-get install -y "python${python_version}" python3-pip python3-venv
 # The following packages correspond to the list of packages installed by the
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
-apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv python3-pytest pylint
+apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
@@ -75,6 +134,42 @@ echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
+
+# ruff
+download_and_extract_from_github \
+    'https://github.com/astral-sh/ruff/releases/download/${version}/ruff-${variant}-unknown-linux-gnu.tar.gz' \
+    "ruff" \
+    "x86_64" "aarch64" \
+    'ruff-${variant}-unknown-linux-gnu/ruff' \
+    1
+
+# actionlint
+download_and_extract_from_github \
+    'https://github.com/rhysd/actionlint/releases/download/v${version}/actionlint_${version}_linux_${variant}.tar.gz' \
+    "actionlint" \
+    "amd64" "arm64" \
+    'actionlint'
+
+# yamlfmt
+download_and_extract_from_github \
+    'https://github.com/google/yamlfmt/releases/download/v${version}/yamlfmt_${version}_Linux_${variant}.tar.gz' \
+    "yamlfmt" \
+    "x86_64" "arm64" \
+    'yamlfmt'
+
+# uv
+download_and_extract_from_github \
+    'https://github.com/astral-sh/uv/releases/download/${version}/uv-${variant}-unknown-linux-gnu.tar.gz' \
+    "uv" \
+    "x86_64" "aarch64" \
+    'uv-${variant}-unknown-linux-gnu/uv uv-${variant}-unknown-linux-gnu/uvx' \
+    1
+
+# basedpyright
+su $(ls /home) -c "uv tool install basedpyright@\"${basedpyright_version}\""
+
+# pytest
+su $(ls /home) -c "uv tool install pytest@\"${pytest_version}\""
 
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
