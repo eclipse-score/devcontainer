@@ -1,4 +1,3 @@
----
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -12,71 +11,54 @@
 # SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
 actionlint:
   version: 1.7.7
   amd64:
     sha256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
   arm64:
     sha256: 401942f9c24ed71e4fe71b76c7d638f66d8633575c4016efd2977ce7c28317d0
-
 basedpyright:
   version: 1.35.0
-
 graphviz:
   version: 2.42.2
-
 protobuf_compiler:
   version: 3.21.12
-
 qemu_system_arm:
   version: 1:8.2.2
-
 sshpass:
   version: 1.09
-
 gdb:
   version: 15.0.50
-
 git:
   version: 2.43.0
-
 git_lfs:
   version: 3.4.1
-
 python:
   version: '3.12'
-
 pytest:
   version: 9.0.2
-
 gh:
   version: 2.45.0
-
 openjdk_21:
   version: 21.0.10
-
 ruff:
   version: 0.11.13
   amd64:
     sha256: 01aa32d29d00876b8d1429c617ed63a00b1fc81abfa4183bb05c9cb647fbc3d0
   arm64:
     sha256: 551af2ebc439d8268dcaf871ea60ad035f688728d30943dcbb2bf775e105213e
-
 shellcheck:
   version: 0.10.0
   amd64:
     sha256: 6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87
   arm64:
     sha256: 324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb
-
 uv:
   version: 0.10.4
   amd64:
     sha256: 6b52a47358deea1c5e173278bf46b2b489747a59ae31f2a4362ed5c6c1c269f7
   arm64:
     sha256: c84a6e6405715caa6e2f5ef8e5f29a5d0bc558a954e9f1b5c082b9d4708c222e
-
 codeql:
   # the coding_standards_version below dictates the codeql version
   version: 2.21.4
@@ -86,13 +68,10 @@ codeql:
   arm64:
     # see https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-osx64.tar.zst.checksum.txt
     sha256: 810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399
-
 codeql_coding_standards:
   version: 2.54.0
-
 valgrind:
   version: 3.22.0
-
 yamlfmt:
   version: 0.17.0
   amd64:
