@@ -75,6 +75,7 @@ check "validate gh is working and has the correct version" bash -c "gh --version
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
 if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
     check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
+    check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
 fi
 
 # Qemu target-related tools
