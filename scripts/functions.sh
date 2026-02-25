@@ -20,7 +20,7 @@ set_dockerfile_name() {
     # Check if proxies are configured in the environment
     set +u
     if [ -n "${HTTP_PROXY}${HTTPS_PROXY}${http_proxy}${https_proxy}${NO_PROXY}${no_proxy}" ]; then
-        DEVCONTAINER_DOCKERFILE_NAME="Dockerfile-with-proxy-vars"
+        DEVCONTAINER_DOCKERFILE_NAME="with-proxy-vars.Dockerfile"
         echo "Proxy environment detected."
     fi
     set -u

@@ -20,9 +20,16 @@ updates:
       interval: daily
   # Docker base images
   - package-ecosystem: docker
-    directory: /
+    directory: /src/s-core-devcontainer/.devcontainer
     schedule:
       interval: daily
+    groups:
+      all-in-one:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
   # DevContainer
   - package-ecosystem: devcontainers
     directory: /
