@@ -144,6 +144,8 @@ There should rarely be a need to modify this.
 * `.github/` contains the regular GitHub setup, with code owners and CI.
 * `resources/` contains a few screenshots.
 
+retrigger CI
+
 ### License and copyright checks
 
 This repo uses [`reuse`](https://codeberg.org/fsfe/reuse-tool) to check for and validate licenses and copyrights.
