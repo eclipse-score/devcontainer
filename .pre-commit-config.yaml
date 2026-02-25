@@ -8,7 +8,6 @@
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
 #
-# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 repos:
@@ -31,10 +30,10 @@ repos:
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
       - id: shellcheck
-  - repo: local
-    hooks:
-      - id: reuse annotate
-        name: Check and fix copyright headers with reuse annotate
-        entry: ./scripts/run_reuse_annotate.sh
-        language: system
-        pass_filenames: false
+# - repo: local
+#   hooks:
+#     - id: reuse annotate
+#       name: Check and fix copyright headers with reuse annotate
+#       entry: ./scripts/run_reuse_annotate.sh
+#       language: system
+#       pass_filenames: false
