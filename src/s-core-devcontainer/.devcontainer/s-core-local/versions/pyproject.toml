@@ -32,6 +32,11 @@ other=[
     "uv==0.10.4",
 ]
 
+# Setup for building a wheel...
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+# ... an empty one.
+[tool.hatch.build.targets.wheel]
+packages = []
