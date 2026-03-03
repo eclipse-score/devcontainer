@@ -1,0 +1,36 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Hint: this file can be used as a python constraints file
+
+actionlint==1.7.7
+basedpyright==1.35.0
+graphviz==2.42.2
+protobuf_compiler==3.21.12
+qemu_system_arm==1:8.2.2
+sshpass==1.09
+gdb==15.0.50
+git==2.43.0
+git_lfs==3.4.1
+python=='3.12'
+pytest==9.0.2
+gh==2.45.0
+openjdk_21==21.0.10
+ruff==0.11.13
+shellcheck==0.10.0
+uv==0.10.4
+codeql:
+codeql_coding_standards==2.54.0
+valgrind==3.22.0
+yamlfmt==0.17.0

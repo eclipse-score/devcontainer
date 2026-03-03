@@ -1,0 +1,32 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Hint: this file can be used as a python dependency file
+
+[project]
+name = "score-python-tools-via-devcontainer"
+version = "0.0.0"
+requires-python = "==3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.0.2",
+    "ruff==0.11.13",
+    "basedpyright==1.35.0",
+    "graphviz==0.20.3",
+    "protobuf==4.25.3",
+    # "uv==0.10.4",
+    "yamlfmt==0.17.0"
+]
