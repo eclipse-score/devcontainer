@@ -39,4 +39,8 @@ build-backend = "hatchling.build"
 
 # ... an empty one.
 [tool.hatch.build.targets.wheel]
-packages = []
+# Doesn't work:
+# packages = []
+
+# Let's ship a dummy file:
+only-include = ["pyproject.toml"]
