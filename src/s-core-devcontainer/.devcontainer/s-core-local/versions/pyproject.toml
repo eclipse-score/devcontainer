@@ -28,7 +28,7 @@ dependencies = [
 other=[
     "graphviz==0.20.3",
     "protobuf==4.25.3",
-    "yamlfmt==0.17.0"
+    "yamlfmt==0.17.0",
     "uv==0.10.4",
 ]
 
