@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
+
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
 set -euxo pipefail
+
+SCRIPT_PATH=$(readlink -f "$0")
+SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 
 if [[ "$#" -lt 1 || "${1}" != "--arm64" && "${1}" != "--amd64" ]]; then
     echo "Error: First parameter must be --arm64 or --amd64."
@@ -31,6 +49,9 @@ IMAGES=()
 for LABEL in "${LABELS[@]}"; do
     IMAGES+=("--image-name \"ghcr.io/eclipse-score/devcontainer:${LABEL}-${ARCH}\"")
 done
+
+. "${SCRIPT_DIR}/functions.sh"
+set_dockerfile_name
 
 # Prepare devcontainer build command
 DEVCONTAINER_CALL="devcontainer build --workspace-folder src/s-core-devcontainer --cache-from ghcr.io/eclipse-score/devcontainer"

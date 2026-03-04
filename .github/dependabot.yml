@@ -11,7 +11,27 @@
 # SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
-# Exported image files shall never be committed.
-/export.img
-build/
+version: 2
+updates:
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+  # Docker base images
+  - package-ecosystem: docker
+    directory: /src/s-core-devcontainer/.devcontainer
+    schedule:
+      interval: daily
+    groups:
+      all-in-one:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+  # DevContainer
+  - package-ecosystem: devcontainers
+    directory: /
+    schedule:
+      interval: daily

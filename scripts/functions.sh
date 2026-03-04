@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -12,6 +14,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# Exported image files shall never be committed.
-/export.img
-build/
+set_dockerfile_name() {
+    DEVCONTAINER_DOCKERFILE_NAME="Dockerfile"
+
+    # Check if proxies are configured in the environment
+    set +u
+    if [ -n "${HTTP_PROXY}${HTTPS_PROXY}${http_proxy}${https_proxy}${NO_PROXY}${no_proxy}" ]; then
+        DEVCONTAINER_DOCKERFILE_NAME="with-proxy-vars.Dockerfile"
+        echo "Proxy environment detected."
+    fi
+    set -u
+
+    export DEVCONTAINER_DOCKERFILE_NAME
+    echo "Using Dockerfile: ${DEVCONTAINER_DOCKERFILE_NAME}"
+}

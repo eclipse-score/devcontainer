@@ -1,3 +1,19 @@
+<!--
+*******************************************************************************
+Copyright (c) 2026 Contributors to the Eclipse Foundation
+
+See the NOTICE file(s) distributed with this work for additional
+information regarding copyright ownership.
+
+This program and the accompanying materials are made available under the
+terms of the Apache License Version 2.0 which is available at
+https://www.apache.org/licenses/LICENSE-2.0
+
+SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+SPDX-License-Identifier: Apache-2.0
+*******************************************************************************
+-->
+
 # Common DevContainer for Eclipse S-CORE
 This repository contains the common [development container](https://containers.dev) for [Eclipse S-CORE](https://github.com/eclipse-score).
 It contains all tools required to develop (modify, build, ...) Eclipse S-CORE.
@@ -74,6 +90,34 @@ These databases are used by Visual Studio Code to support code navigation and au
 
 Congratulations, you are now a dev container enthusiast 😊.
 
+### How to use: codeql
+
+The devcontainer codeql installation supports C, C++ and Rust source code analysis. All publicly available
+"coding standards" are preloaded and codeql is already in PATH.
+
+Example:
+
+```sh
+git clone https://github.com/nlohmann/json.git
+cd json
+cmake -S . -B build -G Ninja
+
+# Step 1: Create database
+mkdir _sca
+codeql database create _sca/codeql_data \
+  --threads=0 \
+  --language=cpp \
+  --command="ninja -C build" \
+  --source-root=.
+
+# Step 2: Run rulechecker and create SARIF report
+codeql database analyze _sca/codeql_data \
+  codeql/misra-cpp-coding-standards \
+  --threads=0 \
+  --format=sarif-latest \
+  --output=_sca/codeql-results.sarif
+```
+
 ## Development
 
 > [!NOTE]
@@ -99,6 +143,14 @@ In addition, it uses so-called "local" features (cf. `src/s-core-devcontainer/.d
 There should rarely be a need to modify this.
 * `.github/` contains the regular GitHub setup, with code owners and CI.
 * `resources/` contains a few screenshots.
+
+### License and copyright checks
+
+This repo uses [`reuse`](https://codeberg.org/fsfe/reuse-tool) to check for and validate licenses and copyrights.
+Checks are performend via pre-commit hooks.
+
+If you want to run it standalone run `pipx run reuse lint` in a terminal.
+To fix found issues run `scripts/run_reuse_annotate.sh`.
 
 ### Modify, Build, Test, Use
 

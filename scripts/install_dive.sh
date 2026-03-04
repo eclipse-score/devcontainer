@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -14,14 +16,25 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-set -euo pipefail
+echo "Installing dive..."
 
-# Configure clangd to remove the -fno-canonical-system-headers flag, which is
-# GCC-specific. If not done, there is an annoying error message on the first
-# line of every C++ file when being displayed in Visual Studio Code.
-mkdir -p ~/.config/clangd
-cat > ~/.config/clangd/config.yaml <<EOF
-CompileFlags:
-  Remove:
-    - -fno-canonical-system-headers
-EOF
+DIVE_NAME="/tmp/dive.deb"
+
+VERSION="0.13.1"
+
+ARCHITECTURE="$(uname -m)"
+if [ "${ARCHITECTURE}" = "x86_64" ]; then
+  ARCH="amd64"
+  SHA256SUM="0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
+else
+  ARCH="arm64"
+  SHA256SUM="80203401b3d7c4feffd13575755a07834a2d2f35f49e8612f0749b318c3f2fa5"
+fi
+
+curl -L "https://github.com/wagoodman/dive/releases/download/v${VERSION}/dive_${VERSION}_linux_${ARCH}.deb" -o "${DIVE_NAME}"
+echo "${SHA256SUM} /tmp/dive.deb" | sha256sum -c - || exit 1
+sudo dpkg -i "${DIVE_NAME}"
+rm -f "${DIVE_NAME}"
+
+# Verify installation
+dive --version
