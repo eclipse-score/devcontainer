@@ -31,7 +31,7 @@ repos:
     hooks:
       - id: shellcheck
   - repo: https://github.com/elektrobit-contrib/eclipse-score_tooling
-    rev: 14320679a5534c677d1525ad404e0e1a8226c983
+    rev: 018507ee6249388b7d3e00686701ab20211deddd
     hooks:
       - id: copyright
   - repo: https://codeberg.org/fsfe/reuse-tool
