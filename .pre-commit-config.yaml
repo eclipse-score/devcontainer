@@ -8,7 +8,6 @@
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
 #
-# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 repos:
@@ -32,7 +31,7 @@ repos:
     hooks:
       - id: shellcheck
   - repo: https://github.com/elektrobit-contrib/eclipse-score_tooling
-    rev: 538509967b41588afbbf2b3e6335e821c0183d55
+    rev: 14320679a5534c677d1525ad404e0e1a8226c983
     hooks:
       - id: copyright
   - repo: https://codeberg.org/fsfe/reuse-tool
