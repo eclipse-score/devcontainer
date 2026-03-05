@@ -31,10 +31,18 @@ repos:
     rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
     hooks:
       - id: shellcheck
-  - repo: local
+  - repo: https://github.com/elektrobit-contrib/eclipse-score_tooling
+    rev: 538509967b41588afbbf2b3e6335e821c0183d55
     hooks:
-      - id: reuse annotate
-        name: Check and fix copyright headers with reuse annotate
-        entry: ./scripts/run_reuse_annotate.sh
-        language: system
-        pass_filenames: false
+      - id: copyright
+  - repo: https://codeberg.org/fsfe/reuse-tool
+    rev: a1bb792acda6fd0724936b4ebbdbc8eceb9c0459 # v6.2.0
+    hooks:
+      - id: reuse-lint-file
+# - repo: local
+#   hooks:
+#     - id: reuse annotate
+#       name: Check and fix copyright headers with reuse annotate
+#       entry: ./scripts/run_reuse_annotate.sh
+#       language: system
+#       pass_filenames: false
