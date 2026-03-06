@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -14,6 +12,8 @@ set -euo pipefail
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+
+set -euo pipefail
 
 echo "Installing dive..."
 
