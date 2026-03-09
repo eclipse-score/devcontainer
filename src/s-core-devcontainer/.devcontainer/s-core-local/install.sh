@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2016
-# Variables in strings with single quotes are expected to be evaluated later by `eval`
-
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -12,9 +9,11 @@
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
 #
-# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+
+# shellcheck disable=SC2016
+# Variables in strings with single quotes are expected to be evaluated later by `eval`
 
 set -euo pipefail
 
