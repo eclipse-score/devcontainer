@@ -28,12 +28,10 @@ jobs:
         os: [arm64, amd64]
         include:
           - os: amd64
-            name: build/amd64
-            description: DevContainer (amd64)
+            name: DevContainer (amd64)
             runner: ubuntu-24.04
           - os: arm64
-            name: build/arm64
-            description: DevContainer (arm64)
+            name: DevContainer (arm64)
             runner: ubuntu-24.04-arm
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.runner }}
