@@ -84,7 +84,7 @@ jobs:
   overall-result:
     name: build/overall-result
     runs-on: ubuntu-24.04
-    needs: [build/amd64, build/arm64]
+    needs: [build]
     if: ${{ !cancelled() }}
     steps:
       - name: Successful verification
