@@ -1,7 +1,7 @@
 {
     "image": "mcr.microsoft.com/devcontainers/javascript-node:4-24",
     "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:": {
+        "ghcr.io/devcontainers/features/docker-in-docker": {
             "moby": "false" // does not work with Debian Trixie based images
         },
         "ghcr.io/devcontainers-extra/features/pre-commit:2": {
