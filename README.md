@@ -118,6 +118,77 @@ codeql database analyze _sca/codeql_data \
   --output=_sca/codeql-results.sarif
 ```
 
+### Optional: QNX Support in Your Repository
+
+QNX support cannot be provided generically in this shared devcontainer image.
+As discussed in [issue #49](https://github.com/eclipse-score/devcontainer/issues/49#issuecomment-4217458769), it has to be configured per repository.
+
+The recommended approach is to follow the pattern used in
+[`inc_someip_gateway/.devcontainer`](https://github.com/eclipse-score/inc_someip_gateway/tree/main/.devcontainer):
+
+1. Build a small repository-local Dockerfile based on `ghcr.io/eclipse-score/devcontainer:<version>`.
+2. Rename the default `vscode` user to the host username via build arg.
+3. Bind-mount the QNX license and credentials into the container.
+4. Create missing host files in `initializeCommand` so startup is smooth.
+
+Use this setup in your repository:
+
+`.devcontainer/Dockerfile`
+
+```Dockerfile
+FROM ghcr.io/eclipse-score/devcontainer:<version>
+
+ARG USERNAME=vscode
+
+# Rename 'vscode' to the host username for QNX-related user expectations.
+RUN if [ "$USERNAME" != "vscode" ]; then \
+    usermod -l ${USERNAME} vscode \
+    && groupmod -n ${USERNAME} vscode \
+    && usermod -d /home/${USERNAME} -m ${USERNAME} \
+    && ln -s /home/${USERNAME} /home/vscode \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
+    && chmod 0440 /etc/sudoers.d/${USERNAME}; \
+  fi
+
+USER ${USERNAME}
+```
+
+`.devcontainer/devcontainer.json`
+
+```json
+{
+  "name": "eclipse-s-core",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "${localEnv:USER}"
+    }
+  },
+  "remoteUser": "${localEnv:USER}",
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.qnx/license/licenses",
+      "target": "/opt/score_qnx/license/licenses",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.netrc",
+      "target": "/home/${localEnv:USER}/.netrc",
+      "type": "bind"
+    }
+  ],
+  "initializeCommand": {
+    "Make sure QNX license exists": "mkdir -p ~/.qnx/license && touch -a ~/.qnx/license/licenses",
+    "Make sure .netrc exists": "touch -a ~/.netrc"
+  }
+}
+```
+
+Notes:
+
+- The mounted license file path inside the container must be `/opt/score_qnx/license/licenses`.
+- `.netrc` is a practical way to provide myQNX credentials without committing secrets into the repository.
+
 ## Development
 
 > [!NOTE]
