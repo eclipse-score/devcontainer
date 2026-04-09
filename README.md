@@ -38,15 +38,32 @@ From here on, we assume that such a development container setup is installed and
 Add a file called `.devcontainer/devcontainer.json` to your repository.
 It should contain the following:
 
+`.devcontainer/devcontainer.json`
+
 ````json
 {
     "name": "eclipse-s-core",
-    "image": "ghcr.io/eclipse-score/devcontainer:<version>"
+    "build": {
+        "dockerfile": "Dockerfile"
+    }
 }
 ````
 
+`.devcontainer/Dockerfile`
+
+```Dockerfile
+# Use Dockerfile to get Dependabot version bumps after new image is released
+FROM ghcr.io/eclipse-score/devcontainer:<version>
+```
+
 The `<version>` must be a [valid, published release](https://github.com/eclipse-score/devcontainer/tags).
-You can also use `main` as `<version>` to automatically follow the `main` branch, and `latest` to follow release tags - but be aware that this can result in undesired updates.
+
+> [!NOTE]
+> Dependabots devcontainer support does not include devcontainer images so far.
+> With the Dockerfile Dependabot will create pull request after a new devcontainer image release is published.
+
+You can also use `main` as `<version>` to automatically follow the `main` branch, and `latest` to follow release tags - but be aware that this will make it harder to figure out with which container version the code has been build and tested.
+You and a colleague might be working with different container versions without knowing, because newer versions of the same tag name are not pulled automatically by Docker.
 
 To start using the container, click the **Reopen in Container** button when prompted by Visual Studio Code:
 
