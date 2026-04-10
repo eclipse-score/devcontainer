@@ -113,7 +113,7 @@ Canonical [decided to restrict user namespaces for security reasons](https://dis
 To still be able to use `linux-sandbox` without disabling `apparmor` run the following commands on your host:
 
 ```bash
-sudo tee /etc/apparmor.d/bazel-linux-sandbox > /dev/null <<'EOF'
+sudo tee /etc/apparmor.d/bazel-linux-sandbox > /dev/null <<EOF
 abi <abi/4.0>,
 include <tunables/global>
 
