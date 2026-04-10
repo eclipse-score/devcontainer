@@ -135,7 +135,7 @@ codeql database analyze _sca/codeql_data \
   --output=_sca/codeql-results.sarif
 ```
 
-### Optional: QNX Support in Your Repository
+### QNX Support in Your Repository
 
 QNX support cannot be provided generically in this shared devcontainer image.
 As discussed in [issue #49](https://github.com/eclipse-score/devcontainer/issues/49#issuecomment-4217458769), it has to be configured per repository.
