@@ -201,10 +201,9 @@ USER ${USERNAME}
 }
 ```
 
-Notes:
-
-- The mounted license file path inside the container must be `/opt/score_qnx/license/licenses`.
-- `.netrc` is a practical way to provide myQNX credentials without committing secrets into the repository.
+> [!NOTE]
+> - The mounted license file path inside the container must be `/opt/score_qnx/license/licenses`.
+> - `.netrc` is a practical way to provide myQNX credentials without committing secrets into the repository.
 
 ## Development
 
