@@ -38,15 +38,32 @@ From here on, we assume that such a development container setup is installed and
 Add a file called `.devcontainer/devcontainer.json` to your repository.
 It should contain the following:
 
+`.devcontainer/devcontainer.json`
+
 ````json
 {
     "name": "eclipse-s-core",
-    "image": "ghcr.io/eclipse-score/devcontainer:<version>"
+    "build": {
+        "dockerfile": "Dockerfile"
+    }
 }
 ````
 
+`.devcontainer/Dockerfile`
+
+```Dockerfile
+# Use Dockerfile to get Dependabot version bumps after new image is released
+FROM ghcr.io/eclipse-score/devcontainer:<version>
+```
+
 The `<version>` must be a [valid, published release](https://github.com/eclipse-score/devcontainer/tags).
-You can also use `main` as `<version>` to automatically follow the `main` branch, and `latest` to follow release tags - but be aware that this can result in undesired updates.
+
+> [!NOTE]
+> Dependabots devcontainer support does not include devcontainer images so far.
+> With the Dockerfile Dependabot will create pull request after a new devcontainer image release is published.
+
+You can also use `main` as `<version>` to automatically follow the `main` branch, and `latest` to follow release tags - but be aware that this will make it harder to figure out with which container version the code has been build and tested.
+You and a colleague might be working with different container versions without knowing, because newer versions of the same tag name are not pulled automatically by Docker.
 
 To start using the container, click the **Reopen in Container** button when prompted by Visual Studio Code:
 
@@ -59,6 +76,19 @@ This may take some time.
 Afterwards, Visual Studio Code should show this in the lower left corner of your window:
 
 ![Dev container success](resources/devcontainer_success.png)
+
+### Inside the Container
+
+Open a Terminal, and - for example - type `bazel build ...` to execute the default build of the repository.
+
+After you have build the code, create [compilation databases](https://clang.llvm.org/docs/JSONCompilationDatabase.html) via Visual Studio Code [Task](https://code.visualstudio.com/docs/debugtest/tasks):
+
+- C++: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update compile_commands.json`
+- Rust: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update rust-project.json`
+
+These databases are used by Visual Studio Code to support code navigation and auto-completion with the help of [language servers](https://microsoft.github.io/language-server-protocol/).
+
+Congratulations, you are now a dev container enthusiast 😊.
 
 ### Bazel's `linux-sandbox`
 
@@ -76,19 +106,6 @@ probably due to lack of alternatives.
 
 > [!NOTE]
 > If `linux-sandbox` is not needed, do not add this snippet.
-
-### Inside the Container
-
-Open a Terminal, and - for example - type `bazel build ...` to execute the default build of the repository.
-
-After you have build the code, create [compilation databases](https://clang.llvm.org/docs/JSONCompilationDatabase.html) via Visual Studio Code [Task](https://code.visualstudio.com/docs/debugtest/tasks):
-
-- C++: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update compile_commands.json`
-- Rust: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> -> `Tasks: Run Task` -> `Update rust-project.json`
-
-These databases are used by Visual Studio Code to support code navigation and auto-completion with the help of [language servers](https://microsoft.github.io/language-server-protocol/).
-
-Congratulations, you are now a dev container enthusiast 😊.
 
 ### How to use: codeql
 
@@ -117,6 +134,76 @@ codeql database analyze _sca/codeql_data \
   --format=sarif-latest \
   --output=_sca/codeql-results.sarif
 ```
+
+### QNX Support in Your Repository
+
+QNX support cannot be provided generically in this shared devcontainer image and has to be configured per repository.
+The basic reason is that QNX licenses might be bound to a user name, which is impossible to support for a generic container image.
+For more details see [issue #49](https://github.com/eclipse-score/devcontainer/issues/49#issuecomment-4217458769).
+
+The recommended approach is to follow this pattern:
+
+1. Build a small repository-local Dockerfile based on `ghcr.io/eclipse-score/devcontainer:<version>`.
+2. Rename the default `vscode` user to the host username via build arg.
+3. Bind-mount the QNX license and credentials into the container.
+4. Create missing host files in `initializeCommand` so startup is smooth.
+
+Use this setup in your repository:
+
+`.devcontainer/Dockerfile`
+
+```Dockerfile
+FROM ghcr.io/eclipse-score/devcontainer:<version>
+
+ARG USERNAME=vscode
+
+# Rename 'vscode' to the host username for QNX-related user expectations.
+# In environments using a license server, the QNX license might be bound to a username.
+RUN if [ "$USERNAME" != "vscode" ]; then \
+    usermod -l ${USERNAME} vscode \
+    && groupmod -n ${USERNAME} vscode \
+    && usermod -d /home/${USERNAME} -m ${USERNAME} \
+    && ln -s /home/${USERNAME} /home/vscode \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
+    && chmod 0440 /etc/sudoers.d/${USERNAME}; \
+  fi
+
+USER ${USERNAME}
+```
+
+`.devcontainer/devcontainer.json`
+
+```json
+{
+  "name": "eclipse-s-core",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "${localEnv:USER}"
+    }
+  },
+  "remoteUser": "${localEnv:USER}",
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.qnx/license/licenses",
+      "target": "/opt/score_qnx/license/licenses",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.netrc",
+      "target": "/home/${localEnv:USER}/.netrc",
+      "type": "bind"
+    }
+  ],
+  "initializeCommand": {
+    "Make sure QNX license exists": "mkdir -p ~/.qnx/license && touch -a ~/.qnx/license/licenses",
+    "Make sure .netrc exists": "touch -a ~/.netrc"
+  }
+}
+```
+
+> [!NOTE]
+> - `.netrc` is a practical way to provide myQNX credentials without committing secrets into the repository.
 
 ## Development
 
