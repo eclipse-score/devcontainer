@@ -107,6 +107,38 @@ probably due to lack of alternatives.
 > [!NOTE]
 > If `linux-sandbox` is not needed, do not add this snippet.
 
+#### Ubuntu 23.10+
+
+Canonical [decided to restrict user namespaces for security reasons](https://discourse.ubuntu.com/t/spec-unprivileged-user-namespace-restrictions-via-apparmor-in-ubuntu-23-10/37626/1).
+To still be able to use `linux-sandbox` without disabling `apparmor` run the following commands on your host:
+
+```bash
+sudo tee /etc/apparmor.d/bazel-linux-sandbox > /dev/null <<'EOF'
+abi <abi/4.0>,
+include <tunables/global>
+
+profile linux-sandbox /var/cache/bazel/install/*/linux-sandbox flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/bazel-linux-sandbox>
+}
+EOF
+sudo apparmor_parser -r /etc/apparmor.d/bazel-linux-sandbox
+```
+
+When done
+
+```bash
+"$(bazel info install_base)/linux-sandbox" /bin/true
+```
+
+should run successfully.
+
+> [!NOTE]
+> `/var/cache/bazel/` is the path onto which a Docker volume is mounted.
+> Unless you have setup the same on your host, this will only make `linux-sandbox` work within the devcontainer.
+
 ### How to use: codeql
 
 The devcontainer codeql installation supports C, C++ and Rust source code analysis. All publicly available
