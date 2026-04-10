@@ -17,11 +17,17 @@ updates:
     directory: /
     schedule:
       interval: daily
+    commit-message:
+      prefix: chore
+      include: scope
   # Docker base images
   - package-ecosystem: docker
     directory: /src/s-core-devcontainer/.devcontainer
     schedule:
       interval: daily
+    commit-message:
+      prefix: chore
+      include: scope
     groups:
       all-in-one:
         patterns:
@@ -34,3 +40,6 @@ updates:
     directory: /
     schedule:
       interval: daily
+    commit-message:
+      prefix: chore
+      include: scope
