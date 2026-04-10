@@ -137,11 +137,11 @@ codeql database analyze _sca/codeql_data \
 
 ### QNX Support in Your Repository
 
-QNX support cannot be provided generically in this shared devcontainer image.
-As discussed in [issue #49](https://github.com/eclipse-score/devcontainer/issues/49#issuecomment-4217458769), it has to be configured per repository.
+QNX support cannot be provided generically in this shared devcontainer image and has to be configured per repository.
+The basic reason is that QNX licenses might be bound to a user name, which is impossible to support for a generic container image.
+For more details see [issue #49](https://github.com/eclipse-score/devcontainer/issues/49#issuecomment-4217458769).
 
-The recommended approach is to follow the pattern used in
-[`inc_someip_gateway/.devcontainer`](https://github.com/eclipse-score/inc_someip_gateway/tree/main/.devcontainer):
+The recommended approach is to follow this pattern:
 
 1. Build a small repository-local Dockerfile based on `ghcr.io/eclipse-score/devcontainer:<version>`.
 2. Rename the default `vscode` user to the host username via build arg.
