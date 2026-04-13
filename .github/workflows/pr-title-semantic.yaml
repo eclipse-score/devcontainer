@@ -20,7 +20,7 @@ on:
       - reopened
       - synchronize
 permissions:
-  pull-requests: read
+  pull-requests: write
 jobs:
   semantic-pr-title:
     name: Semantic PR Title

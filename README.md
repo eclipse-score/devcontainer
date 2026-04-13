@@ -113,7 +113,8 @@ Canonical [decided to restrict user namespaces for security reasons](https://dis
 To still be able to use `linux-sandbox` without disabling `apparmor` run the following commands on your host:
 
 ```bash
-sudo tee /etc/apparmor.d/bazel-linux-sandbox > /dev/null <<EOF
+# prefix with aaa for ordering with default Ubuntu user namespace rule, which would restrict linux-sandbox
+sudo tee /etc/apparmor.d/aaa-bazel-linux-sandbox > /dev/null <<EOF
 abi <abi/4.0>,
 include <tunables/global>
 
@@ -121,10 +122,10 @@ profile linux-sandbox /var/cache/bazel/install/*/linux-sandbox flags=(unconfined
   userns,
 
   # Site-specific additions and overrides. See local/README for details.
-  include if exists <local/bazel-linux-sandbox>
+  include if exists <local/aaa-bazel-linux-sandbox>
 }
 EOF
-sudo apparmor_parser -r /etc/apparmor.d/bazel-linux-sandbox
+sudo apparmor_parser -r /etc/apparmor.d/aaa-bazel-linux-sandbox
 ```
 
 When done
