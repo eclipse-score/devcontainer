@@ -32,8 +32,4 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_DRAFT: 'true'
-          RELEASE_LATEST: 'true'
-        run: ./scripts/release.sh run
+        run: ./scripts/release.sh ${{ github.token }}
