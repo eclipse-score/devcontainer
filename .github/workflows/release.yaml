@@ -14,7 +14,7 @@ name: DevContainer Release
 description: This workflow creates a semantic version release when main changed since the last release tag.
 on:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '0 0 * * 1'
   workflow_dispatch:
 permissions:
   contents: read # for checkout
@@ -25,22 +25,18 @@ jobs:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
     name: release
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/devcontainers/javascript-node:4-24
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           fetch-tags: true
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          cache: npm
-          node-version: lts/*
-      - run: npm clean-install
-      - run: npm install --global corepack@latest
-      - run: corepack npm audit signatures
-      # pinned version updated automatically by Renovate.
+      # this should have been done by the checkout action, but it doesn't work in a container, see https://github.com/actions/checkout/issues/766
+      - run: git config --global --add safe.directory $PWD
+      # pinned version updated automatically by Dependabot.
       # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
       - run: npx semantic-release@25.0.1
         env:
