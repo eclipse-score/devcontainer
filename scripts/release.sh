@@ -21,21 +21,14 @@ usage() {
 }
 
 run_release() {
-    local metadata
-    metadata="$(prepare_metadata)"
-
-    local has_changes previous_tag next_tag release_notes
-    has_changes="$(printf '%s\n' "${metadata}" | grep '^has_changes=' | cut -d= -f2-)"
-    previous_tag="$(printf '%s\n' "${metadata}" | grep '^previous_tag=' | cut -d= -f2-)"
-    next_tag="$(printf '%s\n' "${metadata}" | grep '^next_tag=' | cut -d= -f2-)"
-    release_notes="$(printf '%s\n' "${metadata}" | awk '/^release_notes<<EOF/{found=1; next} found && /^EOF$/{exit} found{print}')"
+    prepare_metadata
 
     if [[ "${has_changes}" != "true" ]]; then
-        print_skip_message "${previous_tag}"
+        echo "No commits since ${LATEST_TAG}; skipping release."
         return 0
     fi
 
-    RELEASE_NOTES="${release_notes}" create_and_publish "${next_tag}"
+    create_and_publish "${NEXT_TAG}"
 }
 
 fetch_tags() {
@@ -57,15 +50,7 @@ prepare_metadata() {
     COMMIT_COUNT="$(git rev-list --count "${REVISION_RANGE}")"
 
     if [[ "${COMMIT_COUNT}" == "0" ]]; then
-        echo "has_changes=false"
-        echo "previous_tag=${LATEST_TAG}"
-        echo "next_version="
-        echo "next_tag="
-        echo "release_type="
-        echo "commit_count=0"
-        echo "release_notes<<EOF"
-        echo "No commits since the last release."
-        echo "EOF"
+        has_changes=false
         exit 0
     fi
 
@@ -111,37 +96,16 @@ prepare_metadata() {
     NEXT_TAG="v${NEXT_VERSION}"
     CHANGELOG="$(git log --reverse --format='* %s (%h)' "${REVISION_RANGE}")"
 
-    echo "has_changes=true"
-    echo "previous_tag=${LATEST_TAG}"
-    echo "next_version=${NEXT_VERSION}"
-    echo "next_tag=${NEXT_TAG}"
-    echo "release_type=${RELEASE_TYPE}"
-    echo "commit_count=${COMMIT_COUNT}"
-    echo "release_notes<<EOF"
-    echo "## Release summary"
-    echo
-    if [[ -n "${LATEST_TAG}" ]]; then
-        echo "- Previous release: ${LATEST_TAG}"
-    else
-        echo "- Previous release: none"
-    fi
-    echo "- Version bump: ${RELEASE_TYPE}"
-    echo "- Included commits: ${COMMIT_COUNT}"
-    echo
-    echo "## Changes"
-    echo
-    printf '%s\n' "${CHANGELOG}"
-    echo "EOF"
-}
-
-print_skip_message() {
-    local previous_tag="${1:-}"
-
-    if [[ -n "${previous_tag}" ]]; then
-        echo "No commits since ${previous_tag}; skipping release."
-    else
-        echo "Repository has no releasable commits yet; skipping release."
-    fi
+    has_changes=true
+    RELEASE_NOTES="## Release summary\n"
+    RELEASE_NOTES+=$'\n'
+    RELEASE_NOTES+="- Previous release: ${LATEST_TAG}\n"
+    RELEASE_NOTES+="- Version bump: ${RELEASE_TYPE}\n"
+    RELEASE_NOTES+="- Included commits: ${COMMIT_COUNT}\n"
+    RELEASE_NOTES+=$'\n'
+    RELEASE_NOTES+="## Changes\n"
+    RELEASE_NOTES+=$'\n'
+    RELEASE_NOTES+="${CHANGELOG}\n"
 }
 
 create_and_publish() {
