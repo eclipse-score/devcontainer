@@ -10,14 +10,49 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-name: Validate & Publish DevContainer
-description: This workflow is checking that for releases, updates do not break stuff and publishes the released container.
+name: DevContainer Release & Validate & Publish
+description: This workflow creates a semantic version release when main changed since the last release tag. Then it checks that for releases, updates do not break stuff and publishes the released container.
 on:
-  push:
-    tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read # for checkout
 jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+    name: release
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.run-semantic-release.outputs.tag_name }}
+    container:
+      image: mcr.microsoft.com/devcontainers/javascript-node:4-24
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      # this should have been done by the checkout action, but it doesn't work in a container, see https://github.com/actions/checkout/issues/766
+      - run: git config --global --add safe.directory $PWD
+      # pinned version updated automatically by Dependabot.
+      # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
+      - name: npx semantic-release
+        id: run-semantic-release
+        run: |
+          set -eux pipefail
+          npx semantic-release@25.0.1 >> /tmp/semantic-release.log 2>&1 || (cat /tmp/semantic-release.log && exit 1)
+          cat /tmp/semantic-release.log
+          tag_name=$(grep "Created tag" /tmp/semantic-release.log | sed -E 's/.*Created tag (.*)/\1/')
+          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
+    needs: [release]
+    if: needs.release.outputs.tag_name != ''
     strategy:
       matrix:
         os: [arm64, amd64]
@@ -38,6 +73,8 @@ jobs:
       - uses: eclipse-score/more-disk-space@v1
       - name: Checkout (GitHub)
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release.outputs.tag_name }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         with:
@@ -61,7 +98,7 @@ jobs:
             ./scripts/create_builder.sh
 
             # Build
-            ./scripts/build.sh --${{ matrix.os }} "${{ github.ref_name }}" "latest"
+            ./scripts/build.sh --${{ matrix.os }} "${{ needs.release.outputs.tag_name }}" "latest"
 
             # Test
             ./scripts/test.sh
@@ -71,10 +108,10 @@ jobs:
             # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh --${{ matrix.os }} "${{ github.ref_name }}" "latest"
+            ./scripts/publish.sh --${{ matrix.os }} "${{ needs.release.outputs.tag_name }}" "latest"
   merge:
     name: Merge Labels
-    needs: [build]
+    needs: [build, release]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -84,6 +121,8 @@ jobs:
       - uses: eclipse-score/more-disk-space@v1
       - name: Checkout (GitHub)
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.release.outputs.tag_name }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
         with:
@@ -105,4 +144,4 @@ jobs:
             # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/merge.sh "${{ github.ref_name }}" "latest"
+            ./scripts/merge.sh "${{ needs.release.outputs.tag_name }}" "latest"
