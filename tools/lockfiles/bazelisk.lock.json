@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
+  "bazelisk": {
+    "version": "1.27.0",
+    "binaries": [
+      {
+        "kind": "file",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-darwin-arm64",
+        "sha256": "8bf08c894ccc19ef37f286e58184c3942c58cb08da955e990522703526ddb720",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "file",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-amd64",
+        "sha256": "e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "file",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-arm64",
+        "sha256": "bb608519a440d45d10304eb684a73a2b6bb7699c5b0e5434361661b25f113a5d",
+        "os": "linux",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}

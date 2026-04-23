@@ -1,0 +1,31 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+module(name = "score_devcontainer")
+
+bazel_dep(name = "rules_multitool", version = "1.11.1")
+
+multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
+
+multitool.hub(lockfile = "//tools:lockfiles/actionlint.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/ruff.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/shellcheck.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/yamlfmt.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/uv.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/buildifier.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/starpls.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/bazelisk.lock.json")
+
+use_repo(multitool, "multitool")
+
+register_toolchains("@multitool//toolchains:all")
