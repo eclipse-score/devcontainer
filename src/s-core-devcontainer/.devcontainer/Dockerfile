@@ -16,4 +16,6 @@ FROM buildpack-deps:noble-curl
 
 LABEL dev.containers.features="common"
 
+COPY tools /usr/local/share/score-tools
+
 RUN userdel -f -r ubuntu

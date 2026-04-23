@@ -20,12 +20,20 @@ KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
 . /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
+source /usr/local/share/score-tools/tool_lockfile_helpers.sh
+
+shellcheck_lockfile_version="$(score_tool_version shellcheck)"
+ruff_lockfile_version="$(score_tool_version ruff)"
+actionlint_lockfile_version="$(score_tool_version actionlint)"
+yamlfmt_lockfile_version="$(score_tool_version yamlfmt)"
+uv_lockfile_version="$(score_tool_version uv)"
+uvx_lockfile_version="$(score_tool_version uvx uv)"
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
 check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"
 
 # Common tooling
-check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_version}'"
+check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_lockfile_version}'"
 
 # For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
 # Hence, we have to work around that.
@@ -56,17 +64,17 @@ check "validate java is working and has the correct version" bash -c "java -vers
 check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
 
 # ruff
-check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_version}'"
+check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_lockfile_version}'"
 
 # actionlint
-check "validate actionlint is working and has the correct version" bash -c "actionlint --version | grep '${actionlint_version}'"
+check "validate actionlint is working and has the correct version" bash -c "actionlint --version | grep '${actionlint_lockfile_version}'"
 
 # yamlfmt
-check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_version}'"
+check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_lockfile_version}'"
 
 # uv
-check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_version}'"
-check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uv_version}'"
+check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_lockfile_version}'"
+check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uvx_lockfile_version}'"
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
