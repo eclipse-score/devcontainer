@@ -213,20 +213,12 @@ repository.
 If another repository wants to use the exact targets defined here, it can depend
 on this module and run the tools through external labels.
 
-Because this module is not published to a Bazel registry yet, consumers
-currently need an override such as `local_path_override(...)`.
-
 Consumer `MODULE.bazel`:
 
 ```starlark
 module(name = "consumer")
 
-bazel_dep(name = "score_devcontainer", version = "0.0.0")
-
-local_path_override(
-    module_name = "score_devcontainer",
-    path = "/absolute/path/to/score_devcontainer",
-)
+bazel_dep(name = "score_devcontainer", version = "1.4.1")
 ```
 
 Then run the tools through the exported targets from this repository:
@@ -277,12 +269,7 @@ Consumer `MODULE.bazel`:
 module(name = "consumer")
 
 bazel_dep(name = "rules_multitool", version = "1.11.1")
-bazel_dep(name = "score_devcontainer", version = "0.0.0")
-
-local_path_override(
-    module_name = "score_devcontainer",
-    path = "/absolute/path/to/score_devcontainer",
-)
+bazel_dep(name = "score_devcontainer", version = "1.4.1")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
 
@@ -315,6 +302,12 @@ Then run:
 This option is useful if the consumer wants to share the pinned tool metadata
 but expose its own wrapper targets.
 
+### Version alignment
+
+The `score_devcontainer` Bazel module version corresponds to the DevContainer
+image version. Repositories that use both the DevContainer and the Bazel module
+must pin the same version to ensure identical tool versions in both paths.
+
 ### Notes
 
 - The lockfile labels above are intended as the cross-repository API for Bazel
@@ -322,9 +315,6 @@ but expose its own wrapper targets.
 - The lockfile shell installer in this directory is internal support code for
   the DevContainer image build. It is not intended as a stable cross-repository
   API.
-- Once this repository is published in a registry or consumed through a pinned
-  Git/archive override, the `local_path_override(...)` can be replaced with the
-  appropriate distribution mechanism.
 
 ---
 
