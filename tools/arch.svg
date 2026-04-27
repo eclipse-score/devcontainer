@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2026 Contributors to the Eclipse Foundation
+SPDX-License-Identifier: Apache-2.0
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="320" viewBox="0 0 920 320" role="img" aria-labelledby="title desc">
+  <title id="title">Tooling architecture</title>
+  <desc id="desc">A shared lockfile catalog feeds DevContainer installation scripts and Bazel rules_multitool targets, giving both execution paths the same tool versions and checksums.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#51606f"/>
+    </marker>
+    <style>
+      text {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1f2933;
+      }
+      .title {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .body {
+        font-size: 15px;
+      }
+      .label {
+        font-size: 14px;
+        fill: #51606f;
+      }
+      .box {
+        fill: #f8fafc;
+        stroke: #51606f;
+        stroke-width: 2;
+        rx: 8;
+      }
+      .source {
+        fill: #e8f4f1;
+        stroke: #23856d;
+      }
+      .path-a {
+        fill: #f8efe6;
+        stroke: #b56d1f;
+      }
+      .path-b {
+        fill: #edf2fb;
+        stroke: #4f6fad;
+      }
+      .arrow {
+        fill: none;
+        stroke: #51606f;
+        stroke-width: 2;
+        marker-end: url(#arrow);
+      }
+    </style>
+  </defs>
+
+  <rect width="920" height="320" fill="#ffffff"/>
+
+  <rect class="box source" x="285" y="36" width="350" height="88"/>
+  <text class="title" x="460" y="72" text-anchor="middle">Shared tool lockfiles</text>
+  <text class="body" x="460" y="101" text-anchor="middle">versions, URLs, checksums, platforms</text>
+
+  <rect class="box path-a" x="70" y="206" width="300" height="78"/>
+  <text class="title" x="220" y="239" text-anchor="middle">DevContainer</text>
+  <text class="body" x="220" y="265" text-anchor="middle">feature installers download tools</text>
+
+  <rect class="box path-b" x="550" y="206" width="300" height="78"/>
+  <text class="title" x="700" y="239" text-anchor="middle">Bazel</text>
+  <text class="body" x="700" y="265" text-anchor="middle">rules_multitool exposes targets</text>
+
+  <path class="arrow" d="M385,124 C320,150 265,174 230,206"/>
+  <path class="arrow" d="M535,124 C600,150 655,174 690,206"/>
+
+  <text class="label" x="255" y="165" text-anchor="middle">same metadata</text>
+  <text class="label" x="665" y="165" text-anchor="middle">same metadata</text>
+</svg>

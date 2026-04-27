@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -11,6 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+
+# shellcheck shell=bash
 
 set -euo pipefail
 
@@ -33,7 +34,8 @@ set -euo pipefail
 # Resolve the helper location once when the file is sourced. This keeps the
 # script self-contained: as long as the `.sh`, `.py`, and `lockfiles/`
 # directory stay together, callers do not need to pass any path configuration.
-readonly SCORE_TOOL_HELPERS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+SCORE_TOOL_HELPERS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+readonly SCORE_TOOL_HELPERS_DIR
 readonly SCORE_TOOL_LOCKFILE_QUERY_PY="${SCORE_TOOL_HELPERS_DIR}/tool_lockfile_query.py"
 
 _score_run_tool_lockfile_query() {
@@ -76,6 +78,7 @@ score_install_tool_from_lockfile() {
             sha256) sha256="${value}" ;;
             file) file="${value}" ;;
             type) archive_type="${value}" ;;
+            *) ;;
         esac
     done < <(
         _score_run_tool_lockfile_query \

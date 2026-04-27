@@ -1,3 +1,19 @@
+<!--
+*******************************************************************************
+Copyright (c) 2026 Contributors to the Eclipse Foundation
+
+See the NOTICE file(s) distributed with this work for additional
+information regarding copyright ownership.
+
+This program and the accompanying materials are made available under the
+terms of the Apache License Version 2.0 which is available at
+https://www.apache.org/licenses/LICENSE-2.0
+
+SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+SPDX-License-Identifier: Apache-2.0
+*******************************************************************************
+-->
+
 # Tooling Strategy: Reproducible CLI Tools Across Development Environments
 
 > This document complements the general infrastructure direction defined in
@@ -29,7 +45,7 @@ Both are supported intentionally.
 
 Not all developers work the same way. Some prefer a fully managed environment, others prefer to stay on their host system. Both workflows exist in practice, and both need to produce identical results.
 
-![Tooling architecture](arch.png)
+![Tooling architecture](arch.svg)
 
 ---
 
