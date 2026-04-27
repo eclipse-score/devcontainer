@@ -18,3 +18,6 @@ build/
 
 # bazel files
 /bazel-*
+
+# AI
+/.codex

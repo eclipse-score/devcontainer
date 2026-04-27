@@ -19,7 +19,7 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /usr/local/share/score-tools/versions.sh /devcontainer/features/s-core-local/versions.yaml
 source /usr/local/share/score-tools/tool_lockfile_helpers.sh
 
 shellcheck_lockfile_version="$(score_tool_version shellcheck)"

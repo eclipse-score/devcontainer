@@ -16,7 +16,7 @@
 set -euo pipefail
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/versions.sh /devcontainer/features/bazel/versions.yaml
 source /usr/local/share/score-tools/tool_lockfile_helpers.sh
 
 bazelisk_lockfile_version="$(score_tool_version bazelisk)"
