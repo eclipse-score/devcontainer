@@ -1,15 +1,4 @@
 #!/usr/bin/env python3
-"""Query tool metadata from the shared `tools/lockfiles/*.lock.json` catalog.
-
-This script is intentionally small and dependency-free so shell-based
-devcontainer feature installers and tests can ask two focused questions without
-re-implementing JSON parsing or platform selection logic:
-
-1. "What is the declared version for tool X?"
-2. "Which binary metadata applies to tool X on this OS/CPU?"
-
-The shell helper `tool_lockfile_helpers.sh` wraps this script for everyday use.
-"""
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -22,6 +11,17 @@ The shell helper `tool_lockfile_helpers.sh` wraps this script for everyday use.
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+"""Query tool metadata from the shared `tools/lockfiles/*.lock.json` catalog.
+
+This script is intentionally small and dependency-free so shell-based
+devcontainer feature installers and tests can ask two focused questions without
+re-implementing JSON parsing or platform selection logic:
+
+1. "What is the declared version for tool X?"
+2. "Which binary metadata applies to tool X on this OS/CPU?"
+
+The shell helper `tool_lockfile_helpers.sh` wraps this script for everyday use.
+"""
 
 from __future__ import annotations
 

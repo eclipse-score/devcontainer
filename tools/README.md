@@ -1,7 +1,7 @@
 # Tooling Strategy: Reproducible CLI Tools Across Development Environments
 
-> This document complements the general infrastructure direction defined in  
-> [DR-001 Infrastructure Design Decision](https://eclipse-score.github.io/score/main/design_decisions/DR-001-infra.html)  
+> This document complements the general infrastructure direction defined in
+> [DR-001 Infrastructure Design Decision](https://eclipse-score.github.io/score/main/design_decisions/DR-001-infra.html)
 > and specifies how CLI tooling is provided across environments.
 
 ## Purpose
@@ -10,9 +10,9 @@ We provide selected CLI tools such as `actionlint` and `shellcheck` in a reprodu
 
 The goal is simple:
 
-- same tool versions  
-- same behavior  
-- same results  
+- same tool versions
+- same behavior
+- same results
 
 independent of how developers choose to work.
 
@@ -35,14 +35,14 @@ Not all developers work the same way. Some prefer a fully managed environment, o
 
 ## Design Principle
 
-> Reproducibility is required.  
+> Reproducibility is required.
 > The execution path is a developer choice.
 
 This means:
 
-- no reliance on system-installed tools  
-- no hidden dependencies  
-- no environment-specific behavior  
+- no reliance on system-installed tools
+- no hidden dependencies
+- no environment-specific behavior
 
 ---
 
@@ -50,9 +50,9 @@ This means:
 
 The DevContainer provides:
 
-- a ready-to-use environment  
-- minimal setup effort  
-- predictable tooling  
+- a ready-to-use environment
+- minimal setup effort
+- predictable tooling
 
 For many developers, this is the most straightforward option.
 
@@ -70,9 +70,9 @@ This exists primarily to support workflows outside the DevContainer.
 
 It allows:
 
-- reproducible tool execution on the host  
-- consistent versions across platforms  
-- alignment with CI execution  
+- reproducible tool execution on the host
+- consistent versions across platforms
+- alignment with CI execution
 
 At the same time, invoking standalone tools through a build system is not always the most ergonomic experience. The setup therefore focuses on making this path reliable rather than minimal.
 
@@ -82,13 +82,13 @@ At the same time, invoking standalone tools through a build system is not always
 
 In practice:
 
-- some developers use the DevContainer  
-- some developers do not  
-- some switch between both depending on the task  
+- some developers use the DevContainer
+- some developers do not
+- some switch between both depending on the task
 
 Relying on only one of these paths would either:
 
-- reduce adoption (DevContainer-only), or  
+- reduce adoption (DevContainer-only), or
 - introduce inconsistencies (native-only)
 
 Supporting both allows flexibility without sacrificing consistency.
@@ -99,15 +99,15 @@ Supporting both allows flexibility without sacrificing consistency.
 
 We use [`rules_multitool`](https://github.com/bazel-contrib/rules_multitool) to provide:
 
-- pinned tool versions  
-- checksum verification  
-- platform-specific binaries (Linux x64, macOS arm64)  
-- a uniform way to expose CLI tools via Bazel  
+- pinned tool versions
+- checksum verification
+- platform-specific binaries (Linux x64, macOS arm64)
+- a uniform way to expose CLI tools via Bazel
 
 This is particularly useful for standalone tools such as:
 
-- `actionlint`  
-- `shellcheck`  
+- `actionlint`
+- `shellcheck`
 
 The alternative would be to manually maintain platform mappings, download logic, and wrappers for each tool. At scale, that quickly turns into a parallel infrastructure effort.
 
@@ -117,10 +117,10 @@ The alternative would be to manually maintain platform mappings, download logic,
 
 This setup reflects the actual constraints:
 
-- large number of users  
-- multiple host platforms  
-- mixed development workflows  
-- need for consistent results across local and CI  
+- large number of users
+- multiple host platforms
+- mixed development workflows
+- need for consistent results across local and CI
 
 A single enforced workflow would simplify the model, but would not match how the system is used in reality.
 
@@ -146,18 +146,18 @@ Technically correct and very powerful, but introduce significantly more complexi
 
 Most teams:
 
-- operate on a single platform (usually Linux)  
-- rely on CI-only validation  
-- accept minor inconsistencies in local setups  
+- operate on a single platform (usually Linux)
+- rely on CI-only validation
+- accept minor inconsistencies in local setups
 
 Under those conditions, simpler approaches are sufficient.
 
 Our setup differs:
 
-- cross-platform development (Linux + macOS ARM)  
-- large team size  
-- frequent local execution of tools  
-- low tolerance for inconsistencies  
+- cross-platform development (Linux + macOS ARM)
+- large team size
+- frequent local execution of tools
+- low tolerance for inconsistencies
 
 In this context, reproducibility becomes more important than minimizing tooling layers.
 
@@ -316,7 +316,7 @@ but expose its own wrapper targets.
 
 We provide:
 
-- a **DevContainer** for convenience and quick setup  
-- **Bazel-based tooling** for reproducible execution outside the container  
+- a **DevContainer** for convenience and quick setup
+- **Bazel-based tooling** for reproducible execution outside the container
 
 This combination allows developers to choose their workflow while ensuring consistent and predictable results across the project.
