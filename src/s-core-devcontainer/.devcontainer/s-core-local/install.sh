@@ -36,8 +36,6 @@ DEBIAN_FRONTEND=noninteractive
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
-source /usr/local/share/score-tools/tool_lockfile_helpers.sh
-
 # always add PIPX_BIN_DIR to path
 PIPX_BIN_DIR_EXPORT="$(grep "export PIPX_BIN_DIR" /etc/bash.bashrc)"
 eval "${PIPX_BIN_DIR_EXPORT}"
@@ -59,8 +57,8 @@ apt-get install -y "python${python_version}" python3-pip python3-venv
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
-# static code analysis for shell scripts
-score_install_tool_from_lockfile shellcheck
+# Lockfile-managed local developer tools
+bash /usr/local/share/score-tools/tool_lockfile_helpers.sh install shellcheck ruff actionlint yamlfmt uv uvx
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz
@@ -83,19 +81,6 @@ echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
 # qemu-system-arm
 apt-get install -y --no-install-recommends --fix-broken qemu-system-arm="${qemu_system_arm_version}*"
-
-# ruff
-score_install_tool_from_lockfile ruff
-
-# actionlint
-score_install_tool_from_lockfile actionlint
-
-# yamlfmt
-score_install_tool_from_lockfile yamlfmt
-
-# uv
-score_install_tool_from_lockfile uv
-score_install_tool_from_lockfile uvx uv
 
 # basedpyright
 su $(ls /home) -c "uv tool install basedpyright@\"${basedpyright_version}\""

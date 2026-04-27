@@ -15,27 +15,15 @@
 
 set -euo pipefail
 
-# Shared shell helpers around the `tools/lockfiles/*.lock.json` catalog.
+# CLI installer around the `tools/lockfiles/*.lock.json` catalog.
 #
-# This script is meant to be sourced by devcontainer feature installers and
-# tests. It delegates JSON parsing and platform selection to
-# `tool_lockfile_query.py`, then adds the shell ergonomics needed for
-# installation.
-#
-# Provided functions:
-# - score_tool_version <tool> [lockfile]
-# - score_install_tool_from_lockfile <tool> [lockfile] [destination]
-#
-# Example:
-#   source /usr/local/share/score-tools/tool_lockfile_helpers.sh
-#   score_tool_version shellcheck
-#   score_install_tool_from_lockfile buildifier
-#
-# Direct usage:
+# This script delegates JSON parsing and platform selection to
+# `tool_lockfile_query.py`, then adds the shell logic needed for installation.
+# Public usage is through the CLI:
 #   bash ./tool_lockfile_helpers.sh install shellcheck yamlfmt
 #   bash ./tool_lockfile_helpers.sh version shellcheck
 
-# Resolve the helper location once when the file is sourced. This keeps the
+# Resolve the helper location once when the script starts. This keeps the
 # script self-contained: as long as the `.sh`, `.py`, and `lockfiles/`
 # directory stay together, callers do not need to pass any path configuration.
 SCORE_TOOL_HELPERS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -47,10 +35,21 @@ _score_run_tool_lockfile_query() {
     python3 "${SCORE_TOOL_LOCKFILE_QUERY_PY}" "$@"
 }
 
+_score_tool_lockfile_name() {
+    # Print the lockfile basename that declares the requested tool.
+    local tool_name="$1"
+
+    _score_run_tool_lockfile_query lockfile --tool "${tool_name}"
+}
+
 score_tool_version() {
     # Print the declared version for one tool entry.
     local tool_name="$1"
-    local lockfile_name="${2:-$1}"
+    local lockfile_name="${2:-}"
+
+    if [[ -z "${lockfile_name}" ]]; then
+        lockfile_name="$(_score_tool_lockfile_name "${tool_name}")"
+    fi
 
     _score_run_tool_lockfile_query \
         version \
@@ -63,8 +62,12 @@ score_install_tool_from_lockfile() {
     # tool. The lockfile tells us which URL, checksum, archive type, and
     # in-archive path belong to the current platform.
     local tool_name="$1"
-    local lockfile_name="${2:-$1}"
+    local lockfile_name="${2:-}"
     local destination="${3:-/usr/local/bin/${tool_name}}"
+
+    if [[ -z "${lockfile_name}" ]]; then
+        lockfile_name="$(_score_tool_lockfile_name "${tool_name}")"
+    fi
 
     local kind=""
     local url=""
@@ -156,7 +159,7 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
 
     case "${command}" in
         install)
-            if [[ "$#" -lt 1 ]]; then
+            if [[ "$#" -eq 0 ]]; then
                 echo "Usage: $0 install <tool> [tool...]" >&2
                 exit 2
             fi
@@ -172,7 +175,7 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
             score_tool_version "$@"
             ;;
         *)
-            echo "Usage: $0 <install|version> <tool> [tool...]" >&2
+            echo "Usage: $0 install <tool> [tool...] | version <tool> [lockfile]" >&2
             exit 2
             ;;
     esac

@@ -20,14 +20,13 @@ KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
 . /usr/local/share/score-tools/versions.sh /devcontainer/features/s-core-local/versions.yaml
-source /usr/local/share/score-tools/tool_lockfile_helpers.sh
 
-shellcheck_lockfile_version="$(score_tool_version shellcheck)"
-ruff_lockfile_version="$(score_tool_version ruff)"
-actionlint_lockfile_version="$(score_tool_version actionlint)"
-yamlfmt_lockfile_version="$(score_tool_version yamlfmt)"
-uv_lockfile_version="$(score_tool_version uv)"
-uvx_lockfile_version="$(score_tool_version uvx uv)"
+shellcheck_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version shellcheck)"
+ruff_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version ruff)"
+actionlint_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version actionlint)"
+yamlfmt_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version yamlfmt)"
+uv_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version uv)"
+uvx_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version uvx)"
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
 check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"

@@ -13,11 +13,12 @@
 """Query tool metadata from the shared `tools/lockfiles/*.lock.json` catalog.
 
 This script is intentionally small and dependency-free so shell-based
-devcontainer feature installers and tests can ask two focused questions without
+devcontainer feature installers and tests can ask three focused questions without
 re-implementing JSON parsing or platform selection logic:
 
 1. "What is the declared version for tool X?"
 2. "Which binary metadata applies to tool X on this OS/CPU?"
+3. "Which lockfile declares tool X?"
 
 The shell helper `tool_lockfile_helpers.sh` wraps this script for everyday use.
 """
@@ -72,6 +73,17 @@ def _load_tool(lockfile: str, tool: str) -> dict:
         ) from exc
 
 
+def _find_lockfile(tool: str) -> str:
+    """Find the lockfile basename that declares a tool."""
+    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
+        with path.open(encoding="utf-8") as handle:
+            data = json.load(handle)
+        if tool in data:
+            return path.name.removesuffix(".lock.json")
+
+    raise SystemExit(f"Tool '{tool}' not found in lockfile catalog")
+
+
 def _select_binary(tool_data: dict, os_name: str, cpu: str) -> dict:
     """Pick the binary entry matching the requested platform."""
     for binary in tool_data["binaries"]:
@@ -92,6 +104,12 @@ def _cmd_version(args: argparse.Namespace) -> int:
             f"Tool '{args.tool}' in '{args.lockfile}.lock.json' does not define a version",
         )
     print(version)
+    return 0
+
+
+def _cmd_lockfile(args: argparse.Namespace) -> int:
+    """Print the lockfile basename that declares one tool."""
+    print(_find_lockfile(args.tool))
     return 0
 
 
@@ -118,6 +136,13 @@ def _build_parser() -> argparse.ArgumentParser:
         description="Read tool metadata from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    lockfile_parser = subparsers.add_parser(
+        "lockfile",
+        help="Print the lockfile basename declaring a tool.",
+    )
+    lockfile_parser.add_argument("--tool", required=True)
+    lockfile_parser.set_defaults(func=_cmd_lockfile)
 
     version_parser = subparsers.add_parser(
         "version",
@@ -150,7 +175,7 @@ def main(argv: list[str] | None = None) -> int:
     """Parse arguments, fill in default lockfile names, and dispatch."""
     parser = _build_parser()
     args = parser.parse_args(argv)
-    if args.lockfile is None:
+    if hasattr(args, "lockfile") and args.lockfile is None:
         args.lockfile = args.tool
     return args.func(args)
 

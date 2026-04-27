@@ -33,16 +33,16 @@ DEBIAN_FRONTEND=noninteractive
 
 ARCHITECTURE=$(dpkg --print-architecture)
 
-source /usr/local/share/score-tools/tool_lockfile_helpers.sh
-
 apt-get update
 
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 apt-get install apt-transport-https -y
 
+# Lockfile-managed Bazel tooling
+bash /usr/local/share/score-tools/tool_lockfile_helpers.sh install bazelisk buildifier starpls
+
 # Bazelisk + Bazel
-score_install_tool_from_lockfile bazelisk
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
 
 # Pre-install a fixed Bazel version, setup the bash command completion
@@ -57,12 +57,6 @@ sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features
 # Configure Bazel to use system trust store for SSL/TLS connections
 # This is required for corporate environments with custom CA certificates
 echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
-
-# Buildifier
-score_install_tool_from_lockfile buildifier
-
-# Starlark Language Server
-score_install_tool_from_lockfile starpls
 
 # Code completion for C++ code of Bazel projects
 # (see https://github.com/kiron1/bazel-compile-commands)

@@ -319,9 +319,9 @@ but expose its own wrapper targets.
 
 - The lockfile labels above are intended as the cross-repository API for Bazel
   consumers.
-- The shell helpers in this directory are internal support code for the
-  DevContainer image build. They are not intended to be sourced from another
-  repository.
+- The lockfile shell installer in this directory is internal support code for
+  the DevContainer image build. It is not intended as a stable cross-repository
+  API.
 - Once this repository is published in a registry or consumed through a pinned
   Git/archive override, the `local_path_override(...)` can be replaced with the
   appropriate distribution mechanism.
