@@ -21,3 +21,6 @@ build/
 
 # AI
 /.codex
+
+# Python files
+*.pyc

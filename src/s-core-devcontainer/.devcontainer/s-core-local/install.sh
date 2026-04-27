@@ -58,7 +58,7 @@ apt-get install -y "python${python_version}" python3-pip python3-venv
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
 # Lockfile-managed local developer tools
-bash /usr/local/share/score-tools/tool_lockfile_helpers.sh install shellcheck ruff actionlint yamlfmt uv uvx
+python3 /usr/local/share/score-tools/tool_installer.py install shellcheck ruff actionlint yamlfmt uv uvx
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz

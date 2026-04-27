@@ -18,9 +18,9 @@ set -euo pipefail
 # Read tool versions + metadata into environment variables
 . /usr/local/share/score-tools/versions.sh /devcontainer/features/bazel/versions.yaml
 
-bazelisk_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version bazelisk)"
-buildifier_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version buildifier)"
-starpls_lockfile_version="$(bash /usr/local/share/score-tools/tool_lockfile_helpers.sh version starpls)"
+bazelisk_lockfile_version="$(python3 /usr/local/share/score-tools/tool_installer.py version bazelisk)"
+buildifier_lockfile_version="$(python3 /usr/local/share/score-tools/tool_installer.py version buildifier)"
+starpls_lockfile_version="$(python3 /usr/local/share/score-tools/tool_installer.py version starpls)"
 # Bazel-related tools
 ## This is the bazel version preinstalled in the devcontainer.
 ## A solid test would disable the network interface first to prevent a different version from being downloaded,
