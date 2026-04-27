@@ -14,8 +14,12 @@
 # *******************************************************************************
 
 npm install -g @devcontainers/cli
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
+
+sudo bash "${REPOSITORY_ROOT}/tools/tool_lockfile_helpers.sh" install shellcheck yamlfmt
+
 pre-commit install
 
 scripts/create_builder.sh
-
-sudo apt-get update && sudo apt-get install -y shellcheck

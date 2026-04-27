@@ -30,6 +30,10 @@ set -euo pipefail
 #   source /usr/local/share/score-tools/tool_lockfile_helpers.sh
 #   score_tool_version shellcheck
 #   score_install_tool_from_lockfile buildifier
+#
+# Direct usage:
+#   bash ./tool_lockfile_helpers.sh install shellcheck yamlfmt
+#   bash ./tool_lockfile_helpers.sh version shellcheck
 
 # Resolve the helper location once when the file is sourced. This keeps the
 # script self-contained: as long as the `.sh`, `.py`, and `lockfiles/`
@@ -145,3 +149,31 @@ score_install_tool_from_lockfile() {
             ;;
     esac
 }
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    command="${1:-}"
+    shift || true
+
+    case "${command}" in
+        install)
+            if [[ "$#" -lt 1 ]]; then
+                echo "Usage: $0 install <tool> [tool...]" >&2
+                exit 2
+            fi
+            for tool_name in "$@"; do
+                score_install_tool_from_lockfile "${tool_name}"
+            done
+            ;;
+        version)
+            if [[ "$#" -lt 1 || "$#" -gt 2 ]]; then
+                echo "Usage: $0 version <tool> [lockfile]" >&2
+                exit 2
+            fi
+            score_tool_version "$@"
+            ;;
+        *)
+            echo "Usage: $0 <install|version> <tool> [tool...]" >&2
+            exit 2
+            ;;
+    esac
+fi
