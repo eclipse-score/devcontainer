@@ -13,6 +13,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Unified entry point for running a CLI tool by name.
+# Inside a container the tool is expected on PATH; outside, it is resolved via Bazel.
+# See tools/README.md for the rationale behind supporting both paths.
+
 set -euo pipefail
 
 if [[ "$#" -lt 1 ]]; then
