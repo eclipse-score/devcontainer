@@ -18,7 +18,7 @@ npm install -g @devcontainers/cli
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-sudo python3 "${REPOSITORY_ROOT}/tools/tool_installer.py" install shellcheck yamlfmt
+sudo "${REPOSITORY_ROOT}/tools/tool_installer.py" install shellcheck yamlfmt
 
 pre-commit install
 

@@ -40,7 +40,7 @@ apt-get update
 apt-get install apt-transport-https -y
 
 # Lockfile-managed Bazel tooling
-python3 /usr/local/share/score-tools/tool_installer.py install bazelisk buildifier starpls
+/usr/local/share/score-tools/tool_installer.py install bazelisk buildifier starpls
 
 # Bazelisk + Bazel
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -16,8 +17,8 @@ Dependency-free (stdlib only) so devcontainer feature installers can use it
 without extra packages.
 
 Usage:
-  python3 tool_installer.py install shellcheck yamlfmt
-  python3 tool_installer.py version shellcheck
+  tool_installer.py install shellcheck yamlfmt
+  tool_installer.py version shellcheck
 """
 
 # pyright: reportAny=false, reportUnusedCallResult=false, reportExplicitAny=false
