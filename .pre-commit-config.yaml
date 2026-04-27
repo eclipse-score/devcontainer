@@ -34,7 +34,6 @@ repos:
         name: shellcheck
         entry: tools/run_tool.sh shellcheck
         language: system
-        args: [-e, SC1091]
         types: [shell]
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
