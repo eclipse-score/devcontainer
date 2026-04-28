@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
+  "yamlfmt": {
+    "version": "0.17.0",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "yamlfmt",
+        "url": "https://github.com/google/yamlfmt/releases/download/v0.17.0/yamlfmt_0.17.0_Darwin_arm64.tar.gz",
+        "sha256": "1be37d76a79caa5073ce342de24f7b8b2509c2a482178286f44b72835469052b",
+        "type": "tar.gz",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "yamlfmt",
+        "url": "https://github.com/google/yamlfmt/releases/download/v0.17.0/yamlfmt_0.17.0_Linux_x86_64.tar.gz",
+        "sha256": "e91dd8722001596b8e4777a29d4a526a10ff276c4ff8a5ae39ff59be5a033054",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "file": "yamlfmt",
+        "url": "https://github.com/google/yamlfmt/releases/download/v0.17.0/yamlfmt_0.17.0_Linux_arm64.tar.gz",
+        "sha256": "ebe78a5547dac68f05a01c9a2845901b3c658095432b107bef3084dfe0b2629d",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}

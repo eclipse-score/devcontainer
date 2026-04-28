@@ -33,6 +33,7 @@ ENV no_proxy=${no_proxy}
 LABEL dev.containers.features="common"
 
 # Unset proxy variables for all login shells
-COPY unset-proxy.sh /etc/bash_completion.d/unset-proxy.sh
+COPY src/s-core-devcontainer/.devcontainer/unset-proxy.sh /etc/bash_completion.d/unset-proxy.sh
+COPY tools /usr/local/share/score-tools
 
 RUN userdel -f -r ubuntu

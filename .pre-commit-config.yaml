@@ -22,14 +22,19 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-added-large-files
         args: [--maxkb=50, --enforce-all] # increase or add git lfs if too strict
-  - repo: https://github.com/google/yamlfmt
-    rev: 21ca5323a9c87ee37a434e0ca908efc0a89daa07 # v0.21.0
+        exclude: ^MODULE\.bazel\.lock$
+  - repo: local
     hooks:
       - id: yamlfmt
-  - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 38980559e3a605691d6579f96222c30778e5a69e # 3.0.0
-    hooks:
+        name: yamlfmt
+        entry: tools/run_tool.sh yamlfmt
+        language: system
+        types: [yaml]
       - id: shellcheck
+        name: shellcheck
+        entry: tools/run_tool.sh shellcheck
+        language: system
+        types: [shell]
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

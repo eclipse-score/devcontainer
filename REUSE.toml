@@ -25,7 +25,9 @@ SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
 path = ["resources/reopen_in_container.png",
-        "resources/devcontainer_success.png"
+        "resources/devcontainer_success.png",
+        "tools/lockfiles/*.lock.json",
+        "MODULE.bazel.lock",
         ]
 SPDX-FileCopyrightText = "Copyright (c) 2026 Contributors to the Eclipse Foundation"
 SPDX-License-Identifier = "Apache-2.0"

@@ -2,7 +2,7 @@
     "build": {
         // Installs latest version from the Distribution
         "dockerfile": "./${localEnv:DEVCONTAINER_DOCKERFILE_NAME:Dockerfile}",
-        "context": ".",
+        "context": "../../../",
         "args": {
             "HTTP_PROXY": "${localEnv:HTTP_PROXY}",
             "HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",

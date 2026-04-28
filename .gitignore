@@ -15,3 +15,12 @@
 # Exported image files shall never be committed.
 /export.img
 build/
+
+# bazel files
+/bazel-*
+
+# AI
+/.codex
+
+# Python files
+*.pyc

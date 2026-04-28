@@ -24,3 +24,6 @@ disable=SC2046
 
 # optional checks, fixes might not be easy and better not break the code
 disable=SC2292,SC2154,SC2312
+
+# SC1091: Not following sourced files that are not specified as input
+disable=SC1091
