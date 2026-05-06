@@ -71,9 +71,11 @@ jobs:
             # Test
             ./scripts/test.sh
 
-            # Test external repository
-            ./scripts/test_external_repo.sh "https://github.com/eclipse-score/inc_someip_gateway.git" "14a733a1f3d5f6fa76ac13365d57c8df30b62a86"
-            ./scripts/test_external_repo.sh "https://github.com/eclipse-score/score.git" "7cbb86d54dced80e33a6405bc92f8abe62200ad4"
+            # Test external repository, arm64 is skipped because not all bazel dependencies are available for arm64
+            if [ "${{ matrix.os }}" = "amd64" ] && ( [ "${{ github.event_name }}" != "pull_request" ] || echo "${{ toJSON(github.event.pull_request.labels) }}" | grep -q "test-external-repos" ); then
+              ./scripts/test_external_repo.sh "https://github.com/eclipse-score/inc_someip_gateway.git" "14a733a1f3d5f6fa76ac13365d57c8df30b62a86"
+              ./scripts/test_external_repo.sh "https://github.com/eclipse-score/score.git" "7cbb86d54dced80e33a6405bc92f8abe62200ad4"
+            fi
 
             # Optionally: Publish
             # We do not use the push feature of devcontainers/ci here, since that would push the wrong container.
