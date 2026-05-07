@@ -39,6 +39,10 @@ This is done to detect breaking changes before releasing a new devcontainer imag
 By default these are not run in pull requests, but in the merge queue and pushes to main to save time.
 If these shall be run in the pull request add the **`test-consumer`** label to a pull request.
 
+> [!NOTE]
+> Github may not trigger a new workflow run after the label is set.
+> You need to push another commit for that.
+
 ## Release Automation
 
 Releases are cut automatically once per week from `main`, but only if commits were added since the latest `v<major>.<minor>.<patch>` tag.
