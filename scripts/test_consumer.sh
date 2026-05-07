@@ -15,9 +15,13 @@
 
 set -euxo pipefail
 
-# Usage: test-external-repo.sh <repo-url> [revision] [devcontainer-image]
+# Usage: test_consumer.sh <repo-url> [revision] [devcontainer-image]
+# Tests that a consumer repository can be built and tested using the devcontainer.
+# It is checked that these commands work without errors:
+#   - bazel build //...
+#   - bazel test //...
 # Parameters:
-#   repo-url             : Git URL of the external repository
+#   repo-url             : Git URL of the consumer repository
 #   revision             : Git branch/tag/commit (default: main)
 
 REPO_URL="${1:?Repository URL is required}"
