@@ -18,7 +18,7 @@ SPDX-License-Identifier: Apache-2.0
 This repository contains the common [development container](https://containers.dev) for [Eclipse S-CORE](https://github.com/eclipse-score).
 It contains all tools required to develop (modify, build, ...) Eclipse S-CORE.
 All tool version are well-defined, and all tools are pre-configured to work as expected for Eclipse S-CORE development.
-The container is [pre-built](https://containers.dev/guide/prebuild) in GitHub Actions as part of this repository, tested, published, and ready for use.
+The container is [pre-built](https://containers.dev/guide/prebuild) in GitHub Actions as part of this repository, [tested, published](./docs/ci.md), and ready for use.
 
 Using the pre-built container in an Eclipse S-CORE repository is described in the [Usage](#usage) section.
 
@@ -311,6 +311,10 @@ Concretely, this can be done as follows:
 The Visual Studio Code instance related to the targeted S-CORE module will now ask you to rebuild the DevContainer.
 If not, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>p</kbd> and run from there "Dev Containers: Rebuilt Container Without Cache".
 Do so, and you have a running instance of `S-CORE DevContainer` related to the targeted S-CORE module.
+
+### Consumer tests
+
+To enable consumer tests in the pull request, read the [ci.md](./docs/ci.md) document.
 
 ### Version Pinning
 

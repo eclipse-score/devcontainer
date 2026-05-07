@@ -98,14 +98,3 @@ It strengthens the supply chain by pinning versions and hashes, sourcing feature
 Pre-built images have a higer availability than the set of all tools which are installed (one download from a location controlled by S-CORE vs. many downloads from "everywhere").
 Pre-built images can be easily archived anywhere, e.g. for reproducibility of builds in real production use-cases.
 It also enforces a clear separation of concerns: general tooling is delivered through reusable features, S-CORE–specific logic lives in a dedicated feature, and image composition plus publishing are centralized.
-
-## Release Automation
-
-Releases are cut automatically once per week from `main`, but only if commits were added since the latest `v<major>.<minor>.<patch>` tag.
-The scheduled workflow creates the git tag and GitHub release, and the existing tag-triggered release workflow then builds, tests and publishes the matching container image.
-
-The next semantic version is derived from commit messages since the previous release:
-
-* breaking changes (`!` in the conventional commit header or `BREAKING CHANGE:` in the body) increment the major version
-* `feat` commits increment the minor version
-* every other commit increments the patch version so maintenance-only weeks still publish a new immutable image
