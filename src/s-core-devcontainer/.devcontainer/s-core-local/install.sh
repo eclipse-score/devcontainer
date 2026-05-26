@@ -96,6 +96,9 @@ apt-get install -y gdb="${gdb_version}*"
 
 apt-get install -y valgrind="1:${valgrind_version}*"
 
+# lcov - code coverage reporting for C/C++
+apt-get install -y lcov="${lcov_version}*"
+
 # CodeQL
 apt-get install -y zstd
 if [ "${ARCHITECTURE}" = "amd64" ]; then
