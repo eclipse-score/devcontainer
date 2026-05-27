@@ -92,6 +92,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [build]
     if: ${{ !cancelled() }}
+    permissions: {}
     steps:
       - name: Successful verification
         if: ${{ !(contains(needs.*.result, 'failure')) }}
