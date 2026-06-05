@@ -79,6 +79,7 @@ check "validate uvx is working and has the correct version" bash -c "uvx --versi
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
+check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
 if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
     check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
     check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
