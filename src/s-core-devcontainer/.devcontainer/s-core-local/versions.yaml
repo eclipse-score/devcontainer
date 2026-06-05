@@ -47,5 +47,7 @@ codeql_coding_standards:
   version: 2.54.0
 valgrind:
   version: 3.22.0
+ripgrep:
+  version: 14.1.0
 lcov:
   version: 2.0
