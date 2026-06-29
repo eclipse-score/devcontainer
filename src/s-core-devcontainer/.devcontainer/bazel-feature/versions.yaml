@@ -11,8 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 bazel:
-  # https://github.com/bazelbuild/bazel/releases -- latest version as of 2025-09-24
-  version: 8.4.1
+  version: 8.6.0
   # no need to define sha256 here, as bazel is installed via bazelisk
 bazel_compile_commands:
   version: 0.18.0
