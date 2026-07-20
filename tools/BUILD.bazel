@@ -15,47 +15,25 @@ package(default_visibility = ["//visibility:public"])
 
 exports_files(glob(["lockfiles/*.lock.json"]))
 
-alias(
-    name = "actionlint",
-    actual = "@multitool//tools/actionlint:cwd",
-)
+def multitool_aliases(name):
+    """Creates aliases for a rules_multitool tool."""
 
-alias(
-    name = "bazelisk",
-    actual = "@multitool//tools/bazelisk:cwd",
-)
+    native.alias(
+        name = name,
+        actual = "@multitool//tools/{0}:cwd".format(name),
+    )
 
-alias(
-    name = "buildifier",
-    actual = "@multitool//tools/buildifier:cwd",
-)
+    native.alias(
+        name = name + "_binary",
+        actual = "@multitool//tools/{0}:{0}".format(name),
+    )
 
-alias(
-    name = "ruff",
-    actual = "@multitool//tools/ruff:cwd",
-)
-
-alias(
-    name = "shellcheck",
-    actual = "@multitool//tools/shellcheck:cwd",
-)
-
-alias(
-    name = "starpls",
-    actual = "@multitool//tools/starpls:cwd",
-)
-
-alias(
-    name = "uv",
-    actual = "@multitool//tools/uv:cwd",
-)
-
-alias(
-    name = "uvx",
-    actual = "@multitool//tools/uvx:cwd",
-)
-
-alias(
-    name = "yamlfmt",
-    actual = "@multitool//tools/yamlfmt:cwd",
-)
+multitool_aliases("actionlint")
+multitool_aliases("bazelisk")
+multitool_aliases("buildifier")
+multitool_aliases("ruff")
+multitool_aliases("shellcheck")
+multitool_aliases("starpls")
+multitool_aliases("uv")
+multitool_aliases("uvx")
+multitool_aliases("yamlfmt")
