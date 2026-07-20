@@ -11,22 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load(":multitool.bzl", "multitool_aliases")
+
 package(default_visibility = ["//visibility:public"])
 
 exports_files(glob(["lockfiles/*.lock.json"]))
-
-def multitool_aliases(name):
-    """Creates aliases for a rules_multitool tool."""
-
-    native.alias(
-        name = name,
-        actual = "@multitool//tools/{0}:cwd".format(name),
-    )
-
-    native.alias(
-        name = name + "_binary",
-        actual = "@multitool//tools/{0}:{0}".format(name),
-    )
 
 multitool_aliases("actionlint")
 multitool_aliases("bazelisk")
