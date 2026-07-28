@@ -171,6 +171,28 @@ if [ "${VARIANT}" != "noinstall" ]; then
     done
 fi
 
+# APM
+if [ "${KERNEL}" = "Linux" ] && [ "${ARCHITECTURE}" = "amd64" ]; then
+    APM_VARIANT=x86_64
+    APM_SHA256SUM="${apm_amd64_sha256}"
+elif [ "${KERNEL}" = "Linux" ] && [ "${ARCHITECTURE}" = "arm64" ]; then
+    APM_VARIANT=arm64
+    APM_SHA256SUM="${apm_arm64_sha256}"
+else
+    echo "APM unsupported architecture/os: ${ARCHITECTURE} on ${KERNEL}, skipping installation"
+    APM_VARIANT=noinstall
+fi
+
+if [ "${APM_VARIANT}" != "noinstall" ]; then
+    apm_install_dir="/usr/local/apm"
+    curl -L "https://github.com/microsoft/apm/releases/download/v${apm_version}/apm-linux-${APM_VARIANT}.tar.gz" -o /tmp/apm.tar.gz
+    echo "${APM_SHA256SUM} /tmp/apm.tar.gz" | sha256sum -c - || exit 1
+    mkdir -p "${apm_install_dir}"
+    tar -xzf /tmp/apm.tar.gz -C "${apm_install_dir}"
+    ln -s "${apm_install_dir}/apm-linux-${APM_VARIANT}/apm" /usr/local/bin/apm
+    rm /tmp/apm.tar.gz
+fi
+
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
 apt-get remove --purge -y apt-transport-https zstd

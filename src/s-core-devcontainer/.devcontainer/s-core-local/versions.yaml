@@ -43,6 +43,12 @@ codeql:
   arm64:
     # see https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-osx64.tar.zst.checksum.txt
     sha256: 810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399
+apm:
+  version: 0.26.0
+  amd64:
+    sha256: 3afba455c5283852ba4c392f668be7c27b65bc4a0fa60a8b53a4626c52628431
+  arm64:
+    sha256: c4d6b5ab6d9bdca3c3c324db7ce8d1c4faf7b317f45a55a50ae2571eaa506d25
 codeql_coding_standards:
   version: 2.54.0
 valgrind:

@@ -168,6 +168,11 @@ codeql database analyze _sca/codeql_data \
   --output=_sca/codeql-results.sarif
 ```
 
+### How to use: apm
+
+The pinned Microsoft Agent Package Manager (APM) CLI is installed and
+available on `PATH` for Linux amd64 and arm64 containers.
+
 ### QNX Support in Your Repository
 
 QNX support cannot be provided generically in this shared devcontainer image and has to be configured per repository.

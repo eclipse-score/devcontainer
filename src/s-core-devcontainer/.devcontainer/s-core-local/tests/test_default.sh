@@ -85,6 +85,10 @@ if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${
     check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
 fi
 
+if [ "${KERNEL}" = "Linux" ] && { [ "${ARCHITECTURE}" = "amd64" ] || [ "${ARCHITECTURE}" = "arm64" ]; }; then
+    check "validate apm is working and has the correct version" bash -c "apm --version | grep '${apm_version}'"
+fi
+
 # lcov
 check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"
 
