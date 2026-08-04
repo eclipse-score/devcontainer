@@ -51,3 +51,5 @@ ripgrep:
   version: 14.1.0
 lcov:
   version: 2.0
+apm:
+  version: 0.27.0
