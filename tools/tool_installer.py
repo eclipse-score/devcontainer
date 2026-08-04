@@ -49,6 +49,7 @@ class Binary(TypedDict):
     sha256: str
     type: NotRequired[str]
     file: NotRequired[str]
+    dir: NotRequired[str]
 
 
 class ToolData(TypedDict):
@@ -172,6 +173,38 @@ def _extract_member(
         raise SystemExit(f"Unsupported archive type '{archive_type}' for {tool}")
 
 
+def _extract_dir(
+    binary: Binary, archive_path: Path, out_dir: Path, tool: str
+) -> None:
+    """Extract a directory from a tar archive, stripping the top-level prefix."""
+    archive_type = binary.get("type", "")
+    dir_prefix = binary.get("dir")
+    if dir_prefix is None:
+        raise SystemExit(f"Binary entry for {tool} does not define 'dir' field")
+    prefix = dir_prefix.rstrip("/") + "/"
+
+    if archive_type not in ("tar.gz", "tgz", "tar.xz", "txz"):
+        raise SystemExit(f"archive-dir only supports tar archives, got '{archive_type}' for {tool}")
+
+    with tarfile.open(archive_path) as tf:
+        for member in tf.getmembers():
+            if not member.name.startswith(prefix):
+                continue
+            rel = member.name[len(prefix):]
+            if not rel:
+                continue
+            dest = out_dir / rel
+            if member.isdir():
+                dest.mkdir(parents=True, exist_ok=True)
+            elif member.isfile():
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                reader = tf.extractfile(member)
+                if reader is not None:
+                    dest.write_bytes(reader.read())
+                if member.mode & 0o111:
+                    dest.chmod(dest.stat().st_mode | 0o111)
+
+
 def _cmd_install(args: argparse.Namespace) -> int:
     """Download, verify, and install tools from the lockfile catalog."""
     dest_dir = Path(args.destination)
@@ -206,6 +239,12 @@ def _cmd_install(args: argparse.Namespace) -> int:
                 _extract_member(binary, download, extracted, tool)
                 if extracted.exists():
                     _place_binary(extracted, destination)
+            elif kind == "archive-dir":
+                extracted_dir = tmp / "extracted_dir"
+                extracted_dir.mkdir()
+                _extract_dir(binary, download, extracted_dir, tool)
+                shutil.copytree(str(extracted_dir), str(dest_dir), dirs_exist_ok=True)
+                (dest_dir / tool).chmod(0o755)
             else:
                 raise SystemExit(f"Unsupported kind '{kind}' for {tool}")
 
