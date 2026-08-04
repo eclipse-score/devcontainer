@@ -27,6 +27,7 @@ actionlint_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py ve
 yamlfmt_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version yamlfmt)"
 uv_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version uv)"
 uvx_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version uvx)"
+apm_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version apm)"
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
 check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"
@@ -70,6 +71,9 @@ check "validate actionlint is working and has the correct version" bash -c "acti
 
 # yamlfmt
 check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_lockfile_version}'"
+
+# apm
+check "validate apm is working and has the correct version" bash -c "apm --version | grep '${apm_lockfile_version}'"
 
 # uv
 check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_lockfile_version}'"
