@@ -177,32 +177,31 @@ def _extract_dir(
     binary: Binary, archive_path: Path, out_dir: Path, tool: str
 ) -> None:
     """Extract a directory from a tar archive, stripping the top-level prefix."""
-    archive_type = binary.get("type", "")
     dir_prefix = binary.get("dir")
     if dir_prefix is None:
         raise SystemExit(f"Binary entry for {tool} does not define 'dir' field")
     prefix = dir_prefix.rstrip("/") + "/"
 
-    if archive_type not in ("tar.gz", "tgz", "tar.xz", "txz"):
-        raise SystemExit(f"archive-dir only supports tar archives, got '{archive_type}' for {tool}")
-
-    with tarfile.open(archive_path) as tf:
-        for member in tf.getmembers():
-            if not member.name.startswith(prefix):
-                continue
-            rel = member.name[len(prefix):]
-            if not rel:
-                continue
-            dest = out_dir / rel
-            if member.isdir():
-                dest.mkdir(parents=True, exist_ok=True)
-            elif member.isfile():
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                reader = tf.extractfile(member)
-                if reader is not None:
-                    dest.write_bytes(reader.read())
-                if member.mode & 0o111:
-                    dest.chmod(dest.stat().st_mode | 0o111)
+    try:
+        with tarfile.open(archive_path) as tf:
+            for member in tf.getmembers():
+                if not member.name.startswith(prefix):
+                    continue
+                rel = member.name[len(prefix):]
+                if not rel:
+                    continue
+                dest = out_dir / rel
+                if member.isdir():
+                    dest.mkdir(parents=True, exist_ok=True)
+                elif member.isfile():
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    reader = tf.extractfile(member)
+                    if reader is not None:
+                        dest.write_bytes(reader.read())
+                    if member.mode & 0o111:
+                        dest.chmod(dest.stat().st_mode | 0o111)
+    except tarfile.TarError as exc:
+        raise SystemExit(f"Failed to extract tar archive for {tool}: {exc}") from exc
 
 
 def _cmd_install(args: argparse.Namespace) -> int:
