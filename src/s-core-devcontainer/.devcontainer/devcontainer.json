@@ -54,6 +54,7 @@
                 "llvm-vs-code-extensions.vscode-clangd",
                 "jebbs.plantuml", // preview PlantUML diagrams
                 "hediet.vscode-drawio", // Draw.IO integration
+                "sst-dev.opencode", // OpenCode VS Code extension
                 "swyddfa.esbonio", // for Sphinx documentation support
                 "rust-lang.rust-analyzer", // Rust language support for Visual Studio Code; see also tasks below
                 "github.vscode-pull-request-github", // GitHub integration

@@ -53,3 +53,5 @@ lcov:
   version: 2.0
 apm:
   version: 0.27.0
+opencode:
+  version: 1.18.15
