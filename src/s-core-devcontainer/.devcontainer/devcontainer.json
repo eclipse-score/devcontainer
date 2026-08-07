@@ -1,7 +1,4 @@
 {
-    "initializeCommand": {
-        "Stage optional host opencode config": "sh -c 'set -eu; src=\"${HOME:-${USERPROFILE:-}}/.config/opencode\"; dst=\"src/s-core-devcontainer/.devcontainer/.host-config/opencode\"; if [ -d \"$src\" ]; then rm -rf \"$dst\"; mkdir -p \"$dst\"; cp -a \"$src/.\" \"$dst/\"; echo \"Staged OpenCode host config from $src\"; else rm -rf \"$dst\"; echo \"No OpenCode host config found at $src; skipping\"; fi'"
-    },
     "build": {
         // Installs latest version from the Distribution
         "dockerfile": "./${localEnv:DEVCONTAINER_DOCKERFILE_NAME:Dockerfile}",
@@ -41,9 +38,6 @@
         "./bazel-feature"
     ],
     "remoteUser": "vscode",
-    "postStartCommand": {
-        "Sync staged opencode config": "bash /devcontainer/features/s-core-local/sync_opencode_config.sh"
-    },
     "customizations": {
         "vscode": {
             "extensions": [

@@ -78,7 +78,6 @@ check "validate apm is working and has the correct version" bash -c "apm --versi
 
 # opencode
 check "validate opencode is working and has the correct version" bash -c "opencode --version | grep '${opencode_lockfile_version}'"
-check "validate OpenCode config sync script is safe without staged host config" bash -c "bash /devcontainer/features/s-core-local/sync_opencode_config.sh"
 
 # uv
 check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_lockfile_version}'"
