@@ -10,6 +10,7 @@
     },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
     "postCreateCommand": {
+        "Fix ownership of mounted config volumes": "bash /devcontainer/features/s-core-local/fix_config_volume_ownership.sh",
         "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh",
         "Enable pre-commit hooks": "bash /devcontainer/features/s-core-local/enable_pre_commit_hooks.sh"
     },
