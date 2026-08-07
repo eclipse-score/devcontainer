@@ -238,6 +238,20 @@ USER ${USERNAME}
 > [!NOTE]
 > - `.netrc` is a practical way to provide myQNX credentials without committing secrets into the repository.
 
+### Optional OpenCode Host Configuration
+
+The development container can import an OpenCode configuration from the host, if present.
+This is intentionally implemented as an optional sync, not as a required bind mount.
+
+Behavior:
+
+1. During `initializeCommand` on the host, `${HOME}/.config/opencode` is checked.
+2. If it exists, it is staged into `src/s-core-devcontainer/.devcontainer/.host-config/opencode` in this repository.
+3. Inside the container, the staged content is copied to `/home/vscode/.config/opencode` during create/start hooks.
+4. If host configuration is missing, the steps are skipped and container startup continues normally.
+
+This allows users with OpenCode host configuration to reuse it in the container, while keeping the setup safe for users who do not use OpenCode.
+
 ## Development
 
 > [!NOTE]
