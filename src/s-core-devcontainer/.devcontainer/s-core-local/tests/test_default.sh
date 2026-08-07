@@ -80,6 +80,7 @@ check "validate pycairo can be built and installed from source" bash -c "pip ins
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
+check "validate pkg-config is working and has the correct version" bash -c "pkg-config --version | grep '${pkg_config_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
 check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
