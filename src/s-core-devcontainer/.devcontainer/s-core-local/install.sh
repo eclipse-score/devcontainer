@@ -91,6 +91,9 @@ su $(ls /home) -c "uv tool install pytest@\"${pytest_version}\""
 # sshpass
 apt-get install -y sshpass="${sshpass_version}*"
 
+# pycairo build dependencies (pkg-config + cairo headers needed when pip builds pycairo from source)
+apt-get install -y pkg-config="${pkg_config_version}*" libcairo2-dev="${libcairo2_dev_version}*"
+
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"
 
