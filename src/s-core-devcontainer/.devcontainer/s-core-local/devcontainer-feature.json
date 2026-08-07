@@ -31,6 +31,11 @@
             "type": "volume"
         },
         {
+            "source": "opencode-config",
+            "target": "/home/vscode/.local/share/opencode",
+            "type": "volume"
+        },
+        {
             "source": "gh-config",
             "target": "/home/vscode/.config/gh",
             "type": "volume"

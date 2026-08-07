@@ -37,4 +37,5 @@ ensure_owner() {
 }
 
 ensure_owner "/home/vscode/.config/opencode"
+ensure_owner "/home/vscode/.local/share/opencode"
 ensure_owner "/home/vscode/.config/gh"
