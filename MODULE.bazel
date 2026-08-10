@@ -26,6 +26,7 @@ multitool.hub(lockfile = "//tools:lockfiles/buildifier.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/starpls.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/bazelisk.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/apm.lock.json")
+multitool.hub(lockfile = "//tools:lockfiles/opencode.lock.json")
 
 use_repo(multitool, "multitool")
 

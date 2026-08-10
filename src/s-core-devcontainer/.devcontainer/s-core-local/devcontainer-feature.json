@@ -10,6 +10,7 @@
     },
     "onCreateCommand": "/devcontainer/features/s-core-local/on_create_command.sh",
     "postCreateCommand": {
+        "Fix ownership of mounted config volumes": "bash /devcontainer/features/s-core-local/fix_config_volume_ownership.sh",
         "Setup persistent bash history": "bash /devcontainer/features/s-core-local/setup_command_history.sh",
         "Enable pre-commit hooks": "bash /devcontainer/features/s-core-local/enable_pre_commit_hooks.sh"
     },
@@ -17,6 +18,26 @@
         {
             "source": "eclipse-s-core-bash-history-${devcontainerId}",
             "target": "/commandhistory",
+            "type": "volume"
+        },
+        // Persisting the configuration of the OpenCode CLI and GitHub CLI tools.
+        // A nice way would be to copy the configuration files to the host machine,
+        // but this is not possible in a devcontainer feature or prebuild devcontainer image,
+        // so we use volumes instead.
+        // `initializeCommand` is only run by the `devcontainer.json` of the using repo and from the image.
+        {
+            "source": "opencode-config",
+            "target": "/home/vscode/.config/opencode",
+            "type": "volume"
+        },
+        {
+            "source": "opencode-config",
+            "target": "/home/vscode/.local/share/opencode",
+            "type": "volume"
+        },
+        {
+            "source": "gh-config",
+            "target": "/home/vscode/.config/gh",
             "type": "volume"
         }
     ]
