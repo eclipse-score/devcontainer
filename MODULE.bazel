@@ -16,7 +16,6 @@ module(name = "score_devcontainer")
 bazel_dep(name = "rules_multitool", version = "1.11.1")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
-
 multitool.hub(lockfile = "//tools:lockfiles/actionlint.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/ruff.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/shellcheck.lock.json")
@@ -25,7 +24,6 @@ multitool.hub(lockfile = "//tools:lockfiles/uv.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/buildifier.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/starpls.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/bazelisk.lock.json")
-
 use_repo(multitool, "multitool")
 
 register_toolchains("@multitool//toolchains:all")
