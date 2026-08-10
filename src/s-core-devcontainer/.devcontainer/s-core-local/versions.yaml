@@ -55,3 +55,7 @@ apm:
   version: 0.27.0
 opencode:
   version: 1.18.15
+pkg_config:
+  version: 1.8.1
+libcairo2_dev:
+  version: 1.18.0
