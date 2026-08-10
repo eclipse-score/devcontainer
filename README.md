@@ -140,6 +140,14 @@ should run successfully.
 > `/var/cache/bazel/` is the path onto which a Docker volume is mounted.
 > Unless you have setup the same on your host, this will only make `linux-sandbox` work within the devcontainer.
 
+### `gh` and `opencode` configuration
+
+This devcontainer includes the `gh` and `opencode` tools, but does not include any configuration for them.
+Configuration is *not* copied from the host into the container, but is instead stored in Docker volumes.
+
+This avoids any host dependencies and a complex machinery to copy configuration from the host into the container.
+Configure these tools inside the container and they will be kept until the volumes are removed across container rebuilds and different repositories.
+
 ### How to use: codeql
 
 The devcontainer codeql installation supports C, C++ and Rust source code analysis. All publicly available

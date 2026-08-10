@@ -44,6 +44,9 @@ if docker buildx inspect multiarch &>/dev/null; then
   if ! check_proxy_config; then
     echo "Builder 'multiarch' exists but has incorrect proxy configuration. Recreating..."
     docker buildx rm multiarch
+  elif ! docker buildx inspect multiarch --bootstrap &>/dev/null; then
+    echo "Builder 'multiarch' exists but is unhealthy. Recreating..."
+    docker buildx rm multiarch
   else
     echo "Builder 'multiarch' already exists with correct configuration."
     docker buildx use multiarch
