@@ -140,13 +140,117 @@ should run successfully.
 > `/var/cache/bazel/` is the path onto which a Docker volume is mounted.
 > Unless you have setup the same on your host, this will only make `linux-sandbox` work within the devcontainer.
 
-### `gh` and `opencode` configuration
+### Persistent Tool Configurations
 
-This devcontainer includes the `gh` and `opencode` tools, but does not include any configuration for them.
-Configuration is *not* copied from the host into the container, but is instead stored in Docker volumes.
+This devcontainer stores selected tool state in Docker volumes.
+Configuration is *not* copied from the host into the container.
+Configure these tools once inside the container and reuse the same state after rebuilds.
+You do not need to create directories on your host (macOS, Windows/WSL2, or Linux); Docker creates and mounts these named volumes inside the container automatically.
 
-This avoids any host dependencies and a complex machinery to copy configuration from the host into the container.
-Configure these tools inside the container and they will be kept until the volumes are removed across container rebuilds and different repositories.
+#### Bash Command History
+
+Command history is written to a volume-backed file and reused in future sessions.
+
+- Persisted file: `/commandhistory/.bash_history`
+- Enabled by default via `PROMPT_COMMAND='history -a'` and `HISTFILE=/commandhistory/.bash_history`
+
+Example:
+
+```bash
+# Inside the container
+bazel test //...
+git status
+
+# Rebuild/reopen the devcontainer, then run:
+history | tail -n 20
+# The earlier commands are still present.
+```
+
+#### GitHub CLI (`gh`) Configuration
+
+The `gh` configuration directory is mounted from a Docker volume.
+
+- Persisted path: `$HOME/.config/gh`
+- Typical persisted files: `hosts.yml`, `config.yml`
+
+Setup example:
+
+```bash
+gh auth login
+gh auth status
+```
+
+After rebuild/reopen:
+
+```bash
+gh auth status
+gh api user --jq '.login'
+```
+
+#### OpenCode (`opencode`) Configuration
+
+The `opencode` configuration and data directories are mounted from a Docker volume.
+For further details on OpenCode, see the [OpenCode documentation](https://opencode.ai/docs).
+
+- Persisted paths:
+  - `$HOME/.config/opencode`
+  - `$HOME/.local/share/opencode`
+
+Setup example:
+
+```bash
+# Use your usual opencode configuration flow
+opencode --help
+
+# Optional quick check that directories exist.
+# If the config directory does not exist yet, start OpenCode once or create it manually;
+# OpenCode typically creates it on first use.
+ls -la "$HOME/.config/opencode"
+ls -la "$HOME/.local/share/opencode"
+```
+
+#### APM
+
+For further details on APM, see the [APM documentation](https://microsoft.github.io/apm/).
+
+#### Verify After Rebuild
+
+After `Rebuild Container` or `Reopen in Container`, run:
+
+```bash
+# Bash history still available
+history | tail -n 10
+
+# gh still authenticated
+gh auth status
+
+# opencode config/data directories still present
+test -d "$HOME/.config/opencode" && echo "opencode config: OK"
+test -d "$HOME/.local/share/opencode" && echo "opencode data: OK"
+```
+
+#### Volume Scope and Reset
+
+These volumes are stored on your host and survive container rebuilds and deletion:
+
+- `eclipse-s-core-bash-history-${devcontainerId}` (bash history)
+- `gh-config` (GitHub CLI config)
+- `opencode-config` (OpenCode config + data)
+
+> [!IMPORTANT]
+> `gh-config` and `opencode-config` are shared host-local volumes.
+> That means multiple devcontainers on the same machine reuse the same `gh`/`opencode` state.
+
+To reset configuration, remove the corresponding volume on the host:
+
+```bash
+docker volume rm gh-config
+docker volume rm opencode-config
+# Bash history reset depends on the generated devcontainerId suffix:
+docker volume ls | grep eclipse-s-core-bash-history
+```
+
+Removing a volume permanently deletes the stored configuration/history for that volume.
 
 ### How to use: codeql
 

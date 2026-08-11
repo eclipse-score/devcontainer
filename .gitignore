@@ -24,3 +24,6 @@ build/
 
 # Python files
 *.pyc
+
+#MacOS
+.DS_Store
