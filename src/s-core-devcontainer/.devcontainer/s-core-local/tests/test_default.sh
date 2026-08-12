@@ -19,16 +19,16 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /devcontainer/features/s-core-local/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
 
-shellcheck_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version shellcheck)"
-ruff_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version ruff)"
-actionlint_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version actionlint)"
-yamlfmt_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version yamlfmt)"
-uv_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version uv)"
-uvx_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version uvx)"
-apm_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version apm)"
-opencode_lockfile_version="$(/usr/local/share/score-tools/tool_installer.py version opencode)"
+shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
+ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"
+actionlint_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version actionlint)"
+yamlfmt_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version yamlfmt)"
+uv_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version uv)"
+uvx_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version uvx)"
+apm_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version apm)"
+opencode_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version opencode)"
 
 # pre-commit, it is available via $PATH in login shells, but not in non-login shells
 check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"

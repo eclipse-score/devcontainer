@@ -11,14 +11,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Install pinned tools from the `tools/lockfiles/*.lock.json` catalog.
+"""Install pinned tools from the shared `tools/lockfiles` catalog.
 
 Dependency-free (stdlib only) so devcontainer feature installers can use it
 without extra packages.
 
 Usage:
-  tool_installer.py install shellcheck yamlfmt
-  tool_installer.py version shellcheck
+  install.py install shellcheck yamlfmt
+  install.py version shellcheck
 """
 
 # pyright: reportAny=false, reportUnusedCallResult=false, reportExplicitAny=false
@@ -59,7 +59,33 @@ class ToolData(TypedDict):
     binaries: list[Binary]
 
 
-LOCKFILE_ROOT = Path(__file__).resolve().parent / "lockfiles"
+LOCKFILE_ROOT = Path(__file__).resolve().parents[2] / "lockfiles"
+
+
+def load_catalog_versions() -> dict[str, str]:
+    """Return every tool version declared by the lockfile catalog."""
+    versions: dict[str, str] = {}
+
+    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
+        with path.open(encoding="utf-8") as handle:
+            data = json.load(handle)
+
+        for tool, definition in data.items():
+            if tool.startswith("$"):
+                continue
+            if not isinstance(definition, dict):
+                raise SystemExit(f"Unexpected entry '{tool}' in '{path.name}'")
+
+            version = definition.get("version")
+            if not isinstance(version, str):
+                raise SystemExit(
+                    f"Tool '{tool}' in '{path.name}' does not define a string version"
+                )
+            if tool in versions:
+                raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+            versions[tool] = version
+
+    return versions
 
 
 def _detect_os() -> str:
@@ -133,6 +159,16 @@ def _select_binary(tool_data: ToolData, os_name: str, cpu: str) -> Binary:
 
 def _cmd_version(args: argparse.Namespace) -> int:
     """Print the declared version for one tool."""
+    if args.lockfile is None:
+        versions = load_catalog_versions()
+        try:
+            print(versions[args.tool])
+        except KeyError as exc:
+            raise SystemExit(
+                f"Tool '{args.tool}' not found in lockfile catalog"
+            ) from exc
+        return 0
+
     args.lockfile = _resolve_lockfile(args.tool, args.lockfile)
     tool_data = _load_tool(args.lockfile, args.tool)
     version = tool_data.get("version")
@@ -173,9 +209,7 @@ def _extract_member(
         raise SystemExit(f"Unsupported archive type '{archive_type}' for {tool}")
 
 
-def _extract_dir(
-    binary: Binary, archive_path: Path, out_dir: Path, tool: str
-) -> None:
+def _extract_dir(binary: Binary, archive_path: Path, out_dir: Path, tool: str) -> None:
     """Extract a directory from a tar archive, stripping the top-level prefix."""
     dir_prefix = binary.get("dir")
     if dir_prefix is None:
@@ -187,7 +221,7 @@ def _extract_dir(
             for member in tf.getmembers():
                 if not member.name.startswith(prefix):
                     continue
-                rel = member.name[len(prefix):]
+                rel = member.name[len(prefix) :]
                 if not rel:
                     continue
                 dest = out_dir / rel

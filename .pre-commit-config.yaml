@@ -37,14 +37,20 @@ repos:
         pass_filenames: false
       - id: yamlfmt
         name: yamlfmt
-        entry: tools/run_tool.sh yamlfmt
+        entry: tools/run-tool yamlfmt
         language: system
         types: [yaml]
       - id: shellcheck
         name: shellcheck
-        entry: tools/run_tool.sh shellcheck
+        entry: tools/run-tool shellcheck
         language: system
         types: [shell]
+      - id: tool-documentation
+        name: check tool documentation
+        entry: python3 tools/internal/sync_readme.py --check
+        language: system
+        pass_filenames: false
+        files: ^tools/(README\.md|internal/sync_readme\.py|lockfiles/.*\.lock\.json)$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

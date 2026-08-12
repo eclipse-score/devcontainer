@@ -14,315 +14,69 @@ SPDX-License-Identifier: Apache-2.0
 *******************************************************************************
 -->
 
-# Tooling Strategy: Reproducible CLI Tools Across Development Environments
+# Pinned command-line tools
 
-> This document complements the general infrastructure direction defined in
-> [DR-001 Infrastructure Design Decision](https://eclipse-score.github.io/score/main/design_decisions/DR-001-infra.html)
-> and specifies how CLI tooling is provided across environments.
+S-CORE repositories run the tools listed below through one interface:
+`.devcontainer/run-tool`. Use it inside and outside the DevContainer so local
+development, hooks, and CI select the same pinned version.
 
-## Purpose
+## Quick start
 
-We provide selected CLI tools such as `actionlint` and `shellcheck` in a reproducible way across supported development environments.
-
-The goal is simple:
-
-- same tool versions
-- same behavior
-- same results
-
-independent of how developers choose to work.
-
----
-
-## Strategy
-
-We support two ways to access the same tooling:
-
-- **DevContainer**
-- **Bazel via `rules_multitool`**
-
-Both are supported intentionally.
-
-Not all developers work the same way. Some prefer a fully managed environment, others prefer to stay on their host system. Both workflows exist in practice, and both need to produce identical results.
-
-![Tooling architecture](arch.svg)
-
----
-
-## Design Principle
-
-> Reproducibility is required.
-> The execution path is a developer choice.
-
-This means:
-
-- no reliance on system-installed tools
-- no hidden dependencies
-- no environment-specific behavior
-
----
-
-## DevContainer
-
-The DevContainer provides:
-
-- a ready-to-use environment
-- minimal setup effort
-- predictable tooling
-
-For many developers, this is the most straightforward option.
-
----
-
-## Bazel-Based Tool Access
-
-We additionally expose tools via Bazel using [`rules_multitool`](https://github.com/bazel-contrib/rules_multitool).
-
-Example usage:
-- `bazel run //tools:actionlint`
-- `bazel run //tools:shellcheck`
-
-This exists primarily to support workflows outside the DevContainer.
-
-It allows:
-
-- reproducible tool execution on the host
-- consistent versions across platforms
-- alignment with CI execution
-
-At the same time, invoking standalone tools through a build system is not always the most ergonomic experience. The setup therefore focuses on making this path reliable rather than minimal.
-
----
-
-## Why We Support Both
-
-In practice:
-
-- some developers use the DevContainer
-- some developers do not
-- some switch between both depending on the task
-
-Relying on only one of these paths would either:
-
-- reduce adoption (DevContainer-only), or
-- introduce inconsistencies (native-only)
-
-Supporting both allows flexibility without sacrificing consistency.
-
----
-
-## Why `rules_multitool`
-
-We use [`rules_multitool`](https://github.com/bazel-contrib/rules_multitool) to provide:
-
-- pinned tool versions
-- checksum verification
-- platform-specific binaries (Linux x64, macOS arm64)
-- a uniform way to expose CLI tools via Bazel
-
-This is particularly useful for standalone tools such as:
-
-- `actionlint`
-- `shellcheck`
-
-The alternative would be to manually maintain platform mappings, download logic, and wrappers for each tool. At scale, that quickly turns into a parallel infrastructure effort.
-
----
-
-## Why This Approach
-
-This setup reflects the actual constraints:
-
-- large number of users
-- multiple host platforms
-- mixed development workflows
-- need for consistent results across local and CI
-
-A single enforced workflow would simplify the model, but would not match how the system is used in reality.
-
----
-
-## Alternatives Considered
-
-### DevContainer only
-
-Conceptually simple, but assumes universal adoption. In practice, that assumption does not hold, leading to gaps in reproducibility.
-
----
-
-### Bazel toolchains
-
-Technically correct and very powerful, but introduce significantly more complexity than needed for standalone CLI tools.
-
----
-
-## Why Use a Niche Solution
-
-`rules_multitool` is not widely used, and that is expected.
-
-Most teams:
-
-- operate on a single platform (usually Linux)
-- rely on CI-only validation
-- accept minor inconsistencies in local setups
-
-Under those conditions, simpler approaches are sufficient.
-
-Our setup differs:
-
-- cross-platform development (Linux + macOS ARM)
-- large team size
-- frequent local execution of tools
-- low tolerance for inconsistencies
-
-In this context, reproducibility becomes more important than minimizing tooling layers.
-
----
-
-## Source of Truth
-
-For tools downloaded directly from upstream release artifacts that participate
-in the shared lockfile-based setup, the authoritative metadata lives in the
-`tools/lockfiles/*.lock.json` files.
-
-These lockfiles define:
-
-- supported platforms
-- download URLs
-- checksums
-- archive or package layout
-
-Both Bazel via `rules_multitool` and the DevContainer installation scripts
-consume the same lockfiles.
-
-Feature installation scripts must not duplicate version, URL, or checksum data
-for these tools.
-
-Tools that are currently still managed directly inside a feature script, or via
-the distribution package manager, remain managed elsewhere.
-
----
-
-## Using From Another Repository
-
-There are two supported Bazel usage patterns for consumers outside this
-repository.
-
-### Option 1: Reuse the exported tool targets directly
-
-If another repository wants to use the exact targets defined here, it can depend
-on this module and run the tools through external labels.
-
-Consumer `MODULE.bazel`:
-
-```starlark
-module(name = "consumer")
-
-bazel_dep(name = "score_devcontainer", version = "1.4.1")
+```console
+$ .devcontainer/run-tool shellcheck scripts/example.sh
+$ .devcontainer/run-tool ruff check .
 ```
 
-Then run the tools through the exported targets from this repository:
+Everything after the command is passed to that command. In the DevContainer,
+the runner executes its installed executable. Outside the container, it runs
+the matching Bazel target. The first host-side invocation may require network
+access while Bazel downloads and caches the executable.
 
-- `bazel run @score_devcontainer//tools:actionlint -- --version`
-- `bazel run @score_devcontainer//tools:shellcheck -- --version`
-- `bazel run @score_devcontainer//tools:ruff -- --version`
+## Available tools
 
-If the consumer wants local target names, it can keep option 1 and add local
-aliases on top:
+<!-- BEGIN GENERATED TOOL TABLE -->
+<!-- Generated by internal/sync_readme.py; do not edit manually. -->
 
-Consumer `BUILD.bazel`:
+| Command | Version | Purpose |
+| --- | --- | --- |
+| `actionlint` | `1.7.7` | Check GitHub Actions workflow files |
+| `apm` | `0.27.0` | Manage APM packages |
+| `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
+| `buildifier` | `8.2.1` | Format and lint Bazel files |
+| `opencode` | `1.18.15` | Run the OpenCode CLI |
+| `ruff` | `0.11.13` | Check and format Python code |
+| `shellcheck` | `0.10.0` | Check shell scripts |
+| `starpls` | `0.1.22` | Provide language-server support for Starlark |
+| `uv` | `0.10.4` | Manage Python projects and packages |
+| `uvx` | `0.10.4` | Run Python tools in isolated environments |
+| `yamlfmt` | `0.17.0` | Format YAML files |
 
-```starlark
-alias(
-    name = "shellcheck",
-    actual = "@score_devcontainer//tools:shellcheck",
-)
+<!-- END GENERATED TOOL TABLE -->
 
-alias(
-    name = "actionlint",
-    actual = "@score_devcontainer//tools:actionlint",
-)
+Pass `--help` through the runner to see a command's own documentation:
+
+```console
+$ .devcontainer/run-tool shellcheck --help
 ```
 
-Then run:
+## Add the runner to a repository
 
-- `bazel run //:shellcheck -- --version`
-- `bazel run //:actionlint -- --version`
+Copy the maintained [`run-tool`](run-tool) to `.devcontainer/run-tool` in the
+consumer repository and make it executable.
 
-This is the simplest option if the consumer wants the targets defined here, but
-prefers local labels in its own repository.
-
-### Option 2: Reuse the lockfiles, but define local targets in the consumer
-
-If another repository wants to keep its own target names, it can import the
-lockfiles exported by this repository and create its own `rules_multitool` hub.
-
-The lockfiles are exported as files from the top-level `tools` package, so the
-external labels look like this:
-
-- `@score_devcontainer//tools:lockfiles/actionlint.lock.json`
-- `@score_devcontainer//tools:lockfiles/shellcheck.lock.json`
-
-Consumer `MODULE.bazel`:
+Pin that release as a module dependency in the repository's `MODULE.bazel`:
 
 ```starlark
-module(name = "consumer")
-
-bazel_dep(name = "rules_multitool", version = "1.11.1")
-bazel_dep(name = "score_devcontainer", version = "1.4.1")
-
-multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
-
-multitool.hub(lockfile = "@score_devcontainer//tools:lockfiles/shellcheck.lock.json")
-multitool.hub(lockfile = "@score_devcontainer//tools:lockfiles/actionlint.lock.json")
-
-use_repo(multitool, "multitool")
-register_toolchains("@multitool//toolchains:all")
+bazel_dep(name = "score_devcontainer", version = "<version>")
 ```
 
-Consumer `BUILD.bazel`:
+Replace `<version>` with the S-CORE DevContainer release used by the
+repository. Use the same release for the Bazel module and the DevContainer
+image; otherwise the command set or versions can differ.
 
-```starlark
-alias(
-    name = "shellcheck",
-    actual = "@multitool//tools/shellcheck:cwd",
-)
+Outside the container, a `bazel` executable must be on `PATH`. Install Bazel
+or Bazelisk as `bazel` before the first host-side invocation; it bootstraps
+access to the catalog.
 
-alias(
-    name = "actionlint",
-    actual = "@multitool//tools/actionlint:cwd",
-)
-```
-
-Then run:
-
-- `bazel run //:shellcheck -- --version`
-- `bazel run //:actionlint -- --version`
-
-This option is useful if the consumer wants to share the pinned tool metadata
-but expose its own wrapper targets.
-
-### Version alignment
-
-The `score_devcontainer` Bazel module version corresponds to the DevContainer
-image version. Repositories that use both the DevContainer and the Bazel module
-must pin the same version to ensure identical tool versions in both paths.
-
-### Notes
-
-- The lockfile labels above are intended as the cross-repository API for Bazel
-  consumers.
-- The lockfile shell installer in this directory is internal support code for
-  the DevContainer image build. It is not intended as a stable cross-repository
-  API.
-
----
-
-## Summary
-
-We provide:
-
-- a **DevContainer** for convenience and quick setup
-- **Bazel-based tooling** for reproducible execution outside the container
-
-This combination allows developers to choose their workflow while ensuring consistent and predictable results across the project.
+Implementation and maintenance details are in
+[internal/README.md](internal/README.md).

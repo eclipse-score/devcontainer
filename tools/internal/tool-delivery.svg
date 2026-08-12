@@ -4,7 +4,7 @@ Copyright (c) 2026 Contributors to the Eclipse Foundation
 SPDX-License-Identifier: Apache-2.0
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="320" viewBox="0 0 920 320" role="img" aria-labelledby="title desc">
-  <title id="title">Tooling architecture</title>
+  <title id="title">Pinned command-line tool delivery</title>
   <desc id="desc">A shared lockfile catalog feeds DevContainer installation scripts and Bazel rules_multitool targets, giving both execution paths the same tool versions and checksums.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">

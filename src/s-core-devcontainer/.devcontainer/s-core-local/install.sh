@@ -31,7 +31,7 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /devcontainer/features/s-core-local/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
@@ -58,7 +58,7 @@ apt-get install -y "python${python_version}" python3-pip python3-venv
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
 # Lockfile-managed local developer tools
-/usr/local/share/score-tools/tool_installer.py install shellcheck ruff actionlint yamlfmt uv uvx apm opencode
+/usr/local/share/score-tools/internal/devcontainer/install.py install shellcheck ruff actionlint yamlfmt uv uvx apm opencode
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz
