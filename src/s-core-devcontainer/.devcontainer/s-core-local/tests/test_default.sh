@@ -30,8 +30,13 @@ uvx_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/insta
 apm_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version apm)"
 opencode_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version opencode)"
 
-# pre-commit, it is available via $PATH in login shells, but not in non-login shells
-check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '4.5.1'"
+# The shared catalog is the assertion source, so installation metadata and the
+# executable exposed on PATH are checked against the same release.
+pre_commit_catalog_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version pre-commit)"
+
+# Verify the system-wide uv installation exposes the catalogued release to the
+# non-root user running feature tests.
+check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '${pre_commit_catalog_version}'"
 
 # Common tooling
 check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_lockfile_version}'"

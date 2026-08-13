@@ -18,8 +18,17 @@ npm install -g @devcontainers/cli
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install actionlint bazelisk buildifier ruff shellcheck yamlfmt
+# Install uv and uvx from the native lockfile first. The pinned uv release then
+# resolves every Python distribution declared in the shared catalog.
+sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install actionlint bazelisk buildifier ruff shellcheck uv uvx yamlfmt
 
+# Install the catalogued Python distribution system-wide. The explicit
+# directories avoid root-specific uv defaults and make pre-commit available to
+# the non-root development user.
+sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-python pre-commit \
+    --bin-dir /usr/local/bin --tool-dir /usr/local/share/uv/tools
+
+# Hooks can only be registered after the catalogued executable is on PATH.
 pre-commit install
 
 scripts/create_builder.sh

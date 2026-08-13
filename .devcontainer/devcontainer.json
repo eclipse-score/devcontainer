@@ -3,9 +3,6 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:4": {
             "moby": "false" // does not work with Debian Trixie based images
-        },
-        "ghcr.io/devcontainers-extra/features/pre-commit:2": {
-            "version": "4.5.1"
         }
     },
     "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post_create_command.sh",
