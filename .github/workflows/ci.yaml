@@ -11,10 +11,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 name: Validate DevContainer
-description: This workflow is checking that updates do not break stuff. If on main branch, publish to "latest" tag.
+# This workflow is checking that updates do not break stuff. If on main branch, publish to "latest" tag.
 on:
   pull_request:
-    -types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled]
   push:
     branches:
       - main

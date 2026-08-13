@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 name: Validate PR Title
-description: This workflow validates pull request titles against semantic conventions.
+# This workflow validates pull request titles against semantic conventions.
 on:
   pull_request_target:
     types:

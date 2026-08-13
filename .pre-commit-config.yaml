@@ -45,6 +45,11 @@ repos:
         entry: tools/run_tool.sh shellcheck
         language: system
         types: [shell]
+      - id: actionlint
+        name: actionlint
+        entry: tools/run_tool.sh actionlint
+        language: system
+        files: ^\.github/workflows/.*\.(yml|yaml)$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:
