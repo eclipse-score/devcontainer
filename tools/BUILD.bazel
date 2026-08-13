@@ -18,13 +18,23 @@ package(default_visibility = ["//visibility:public"])
 exports_files(glob(["lockfiles/*.lock.json"]))
 
 multitool_aliases("actionlint")
+
 multitool_aliases("bazelisk")
+
 multitool_aliases("buildifier")
+
 multitool_aliases("ruff")
+
 multitool_aliases("shellcheck")
+
 multitool_aliases("starpls")
+
 multitool_aliases("uv")
+
 multitool_aliases("uvx")
+
 multitool_aliases("yamlfmt")
+
 multitool_aliases("apm")
+
 multitool_aliases("opencode")

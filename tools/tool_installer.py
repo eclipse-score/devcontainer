@@ -173,9 +173,7 @@ def _extract_member(
         raise SystemExit(f"Unsupported archive type '{archive_type}' for {tool}")
 
 
-def _extract_dir(
-    binary: Binary, archive_path: Path, out_dir: Path, tool: str
-) -> None:
+def _extract_dir(binary: Binary, archive_path: Path, out_dir: Path, tool: str) -> None:
     """Extract a directory from a tar archive, stripping the top-level prefix."""
     dir_prefix = binary.get("dir")
     if dir_prefix is None:
@@ -187,7 +185,7 @@ def _extract_dir(
             for member in tf.getmembers():
                 if not member.name.startswith(prefix):
                     continue
-                rel = member.name[len(prefix):]
+                rel = member.name[len(prefix) :]
                 if not rel:
                     continue
                 dest = out_dir / rel
