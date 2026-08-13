@@ -55,9 +55,19 @@ repos:
         entry: tools/run-tool shellcheck
         language: system
         types: [shell]
+      - id: ruff-format
+        name: ruff format
+        entry: tools/run-tool ruff format
+        language: system
+        types: [python]
+      - id: ruff-check
+        name: ruff check
+        entry: tools/run-tool ruff check --fix
+        language: system
+        types: [python]
       - id: tool-documentation
         name: check tool documentation
-        entry: python3 tools/internal/sync_readme.py --check
+        entry: python3 tools/internal/sync_readme.py
         language: system
         pass_filenames: false
         files: ^tools/(README\.md|internal/(sync_readme\.py|devcontainer/install\.py)|lockfiles/.*\.lock\.json)$

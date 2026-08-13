@@ -29,7 +29,7 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/bazel/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 

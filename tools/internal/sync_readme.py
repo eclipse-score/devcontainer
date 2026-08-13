@@ -18,7 +18,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from devcontainer.install import load_catalog_versions
+from devcontainer.install import load_catalog_descriptions, load_catalog_versions
 
 
 TOOLS_DIR = Path(__file__).resolve().parent.parent
@@ -26,31 +26,11 @@ README_PATH = TOOLS_DIR / "README.md"
 TABLE_START = "<!-- BEGIN GENERATED TOOL TABLE -->"
 TABLE_END = "<!-- END GENERATED TOOL TABLE -->"
 
-PURPOSES = {
-    "actionlint": "Check GitHub Actions workflow files",
-    "apm": "Manage APM packages",
-    "bazelisk": "Run the Bazel version selected by a repository",
-    "buildifier": "Format and lint Bazel files",
-    "opencode": "Run the OpenCode CLI",
-    "ruff": "Check and format Python code",
-    "shellcheck": "Check shell scripts",
-    "starpls": "Provide language-server support for Starlark",
-    "uv": "Manage Python projects and packages",
-    "uvx": "Run Python tools in isolated environments",
-    "yamlfmt": "Format YAML files",
-}
 
-
-def _render_table(versions: dict[str, str]) -> str:
-    undocumented = sorted(versions.keys() - PURPOSES.keys())
-    stale_purposes = sorted(PURPOSES.keys() - versions.keys())
+def _render_table(versions: dict[str, str], descriptions: dict[str, str]) -> str:
+    undocumented = sorted(versions.keys() - descriptions.keys())
     if undocumented:
         raise SystemExit("Missing tool descriptions for: " + ", ".join(undocumented))
-    if stale_purposes:
-        raise SystemExit(
-            "Descriptions exist without lockfile entries for: "
-            + ", ".join(stale_purposes)
-        )
 
     rows = [
         TABLE_START,
@@ -60,7 +40,7 @@ def _render_table(versions: dict[str, str]) -> str:
         "| --- | --- | --- |",
     ]
     rows.extend(
-        f"| `{command}` | `{versions[command]}` | {PURPOSES[command]} |"
+        f"| `{command}` | `{versions[command]}` | {descriptions[command]} |"
         for command in sorted(versions)
     )
     rows.extend(["", TABLE_END])
@@ -82,25 +62,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Synchronize README tool versions with lockfiles.",
     )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Fail instead of updating README.md when the generated table differs.",
-    )
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
 
     current = README_PATH.read_text(encoding="utf-8")
-    expected = _updated_readme(current, _render_table(load_catalog_versions()))
+    table = _render_table(load_catalog_versions(), load_catalog_descriptions())
+    expected = _updated_readme(current, table)
 
     if current == expected:
         return 0
-    if args.check:
-        print(
-            "tools/README.md is out of date; run "
-            "'python3 tools/internal/sync_readme.py'",
-            file=sys.stderr,
-        )
-        return 1
 
     README_PATH.write_text(expected, encoding="utf-8")
     return 0

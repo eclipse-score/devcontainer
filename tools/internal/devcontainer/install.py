@@ -37,6 +37,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 from typing import NotRequired, TypedDict
+from collections.abc import Iterator
 
 
 class Binary(TypedDict):
@@ -56,16 +57,15 @@ class ToolData(TypedDict):
     """Tool metadata from a lockfile entry."""
 
     version: NotRequired[str]
+    description: NotRequired[str]
     binaries: list[Binary]
 
 
 LOCKFILE_ROOT = Path(__file__).resolve().parents[2] / "lockfiles"
 
 
-def load_catalog_versions() -> dict[str, str]:
-    """Return every tool version declared by the lockfile catalog."""
-    versions: dict[str, str] = {}
-
+def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
+    """Yield (tool, lockfile filename, definition) for every catalog entry."""
     for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
         with path.open(encoding="utf-8") as handle:
             data = json.load(handle)
@@ -75,17 +75,48 @@ def load_catalog_versions() -> dict[str, str]:
                 continue
             if not isinstance(definition, dict):
                 raise SystemExit(f"Unexpected entry '{tool}' in '{path.name}'")
+            yield tool, path.name, definition
 
-            version = definition.get("version")
-            if not isinstance(version, str):
-                raise SystemExit(
-                    f"Tool '{tool}' in '{path.name}' does not define a string version"
-                )
-            if tool in versions:
-                raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
-            versions[tool] = version
+
+def load_catalog_versions() -> dict[str, str]:
+    """Return every tool version declared by the lockfile catalog."""
+    versions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        version = definition.get("version")
+        if not isinstance(version, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' does not define a string version"
+            )
+        if tool in versions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        versions[tool] = version
 
     return versions
+
+
+def load_catalog_descriptions() -> dict[str, str]:
+    """Return every tool description declared by the lockfile catalog.
+
+    Tools without a description are omitted so callers can report a
+    friendly list of undocumented tools instead of failing on the first
+    one encountered.
+    """
+    descriptions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        description = definition.get("description")
+        if description is None:
+            continue
+        if not isinstance(description, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' has a non-string description"
+            )
+        if tool in descriptions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        descriptions[tool] = description
+
+    return descriptions
 
 
 def _detect_os() -> str:

@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "actionlint": {
     "version": "1.7.7",
+    "description": "Check GitHub Actions workflow files",
     "binaries": [
       {
         "kind": "archive",
