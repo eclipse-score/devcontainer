@@ -111,9 +111,9 @@ publishes them together. The installer can locate a command in a differently
 named lockfile, but an explicit `--lockfile` remains available for ambiguous
 cases.
 
-To remove a command, remove it from the same integration points. Then run the
-documentation check below; it rejects command descriptions without a catalog
-entry and catalog entries without a description.
+To remove a command, remove it from the same integration points. Then run
+`sync_readme.py` (see below); it rejects command descriptions without a
+catalog entry and catalog entries without a description.
 
 ## Validation and release alignment
 
@@ -124,11 +124,8 @@ description:
 $ python3 tools/internal/sync_readme.py
 ```
 
-Use `--check` in automation to reject stale generated content:
-
-```console
-$ python3 tools/internal/sync_readme.py --check
-```
+The pre-commit hook runs the same command; pre-commit rejects the commit if
+running it changes `tools/README.md`, so a stale table cannot be committed.
 
 Run the feature test for every installer changed. The feature tests read their
 expected versions from the catalog, which verifies that the DevContainer and

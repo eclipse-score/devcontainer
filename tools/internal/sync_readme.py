@@ -82,25 +82,13 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Synchronize README tool versions with lockfiles.",
     )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Fail instead of updating README.md when the generated table differs.",
-    )
-    args = parser.parse_args(argv)
+    parser.parse_args(argv)
 
     current = README_PATH.read_text(encoding="utf-8")
     expected = _updated_readme(current, _render_table(load_catalog_versions()))
 
     if current == expected:
         return 0
-    if args.check:
-        print(
-            "tools/README.md is out of date; run "
-            "'python3 tools/internal/sync_readme.py'",
-            file=sys.stderr,
-        )
-        return 1
 
     README_PATH.write_text(expected, encoding="utf-8")
     return 0

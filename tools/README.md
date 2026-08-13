@@ -45,7 +45,7 @@ access while Bazel downloads and caches the executable.
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `1.18.15` | Run the OpenCode CLI |
 | `ruff` | `0.11.13` | Check and format Python code |
-| `shellcheck` | `0.10.0` | Check shell scripts |
+| `shellcheck` | `9.9.9` | Check shell scripts |
 | `starpls` | `0.1.22` | Provide language-server support for Starlark |
 | `uv` | `0.10.4` | Manage Python projects and packages |
 | `uvx` | `0.10.4` | Run Python tools in isolated environments |

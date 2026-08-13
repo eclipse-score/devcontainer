@@ -57,7 +57,7 @@ repos:
         types: [python]
       - id: tool-documentation
         name: check tool documentation
-        entry: python3 tools/internal/sync_readme.py --check
+        entry: python3 tools/internal/sync_readme.py
         language: system
         pass_filenames: false
         files: ^tools/(README\.md|internal/sync_readme\.py|lockfiles/.*\.lock\.json)$
