@@ -145,9 +145,9 @@ both delivery paths.
 ## Rationale and boundaries
 
 The runner supports mixed workflows without exposing two user interfaces. A
-container-only implementation would not cover developers working on Linux or
-macOS hosts, while arbitrary system-installed tools would lose version
-alignment.
+container-only implementation would not cover developers who do not run the
+DevContainer at all, while arbitrary system-installed tools would lose
+version alignment with those who do.
 
 Full Bazel toolchains remain appropriate for tools that participate in build
 actions or platform transitions. They add unnecessary complexity for the
