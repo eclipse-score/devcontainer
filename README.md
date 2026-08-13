@@ -388,7 +388,7 @@ There should rarely be a need to modify this.
 This repo uses [`reuse`](https://codeberg.org/fsfe/reuse-tool) to check for and validate licenses and copyrights.
 Checks are performend via pre-commit hooks.
 
-If you want to run it standalone run `pipx run reuse lint` in a terminal.
+If you want to run it standalone, run `tools/run-tool uvx reuse lint` in a terminal.
 To fix found issues run `scripts/run_reuse_annotate.sh`.
 
 ### Modify, Build, Test, Use

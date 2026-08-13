@@ -28,7 +28,8 @@ files_to_annotate=$(comm -23 <(git ls-files | sort) <(echo "${deleted_files}" | 
 
 # shellcheck disable=SC2086
 # Expansion of ${files_to_annotate} is intentional to pass the list of files as separate arguments to the reuse annotate command.
-pipx run reuse annotate --template apache-2.0 --merge-copyrights --recursive --skip-unrecognised \
+# The shared runner supplies the catalogued uvx binary in containers and Bazel.
+tools/run-tool uvx reuse annotate --template apache-2.0 --merge-copyrights --recursive --skip-unrecognised \
  --copyright="Contributors to the Eclipse Foundation" --license=Apache-2.0 ${files_to_annotate}
 
 popd > /dev/null

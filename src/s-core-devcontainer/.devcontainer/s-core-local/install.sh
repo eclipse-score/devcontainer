@@ -36,11 +36,6 @@ DEBIAN_FRONTEND=noninteractive
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
-# always add PIPX_BIN_DIR to path
-PIPX_BIN_DIR_EXPORT="$(grep "export PIPX_BIN_DIR" /etc/bash.bashrc)"
-eval "${PIPX_BIN_DIR_EXPORT}"
-echo -e "PATH=\"${PIPX_BIN_DIR}:\$PATH\"\nexport PATH" >> /etc/profile.d/pipx_bin_dir.sh
-
 apt-get update
 
 # Unminimize the image to include standard packages like man pages
