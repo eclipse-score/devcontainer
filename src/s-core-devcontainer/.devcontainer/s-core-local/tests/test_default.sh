@@ -101,5 +101,6 @@ fi
 check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"
 
 # Qemu target-related tools
-check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_arm_version}'"
+check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version}'"
+check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version}'"
 check "validate sshpass is working and has the correct version" bash -c "sshpass -V | grep '${sshpass_version}'"

@@ -16,7 +16,7 @@ graphviz:
   version: 2.42.2
 protobuf_compiler:
   version: 3.21.12
-qemu_system_arm:
+qemu_system:
   version: 1:8.2.2
 sshpass:
   version: 1.09

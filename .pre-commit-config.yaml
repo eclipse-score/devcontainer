@@ -40,6 +40,16 @@ repos:
         entry: tools/run-tool yamlfmt
         language: system
         types: [yaml]
+      - id: ruff-format
+        name: ruff format
+        entry: tools/run-tool ruff format
+        language: system
+        types: [python]
+      - id: buildifier
+        name: buildifier
+        entry: tools/run-tool buildifier
+        language: system
+        types: [bazel]
       - id: shellcheck
         name: shellcheck
         entry: tools/run-tool shellcheck
@@ -50,7 +60,12 @@ repos:
         entry: python3 tools/internal/sync_readme.py --check
         language: system
         pass_filenames: false
-        files: ^tools/(README\.md|internal/sync_readme\.py|lockfiles/.*\.lock\.json)$
+        files: ^tools/(README\.md|internal/(sync_readme\.py|devcontainer/install\.py)|lockfiles/.*\.lock\.json)$
+      - id: ruff-check
+        name: ruff check
+        entry: tools/run-tool ruff check
+        language: system
+        types: [python]
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

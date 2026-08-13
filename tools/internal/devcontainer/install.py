@@ -268,10 +268,19 @@ def _cmd_install(args: argparse.Namespace) -> int:
             if kind == "file":
                 _place_binary(download, destination)
             elif kind == "archive":
-                extracted = tmp / "extracted"
-                _extract_member(binary, download, extracted, tool)
-                if extracted.exists():
-                    _place_binary(extracted, destination)
+                if "dir" in binary:
+                    extracted_dir = tmp / "extracted_dir"
+                    extracted_dir.mkdir()
+                    _extract_dir(binary, download, extracted_dir, tool)
+                    shutil.copytree(
+                        str(extracted_dir), str(dest_dir), dirs_exist_ok=True
+                    )
+                    destination.chmod(0o755)
+                else:
+                    extracted = tmp / "extracted"
+                    _extract_member(binary, download, extracted, tool)
+                    if extracted.exists():
+                        _place_binary(extracted, destination)
             elif kind == "archive-dir":
                 extracted_dir = tmp / "extracted_dir"
                 extracted_dir.mkdir()

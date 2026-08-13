@@ -45,9 +45,7 @@ def _render_table(versions: dict[str, str]) -> str:
     undocumented = sorted(versions.keys() - PURPOSES.keys())
     stale_purposes = sorted(PURPOSES.keys() - versions.keys())
     if undocumented:
-        raise SystemExit(
-            "Missing tool descriptions for: " + ", ".join(undocumented)
-        )
+        raise SystemExit("Missing tool descriptions for: " + ", ".join(undocumented))
     if stale_purposes:
         raise SystemExit(
             "Descriptions exist without lockfile entries for: "
