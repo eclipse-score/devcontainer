@@ -63,6 +63,14 @@ jobs:
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit 1
 
+            # A fake uv executable makes the launcher contract deterministic:
+            # arguments, cwd, and environment are checked without network I/O.
+            bazelisk test //tools:python_tool_runner_test --test_output=errors
+
+            # The real target covers the integration boundary between
+            # rules_multitool, Bazel runfiles, uvx, and the Python package.
+            bazelisk run //tools:pre-commit -- --version
+
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
 

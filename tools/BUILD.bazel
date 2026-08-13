@@ -11,11 +11,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load(":multitool.bzl", "multitool_aliases")
+load(":python_tool.bzl", "python_tool")
 
 package(default_visibility = ["//visibility:public"])
 
-exports_files(glob(["lockfiles/*.lock.json"]))
+# Native lockfiles are consumed by rules_multitool; the Starlark catalog is
+# loaded directly by python_tool.bzl. Export both because they are public
+# metadata shipped with the score_devcontainer module.
+exports_files(glob([
+    "lockfiles/*.bzl",
+    "lockfiles/*.lock.json",
+]))
 
 multitool_aliases("actionlint")
 
@@ -38,3 +46,19 @@ multitool_aliases("yamlfmt")
 multitool_aliases("apm")
 
 multitool_aliases("opencode")
+
+# Python distributions are resolved through pinned uvx because they do not
+# provide the platform-specific release binaries consumed by rules_multitool.
+python_tool("pre-commit")
+
+# This contract test keeps Bazel's shell launcher and the container installer
+# aligned with their shared catalog.
+sh_test(
+    name = "python_tool_runner_test",
+    srcs = ["tests/python_tool_runner_test.sh"],
+    data = [
+        "internal/devcontainer/install.py",
+        "internal/run_python_tool.sh",
+        "lockfiles/python_tools.bzl",
+    ],
+)

@@ -28,16 +28,16 @@ One catalog is delivered through two execution paths:
 
 | Component | Responsibility |
 | --- | --- |
-| `tools/lockfiles/*.lock.json` | Define versions, supported platforms, download locations, checksums, and archive layouts. |
-| `MODULE.bazel` | Makes each lockfile available to `rules_multitool`. |
-| `tools/BUILD.bazel` | Exposes the public Bazel aliases for each command. |
+| `tools/lockfiles/*.lock.json` and `tools/lockfiles/python_tools.bzl` | Define versions and delivery metadata. |
+| `MODULE.bazel` | Makes native tool lockfiles available to `rules_multitool`. |
+| `tools/BUILD.bazel` | Exposes public Bazel targets for each command. |
 | Feature installers | Install the commands exposed on the DevContainer's `PATH`. |
 | `tools/run-tool` | Uses the command on `PATH` in a container when available; otherwise uses the public Bazel alias. |
 | `tools/README.md` | Documents every command and its version from the catalog. |
 
-Adding a lockfile alone does not make a command available through either
-delivery path. Add its Bazel alias and its applicable DevContainer installer
-as well. The runner is an interface selector, not a registry of commands.
+A command is available when its catalog metadata, Bazel target, and applicable
+DevContainer installer are registered together. The runner selects between
+those delivery paths; the catalogs remain the command registries.
 
 ## Architecture
 
@@ -53,9 +53,22 @@ Native tools with upstream release artifacts use
 
 The `multitool_aliases` helper exposes the `rules_multitool` `cwd` target as
 the public command. That wrapper restores `BUILD_WORKING_DIRECTORY` before
-starting a tool, so
-configuration discovery and repository-relative paths behave like a direct
-invocation.
+starting a tool, so configuration discovery and repository-relative paths
+behave like a direct invocation.
+
+Python packages do not provide the platform-specific, checksum-addressed
+release binaries expected by `rules_multitool`. Their public Bazel targets
+therefore use the `uvx` binary from `rules_multitool` to create an isolated
+environment for the exact catalogued package version. A shell launcher restores
+the caller's working directory before invoking `uvx`; using shell here is
+intentional so Python-based tools do not require a system Python installation
+on the host.
+
+The DevContainer takes the other delivery path: it installs each Python tool
+once with the catalogued `uv` binary and exposes the resulting entrypoint on
+`PATH`. Python is already part of the image before feature tools are installed,
+so the installer can use its standard library without adding a container or
+host dependency.
 
 The maintained runner source is [`run-tool`](../run-tool). It remains under
 `tools/` in this implementation repository; consumer repositories copy it to
@@ -71,6 +84,20 @@ supported platforms, download URLs, checksums, and archive layouts.
 `rules_multitool` consumes the files for Bazel;
 [`devcontainer/install.py`](devcontainer/install.py) consumes them while
 building the DevContainer.
+
+Python command-line tool metadata lives in
+[`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
+a data-only Starlark dictionary because Bazel must read the pin during analysis,
+before the command can run. Its restricted literal form is also valid Python
+syntax. The privileged DevContainer installer parses it with
+`ast.literal_eval`, preserving a data-only privilege boundary. This shared
+format keeps the package, console entrypoint, version, and description in one
+source of truth while Bazel execution remains independent of host Python.
+
+The catalogs have distinct ownership: `devcontainer-lock.json` records external
+DevContainer features, `python_tools.bzl` records Python package releases, and
+`uv.lock.json` records the installer runtime. Each version is therefore owned
+by the component that resolves it.
 
 The published `score_devcontainer` Bazel module and DevContainer image share a
 release version. Consumers using both must pin the same release.
@@ -106,6 +133,19 @@ changes together:
 7. If this repository's own DevContainer needs the command, add it to
    [`.devcontainer/post_create_command.sh`](../../.devcontainer/post_create_command.sh).
 
+For a Python command-line tool, add an entry to
+`tools/lockfiles/python_tools.bzl`, add `python_tool("<command>")` to
+`tools/BUILD.bazel`, and install it through `install.py install-python` in
+each applicable DevContainer installer. Keep the catalog as a single literal
+`PYTHON_TOOLS` assignment: this is what makes it safe for the installer and
+directly loadable by Bazel. The `package` selects the distribution passed to
+`uv`, while `entrypoint` names the console command because those names need not
+be identical.
+
+Bazel invokes Python tools on demand with the pinned `uvx`; DevContainers
+install the same package with the pinned `uv`. Add launcher and installer
+coverage to `python_tool_runner_test` when either delivery contract changes.
+
 Keep related commands such as `uv` and `uvx` in one lockfile when upstream
 publishes them together. The installer can locate a command in a differently
 named lockfile, but an explicit `--lockfile` remains available for ambiguous
@@ -133,6 +173,12 @@ lockfiles remain aligned. Publish the Bazel module and the DevContainer image
 with the same release version so consumer repositories can pin one version for
 both delivery paths.
 
+`python_tool_runner_test` uses a fake uv executable to verify arguments,
+environment variables, and working-directory behavior without network access.
+CI additionally runs the real `//tools:pre-commit` target as a smoke test
+because only that target exercises `rules_multitool`, Bazel runfiles, and uvx
+together.
+
 ## Bazel target conventions
 
 `multitool_aliases` exposes two native-tool targets:
@@ -141,6 +187,16 @@ both delivery paths.
   `bazel run`.
 - `<command>_binary` is the raw executable for use as a tool dependency in other
   Bazel rules.
+
+Python tools expose only the runnable `<command>` target. They are intended for
+interactive and CI use, not as executable dependencies in Bazel actions. The
+target embeds the catalog metadata as arguments to a shell launcher and carries
+only the pinned `uvx` executable in its runfiles, which keeps execution
+independent of host Python and avoids runtime catalog path resolution.
+
+`rules_shell` supplies the `sh_binary` and `sh_test` APIs consistently across
+the supported Bazel generations, so one BUILD definition serves every
+supported consumer.
 
 ## Rationale and boundaries
 

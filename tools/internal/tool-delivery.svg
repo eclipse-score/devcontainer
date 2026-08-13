@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="320" viewBox="0 0 920 320" role="img" aria-labelledby="title desc">
   <title id="title">Pinned command-line tool delivery</title>
-  <desc id="desc">A shared lockfile catalog feeds DevContainer installation scripts and Bazel rules_multitool targets, giving both execution paths the same tool versions and checksums.</desc>
+  <desc id="desc">A shared catalog feeds DevContainer installers and Bazel targets. Native tools use release lockfiles, while Python tools use uv for persistent container installation and uvx for on-demand Bazel execution.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#51606f"/>
@@ -56,20 +56,23 @@ SPDX-License-Identifier: Apache-2.0
   <rect width="920" height="320" fill="#ffffff"/>
 
   <rect class="box source" x="285" y="36" width="350" height="88"/>
-  <text class="title" x="460" y="72" text-anchor="middle">Shared tool lockfiles</text>
-  <text class="body" x="460" y="101" text-anchor="middle">versions, URLs, checksums, platforms</text>
+  <text class="title" x="460" y="66" text-anchor="middle">Shared tool catalog</text>
+  <text class="body" x="460" y="94" text-anchor="middle">native lockfiles: artifacts and checksums</text>
+  <text class="body" x="460" y="115" text-anchor="middle">Python catalog: packages and entrypoints</text>
 
   <rect class="box path-a" x="70" y="206" width="300" height="78"/>
   <text class="title" x="220" y="239" text-anchor="middle">DevContainer</text>
-  <text class="body" x="220" y="265" text-anchor="middle">feature installers download tools</text>
+  <text class="body" x="220" y="263" text-anchor="middle">native downloads + persistent</text>
+  <text class="body" x="220" y="281" text-anchor="middle">Python installation with uv</text>
 
   <rect class="box path-b" x="550" y="206" width="300" height="78"/>
   <text class="title" x="700" y="239" text-anchor="middle">Bazel</text>
-  <text class="body" x="700" y="265" text-anchor="middle">rules_multitool exposes targets</text>
+  <text class="body" x="700" y="263" text-anchor="middle">native targets + on-demand</text>
+  <text class="body" x="700" y="281" text-anchor="middle">Python execution with uvx</text>
 
   <path class="arrow" d="M385,124 C320,150 265,174 230,206"/>
   <path class="arrow" d="M535,124 C600,150 655,174 690,206"/>
 
-  <text class="label" x="255" y="165" text-anchor="middle">same metadata</text>
-  <text class="label" x="665" y="165" text-anchor="middle">same metadata</text>
+  <text class="label" x="255" y="165" text-anchor="middle">installer reads catalog</text>
+  <text class="label" x="665" y="165" text-anchor="middle">rules load catalog</text>
 </svg>

@@ -72,7 +72,9 @@ repos:
         entry: python3 tools/internal/sync_readme.py
         language: system
         pass_filenames: false
-        files: ^tools/(README\.md|internal/(sync_readme\.py|devcontainer/install\.py)|lockfiles/.*\.lock\.json)$
+        # Both catalog formats feed the generated table; watching both keeps
+        # user-facing versions synchronized with their sources of truth.
+        files: ^tools/(README\.md|internal/(sync_readme\.py|devcontainer/install\.py)|lockfiles/(.*\.lock\.json|python_tools\.bzl))$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:
