@@ -45,6 +45,11 @@ repos:
         entry: tools/run_tool.sh ruff format
         language: system
         types: [python]
+      - id: buildifier
+        name: buildifier
+        entry: tools/run_tool.sh buildifier
+        language: system
+        types: [bazel]
       - id: shellcheck
         name: shellcheck
         entry: tools/run_tool.sh shellcheck

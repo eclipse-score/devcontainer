@@ -18,7 +18,7 @@ npm install -g @devcontainers/cli
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-sudo "${REPOSITORY_ROOT}/tools/tool_installer.py" install bazelisk shellcheck yamlfmt ruff
+sudo "${REPOSITORY_ROOT}/tools/tool_installer.py" install bazelisk shellcheck yamlfmt ruff buildifier
 
 pre-commit install
 
