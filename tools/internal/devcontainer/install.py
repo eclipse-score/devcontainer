@@ -11,14 +11,14 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Install pinned tools from the `tools/lockfiles/*.lock.json` catalog.
+"""Install pinned tools from the shared `tools/lockfiles` catalog.
 
 Dependency-free (stdlib only) so devcontainer feature installers can use it
 without extra packages.
 
 Usage:
-  tool_installer.py install shellcheck yamlfmt
-  tool_installer.py version shellcheck
+  install.py install shellcheck yamlfmt
+  install.py version shellcheck
 """
 
 # pyright: reportAny=false, reportUnusedCallResult=false, reportExplicitAny=false
@@ -37,6 +37,7 @@ import urllib.request
 import zipfile
 from pathlib import Path
 from typing import NotRequired, TypedDict
+from collections.abc import Iterator
 
 
 class Binary(TypedDict):
@@ -56,10 +57,66 @@ class ToolData(TypedDict):
     """Tool metadata from a lockfile entry."""
 
     version: NotRequired[str]
+    description: NotRequired[str]
     binaries: list[Binary]
 
 
-LOCKFILE_ROOT = Path(__file__).resolve().parent / "lockfiles"
+LOCKFILE_ROOT = Path(__file__).resolve().parents[2] / "lockfiles"
+
+
+def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
+    """Yield (tool, lockfile filename, definition) for every catalog entry."""
+    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
+        with path.open(encoding="utf-8") as handle:
+            data = json.load(handle)
+
+        for tool, definition in data.items():
+            if tool.startswith("$"):
+                continue
+            if not isinstance(definition, dict):
+                raise SystemExit(f"Unexpected entry '{tool}' in '{path.name}'")
+            yield tool, path.name, definition
+
+
+def load_catalog_versions() -> dict[str, str]:
+    """Return every tool version declared by the lockfile catalog."""
+    versions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        version = definition.get("version")
+        if not isinstance(version, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' does not define a string version"
+            )
+        if tool in versions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        versions[tool] = version
+
+    return versions
+
+
+def load_catalog_descriptions() -> dict[str, str]:
+    """Return every tool description declared by the lockfile catalog.
+
+    Tools without a description are omitted so callers can report a
+    friendly list of undocumented tools instead of failing on the first
+    one encountered.
+    """
+    descriptions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        description = definition.get("description")
+        if description is None:
+            continue
+        if not isinstance(description, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' has a non-string description"
+            )
+        if tool in descriptions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        descriptions[tool] = description
+
+    return descriptions
 
 
 def _detect_os() -> str:
@@ -133,6 +190,16 @@ def _select_binary(tool_data: ToolData, os_name: str, cpu: str) -> Binary:
 
 def _cmd_version(args: argparse.Namespace) -> int:
     """Print the declared version for one tool."""
+    if args.lockfile is None:
+        versions = load_catalog_versions()
+        try:
+            print(versions[args.tool])
+        except KeyError as exc:
+            raise SystemExit(
+                f"Tool '{args.tool}' not found in lockfile catalog"
+            ) from exc
+        return 0
+
     args.lockfile = _resolve_lockfile(args.tool, args.lockfile)
     tool_data = _load_tool(args.lockfile, args.tool)
     version = tool_data.get("version")
@@ -232,16 +299,19 @@ def _cmd_install(args: argparse.Namespace) -> int:
             if kind == "file":
                 _place_binary(download, destination)
             elif kind == "archive":
-                extracted = tmp / "extracted"
-                _extract_member(binary, download, extracted, tool)
-                if extracted.exists():
-                    _place_binary(extracted, destination)
-            elif kind == "archive-dir":
-                extracted_dir = tmp / "extracted_dir"
-                extracted_dir.mkdir()
-                _extract_dir(binary, download, extracted_dir, tool)
-                shutil.copytree(str(extracted_dir), str(dest_dir), dirs_exist_ok=True)
-                (dest_dir / tool).chmod(0o755)
+                if "dir" in binary:
+                    extracted_dir = tmp / "extracted_dir"
+                    extracted_dir.mkdir()
+                    _extract_dir(binary, download, extracted_dir, tool)
+                    shutil.copytree(
+                        str(extracted_dir), str(dest_dir), dirs_exist_ok=True
+                    )
+                    destination.chmod(0o755)
+                else:
+                    extracted = tmp / "extracted"
+                    _extract_member(binary, download, extracted, tool)
+                    if extracted.exists():
+                        _place_binary(extracted, destination)
             else:
                 raise SystemExit(f"Unsupported kind '{kind}' for {tool}")
 

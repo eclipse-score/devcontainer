@@ -17,7 +17,7 @@ SPDX-License-Identifier: Apache-2.0
 # Common DevContainer for Eclipse S-CORE
 This repository contains the common [development container](https://containers.dev) for [Eclipse S-CORE](https://github.com/eclipse-score).
 It contains all tools required to develop (modify, build, ...) Eclipse S-CORE.
-All tool version are well-defined, and all tools are pre-configured to work as expected for Eclipse S-CORE development.
+All tool versions are well-defined, and all tools are pre-configured to work as expected for Eclipse S-CORE development.
 The container is [pre-built](https://containers.dev/guide/prebuild) in GitHub Actions as part of this repository, [tested, published](./docs/ci.md), and ready for use.
 
 Using the pre-built container in an Eclipse S-CORE repository is described in the [Usage](#usage) section.
@@ -79,7 +79,14 @@ Afterwards, Visual Studio Code should show this in the lower left corner of your
 
 ### Inside the Container
 
-Open a Terminal, and - for example - type `bazel build ...` to execute the default build of the repository.
+Open a terminal and, for example, run `bazel build ...` to execute the
+repository's default build.
+
+For pinned command-line tools that are also available outside the container,
+use the repository's `.devcontainer/run-tool` wrapper. It selects the
+container installation here and the matching Bazel target on the host. See
+[Pinned command-line tools](tools/README.md) for the supported commands and
+setup.
 
 After you have build the code, create [compilation databases](https://clang.llvm.org/docs/JSONCompilationDatabase.html) via Visual Studio Code [Task](https://code.visualstudio.com/docs/debugtest/tasks):
 

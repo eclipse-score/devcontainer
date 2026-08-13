@@ -29,7 +29,7 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 
@@ -40,7 +40,7 @@ apt-get update
 apt-get install apt-transport-https -y
 
 # Lockfile-managed Bazel tooling
-/usr/local/share/score-tools/tool_installer.py install bazelisk buildifier starpls
+/usr/local/share/score-tools/internal/devcontainer/install.py install bazelisk buildifier starpls
 
 # Bazelisk + Bazel
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
