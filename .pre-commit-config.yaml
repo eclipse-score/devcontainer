@@ -55,6 +55,11 @@ repos:
         entry: tools/run_tool.sh shellcheck
         language: system
         types: [shell]
+      - id: ruff-check
+        name: ruff check
+        entry: tools/run_tool.sh ruff check
+        language: system
+        types: [python]
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:
