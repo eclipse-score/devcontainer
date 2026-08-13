@@ -81,7 +81,8 @@ For a tool distributed as a native release artifact, make the following
 changes together:
 
 1. Add or update the multitool-compatible
-   `tools/lockfiles/<command>.lock.json`.
+   `tools/lockfiles/<command>.lock.json`, including a `description` field
+   for each tool entry (used to generate the README table).
 2. Register the lockfile with `multitool.hub` in the root
    [`MODULE.bazel`](../../MODULE.bazel).
 3. Add `multitool_aliases("<command>")` to
@@ -96,8 +97,7 @@ changes together:
    [`s-core-local/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh)
    or
    [`bazel-feature/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
-6. Add the command description to `PURPOSES` in
-   [`sync_readme.py`](sync_readme.py), then regenerate the table:
+6. Regenerate the documented command table:
 
    ```console
    $ python3 tools/internal/sync_readme.py
@@ -111,9 +111,9 @@ publishes them together. The installer can locate a command in a differently
 named lockfile, but an explicit `--lockfile` remains available for ambiguous
 cases.
 
-To remove a command, remove it from the same integration points. Then run
-`sync_readme.py` (see below); it rejects command descriptions without a
-catalog entry and catalog entries without a description.
+To remove a command, remove it from the same integration points, including
+its `description` field. Then run `sync_readme.py` (see below); it rejects
+lockfile entries without a description.
 
 ## Validation and release alignment
 

@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "buildifier": {
     "version": "8.2.1",
+    "description": "Format and lint Bazel files",
     "binaries": [
       {
         "kind": "file",
