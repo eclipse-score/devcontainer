@@ -79,8 +79,10 @@ JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
 export JAVA_HOME
 echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
-# qemu-system (full system emulation binaries, e.g. arm, x86, ...)
-apt-get install -y --no-install-recommends --fix-broken qemu-system="${qemu_system_version}*"
+# QEMU system emulators for ARM and x86
+apt-get install -y --no-install-recommends --fix-broken \
+    qemu-system-arm="${qemu_system_version}*" \
+    qemu-system-x86="${qemu_system_version}*"
 
 # basedpyright
 su $(ls /home) -c "uv tool install basedpyright@\"${basedpyright_version}\""
