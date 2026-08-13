@@ -35,6 +35,7 @@ repos:
         entry: bazelisk mod deps --lockfile_mode=error
         language: system
         pass_filenames: false
+      # Formatters
       - id: yamlfmt
         name: yamlfmt
         entry: tools/run-tool yamlfmt
@@ -50,19 +51,20 @@ repos:
         entry: tools/run-tool buildifier
         language: system
         types: [bazel]
+      # Static Code Analysis Tools
+      - id: actionlint
+        name: actionlint
+        entry: tools/run-tool actionlint
+        language: system
+        files: ^\.github/workflows/.*\.(yml|yaml)$
       - id: shellcheck
         name: shellcheck
         entry: tools/run-tool shellcheck
         language: system
         types: [shell]
-      - id: ruff-format
-        name: ruff format
-        entry: tools/run-tool ruff format
-        language: system
-        types: [python]
       - id: ruff-check
         name: ruff check
-        entry: tools/run-tool ruff check --fix
+        entry: tools/run-tool ruff check
         language: system
         types: [python]
       - id: tool-documentation
@@ -71,11 +73,6 @@ repos:
         language: system
         pass_filenames: false
         files: ^tools/(README\.md|internal/(sync_readme\.py|devcontainer/install\.py)|lockfiles/.*\.lock\.json)$
-      - id: ruff-check
-        name: ruff check
-        entry: tools/run-tool ruff check
-        language: system
-        types: [python]
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 name: DevContainer Release & Validate & Publish
-description: This workflow creates a semantic version release when main changed since the last release tag. Then it checks that for releases, updates do not break stuff and publishes the released container.
+# This workflow creates a semantic version release when main changed since the last release tag. Then it checks that for releases, updates do not break stuff and publishes the released container.
 on:
   schedule:
     - cron: '0 0 * * 1'
@@ -37,7 +37,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
       # this should have been done by the checkout action, but it doesn't work in a container, see https://github.com/actions/checkout/issues/766
-      - run: git config --global --add safe.directory $PWD
+      - run: git config --global --add safe.directory "$PWD"
       # pinned version updated automatically by Dependabot.
       # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
       - name: npx semantic-release
@@ -47,7 +47,7 @@ jobs:
           npx semantic-release@25.0.1 >> /tmp/semantic-release.log 2>&1 || (cat /tmp/semantic-release.log && exit 1)
           cat /tmp/semantic-release.log
           tag_name=$(grep "Created tag" /tmp/semantic-release.log | sed -E 's/.*Created tag (.*)/\1/')
-          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
+          echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
