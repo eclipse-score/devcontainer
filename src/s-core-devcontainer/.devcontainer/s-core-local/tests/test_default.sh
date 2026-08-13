@@ -19,7 +19,7 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/s-core-local/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
 ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"

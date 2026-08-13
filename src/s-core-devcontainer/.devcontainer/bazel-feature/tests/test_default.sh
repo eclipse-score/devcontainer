@@ -16,7 +16,7 @@
 set -euo pipefail
 
 # Read tool versions + metadata into environment variables
-. /devcontainer/features/bazel/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
 
 bazelisk_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version bazelisk)"
 buildifier_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version buildifier)"
