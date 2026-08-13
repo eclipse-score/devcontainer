@@ -35,6 +35,7 @@ repos:
         entry: bazelisk mod deps --lockfile_mode=error
         language: system
         pass_filenames: false
+      # Formatters
       - id: yamlfmt
         name: yamlfmt
         entry: tools/run_tool.sh yamlfmt
@@ -50,6 +51,12 @@ repos:
         entry: tools/run_tool.sh buildifier
         language: system
         types: [bazel]
+      # Static Code Analysis Tools
+      - id: actionlint
+        name: actionlint
+        entry: tools/run_tool.sh actionlint
+        language: system
+        files: ^\.github/workflows/.*\.(yml|yaml)$
       - id: shellcheck
         name: shellcheck
         entry: tools/run_tool.sh shellcheck

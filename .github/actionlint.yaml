@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -12,14 +10,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
-npm install -g @devcontainers/cli
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
-
-sudo "${REPOSITORY_ROOT}/tools/tool_installer.py" install actionlint bazelisk buildifier ruff shellcheck yamlfmt
-
-pre-commit install
-
-scripts/create_builder.sh
+self-hosted-runner:
+  labels:
+    - ubuntu-slim
