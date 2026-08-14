@@ -36,11 +36,6 @@ DEBIAN_FRONTEND=noninteractive
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
-# always add PIPX_BIN_DIR to path
-PIPX_BIN_DIR_EXPORT="$(grep "export PIPX_BIN_DIR" /etc/bash.bashrc)"
-eval "${PIPX_BIN_DIR_EXPORT}"
-echo -e "PATH=\"${PIPX_BIN_DIR}:\$PATH\"\nexport PATH" >> /etc/profile.d/pipx_bin_dir.sh
-
 apt-get update
 
 # Unminimize the image to include standard packages like man pages
@@ -57,8 +52,15 @@ apt-get install -y "python${python_version}" python3-pip python3-venv
 # devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
 apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
 
-# Lockfile-managed local developer tools
+# uv must be installed from the native lockfile before it can install the
+# Python distributions declared in the shared Python tool catalog below.
 /usr/local/share/score-tools/internal/devcontainer/install.py install shellcheck ruff actionlint yamlfmt uv uvx apm opencode
+
+# Keep Python CLIs in system directories so every DevContainer user sees the
+# same entrypoint and isolated environment. Bazel reads the same package pin
+# from this catalog but executes it on demand with uvx.
+/usr/local/share/score-tools/internal/devcontainer/install.py install-python pre-commit \
+    --bin-dir /usr/local/bin --tool-dir /usr/local/share/uv/tools
 
 # GraphViz
 # The Ubuntu Noble package of GraphViz
