@@ -44,6 +44,7 @@ access while Bazel downloads and caches the executable.
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `1.18.15` | Run the OpenCode CLI |
+| `pre-commit` | `4.5.1` | Run repository pre-commit hooks |
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
 | `starpls` | `0.1.22` | Provide language-server support for Starlark |
@@ -76,7 +77,8 @@ image; otherwise the command set or versions can differ.
 
 Outside the container, a `bazel` executable must be on `PATH`. Install Bazel
 or Bazelisk as `bazel` before the first host-side invocation; it bootstraps
-access to the catalog.
+access to the catalog. The Bazel targets bring their own pinned tool runtime;
+Python is not required on the host to run Python-based commands.
 
 Implementation and maintenance details are in
 [internal/README.md](internal/README.md).

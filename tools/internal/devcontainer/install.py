@@ -13,11 +13,13 @@
 # *******************************************************************************
 """Install pinned tools from the shared `tools/lockfiles` catalog.
 
-Dependency-free (stdlib only) so devcontainer feature installers can use it
-without extra packages.
+Dependency-free (stdlib only) so feature installers can use the Python already
+present in the image. Bazel executes Python tools through a shell launcher and
+the pinned uvx runtime, keeping this installer container-specific.
 
 Usage:
   install.py install shellcheck yamlfmt
+  install.py install-python pre-commit
   install.py version shellcheck
 """
 
@@ -26,10 +28,13 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
+import os
 import platform
 import shutil
+import subprocess
 import sys
 import tarfile
 import tempfile
@@ -62,6 +67,18 @@ class ToolData(TypedDict):
 
 
 LOCKFILE_ROOT = Path(__file__).resolve().parents[2] / "lockfiles"
+PYTHON_TOOL_CATALOG = LOCKFILE_ROOT / "python_tools.bzl"
+
+
+class PythonTool(TypedDict):
+    """Metadata shared by the container installer and Bazel launcher."""
+
+    # The distribution and console entrypoint can have different names.
+    package: str
+    version: str
+    entrypoint: str
+    # User-facing text is kept beside the pin so generated docs cannot drift.
+    description: str
 
 
 def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
@@ -78,6 +95,79 @@ def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
             yield tool, path.name, definition
 
 
+def _parse_python_tool_catalog() -> object:
+    """Return the literal assigned to ``PYTHON_TOOLS``.
+
+    The feature installer runs as root, so importing or executing a repository
+    file would cross a privilege boundary. Parsing one assignment and accepting
+    only literal data lets Bazel and the installer share a catalog safely.
+    """
+    try:
+        module = ast.parse(
+            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
+            filename=str(PYTHON_TOOL_CATALOG),
+        )
+    except SyntaxError as exc:
+        raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
+
+    # Exactly one statement preserves the catalog's data-only contract.
+    if len(module.body) != 1:
+        raise SystemExit(
+            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
+        )
+
+    assignment = module.body[0]
+    if not isinstance(assignment, ast.Assign) or len(assignment.targets) != 1:
+        raise SystemExit(
+            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
+        )
+
+    target = assignment.targets[0]
+    if not isinstance(target, ast.Name) or target.id != "PYTHON_TOOLS":
+        raise SystemExit("Python tool catalog must assign its data to PYTHON_TOOLS")
+
+    try:
+        return ast.literal_eval(assignment.value)
+    except (TypeError, ValueError) as exc:
+        raise SystemExit("Python tool catalog must contain only literal data") from exc
+
+
+def _load_python_tools() -> dict[str, PythonTool]:
+    """Validate the shared catalog and return typed Python tool metadata."""
+    catalog = _parse_python_tool_catalog()
+    if not isinstance(catalog, dict):
+        raise SystemExit("PYTHON_TOOLS must be a dictionary")
+
+    tools: dict[str, PythonTool] = {}
+    for command, metadata in catalog.items():
+        if (
+            not isinstance(command, str)
+            or not command
+            or not isinstance(metadata, dict)
+        ):
+            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
+
+        package = metadata.get("package")
+        version = metadata.get("version")
+        entrypoint = metadata.get("entrypoint")
+        description = metadata.get("description")
+        # Central validation gives Bazel, installation, and documentation the
+        # same required-field contract.
+        if not all(
+            isinstance(value, str) and value
+            for value in (package, version, entrypoint, description)
+        ):
+            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
+
+        tools[command] = {
+            "package": package,
+            "version": version,
+            "entrypoint": entrypoint,
+            "description": description,
+        }
+    return tools
+
+
 def load_catalog_versions() -> dict[str, str]:
     """Return every tool version declared by the lockfile catalog."""
     versions: dict[str, str] = {}
@@ -91,6 +181,11 @@ def load_catalog_versions() -> dict[str, str]:
         if tool in versions:
             raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
         versions[tool] = version
+
+    for tool, definition in _load_python_tools().items():
+        if tool in versions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
+        versions[tool] = definition["version"]
 
     return versions
 
@@ -115,6 +210,11 @@ def load_catalog_descriptions() -> dict[str, str]:
         if tool in descriptions:
             raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
         descriptions[tool] = description
+
+    for tool, definition in _load_python_tools().items():
+        if tool in descriptions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
+        descriptions[tool] = definition["description"]
 
     return descriptions
 
@@ -208,6 +308,46 @@ def _cmd_version(args: argparse.Namespace) -> int:
             f"Tool '{args.tool}' in '{args.lockfile}.lock.json' does not define a version",
         )
     print(version)
+    return 0
+
+
+def _cmd_install_python(args: argparse.Namespace) -> int:
+    """Install catalogued Python CLIs into the DevContainer with pinned uv."""
+    # Resolve uv from PATH by default so feature scripts use the binary already
+    # installed from uv.lock.json, while tests can inject a controlled binary.
+    uv = shutil.which(args.uv)
+    if uv is None:
+        raise SystemExit(
+            f"Could not install Python tools: '{args.uv}' was not found on PATH"
+        )
+
+    # Fixed system paths make feature installs independent of the root account's
+    # uv defaults and expose the entrypoints to every container user.
+    environment = os.environ.copy()
+    if args.bin_dir is not None:
+        environment["UV_TOOL_BIN_DIR"] = args.bin_dir
+    if args.tool_dir is not None:
+        environment["UV_TOOL_DIR"] = args.tool_dir
+
+    # Resolve every requested name before changing the filesystem. A typo in a
+    # later argument must not leave the container with a partially applied set.
+    catalog = _load_python_tools()
+    requirements: list[str] = []
+    for tool in args.tools:
+        try:
+            tool_data = catalog[tool]
+        except KeyError as exc:
+            raise SystemExit(f"Tool '{tool}' not found in Python tool catalog") from exc
+        requirements.append(f"{tool_data['package']}=={tool_data['version']}")
+
+    for requirement in requirements:
+        # --force reapplies the catalog pin when a persistent layer already
+        # contains another version, making container rebuilds deterministic.
+        subprocess.run(
+            [uv, "tool", "install", "--force", requirement],
+            check=True,
+            env=environment,
+        )
     return 0
 
 
@@ -334,6 +474,30 @@ def _build_parser() -> argparse.ArgumentParser:
     install_parser.add_argument("--os", default=_detect_os())
     install_parser.add_argument("--cpu", default=_detect_cpu())
     install_parser.set_defaults(func=_cmd_install)
+
+    install_python_parser = subparsers.add_parser(
+        "install-python",
+        help="Install Python command-line tools declared in python_tools.bzl.",
+    )
+    install_python_parser.add_argument(
+        "tools",
+        nargs="+",
+        help="Catalog command names to install.",
+    )
+    install_python_parser.add_argument(
+        "--uv",
+        default="uv",
+        help="uv executable installed from the native tool lockfile.",
+    )
+    install_python_parser.add_argument(
+        "--bin-dir",
+        help="Directory in which uv exposes console entrypoints.",
+    )
+    install_python_parser.add_argument(
+        "--tool-dir",
+        help="Directory in which uv stores isolated tool environments.",
+    )
+    install_python_parser.set_defaults(func=_cmd_install_python)
 
     version_parser = subparsers.add_parser(
         "version",

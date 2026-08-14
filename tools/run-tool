@@ -27,10 +27,15 @@ fi
 tool_name="$1"
 shift
 
+# A host PATH may contain an arbitrary, unpinned version, so PATH execution is
+# deliberately limited to containers built from this catalog. If a container
+# lacks a command, falling through to Bazel still gives it the pinned version.
 if { [[ -f /.dockerenv ]] || [[ -f /run/.containerenv ]] || [[ -d /devcontainer ]]; } &&
   command -v "${tool_name}" >/dev/null 2>&1; then
   exec "${tool_name}" "$@"
 elif command -v bazel >/dev/null 2>&1; then
+  # Consumer repositories expose this module as @score_devcontainer; `--`
+  # prevents tool flags from being interpreted as Bazel flags.
   exec bazel run "@score_devcontainer//tools:${tool_name}" -- "$@"
 else
   echo "Could not run '${tool_name}': no container command or Bazel executable is available." >&2
