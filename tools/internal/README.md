@@ -89,10 +89,13 @@ Python command-line tool metadata lives in
 [`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
 a data-only Starlark dictionary because Bazel must read the pin during analysis,
 before the command can run. Its restricted literal form is also valid Python
-syntax. The privileged DevContainer installer parses it with
-`ast.literal_eval`, preserving a data-only privilege boundary. This shared
-format keeps the package, console entrypoint, version, and description in one
-source of truth while Bazel execution remains independent of host Python.
+syntax. During DevContainer setup, `install.py` runs as root so it can install
+tools in system locations such as `/usr/local/bin`. It parses the catalog with
+`ast.literal_eval` instead of executing it as Python, so catalog changes can
+provide only literal data and cannot run code with the installer's privileges.
+This shared format keeps the package, console entrypoint, version, and
+description in one source of truth while Bazel execution remains independent
+of host Python.
 
 The catalogs have distinct ownership: `devcontainer-lock.json` records external
 DevContainer features, `python_tools.bzl` records Python package releases, and

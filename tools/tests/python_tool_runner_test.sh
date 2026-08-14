@@ -52,7 +52,7 @@ chmod +x "${fake_uvx}"
 
 # The explicit assertion verifies the requested release. Subsequent checks use
 # the parsed value to keep every expected uv argument aligned with the catalog.
-catalog_version="$(python3 "${installer}" version pre-commit)"
+catalog_version="$("${installer}" version pre-commit)"
 [[ "${catalog_version}" = "4.5.1" ]]
 
 # The Bazel launcher receives an execroot-relative uvx path, then changes to the
@@ -75,7 +75,7 @@ assert_lines "${output}" \
 # whichever home directory uv would otherwise infer during image creation.
 environment_output="${TEST_TMPDIR}/uvx.env"
 OUTPUT_FILE="${output}" ENV_OUTPUT="${environment_output}" \
-    python3 "${installer}" install-python pre-commit \
+    "${installer}" install-python pre-commit \
     --uv "${fake_uvx}" --bin-dir /test/bin --tool-dir /test/tools
 
 assert_lines "${output}" \
@@ -89,7 +89,7 @@ assert_lines "${environment_output}" "/test/bin" "/test/tools"
 # Validate all names before invoking uv. Including a valid name first proves an
 # error cannot leave behind a partially installed tool set.
 rm -f "${output}"
-if OUTPUT_FILE="${output}" python3 "${installer}" install-python \
+if OUTPUT_FILE="${output}" "${installer}" install-python \
     pre-commit missing-tool \
     --uv "${fake_uvx}" 2> "${TEST_TMPDIR}/unknown.err"; then
     echo "Unknown Python tool unexpectedly succeeded" >&2
