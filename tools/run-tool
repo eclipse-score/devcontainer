@@ -50,7 +50,7 @@ extract_version() {
 version_args() {
     case "$1" in
         bazelisk | starpls) printf '%s\n' version ;;
-        *) printf '%s\n' --version -version -v ;;
+        *) printf '%s\n' -v -version --version ;;
     esac
 }
 
@@ -73,10 +73,11 @@ installed_version() {
 # Only this repository's own checkout ships the catalog next to run-tool;
 # consumer repositories that copied just this file fall through to Bazel.
 pinned_version() {
+    local tool="$1"
     local installer="${SCRIPT_DIR}/internal/devcontainer/install.py"
     command -v python3 >/dev/null 2>&1 || return 1
     [[ -f "${installer}" ]] || return 1
-    python3 "${installer}" version "${tool_name}" 2>/dev/null
+    python3 "${installer}" version "${tool}" 2>/dev/null
 }
 
 if [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
@@ -89,7 +90,7 @@ if [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
   # A host PATH may contain an arbitrary, unpinned version; only use it when
   # it exactly matches the catalog, otherwise fall through to Bazel.
   # shellcheck disable=SC2310
-  if installed="$(installed_version "${tool_name}")" && pinned="$(pinned_version)" &&
+  if installed="$(installed_version "${tool_name}")" && pinned="$(pinned_version "${tool_name}")" &&
     [[ "${installed}" == "${pinned}" ]]; then
     exec "${tool_name}" "$@"
   fi
