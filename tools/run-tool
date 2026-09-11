@@ -88,6 +88,7 @@ if [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
 
   # A host PATH may contain an arbitrary, unpinned version; only use it when
   # it exactly matches the catalog, otherwise fall through to Bazel.
+  # shellcheck disable=SC2310
   if installed="$(installed_version "${tool_name}")" && pinned="$(pinned_version)" &&
     [[ "${installed}" == "${pinned}" ]]; then
     exec "${tool_name}" "$@"
