@@ -25,12 +25,16 @@ development, hooks, and CI select the same pinned version.
 ```console
 $ .devcontainer/run-tool shellcheck scripts/example.sh
 $ .devcontainer/run-tool ruff check .
+$ .devcontainer/run-tool --strict bazelisk version
 ```
 
 Everything after the command is passed to that command. In the DevContainer,
-the runner executes its installed executable. Outside the container, it runs
-the matching Bazel target. The first host-side invocation may require network
-access while Bazel downloads and caches the executable.
+the runner executes its installed executable. Outside the container, it checks
+for a local installation matching the pinned version; if found, it uses that.
+Otherwise it runs the matching Bazel target. The first Bazel invocation may
+require network access while it downloads and caches the executable.
+
+Use the `--strict` flag to skip local tools and always run through Bazel.
 
 ## Available tools
 
