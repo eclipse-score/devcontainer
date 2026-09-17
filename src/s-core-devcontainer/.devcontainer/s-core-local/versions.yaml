@@ -52,9 +52,9 @@ ripgrep:
 lcov:
   version: 2.0
 apm:
-  version: 0.27.0
+  version: 0.30.0
 opencode:
-  version: 1.18.15
+  version: 1.18.31
 pkg_config:
   version: 1.8.1
 libcairo2_dev:
