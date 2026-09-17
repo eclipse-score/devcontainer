@@ -1,0 +1,41 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+name: Update Dependencies with Renovate
+
+on:
+  schedule:
+    # Run at 2 AM UTC on Monday
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Run Renovate
+        uses: renovatebot/github-action@v46.2.4
+        with:
+          configurationFile: .github/renovate.json5
+        env:
+          LOG_LEVEL: debug
+          # Uses the default GITHUB_TOKEN unless overridden
+          # For private repos or higher rate limits, use RENOVATE_TOKEN
