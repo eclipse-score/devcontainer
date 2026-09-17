@@ -40,10 +40,10 @@ access while Bazel downloads and caches the executable.
 | Command | Version | Purpose |
 | --- | --- | --- |
 | `actionlint` | `1.7.7` | Check GitHub Actions workflow files |
-| `apm` | `0.27.0` | Manage APM packages |
+| `apm` | `0.30.0` | Manage APM packages |
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
-| `opencode` | `1.18.15` | Run the OpenCode CLI |
+| `opencode` | `1.18.31` | Run the OpenCode CLI |
 | `pre-commit` | `4.5.1` | Run repository pre-commit hooks |
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
