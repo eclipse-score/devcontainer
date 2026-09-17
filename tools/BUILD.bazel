@@ -68,8 +68,10 @@ sh_test(
     size = "small",
     srcs = ["tests/run_tool_test.sh"],
     data = [
-        "run-tool",
         "internal/devcontainer/install.py",
-        "lockfiles/shellcheck.lock.json",
-    ],
+        "run-tool",
+    ] + glob([
+        "lockfiles/*.bzl",
+        "lockfiles/*.lock.json",
+    ]),
 )

@@ -160,15 +160,17 @@ lockfile entries without a description.
 
 ## Validation and release alignment
 
-Regenerate the user-facing command table after changing a lockfile or a
-description:
+Regenerate the user-facing command table and runner versions after changing a
+lockfile or a description:
 
 ```console
 $ python3 tools/internal/sync_readme.py
+$ python3 tools/internal/sync_run_tool.py
 ```
 
-The pre-commit hook runs the same command; pre-commit rejects the commit if
-running it changes `tools/README.md`, so a stale table cannot be committed.
+The pre-commit hooks run these commands; pre-commit rejects the commit if
+running them changes `tools/README.md` or `tools/run-tool`, so a stale table or
+runner catalog cannot be committed.
 
 Run the feature test for every installer changed. The feature tests read their
 expected versions from the catalog, which verifies that the DevContainer and
