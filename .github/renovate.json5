@@ -31,6 +31,7 @@
   "commitMessagePrefix": "chore(deps):",
   "prConcurrentLimit": 5,
   "prCreation": "auto",
+  "automerge": false,
   "customManagers": [
     {
       "customType": "regex",
@@ -39,13 +40,12 @@
       ],
       "matchStrings": [
         "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/microsoft/apm/releases/download/v(?<currentValue>[^/]+)/[^\"]+\""
+        "\"url\":\\s*\"https://github\\.com/microsoft/apm/releases/download/v[^/]+/[^\"]+\"",
+        "\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/apm",
-      "versioningTemplate": "semver",
-      "autoReplaceStringTemplate": "\"version\": \"{{{newVersion}}}\"",
-      "updateType": "major"
+      "versioningTemplate": "semver"
     },
     {
       "customType": "regex",
@@ -54,7 +54,8 @@
       ],
       "matchStrings": [
         "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/anomalyco/opencode/releases/download/v(?<currentValue>[^/]+)/[^\"]+\""
+        "\"url\":\\s*\"https://github\\.com/anomalyco/opencode/releases/download/v[^/]+/[^\"]+\"",
+        "\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "anomalyco/opencode",

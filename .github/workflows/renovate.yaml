@@ -11,12 +11,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-name: Update Dependencies with Renovate
+name: Daily Renovate Dependency Updates
 
 on:
   schedule:
-    # Run at 2 AM UTC on Monday
-    - cron: '0 2 * * 1'
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -27,6 +27,8 @@ permissions:
 jobs:
   renovate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -35,7 +37,6 @@ jobs:
         uses: renovatebot/github-action@v46.2.4
         with:
           configurationFile: .github/renovate.json5
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           LOG_LEVEL: debug
-          # Uses the default GITHUB_TOKEN unless overridden
-          # For private repos or higher rate limits, use RENOVATE_TOKEN
