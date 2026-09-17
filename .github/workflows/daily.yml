@@ -43,7 +43,9 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
       - name: Checkout config file
         uses: actions/checkout@v7
