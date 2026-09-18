@@ -19,12 +19,12 @@
   ],
   "timezone": "UTC",
   "schedule": [
-    "after 10pm on Monday"
+    "at any time"
   ],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": [
-      "after 10pm on Monday"
+      "at any time"
     ]
   },
   "semanticCommits": "enabled",
@@ -40,8 +40,7 @@
       ],
       "matchStrings": [
         "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/microsoft/apm/releases/download/v[^/]+/[^\"]+\"",
-        "\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
+        "\"url\":\\s*\"https://github\\.com/microsoft/apm/releases/download/v(?<currentValue>[^/]+)/[^\"]+\",\\s*\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/apm",
@@ -54,8 +53,7 @@
       ],
       "matchStrings": [
         "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/anomalyco/opencode/releases/download/v[^/]+/[^\"]+\"",
-        "\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
+        "\"url\":\\s*\"https://github\\.com/anomalyco/opencode/releases/download/v(?<currentValue>[^/]+)/[^\"]+\",\\s*\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "anomalyco/opencode",
@@ -85,6 +83,9 @@
       "depNameTemplate": "anomalyco/opencode",
       "versioningTemplate": "semver"
     }
+  ],
+  "enabledManagers": [
+    "custom.regex"
   ],
   "ignoreDeps": [],
   "labels": [
