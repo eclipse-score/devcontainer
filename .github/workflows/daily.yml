@@ -1,0 +1,60 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Daily Maintenance
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+on:
+  # Runs every day at midnight UTC
+  schedule:
+    - cron: '0 0 * * *'
+  # Manually trigger the workflow from the GitHub UI
+  workflow_dispatch: {}
+  workflow_call:
+jobs:
+  maintenance:
+    uses: eclipse-score/cicd-workflows/.github/workflows/daily.yml@8d80e8df150cae21d53cbc8031d0f970648f7a67 # v0.0.3
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      pages: write
+      id-token: write
+      actions: write
+  renovate:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' }}
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout config file
+        uses: actions/checkout@v7
+      - name: Run renovate
+        uses: renovatebot/github-action@5402b206248e5a8c8427a15102702eb9c1793efc # v46.2.4
+        with:
+          # Pull requests from forks do not have access to secrets
+          token: ${{ secrets.RENOVATE_TOKEN }}
+          configurationFile: .github/renovate.json5
+        env:
+          LOG_LEVEL: debug
+  validate-renovate-config:
+    name: Validate Renovate config
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout config file
+        uses: actions/checkout@v7
+      - name: Validate Renovate config
+        run: npx --yes --package renovate renovate-config-validator .github/renovate.json5

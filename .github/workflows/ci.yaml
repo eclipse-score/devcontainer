@@ -23,6 +23,23 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
+  changes:
+    name: Detect changed files
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      daily: ${{ steps.filter.outputs.daily }}
+    steps:
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            daily:
+              - '.github/workflows/daily.yml'
+              - '.github/renovate.json5'
   build:
     strategy:
       matrix:
@@ -95,10 +112,22 @@ jobs:
               echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
               ./scripts/publish.sh --${{ matrix.os }} "main"
             fi
+  daily:
+    secrets: inherit
+    needs: [changes]
+    if: needs.changes.outputs.daily == 'true'
+    uses: ./.github/workflows/daily.yml
+    permissions:
+      actions: write
+      contents: write
+      issues: write
+      pages: write
+      pull-requests: write
+      id-token: write
   overall-result:
     name: build/overall-result
     runs-on: ubuntu-24.04
-    needs: [build]
+    needs: [build, daily]
     if: ${{ !cancelled() }}
     permissions: {}
     steps:
