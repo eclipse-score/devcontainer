@@ -25,10 +25,14 @@ concurrency:
 jobs:
   validate-renovate-config:
     name: Validate Renovate config
-    if: github.event_name == 'merge_group'
-    uses: ./.github/workflows/daily.yml
+    runs-on: ubuntu-latest
     permissions:
       contents: read
+    steps:
+      - name: Checkout config file
+        uses: actions/checkout@v7
+      - name: Validate Renovate config
+        run: npx --yes --package renovate renovate-config-validator .github/renovate.json5
   build:
     strategy:
       matrix:
