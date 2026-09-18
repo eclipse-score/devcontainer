@@ -16,6 +16,7 @@ permissions:
   issues: write
   pull-requests: write
 on:
+  workflow_call:
   # Runs every day at midnight UTC
   schedule:
     - cron: '0 0 * * *'
@@ -30,6 +31,7 @@ on:
   workflow_dispatch: {}
 jobs:
   maintenance:
+    if: github.event_name != 'workflow_call'
     uses: eclipse-score/cicd-workflows/.github/workflows/daily.yml@8d80e8df150cae21d53cbc8031d0f970648f7a67 # v0.0.3
     permissions:
       contents: write
@@ -39,7 +41,7 @@ jobs:
       id-token: write
       actions: write
   renovate:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.event_name != 'workflow_call'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -53,3 +55,13 @@ jobs:
           configurationFile: .github/renovate.json5
         env:
           LOG_LEVEL: debug
+  validate-renovate-config:
+    if: github.event_name == 'workflow_call'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout config file
+        uses: actions/checkout@v7
+      - name: Validate Renovate config
+        run: npx --yes --package renovate renovate-config-validator .github/renovate.json5
