@@ -28,9 +28,9 @@ $ .devcontainer/run-tool ruff check .
 ```
 
 Everything after the command is passed to that command. In the DevContainer,
-the runner executes its installed executable. Outside the container, it runs
-the matching Bazel target. The first host-side invocation may require network
-access while Bazel downloads and caches the executable.
+it runs the installed executable. Outside the container, it uses the local tool
+when available or Bazel otherwise (`--strict` forces Bazel). The first
+host-side Bazel invocation may require network access to download the binary.
 
 ## Available tools
 

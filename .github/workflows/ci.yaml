@@ -66,6 +66,7 @@ jobs:
             # A fake uv executable makes the launcher contract deterministic:
             # arguments, cwd, and environment are checked without network I/O.
             bazelisk test //tools:python_tool_runner_test --test_output=errors
+            bazelisk test //tools:run_tool_test --test_output=errors
 
             # The real target covers the integration boundary between
             # rules_multitool, Bazel runfiles, uvx, and the Python package.
