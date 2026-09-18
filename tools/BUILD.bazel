@@ -62,3 +62,12 @@ sh_test(
         "lockfiles/python_tools.bzl",
     ],
 )
+
+sh_test(
+    name = "run_tool_test",
+    size = "small",
+    srcs = ["tests/run_tool_test.sh"],
+    data = [
+        "run-tool",
+    ],
+)

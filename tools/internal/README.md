@@ -32,7 +32,7 @@ One catalog is delivered through two execution paths:
 | `MODULE.bazel` | Makes native tool lockfiles available to `rules_multitool`. |
 | `tools/BUILD.bazel` | Exposes public Bazel targets for each command. |
 | Feature installers | Install the commands exposed on the DevContainer's `PATH`. |
-| `tools/run-tool` | Uses the command on `PATH` in a container when available; otherwise uses the public Bazel alias. |
+| `tools/run-tool` | Uses the command on `PATH` in a container or locally when available; otherwise uses the public Bazel alias (`--strict` forces Bazel). |
 | `tools/README.md` | Documents every command and its version from the catalog. |
 
 A command is available when its catalog metadata, Bazel target, and applicable
@@ -42,8 +42,8 @@ those delivery paths; the catalogs remain the command registries.
 ## Architecture
 
 The public interface is `.devcontainer/run-tool` in each consumer
-repository. Inside a container, it uses the command installed on `PATH` when
-available. Otherwise, it invokes the matching public Bazel target. Developers
+repository. Inside a container or on the host, it uses the command on `PATH`
+when available, or falls back to Bazel (`--strict` forces Bazel). Developers
 use the same command line without choosing the execution path.
 
 ![Command-line tool delivery](tool-delivery.svg)

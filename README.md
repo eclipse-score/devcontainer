@@ -84,9 +84,9 @@ repository's default build.
 
 For pinned command-line tools that are also available outside the container,
 use the repository's `.devcontainer/run-tool` wrapper. It selects the
-container installation here and the matching Bazel target on the host. See
-[Pinned command-line tools](tools/README.md) for the supported commands and
-setup.
+installed command on `PATH` when available and the matching Bazel target
+otherwise. See [Pinned command-line tools](tools/README.md) for the supported
+commands and setup.
 
 After you have build the code, create [compilation databases](https://clang.llvm.org/docs/JSONCompilationDatabase.html) via Visual Studio Code [Task](https://code.visualstudio.com/docs/debugtest/tasks):
 
