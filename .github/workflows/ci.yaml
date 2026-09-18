@@ -117,6 +117,13 @@ jobs:
     needs: [changes]
     if: needs.changes.outputs.daily == 'true'
     uses: ./.github/workflows/daily.yml
+    permissions:
+      actions: write
+      contents: write
+      issues: write
+      pages: write
+      pull-requests: write
+      id-token: write
   overall-result:
     name: build/overall-result
     runs-on: ubuntu-24.04
