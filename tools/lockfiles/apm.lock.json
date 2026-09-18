@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "apm": {
-    "version": "0.30.0",
+    "version": "0.31.0",
     "description": "Manage APM packages",
     "binaries": [
       {
