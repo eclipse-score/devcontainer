@@ -27,6 +27,8 @@ jobs:
   # Check whether semantic-release would create a new release without creating it.
   prepare:
     if: github.ref == 'refs/heads/main' && inputs.rebuild_tag == ''
+    permissions:
+      contents: write
     name: Prepare release
     runs-on: ubuntu-latest
     outputs:
@@ -144,23 +146,35 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate release tag
+        env:
+          REBUILD_TAG: ${{ inputs.rebuild_tag }}
+        run: |
+          if [[ ! "$REBUILD_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $REBUILD_TAG" >&2
+            exit 1
+          fi
       - name: Build, Test, Publish
         uses: devcontainers/ci@v0.3
         with:
           push: never
+          env: |
+            REBUILD_TAG=${{ inputs.rebuild_tag }}
           runCmd: |
             set -euxo pipefail
             ./scripts/create_builder.sh
-            ./scripts/build.sh --${{ matrix.os }} "${{ inputs.rebuild_tag }}"
+            ./scripts/build.sh --${{ matrix.os }} "$REBUILD_TAG"
             ./scripts/test.sh
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh --${{ matrix.os }} "${{ inputs.rebuild_tag }}"
+            ./scripts/publish.sh --${{ matrix.os }} "$REBUILD_TAG"
   # Merge the architecture images for an existing rebuilt release.
   rebuild-merge:
     needs: [rebuild]
     if: github.ref == 'refs/heads/main' && inputs.rebuild_tag != ''
     name: Merge Rebuilt Labels
     runs-on: ubuntu-24.04
+    outputs:
+      rebuild_tag: ${{ steps.validate-release-tag.outputs.rebuild_tag }}
     permissions:
       contents: read
       packages: write
@@ -177,14 +191,34 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate release tag
+        id: validate-release-tag
+        env:
+          REBUILD_TAG: ${{ inputs.rebuild_tag }}
+        run: |
+          if [[ ! "$REBUILD_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $REBUILD_TAG" >&2
+            exit 1
+          fi
+          echo "rebuild_tag=$REBUILD_TAG" >> "$GITHUB_OUTPUT"
       - name: Merge rebuilt labels
         uses: devcontainers/ci@v0.3
         with:
           push: never
+          env: |
+            REBUILD_TAG=${{ steps.validate-release-tag.outputs.rebuild_tag }}
           runCmd: |
             set -euxo pipefail
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/merge.sh "${{ inputs.rebuild_tag }}" "latest"
+            latest_release_tag=$(git ls-remote --tags --refs origin 'v*' \
+              | awk -F/ '$NF ~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ { print $NF }' \
+              | sort -V \
+              | tail -n 1)
+            if [[ "$REBUILD_TAG" == "$latest_release_tag" ]]; then
+              ./scripts/merge.sh "$REBUILD_TAG" "latest"
+            else
+              ./scripts/merge.sh "$REBUILD_TAG"
+            fi
   # Create the GitHub release only after all validation builds succeed.
   release:
     needs: [build]
