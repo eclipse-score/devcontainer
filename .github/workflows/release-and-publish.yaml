@@ -19,16 +19,12 @@ on:
 permissions:
   contents: read # for checkout
 jobs:
-  release:
+  prepare:
     if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-    name: release
+    name: Prepare release
     runs-on: ubuntu-latest
     outputs:
-      tag_name: ${{ steps.run-semantic-release.outputs.tag_name }}
+      release_needed: ${{ steps.run-semantic-release.outputs.release_needed }}
     container:
       image: mcr.microsoft.com/devcontainers/javascript-node:4-24
     steps:
@@ -44,15 +40,18 @@ jobs:
         id: run-semantic-release
         run: |
           set -eux pipefail
-          npx semantic-release@25.0.1 >> /tmp/semantic-release.log 2>&1 || (cat /tmp/semantic-release.log && exit 1)
+          npx semantic-release@25.0.1 --dry-run >> /tmp/semantic-release.log 2>&1 || (cat /tmp/semantic-release.log && exit 1)
           cat /tmp/semantic-release.log
-          tag_name=$(grep "Created tag" /tmp/semantic-release.log | sed -E 's/.*Created tag (.*)/\1/')
-          echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
+          if grep -q "The next release version is" /tmp/semantic-release.log; then
+            echo "release_needed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
-    needs: [release]
-    if: needs.release.outputs.tag_name != ''
+    needs: [prepare]
+    if: needs.prepare.outputs.release_needed == 'true'
     strategy:
       matrix:
         os: [arm64, amd64]
@@ -73,8 +72,6 @@ jobs:
       - uses: eclipse-score/more-disk-space@v1
       - name: Checkout (GitHub)
         uses: actions/checkout@v7
-        with:
-          ref: ${{ needs.release.outputs.tag_name }}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4.6.0
         with:
@@ -98,7 +95,7 @@ jobs:
             ./scripts/create_builder.sh
 
             # Build
-            ./scripts/build.sh --${{ matrix.os }} "${{ needs.release.outputs.tag_name }}" "latest"
+            ./scripts/build.sh --${{ matrix.os }} "sha-${{ github.sha }}"
 
             # Test
             ./scripts/test.sh
@@ -108,10 +105,65 @@ jobs:
             # Instead, we use the publish script which pushes the correct container (residing in src/s-core-devcontainer).
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            ./scripts/publish.sh --${{ matrix.os }} "${{ needs.release.outputs.tag_name }}" "latest"
+            ./scripts/publish.sh --${{ matrix.os }} "sha-${{ github.sha }}"
+  release:
+    needs: [build]
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+    name: release
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.run-semantic-release.outputs.tag_name }}
+    container:
+      image: mcr.microsoft.com/devcontainers/javascript-node:4-24
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - run: git config --global --add safe.directory "$PWD"
+      - name: npx semantic-release
+        id: run-semantic-release
+        run: |
+          set -eux pipefail
+          npx semantic-release@25.0.1 >> /tmp/semantic-release.log 2>&1 || (cat /tmp/semantic-release.log && exit 1)
+          cat /tmp/semantic-release.log
+          tag_name=$(grep "Created tag" /tmp/semantic-release.log | sed -E 's/.*Created tag (.*)/\1/')
+          echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  promote:
+    needs: [release, build]
+    if: needs.release.outputs.tag_name != ''
+    name: Promote release images
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Promote architecture images
+        env:
+          TAG_NAME: ${{ needs.release.outputs.tag_name }}
+          SOURCE_TAG: sha-${{ github.sha }}
+        run: |
+          set -euxo pipefail
+          for arch in amd64 arm64; do
+            docker buildx imagetools create \
+              --tag "ghcr.io/eclipse-score/devcontainer:${TAG_NAME}-${arch}" \
+              "ghcr.io/eclipse-score/devcontainer:${SOURCE_TAG}-${arch}"
+          done
   merge:
     name: Merge Labels
-    needs: [build, release]
+    needs: [promote, release]
     runs-on: ubuntu-24.04
     permissions:
       contents: read
