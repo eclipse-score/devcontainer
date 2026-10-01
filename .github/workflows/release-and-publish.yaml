@@ -16,11 +16,16 @@ on:
   schedule:
     - cron: '0 0 * * 1'
   workflow_dispatch:
+    inputs:
+      rebuild_tag:
+        description: Existing release tag to rebuild, for example v1.11.1
+        required: false
+        type: string
 permissions:
   contents: read # for checkout
 jobs:
   prepare:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && inputs.rebuild_tag == ''
     name: Prepare release
     runs-on: ubuntu-latest
     outputs:
@@ -106,6 +111,76 @@ jobs:
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             ./scripts/publish.sh --${{ matrix.os }} "sha-${{ github.sha }}"
+  rebuild:
+    if: github.ref == 'refs/heads/main' && inputs.rebuild_tag != ''
+    strategy:
+      matrix:
+        os: [arm64, amd64]
+        include:
+          - os: amd64
+            name: Rebuild DevContainer (amd64)
+            runner: ubuntu-24.04
+          - os: arm64
+            name: Rebuild DevContainer (arm64)
+            runner: ubuntu-24.04-arm
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: eclipse-score/more-disk-space@v1
+      - name: Checkout release tag
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.rebuild_tag }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build, Test, Publish
+        uses: devcontainers/ci@v0.3
+        with:
+          push: never
+          runCmd: |
+            set -euxo pipefail
+            ./scripts/create_builder.sh
+            ./scripts/build.sh --${{ matrix.os }} "${{ inputs.rebuild_tag }}"
+            ./scripts/test.sh
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            ./scripts/publish.sh --${{ matrix.os }} "${{ inputs.rebuild_tag }}"
+  rebuild-merge:
+    needs: [rebuild]
+    if: github.ref == 'refs/heads/main' && inputs.rebuild_tag != ''
+    name: Merge Rebuilt Labels
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: eclipse-score/more-disk-space@v1
+      - name: Checkout release tag
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.rebuild_tag }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge rebuilt labels
+        uses: devcontainers/ci@v0.3
+        with:
+          push: never
+          runCmd: |
+            set -euxo pipefail
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            ./scripts/merge.sh "${{ inputs.rebuild_tag }}" "latest"
   release:
     needs: [build]
     if: ${{ !cancelled() && needs.build.result == 'success' }}
