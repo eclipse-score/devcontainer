@@ -24,6 +24,7 @@ on:
 permissions:
   contents: read # for checkout
 jobs:
+  # Check whether semantic-release would create a new release without creating it.
   prepare:
     if: github.ref == 'refs/heads/main' && inputs.rebuild_tag == ''
     name: Prepare release
@@ -54,6 +55,7 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Build, test, and push temporary commit-tagged images before releasing.
   build:
     needs: [prepare]
     if: needs.prepare.outputs.release_needed == 'true'
@@ -111,6 +113,7 @@ jobs:
             # manually login to ghcr.io for publishing
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             ./scripts/publish.sh --${{ matrix.os }} "sha-${{ github.sha }}"
+  # Rebuild and republish an existing release selected through workflow_dispatch.
   rebuild:
     if: github.ref == 'refs/heads/main' && inputs.rebuild_tag != ''
     strategy:
@@ -152,6 +155,7 @@ jobs:
             ./scripts/test.sh
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             ./scripts/publish.sh --${{ matrix.os }} "${{ inputs.rebuild_tag }}"
+  # Merge the architecture images for an existing rebuilt release.
   rebuild-merge:
     needs: [rebuild]
     if: github.ref == 'refs/heads/main' && inputs.rebuild_tag != ''
@@ -181,6 +185,7 @@ jobs:
             set -euxo pipefail
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             ./scripts/merge.sh "${{ inputs.rebuild_tag }}" "latest"
+  # Create the GitHub release only after all validation builds succeed.
   release:
     needs: [build]
     if: ${{ !cancelled() && needs.build.result == 'success' }}
@@ -210,6 +215,7 @@ jobs:
           echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Promote validated temporary images to the new release architecture tags.
   promote:
     needs: [release, build]
     if: needs.release.outputs.tag_name != ''
@@ -236,6 +242,7 @@ jobs:
               --tag "ghcr.io/eclipse-score/devcontainer:${TAG_NAME}-${arch}" \
               "ghcr.io/eclipse-score/devcontainer:${SOURCE_TAG}-${arch}"
           done
+  # Create the release and latest multi-architecture manifests.
   merge:
     name: Merge Labels
     needs: [promote, release]
