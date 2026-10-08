@@ -41,7 +41,7 @@ jobs:
       - name: Checkout config file
         uses: actions/checkout@v7
       - name: Run renovate
-        uses: renovatebot/github-action@9fea9f0fbf80401026d11d03911d62b1f70fef1f # v46.3.3
+        uses: renovatebot/github-action@230ce922b08968d0a4f6f70f295601daff09ef1d # v46.3.7
         with:
           # Pull requests from forks do not have access to secrets
           token: ${{ secrets.RENOVATE_TOKEN }}
