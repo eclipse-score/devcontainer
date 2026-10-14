@@ -54,7 +54,7 @@ lcov:
 apm:
   version: 0.30.0
 opencode:
-  version: 1.18.31
+  version: 1.18.34
 pkg_config:
   version: 1.8.1
 libcairo2_dev:

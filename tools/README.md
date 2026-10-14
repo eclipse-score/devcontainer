@@ -43,7 +43,7 @@ host-side Bazel invocation may require network access to download the binary.
 | `apm` | `0.30.0` | Manage APM packages |
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
-| `opencode` | `1.18.31` | Run the OpenCode CLI |
+| `opencode` | `1.18.34` | Run the OpenCode CLI |
 | `pre-commit` | `4.5.1` | Run repository pre-commit hooks |
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
