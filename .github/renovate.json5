@@ -32,13 +32,13 @@
   "prConcurrentLimit": 5,
   "prCreation": "immediate",
   "automerge": false,
-  "postUpgradeTasks": [
-    {
-      "description": "Refresh lockfile URLs and sha256 digests after a version bump",
-      "command": "python3 tools/internal/refresh_lockfile_digests.py",
-      "executionMode": "graceful"
-    }
-  ],
+  "postUpgradeTasks": {
+    "commands": [
+      "python3 tools/internal/refresh_lockfile_digests.py"
+    ],
+    "fileFilters": ["**/*"],
+    "executionMode": "update"
+  },
   "customManagers": [
     {
       "customType": "regex",
