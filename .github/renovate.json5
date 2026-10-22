@@ -30,8 +30,15 @@
   "semanticCommits": "enabled",
   "commitMessagePrefix": "chore(deps):",
   "prConcurrentLimit": 5,
-  "prCreation": "auto",
+  "prCreation": "immediate",
   "automerge": false,
+  "postUpgradeTasks": {
+    "commands": [
+      "tools/internal/refresh_lockfile_digests.py"
+    ],
+    "fileFilters": ["**/*"],
+    "executionMode": "update"
+  },
   "customManagers": [
     {
       "customType": "regex",
@@ -39,8 +46,7 @@
         "^tools/lockfiles/apm\\.lock\\.json$"
       ],
       "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/microsoft/apm/releases/download/v(?<currentValue>[^/]+)/[^\"]+\",\\s*\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/apm",
@@ -52,8 +58,7 @@
         "^tools/lockfiles/opencode\\.lock\\.json$"
       ],
       "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\"",
-        "\"url\":\\s*\"https://github\\.com/anomalyco/opencode/releases/download/v(?<currentValue>[^/]+)/[^\"]+\",\\s*\"sha256\":\\s*\"(?<currentDigest>[^\"]+)\""
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "anomalyco/opencode",
