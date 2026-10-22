@@ -51,7 +51,7 @@ jobs:
           # Allow the post-upgrade task that refreshes lockfile URLs and sha256
           # digests (allowedCommands is a global-only option, so it must be set
           # here rather than in renovate.json5).
-          RENOVATE_ALLOWED_COMMANDS: '["python3 tools/internal/refresh_lockfile_digests.py"]'
+          RENOVATE_ALLOWED_COMMANDS: '["tools/internal/refresh_lockfile_digests.py"]'
   validate-renovate-config:
     name: Validate Renovate config
     runs-on: ubuntu-latest
