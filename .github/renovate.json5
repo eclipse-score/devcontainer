@@ -65,6 +65,21 @@
       "versioningTemplate": "semver"
     },
     {
+      // uv ships the TLS stack used by every Bazel and DevContainer Python
+      // tool, so it must track upstream security releases rather than being
+      // bumped by hand. Both the `uv` and `uvx` entries share one version.
+      "customType": "regex",
+      "fileMatch": [
+        "^tools/lockfiles/uv\\.lock\\.json$"
+      ],
+      "matchStrings": [
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "astral-sh/uv",
+      "versioningTemplate": "semver"
+    },
+    {
       "customType": "regex",
       "fileMatch": [
         "versions\\.yaml$"

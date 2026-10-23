@@ -30,13 +30,23 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 # used by apt-get only inside this script
 DEBIAN_FRONTEND=noninteractive
 
+apt-get update
+
+# Refresh the system trust store before the first TLS download. This must come
+# before load_feature_versions.sh, which fetches yq over HTTPS, so every
+# download in this script validates against a current set of roots. The base
+# image carries the CA bundle from its own build date and this feature runs
+# with `upgradePackages: false`, so a distrusted CA would otherwise persist.
+# Deliberately not pinned in versions.yaml: a pinned trust store is a stale
+# trust store, and it has to be current before versions.yaml can even be read.
+apt-get install -y --no-install-recommends ca-certificates
+update-ca-certificates --fresh
+
 # Read tool versions + metadata into environment variables
 . /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
-
-apt-get update
 
 # Unminimize the image to include standard packages like man pages
 bash -c "yes || true" | unminimize

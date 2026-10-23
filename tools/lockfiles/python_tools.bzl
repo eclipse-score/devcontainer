@@ -21,7 +21,7 @@ PYTHON_TOOLS = {
         # users. They are separate because Python distributions may name them
         # differently.
         "package": "pre-commit",
-        "version": "4.5.1",
+        "version": "4.7.0",
         "entrypoint": "pre-commit",
         # Documentation is generated from the catalog so version and purpose
         # are reviewed together.
