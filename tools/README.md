@@ -44,12 +44,12 @@ host-side Bazel invocation may require network access to download the binary.
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `1.18.31` | Run the OpenCode CLI |
-| `pre-commit` | `4.5.1` | Run repository pre-commit hooks |
+| `pre-commit` | `4.7.0` | Run repository pre-commit hooks |
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
 | `starpls` | `0.1.22` | Provide language-server support for Starlark |
-| `uv` | `0.10.4` | Manage Python projects and packages |
-| `uvx` | `0.10.4` | Run Python tools in isolated environments |
+| `uv` | `0.13.5` | Manage Python projects and packages |
+| `uvx` | `0.13.5` | Run Python tools in isolated environments |
 | `yamlfmt` | `0.17.0` | Format YAML files |
 
 <!-- END GENERATED TOOL TABLE -->

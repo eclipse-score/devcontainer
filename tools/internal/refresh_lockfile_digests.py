@@ -68,10 +68,10 @@ def refresh_lockfile(path, token=None):
             continue
 
         # Derive the GitHub repo from the first binary URL:
-        #   https://github.com/<owner>/<repo>/releases/download/v<ver>/<asset>
+        #   https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>
         first_url = tool["binaries"][0].get("url", "")
         parts = first_url.split("/")
-        if len(parts) < 8 or parts[2] != "github.com" or parts[5] != "releases":
+        if len(parts) < 9 or parts[2] != "github.com" or parts[5] != "releases":
             print(
                 f"  ! {tool_name}: cannot derive repo from {first_url!r}",
                 file=sys.stderr,
@@ -79,8 +79,15 @@ def refresh_lockfile(path, token=None):
             continue
         owner, repo = parts[3], parts[4]
 
+        # Release tags are not uniformly prefixed: most projects publish
+        # `v1.27.0`, while the astral-sh ones (uv, ruff) publish a bare
+        # `0.13.5`. Reuse the prefix the pinned URL already encodes, because
+        # Renovate rewrites the version inside that URL but never the prefix.
+        # Assuming `v` here silently rewrote those tools to a nonexistent tag.
+        tag = ("v" if parts[7].startswith("v") else "") + version
+
         release = _api_get(
-            f"{GITHUB_API}/repos/{owner}/{repo}/releases/tags/v{version}", token
+            f"{GITHUB_API}/repos/{owner}/{repo}/releases/tags/{tag}", token
         )
         digests = {a["name"]: a.get("digest", "") for a in release.get("assets", [])}
 
@@ -96,7 +103,9 @@ def refresh_lockfile(path, token=None):
             sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
             # Rebuild the URL from the version so the file is consistent
             # whether or not Renovate already updated the URL.
-            new_url = f"https://github.com/{owner}/{repo}/releases/download/v{version}/{asset}"
+            new_url = (
+                f"https://github.com/{owner}/{repo}/releases/download/{tag}/{asset}"
+            )
             if binary.get("sha256") != sha or binary.get("url") != new_url:
                 binary["url"] = new_url
                 binary["sha256"] = sha
