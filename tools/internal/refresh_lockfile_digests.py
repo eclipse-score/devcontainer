@@ -49,16 +49,35 @@ def _api_get(url, token=None):
         return json.load(resp)
 
 
-def _asset_name(url):
-    """Extract the asset filename from a GitHub release download URL."""
-    return url.rsplit("/", 1)[-1]
+def _parse_release_url(url):
+    """Split a GitHub release download URL into its components.
+
+    Layout: https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>
+    Returns ``(owner, repo, tag, asset)`` or ``None`` if the URL does not match.
+    """
+    parts = url.split("/")
+    if len(parts) != 9 or parts[2] != "github.com" or parts[5] != "releases":
+        return None
+    return parts[3], parts[4], parts[7], parts[8]
 
 
-def refresh_lockfile(path, token=None):
+def _release_digests(owner, repo, tag, token, cache):
+    """Return ``{asset name: digest}`` for a release, fetching each one once."""
+    key = (owner, repo, tag)
+    if key not in cache:
+        release = _api_get(
+            f"{GITHUB_API}/repos/{owner}/{repo}/releases/tags/{tag}", token
+        )
+        cache[key] = {a["name"]: a.get("digest", "") for a in release.get("assets", [])}
+    return cache[key]
+
+
+def refresh_lockfile(path, token=None, cache=None):
     """Refresh one lockfile in place. Returns a list of changed binary names."""
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
 
+    cache = {} if cache is None else cache
     changed = []
     for tool_name, tool in data.items():
         if not isinstance(tool, dict) or "binaries" not in tool:
@@ -67,36 +86,40 @@ def refresh_lockfile(path, token=None):
         if not version:
             continue
 
-        # Derive the GitHub repo from the first binary URL:
-        #   https://github.com/<owner>/<repo>/releases/download/v<ver>/<asset>
         first_url = tool["binaries"][0].get("url", "")
-        parts = first_url.split("/")
-        if len(parts) < 8 or parts[2] != "github.com" or parts[5] != "releases":
+        parsed = _parse_release_url(first_url)
+        if parsed is None:
             print(
                 f"  ! {tool_name}: cannot derive repo from {first_url!r}",
                 file=sys.stderr,
             )
             continue
-        owner, repo = parts[3], parts[4]
+        owner, repo, first_tag, _ = parsed
 
-        release = _api_get(
-            f"{GITHUB_API}/repos/{owner}/{repo}/releases/tags/v{version}", token
-        )
-        digests = {a["name"]: a.get("digest", "") for a in release.get("assets", [])}
+        # Release tags are not uniformly prefixed: most projects publish
+        # `v1.27.0`, while the astral-sh ones (uv, ruff) publish a bare
+        # `0.13.5`. Reuse the prefix the pinned URL already encodes; assuming
+        # `v` here would rewrite those tools to a nonexistent tag.
+        tag = ("v" if first_tag.startswith("v") else "") + version
+
+        digests = _release_digests(owner, repo, tag, token, cache)
 
         for binary in tool["binaries"]:
-            asset = _asset_name(binary.get("url", ""))
+            binary_parts = _parse_release_url(binary.get("url", ""))
+            asset = binary_parts[3] if binary_parts else None
             digest = digests.get(asset)
             if not digest:
                 print(
-                    f"  ! {tool_name}: no digest for asset {asset!r} in v{version}",
+                    f"  ! {tool_name}: no digest for asset {asset!r} in {tag}",
                     file=sys.stderr,
                 )
                 continue
             sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
             # Rebuild the URL from the version so the file is consistent
             # whether or not Renovate already updated the URL.
-            new_url = f"https://github.com/{owner}/{repo}/releases/download/v{version}/{asset}"
+            new_url = (
+                f"https://github.com/{owner}/{repo}/releases/download/{tag}/{asset}"
+            )
             if binary.get("sha256") != sha or binary.get("url") != new_url:
                 binary["url"] = new_url
                 binary["sha256"] = sha
@@ -120,11 +143,12 @@ def main(argv):
             if name.endswith(".lock.json")
         ]
 
+    cache = {}
     failed = False
     for path in argv[1:]:
         print(f"Refreshing {path}")
         try:
-            changed = refresh_lockfile(path, token)
+            changed = refresh_lockfile(path, token, cache)
         except Exception as exc:
             print(f"  ! failed: {exc}", file=sys.stderr)
             failed = True
