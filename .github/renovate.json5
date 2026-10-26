@@ -34,7 +34,8 @@
   "automerge": false,
   "postUpgradeTasks": {
     "commands": [
-      "tools/internal/refresh_lockfile_digests.py"
+      "tools/internal/refresh_lockfile_digests.py",
+      "tools/internal/sync_readme.py"
     ],
     "fileFilters": ["**/*"],
     "executionMode": "update"
