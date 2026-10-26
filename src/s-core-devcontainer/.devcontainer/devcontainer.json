@@ -27,7 +27,8 @@
             "version": "20"
         },
         "./s-core-local": {},
-        "./bazel-feature": {}
+        "./bazel-feature": {},
+        "ghcr.io/eclipse-score/mcp-servers/agent-context:0": {}
     },
     "overrideFeatureInstallOrder": [
         // this order makes it more convenient to develop the local features, since they will be installed last
@@ -35,7 +36,8 @@
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
         "./s-core-local",
-        "./bazel-feature"
+        "./bazel-feature",
+        "ghcr.io/eclipse-score/mcp-servers/agent-context:0"
     ],
     "remoteUser": "vscode",
     "customizations": {
