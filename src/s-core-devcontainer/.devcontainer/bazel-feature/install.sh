@@ -28,22 +28,12 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 # used by apt-get only inside this script
 DEBIAN_FRONTEND=noninteractive
 
-apt-get update
-
-# Refresh the system trust store before the first TLS download. This must come
-# before load_feature_versions.sh, which fetches yq over HTTPS, so every
-# download in this script validates against a current set of roots. The feature
-# is also usable standalone on a base image this repository does not control,
-# so it cannot rely on the Dockerfile having done this already.
-# Deliberately not pinned in versions.yaml: a pinned trust store is a stale
-# trust store, and it has to be current before versions.yaml can even be read.
-apt-get install -y --no-install-recommends ca-certificates
-update-ca-certificates --fresh
-
 # Read tool versions + metadata into environment variables
 . /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
 
 ARCHITECTURE=$(dpkg --print-architecture)
+
+apt-get update
 
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.

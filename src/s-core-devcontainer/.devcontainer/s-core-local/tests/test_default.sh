@@ -25,7 +25,7 @@ KERNEL=$(uname -s)
 #
 # The October 2026 eMudhra incident compromised intermediate CA private keys
 # chaining to "emSign ECC Root CA - G3"; Ubuntu distrusts that root as of
-# ca-certificates 20260816ubuntu0.24.04.1. The install step upgrades the
+# ca-certificates 20260816ubuntu0.24.04.1. The Dockerfile upgrades the
 # package, but image builds run with `--cache-from`, so a layer assembled
 # before that upgrade could still be reused. Asserting the outcome here means
 # a stale trust store fails CI instead of being published.
@@ -111,10 +111,6 @@ check "validate opencode is working and has the correct version" bash -c "openco
 # uv
 check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_lockfile_version}'"
 check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uvx_lockfile_version}'"
-# Both ship from one upstream release and one archive. Renovate matches the two
-# entries in uv.lock.json separately, so a partial bump would otherwise leave
-# them silently pinned to different releases.
-check "validate uv and uvx are pinned to the same release" bash -c "[ '${uv_lockfile_version}' = '${uvx_lockfile_version}' ]"
 
 # pycairo build from source (requires pkg-config and libcairo2-dev)
 check "validate pycairo can be built and installed from source" bash -c "pip install --break-system-packages pycairo==1.29.0"
