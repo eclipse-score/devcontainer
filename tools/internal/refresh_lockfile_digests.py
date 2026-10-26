@@ -68,9 +68,7 @@ def _release_digests(owner, repo, tag, token, cache):
         release = _api_get(
             f"{GITHUB_API}/repos/{owner}/{repo}/releases/tags/{tag}", token
         )
-        cache[key] = {
-            a["name"]: a.get("digest", "") for a in release.get("assets", [])
-        }
+        cache[key] = {a["name"]: a.get("digest", "") for a in release.get("assets", [])}
     return cache[key]
 
 
