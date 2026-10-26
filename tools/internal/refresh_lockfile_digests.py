@@ -81,9 +81,8 @@ def refresh_lockfile(path, token=None):
 
         # Release tags are not uniformly prefixed: most projects publish
         # `v1.27.0`, while the astral-sh ones (uv, ruff) publish a bare
-        # `0.13.5`. Reuse the prefix the pinned URL already encodes, because
-        # Renovate rewrites the version inside that URL but never the prefix.
-        # Assuming `v` here silently rewrote those tools to a nonexistent tag.
+        # `0.13.5`. Reuse the prefix the pinned URL already encodes; assuming
+        # `v` here would rewrite those tools to a nonexistent tag.
         tag = ("v" if parts[7].startswith("v") else "") + version
 
         release = _api_get(
