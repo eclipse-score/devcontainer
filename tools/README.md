@@ -40,7 +40,7 @@ host-side Bazel invocation may require network access to download the binary.
 | Command | Version | Purpose |
 | --- | --- | --- |
 | `actionlint` | `1.7.7` | Check GitHub Actions workflow files |
-| `apm` | `0.30.0` | Manage APM packages |
+| `apm` | `0.35.0` | Manage APM packages |
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `1.18.31` | Run the OpenCode CLI |

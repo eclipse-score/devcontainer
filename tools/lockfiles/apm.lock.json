@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "apm": {
-    "version": "0.30.0",
+    "version": "0.35.0",
     "description": "Manage APM packages",
     "binaries": [
       {
@@ -9,8 +9,8 @@
         "type": "tar.gz",
         "dir": "apm-darwin-arm64",
         "file": "apm-darwin-arm64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.30.0/apm-darwin-arm64.tar.gz",
-        "sha256": "1cbd8fefbb5f74fd0e05f196bb81cff3cec2876f8f8e1a2e45d4b78fa127a37c",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-arm64.tar.gz",
+        "sha256": "cb2c54152e3bd39acfe2fbda4a2aa91d2af914e24859d3623423efd7b27e3dd0",
         "os": "macos",
         "cpu": "arm64"
       },
@@ -19,8 +19,8 @@
         "type": "tar.gz",
         "dir": "apm-darwin-x86_64",
         "file": "apm-darwin-x86_64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.30.0/apm-darwin-x86_64.tar.gz",
-        "sha256": "648ea29ef54d234c10495dc139d70a535e107b1e1e848c815197ca2b7b6f8515",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-x86_64.tar.gz",
+        "sha256": "ee17daf433c49ed481d9f2ddee31825cbced9390637cab9a5138815bbace327c",
         "os": "macos",
         "cpu": "x86_64"
       },
@@ -29,8 +29,8 @@
         "type": "tar.gz",
         "dir": "apm-linux-x86_64",
         "file": "apm-linux-x86_64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.30.0/apm-linux-x86_64.tar.gz",
-        "sha256": "8b84bebf19c350faf36d21aebb350dc656d04c0b7a1c2bf8ea35c0caa0e44bb9",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
+        "sha256": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
         "os": "linux",
         "cpu": "x86_64"
       },
@@ -39,8 +39,8 @@
         "type": "tar.gz",
         "dir": "apm-linux-arm64",
         "file": "apm-linux-arm64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.30.0/apm-linux-arm64.tar.gz",
-        "sha256": "5d40fce0bb4beb6f59d35949b6ce5dcb6eb1e8493f4a55fc5d91d764077f82df",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-arm64.tar.gz",
+        "sha256": "ada8901ce1b29e5d188629eeed64e8499853a8cb5f047630ebedbde24008508e",
         "os": "linux",
         "cpu": "arm64"
       }
