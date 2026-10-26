@@ -36,5 +36,9 @@ check "validate the compromised ${distrusted_root_cn} is not in the system CA bu
 # Bazel runs its JVM against this keystore (see the bazel feature's
 # /etc/bazel.bazelrc), so it needs the same guarantee as the OpenSSL bundle.
 # Matched on fingerprint because the keytool alias is derived from a filename.
+# As above, prove the keystore is readable first, so a missing or corrupt
+# keystore cannot make the absence check pass.
+check "validate the Java keystore is present and parsable" bash -c \
+    "[ \"\$(keytool -list -keystore /etc/ssl/certs/java/cacerts -storepass changeit | grep -c 'trustedCertEntry')\" -gt 50 ]"
 check "validate the compromised ${distrusted_root_cn} is not in the Java keystore" bash -c \
     "! keytool -list -keystore /etc/ssl/certs/java/cacerts -storepass changeit | grep -qiF '${distrusted_root_sha256}'"
