@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "uv": {
-    "version": "0.13.5",
+    "version": "0.13.6",
     "description": "Manage Python projects and packages",
     "binaries": [
       {
@@ -34,7 +34,7 @@
     ]
   },
   "uvx": {
-    "version": "0.13.5",
+    "version": "0.13.6",
     "description": "Run Python tools in isolated environments",
     "binaries": [
       {
