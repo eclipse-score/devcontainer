@@ -68,6 +68,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "^tools/lockfiles/uv\\.lock\\.json$"
+      ],
+      "matchStrings": [
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "astral-sh/uv",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "versions\\.yaml$"
       ],
       "matchStrings": [

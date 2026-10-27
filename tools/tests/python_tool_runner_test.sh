@@ -53,7 +53,7 @@ chmod +x "${fake_uvx}"
 # The explicit assertion verifies the requested release. Subsequent checks use
 # the parsed value to keep every expected uv argument aligned with the catalog.
 catalog_version="$("${installer}" version pre-commit)"
-[[ "${catalog_version}" = "4.5.1" ]]
+[[ "${catalog_version}" = "4.7.0" ]]
 
 # The Bazel launcher receives an execroot-relative uvx path, then changes to the
 # caller's workspace. This catches regressions where that path breaks after cd.

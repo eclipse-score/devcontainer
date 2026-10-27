@@ -26,6 +26,10 @@ check "validate clang-format is working and has the correct version" bash -c "cl
 check "validate clang-tidy is working and has the correct version" bash -c "clang-tidy --version | grep '20.1.8'"
 check "validate clang is working and has the correct version" bash -c "clang --version | grep '20.1.8'"
 
+# System trust store. Verifies the Dockerfile's CA refresh, so it is sourced
+# explicitly here rather than being discovered; forgetting this line skips it.
+source "${SCRIPT_DIR}/ca_certificates.sh"
+
 # Tests from the local s-core-local feature
 source /devcontainer/features/s-core-local/tests/test_default.sh
 

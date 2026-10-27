@@ -81,7 +81,7 @@ To support proxy environments, environment variables are set in the [`Dockerfile
 
 ## Tests
 
-After an image build, tests check that each tool expected to be in the image is installed with the specified version for [pre-existing features](../src/s-core-devcontainer/test-project/test.sh), the [S-CORE feature](../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh) and the [bazel feature](../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
+After an image build, tests check that each tool expected to be in the image is installed with the specified version for [pre-existing features](../src/s-core-devcontainer/test-project/test.sh), the [system CA trust store](../src/s-core-devcontainer/test-project/ca_certificates.sh), the [S-CORE feature](../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh) and the [bazel feature](../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
 This may seem overly complex at first, but prevents (1) accidentially wrong versions, (2) completely broken tools that cannot even execute.
 Both cases can happen and have happened in the past already, e.g. due to unexpected interactions between devcontainer features.
 
