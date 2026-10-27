@@ -35,9 +35,9 @@
         // which means changes to it will be applied without needing to rebuild all other features
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
-        "./s-core-local",
         "./bazel-feature",
-        "ghcr.io/eclipse-score/mcp-servers/agent-context:0"
+        "ghcr.io/eclipse-score/mcp-servers/agent-context:0",
+        "./s-core-local"
     ],
     "remoteUser": "vscode",
     "customizations": {
