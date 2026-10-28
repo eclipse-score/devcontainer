@@ -33,7 +33,7 @@ jobs:
       id-token: write
       actions: write
   renovate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: ${{ github.event_name == 'schedule' }}
     permissions:
       contents: read
@@ -55,7 +55,7 @@ jobs:
           RENOVATE_ALLOWED_COMMANDS: '["tools/internal/refresh_lockfile_digests.py", "tools/internal/sync_readme.py"]'
   validate-renovate-config:
     name: Validate Renovate config
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
