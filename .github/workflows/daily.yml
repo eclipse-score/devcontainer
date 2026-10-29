@@ -34,7 +34,7 @@ jobs:
       actions: write
   renovate:
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     permissions:
       contents: read
     steps:
@@ -48,11 +48,12 @@ jobs:
           configurationFile: .github/renovate.json5
         env:
           LOG_LEVEL: debug
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
           # Allow the post-upgrade tasks that refresh lockfile URLs and sha256
           # digests and re-sync the generated tool table in tools/README.md
           # (allowedCommands is a global-only option, so it must be set here
           # rather than in renovate.json5).
-          RENOVATE_ALLOWED_COMMANDS: '["tools/internal/refresh_lockfile_digests.py", "tools/internal/sync_readme.py"]'
+          RENOVATE_ALLOWED_COMMANDS: '["^tools/internal/refresh_lockfile_digests\\.py$", "^tools/internal/sync_readme\\.py$"]'
   validate-renovate-config:
     name: Validate Renovate config
     runs-on: ubuntu-24.04
