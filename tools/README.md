@@ -48,8 +48,8 @@ host-side Bazel invocation may require network access to download the binary.
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
 | `starpls` | `0.1.22` | Provide language-server support for Starlark |
-| `uv` | `0.13.5` | Manage Python projects and packages |
-| `uvx` | `0.13.5` | Run Python tools in isolated environments |
+| `uv` | `0.13.6` | Manage Python projects and packages |
+| `uvx` | `0.13.6` | Run Python tools in isolated environments |
 | `yamlfmt` | `0.17.0` | Format YAML files |
 
 <!-- END GENERATED TOOL TABLE -->
