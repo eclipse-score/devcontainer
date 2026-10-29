@@ -26,7 +26,7 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
     name: release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       tag_name: ${{ steps.run-semantic-release.outputs.tag_name }}
     container:
