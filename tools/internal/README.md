@@ -14,202 +14,114 @@ SPDX-License-Identifier: Apache-2.0
 *******************************************************************************
 -->
 
-# Maintaining command-line tools
+# Maintaining tools
 
-This guide describes how the pinned command-line tools are provided and
-maintained. For normal usage, see [Pinned command-line tools](../README.md).
+The catalog covers development commands, feature bundles, base images, and build
+helpers. Definitions own version decisions; environment compositions own selection.
+The container installer is a consumer of those inputs, as are documentation and
+verification. Standalone delivery imports no container installation code.
 
-The approach complements the general direction in
-[DR-001 Infrastructure Design Decision](https://eclipse-score.github.io/score/main/design_decisions/DR-001-infra.html).
+## Sources and responsibilities
 
-## Delivery contract
-
-One catalog is delivered through two execution paths:
-
-| Component | Responsibility |
+| Source | Owns |
 | --- | --- |
-| `tools/lockfiles/*.lock.json` and `tools/lockfiles/python_tools.bzl` | Define versions and delivery metadata. |
-| `MODULE.bazel` | Makes native tool lockfiles available to `rules_multitool`. |
-| `tools/BUILD.bazel` | Exposes public Bazel targets for each command. |
-| Feature installers | Install the commands exposed on the DevContainer's `PATH`. |
-| `tools/run-tool` | Uses the command on `PATH` in a container or locally when available; otherwise uses the public Bazel alias (`--strict` forces Bazel). |
-| `tools/README.md` | Documents every command and its version from the catalog. |
+| `tools/lockfiles/*.lock.json` | Native releases, platforms, artifact hashes and layouts |
+| `tools/score_tools/python_tools.bzl` | Python distributions, exact top-level versions and entrypoints |
+| `tools/providers.json` | APT constraints, special release setup metadata, compatibility expectations and references to external owners |
+| `tools/environments.json` | Local feature and repository selections, including temporary build dependencies |
+| Dev Containers configs and lockfiles | External feature selection, options, resolved feature versions and OCI digests |
+| Dockerfiles / root Dev Containers config | Base images and trust-store refresh policy |
+| `.bazelversion` | Workspace Bazel version, independent of the image's preinstalled version |
 
-A command is available when its catalog metadata, Bazel target, and applicable
-DevContainer installer are registered together. The runner selects between
-those delivery paths; the catalogs remain the command registries.
+`score_tools.catalog` reads these definitions without installation side effects.
+It accepts only a literal Python-tool dictionary. Bazel loads that same Starlark
+file during analysis; its runtime launcher carries immutable arguments and the
+catalog-pinned uvx binary, so host Python is unnecessary.
 
-## Architecture
+The published image composes the s-core-local and bazel-feature selections.
+Repository development uses its own selection and retains its Docker feature.
+Features still own lifecycle hooks, mounts and special setup such as JAVA_HOME,
+CodeQL packs and Bazel completion. They do not own another list of native or
+Python commands. Python tools are installed to `/usr/local/bin` with environments
+under `/usr/local/share/uv/tools`, accessible to the development user. Bazel setup
+uses the Dev Containers `_REMOTE_USER`, defaulting to vscode.
 
-The public interface is `.devcontainer/run-tool` in each consumer
-repository. Inside a container or on the host, it uses the command on `PATH`
-when available, or falls back to Bazel (`--strict` forces Bazel). Developers
-use the same command line without choosing the execution path.
+The yq download helper is removed: the existing image Python reads literal data
+and emits quoted shell metadata. yq is therefore intentionally absent from the
+shipped catalog. No new host Python requirement is introduced for Bazel callers.
 
-![Command-line tool delivery](tool-delivery.svg)
+## Maintenance
 
-Native tools with upstream release artifacts use
-[`rules_multitool`](https://github.com/bazel-contrib/rules_multitool).
+To add a native tool, define its lockfile and add the relevant environment
+membership. Register its multitool hub and Bazel aliases; catalog validation
+checks both explicit registrations against all native definitions.
 
-The `multitool_aliases` helper exposes the `rules_multitool` `cwd` target as
-the public command. That wrapper restores `BUILD_WORKING_DIRECTORY` before
-starting a tool, so configuration discovery and repository-relative paths
-behave like a direct invocation.
+To add a Python tool, edit the literal dictionary and select its environments.
+Bazel targets derive from the dictionary and the distribution includes the file
+as package data. There is no second package requirements file to update.
 
-Python packages do not provide the platform-specific, checksum-addressed
-release binaries expected by `rules_multitool`. Their public Bazel targets
-therefore use the `uvx` binary from `rules_multitool` to create an isolated
-environment for the exact catalogued package version. A shell launcher restores
-the caller's working directory before invoking `uvx`; using shell here is
-intentional so Python-based tools do not require a system Python installation
-on the host.
+To add an APT tool, define its packages and policy in `providers.json`, then add
+its name to an environment's `apt` selection. Use `distribution` for intentionally
+unpinned installs, `prefix` for Debian version-prefix constraints (including any
+epoch), and `package-name` when the version selects the package identity.
+Compatibility expectations are separate fields and do not masquerade as install
+pins. Add tool-specific functional checks where package inspection is insufficient.
 
-The DevContainer takes the other delivery path: it installs each Python tool
-once with the catalogued `uv` binary and exposes the resulting entrypoint on
-`PATH`. Python is already part of the image before feature tools are installed,
-so the installer can use its standard library without adding a container or
-host dependency.
+To update a tool, change its owning definition, refresh native artifact hashes
+where relevant, and regenerate the overview. Existing Renovate release managers
+continue to edit native lockfiles; duplicate apm/opencode YAML managers are removed.
+Other providers currently require the manual review named in the overview.
 
-The maintained runner source is [`run-tool`](../run-tool). It remains under
-`tools/` in this implementation repository; consumer repositories copy it to
-`.devcontainer/run-tool`. This repository invokes that source directly from
-its pre-commit configuration. Consumer documentation only presents the copied
-`.devcontainer/run-tool` path.
-
-## Sources of truth
-
-Native tool metadata lives in
-[`tools/lockfiles/*.lock.json`](../lockfiles). Each lockfile records versions,
-supported platforms, download URLs, checksums, and archive layouts.
-`rules_multitool` consumes the files for Bazel;
-[`devcontainer/install.py`](devcontainer/install.py) consumes them while
-building the DevContainer.
-
-Python command-line tool metadata lives in
-[`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
-a data-only Starlark dictionary because Bazel must read the pin during analysis,
-before the command can run. Its restricted literal form is also valid Python
-syntax. During DevContainer setup, `install.py` runs as root so it can install
-tools in system locations such as `/usr/local/bin`. It parses the catalog with
-`ast.literal_eval` instead of executing it as Python, so catalog changes can
-provide only literal data and cannot run code with the installer's privileges.
-This shared format keeps the package, console entrypoint, version, and
-description in one source of truth while Bazel execution remains independent
-of host Python.
-
-The catalogs have distinct ownership: `devcontainer-lock.json` records external
-DevContainer features, `python_tools.bzl` records Python package releases, and
-`uv.lock.json` records the installer runtime. Each version is therefore owned
-by the component that resolves it.
-
-The published `score_devcontainer` Bazel module and DevContainer image share a
-release version. Consumers using both must pin the same release.
-
-## Adding or updating a tool
-
-For a tool distributed as a native release artifact, make the following
-changes together:
-
-1. Add or update the multitool-compatible
-   `tools/lockfiles/<command>.lock.json`, including a `description` field
-   for each tool entry (used to generate the README table).
-2. Register the lockfile with `multitool.hub` in the root
-   [`MODULE.bazel`](../../MODULE.bazel).
-3. Add `multitool_aliases("<command>")` to
-   [`tools/BUILD.bazel`](../BUILD.bazel).
-4. Add the command to the appropriate feature installer:
-   [`s-core-local/install.sh`](../../src/s-core-devcontainer/.devcontainer/s-core-local/install.sh)
-   for general tools or
-   [`bazel-feature/install.sh`](../../src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh)
-   for Bazel-specific tools.
-5. Read the lockfile version and test the installed command in the matching
-   feature test:
-   [`s-core-local/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh)
-   or
-   [`bazel-feature/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
-6. Regenerate the documented command table:
-
-   ```console
-   $ python3 tools/internal/sync_readme.py
-   ```
-
-7. If this repository's own DevContainer needs the command, add it to
-   [`.devcontainer/post_create_command.sh`](../../.devcontainer/post_create_command.sh).
-
-For a Python command-line tool, add an entry to
-`tools/lockfiles/python_tools.bzl`, add `python_tool("<command>")` to
-`tools/BUILD.bazel`, and install it through `install.py install-python` in
-each applicable DevContainer installer. Keep the catalog as a single literal
-`PYTHON_TOOLS` assignment: this is what makes it safe for the installer and
-directly loadable by Bazel. The `package` selects the distribution passed to
-`uv`, while `entrypoint` names the console command because those names need not
-be identical.
-
-Bazel invokes Python tools on demand with the pinned `uvx`; DevContainers
-install the same package with the pinned `uv`. Add launcher and installer
-coverage to `python_tool_runner_test` when either delivery contract changes.
-
-Keep related commands such as `uv` and `uvx` in one lockfile when upstream
-publishes them together. The installer can locate a command in a differently
-named lockfile, but an explicit `--lockfile` remains available for ambiguous
-cases.
-
-To remove a command, remove it from the same integration points, including
-its `description` field. Then run `sync_readme.py` (see below); it rejects
-lockfile entries without a description.
-
-## Validation and release alignment
-
-Regenerate the user-facing command table after changing a lockfile or a
-description:
+To remove a tool from an environment, remove that membership. Installation,
+availability verification and generated membership use that same selection.
+Deleting the global definition additionally removes its delivery targets and
+registrations. Provider-specific lifecycle setup must be reviewed with the change.
 
 ```console
-$ python3 tools/internal/sync_readme.py
+python3 tools/internal/sync_readme.py
+python3 tools/internal/sync_readme.py --check
+python3 -m unittest discover -s tools/tests -p 'test_*.py'
+bazel test //tools:python_tool_runner_test //tools:run_tool_test
 ```
 
-The pre-commit hook runs the same command; pre-commit rejects the commit if
-running it changes `tools/README.md`, so a stale table cannot be committed.
+`install.py verify-environment NAME` inspects selected executables' reported
+versions and installed Debian package state and constraints. Run it as the
+actual development user. It emits observed versions separately from requested
+policy. Feature tests additionally cover functionality, compatibility and setup.
 
-Run the feature test for every installer changed. The feature tests read their
-expected versions from the catalog, which verifies that the DevContainer and
-lockfiles remain aligned. Publish the Bazel module and the DevContainer image
-with the same release version so consumer repositories can pin one version for
-both delivery paths.
+## Execution and migration
 
-`python_tool_runner_test` uses a fake uv executable to verify arguments,
-environment variables, and working-directory behavior without network access.
-CI additionally runs the real `//tools:pre-commit` target as a smoke test
-because only that target exercises `rules_multitool`, Bazel runfiles, and uvx
-together.
+Direct Bazel targets select native artifacts or the Python definition through
+pinned uvx. Native `<command>_binary` targets remain available as dependencies;
+Python targets are for invocation, not hermetic Bazel actions.
 
-## Bazel target conventions
+`run-tool` retains existing behavior: container PATH wins even with `--strict`;
+non-strict host invocation prefers PATH; strict host invocation uses Bazel.
+A failed local invocation returns its exit code and suggests strict execution;
+it does not silently retry. PATH selection is not a version guarantee and a
+container marker is not an image attestation. This compatibility decision avoids
+changing downstream hooks during the catalog refactoring.
 
-`multitool_aliases` exposes two native-tool targets:
+The new explicit `score-tool` entrypoint selects Python tools through caller uv.
+It preserves cwd, argument boundaries, signals and exit status using exec.
+Future release-based consumer usage (replace RELEASE with a published Git ref):
 
-- `<command>` uses the caller's working directory and is intended for
-  `bazel run`.
-- `<command>_binary` is the raw executable for use as a tool dependency in other
-  Bazel rules.
+```console
+uvx --from 'git+https://github.com/eclipse-score/devcontainer.git@RELEASE' score-tool pre-commit run --all-files
+```
 
-Python tools expose only the runnable `<command>` target. They are intended for
-interactive and CI use, not as executable dependencies in Bazel actions. The
-target embeds the catalog metadata as arguments to a shell launcher and carries
-only the pinned `uvx` executable in its runfiles, which keeps execution
-independent of host Python and avoids runtime catalog path resolution.
+For local verification, use `git+file:///absolute/path/to/repository@COMMIT` from
+outside the checkout. No package or image publication is needed. Consumers may
+migrate unpinned `uvx pre-commit` calls to this explicit release-selected form.
+The standalone path requires compatible uv already on PATH and does not pin or
+bootstrap it. Container and Bazel delivery retain their catalog-pinned uv runtime.
 
-`rules_shell` supplies the `sh_binary` and `sh_test` APIs consistently across
-the supported Bazel generations, so one BUILD definition serves every
-supported consumer.
+## Guarantees
 
-## Rationale and boundaries
-
-The runner supports mixed workflows without exposing two user interfaces. A
-container-only implementation would not cover developers who do not run the
-DevContainer at all, while arbitrary system-installed tools would lose
-version alignment with those who do.
-
-Full Bazel toolchains remain appropriate for tools that participate in build
-actions or platform transitions. They add unnecessary complexity for the
-standalone CLIs covered here. Bazel targets, exported lockfiles, and
-`internal/devcontainer/install.py` are implementation details; the runner is
-the only documented consumer invocation method.
+Native hashes verify exact artifacts. APT prefixes constrain direct package
+versions without freezing repository state or transitive dependencies. Feature
+OCI digests lock feature implementations, not every package those features fetch.
+Python pins select direct distributions; interpreter and transitive resolution
+are still uv's responsibility. Trust-store refresh and intentionally distribution
+following tools remain unpinned. Full environment locking and reproducible image
+rebuilds are outside this refactoring.

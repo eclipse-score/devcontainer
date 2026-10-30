@@ -14,7 +14,7 @@
 # *******************************************************************************
 
 # Consumer repositories install this runner as .devcontainer/run-tool.
-# It runs a pinned CLI tool from PATH in a container, from local PATH on the host
+# It runs an available CLI tool from PATH in a container, from local PATH on the host
 # when available, or through Bazel otherwise.
 # Use --strict to bypass local tools on the host and force execution through Bazel.
 # See https://github.com/eclipse-score/devcontainer/tree/main/tools.
@@ -51,8 +51,8 @@ in_container() {
     esac
 }
 
-# A container built from this catalog only ever has the pinned version on
-# PATH, so container execution is direct and untouched.
+# Container PATH remains preferred for compatibility, including --strict.
+# Container detection is an execution shortcut, not a version attestation.
 # shellcheck disable=SC2310
 if in_container && command -v "${tool_name}" >/dev/null 2>&1; then
     exec "${tool_name}" "$@"

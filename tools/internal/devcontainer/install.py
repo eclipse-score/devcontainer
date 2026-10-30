@@ -28,7 +28,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import ast
 import hashlib
 import json
 import os
@@ -41,182 +40,20 @@ import tempfile
 import urllib.request
 import zipfile
 from pathlib import Path
-from typing import NotRequired, TypedDict
-from collections.abc import Iterator
 
-
-class Binary(TypedDict):
-    """A single binary entry from a tool's lockfile definition."""
-
-    os: str
-    cpu: str
-    kind: str
-    url: str
-    sha256: str
-    type: NotRequired[str]
-    file: NotRequired[str]
-    dir: NotRequired[str]
-
-
-class ToolData(TypedDict):
-    """Tool metadata from a lockfile entry."""
-
-    version: NotRequired[str]
-    description: NotRequired[str]
-    binaries: list[Binary]
-
-
-LOCKFILE_ROOT = Path(__file__).resolve().parents[2] / "lockfiles"
-PYTHON_TOOL_CATALOG = LOCKFILE_ROOT / "python_tools.bzl"
-
-
-class PythonTool(TypedDict):
-    """Metadata shared by the container installer and Bazel launcher."""
-
-    # The distribution and console entrypoint can have different names.
-    package: str
-    version: str
-    entrypoint: str
-    # User-facing text is kept beside the pin so generated docs cannot drift.
-    description: str
-
-
-def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
-    """Yield (tool, lockfile filename, definition) for every catalog entry."""
-    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
-        with path.open(encoding="utf-8") as handle:
-            data = json.load(handle)
-
-        for tool, definition in data.items():
-            if tool.startswith("$"):
-                continue
-            if not isinstance(definition, dict):
-                raise SystemExit(f"Unexpected entry '{tool}' in '{path.name}'")
-            yield tool, path.name, definition
-
-
-def _parse_python_tool_catalog() -> object:
-    """Return the literal assigned to ``PYTHON_TOOLS``.
-
-    The feature installer runs as root, so importing or executing a repository
-    file would cross a privilege boundary. Parsing one assignment and accepting
-    only literal data lets Bazel and the installer share a catalog safely.
-    """
-    try:
-        module = ast.parse(
-            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
-            filename=str(PYTHON_TOOL_CATALOG),
-        )
-    except SyntaxError as exc:
-        raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
-
-    # Exactly one statement preserves the catalog's data-only contract.
-    if len(module.body) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    assignment = module.body[0]
-    if not isinstance(assignment, ast.Assign) or len(assignment.targets) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    target = assignment.targets[0]
-    if not isinstance(target, ast.Name) or target.id != "PYTHON_TOOLS":
-        raise SystemExit("Python tool catalog must assign its data to PYTHON_TOOLS")
-
-    try:
-        return ast.literal_eval(assignment.value)
-    except (TypeError, ValueError) as exc:
-        raise SystemExit("Python tool catalog must contain only literal data") from exc
-
-
-def _load_python_tools() -> dict[str, PythonTool]:
-    """Validate the shared catalog and return typed Python tool metadata."""
-    catalog = _parse_python_tool_catalog()
-    if not isinstance(catalog, dict):
-        raise SystemExit("PYTHON_TOOLS must be a dictionary")
-
-    tools: dict[str, PythonTool] = {}
-    for command, metadata in catalog.items():
-        if (
-            not isinstance(command, str)
-            or not command
-            or not isinstance(metadata, dict)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        package = metadata.get("package")
-        version = metadata.get("version")
-        entrypoint = metadata.get("entrypoint")
-        description = metadata.get("description")
-        # Central validation gives Bazel, installation, and documentation the
-        # same required-field contract.
-        if not all(
-            isinstance(value, str) and value
-            for value in (package, version, entrypoint, description)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        tools[command] = {
-            "package": package,
-            "version": version,
-            "entrypoint": entrypoint,
-            "description": description,
-        }
-    return tools
-
-
-def load_catalog_versions() -> dict[str, str]:
-    """Return every tool version declared by the lockfile catalog."""
-    versions: dict[str, str] = {}
-
-    for tool, filename, definition in _iter_catalog():
-        version = definition.get("version")
-        if not isinstance(version, str):
-            raise SystemExit(
-                f"Tool '{tool}' in '{filename}' does not define a string version"
-            )
-        if tool in versions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
-        versions[tool] = version
-
-    for tool, definition in _load_python_tools().items():
-        if tool in versions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
-        versions[tool] = definition["version"]
-
-    return versions
-
-
-def load_catalog_descriptions() -> dict[str, str]:
-    """Return every tool description declared by the lockfile catalog.
-
-    Tools without a description are omitted so callers can report a
-    friendly list of undocumented tools instead of failing on the first
-    one encountered.
-    """
-    descriptions: dict[str, str] = {}
-
-    for tool, filename, definition in _iter_catalog():
-        description = definition.get("description")
-        if description is None:
-            continue
-        if not isinstance(description, str):
-            raise SystemExit(
-                f"Tool '{tool}' in '{filename}' has a non-string description"
-            )
-        if tool in descriptions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
-        descriptions[tool] = description
-
-    for tool, definition in _load_python_tools().items():
-        if tool in descriptions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
-        descriptions[tool] = definition["description"]
-
-    return descriptions
+# Container images copy the complete tools directory; source execution and
+# Bazel runfiles use the same import root without installing a host package.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from score_tools.catalog import (
+    LOCKFILE_ROOT,
+    Binary,
+    ToolData,
+    _load_python_tools,
+    apt_requirements,
+    load_catalog_versions,
+    load_environments,
+    load_providers,
+)
 
 
 def _detect_os() -> str:
@@ -458,11 +295,148 @@ def _cmd_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_environment(args: argparse.Namespace) -> int:
+    """Apply a named environment's native/Python selection in dependency order."""
+    selections = load_environments()
+    selection = selections[args.environment]
+    if args.phase != "runtime":
+        packages = [
+            package
+            for name in selection.get("build-apt", [])
+            for package in load_providers()[name]["packages"]
+        ]
+        if packages:
+            action = (
+                ["install", "-y"]
+                if args.phase == "build"
+                else ["remove", "--purge", "-y"]
+            )
+            subprocess.run(["apt-get", *action, *packages], check=True)
+        return 0
+    requirements = apt_requirements(args.environment)
+    if requirements:
+        subprocess.run(
+            ["apt-get", "install", "-y", *requirements],
+            check=True,
+        )
+    native = argparse.Namespace(
+        tools=selection["native"],
+        lockfile=None,
+        destination=args.destination,
+        os=_detect_os(),
+        cpu=_detect_cpu(),
+    )
+    _cmd_install(native)
+    if selection["python"]:
+        python = argparse.Namespace(
+            tools=selection["python"],
+            uv=str(Path(args.destination) / "uv"),
+            bin_dir=args.destination,
+            tool_dir=args.tool_dir,
+        )
+        _cmd_install_python(python)
+    for name in selection.get("npm", []):
+        definition = load_providers()[name]
+        subprocess.run(["npm", "install", "-g", definition["package"]], check=True)
+    return 0
+
+
+def _cmd_shell_metadata(args: argparse.Namespace) -> int:
+    """Emit quoted data for the provider-specific feature setup, never shell code from definitions."""
+    import re
+    import shlex
+
+    def emit(name, value):
+        if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name):
+            raise SystemExit(f"Invalid metadata variable: {name}")
+        if isinstance(value, dict):
+            for key, child in value.items():
+                emit(name + "_" + key, child)
+        elif isinstance(value, str):
+            print("export " + name + "=" + shlex.quote(value))
+
+    for name, definition in load_providers().items():
+        emit(name.replace("-", "_"), definition)
+    # Python definitions are shared with Bazel and the installed uv package.
+    for name, definition in _load_python_tools().items():
+        emit(name.replace("-", "_"), definition)
+    return 0
+
+
+def _cmd_verify_environment(args: argparse.Namespace) -> int:
+    """Inspect selected commands and installed Debian packages, not installer inputs."""
+    import re
+
+    selection = load_environments()[args.environment]
+    versions = load_catalog_versions()
+    observed = {}
+    for name in selection["native"] + selection["python"]:
+        command = shutil.which(name)
+        if command is None:
+            raise SystemExit(f"Selected command missing from PATH: {name}")
+        flag = "version" if name in ("starpls", "bazelisk") else "--version"
+        run = subprocess.run(
+            [command, flag],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            check=True,
+        )
+        if not re.search(
+            r"(?<![0-9.])" + re.escape(versions[name]) + r"(?![0-9.])", run.stdout
+        ):
+            raise SystemExit(f"Unexpected {name} version: {run.stdout}")
+        observed[name] = {"command": command, "reported": run.stdout.strip()}
+    providers = load_providers()
+    for name in selection.get("apt", []):
+        definition = providers[name]
+        for package in definition["packages"]:
+            package = package.format(version=definition.get("version", ""))
+            run = subprocess.run(
+                ["dpkg-query", "-W", "-f=${Status}\\n${Version}", package],
+                text=True,
+                stdout=subprocess.PIPE,
+                check=True,
+            )
+            status, version = run.stdout.splitlines()
+            if status != "install ok installed":
+                raise SystemExit(f"Selected package is not installed: {package}")
+            if definition["policy"] == "prefix" and not version.startswith(
+                definition["version"]
+            ):
+                raise SystemExit(f"Unexpected {package} version: {version}")
+            observed[package] = {"resolved": version, "policy": definition["policy"]}
+    print(json.dumps(observed, indent=2))
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install pinned tools from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    verify_parser = subparsers.add_parser(
+        "verify-environment", help="Inspect actual installed selections."
+    )
+    verify_parser.add_argument("environment")
+    verify_parser.set_defaults(func=_cmd_verify_environment)
+
+    metadata_parser = subparsers.add_parser(
+        "shell-metadata", help="Read feature setup metadata."
+    )
+    metadata_parser.set_defaults(func=_cmd_shell_metadata)
+
+    environment_parser = subparsers.add_parser(
+        "environment", help="Install a declared environment selection."
+    )
+    environment_parser.add_argument("environment")
+    environment_parser.add_argument(
+        "--phase", choices=("runtime", "build", "cleanup"), default="runtime"
+    )
+    environment_parser.add_argument("--destination", default="/usr/local/bin")
+    environment_parser.add_argument("--tool-dir", default="/usr/local/share/uv/tools")
+    environment_parser.set_defaults(func=_cmd_environment)
 
     install_parser = subparsers.add_parser(
         "install",

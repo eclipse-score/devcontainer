@@ -18,8 +18,13 @@ set -euo pipefail
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
+check "verify selected s-core-local tools and packages" /usr/local/share/score-tools/internal/devcontainer/install.py verify-environment s-core-local
+
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
+
+basedpyright_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version basedpyright)"
+pytest_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version pytest)"
 
 shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
 ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"
@@ -50,8 +55,8 @@ check "validate graphviz has the correct version" bash -c "dpkg -s graphviz | gr
 check "validate protoc is working and has the correct version" bash -c "protoc --version | grep 'libprotoc ${protobuf_compiler_version}'"
 
 # Common tooling
-check "validate git is working and has the correct version" bash -c "git --version | grep '${git_version}'"
-check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '${git_lfs_version}'"
+check "validate git is working and has the correct version" bash -c "git --version | grep '${git_compatibility_version}'"
+check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '${git_lfs_compatibility_version}'"
 
 # Python-related tools (a selected sub-set; others may be added later)
 check "validate python3 is working and has the correct version" bash -c "python3 --version | grep '${python_version}'"
@@ -89,13 +94,13 @@ check "validate uv is working and has the correct version" bash -c "uv --version
 check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uvx_lockfile_version}'"
 
 # pycairo build from source (requires pkg-config and libcairo2-dev)
-check "validate pycairo can be built and installed from source" bash -c "pip install --break-system-packages pycairo==1.29.0"
+check "validate pycairo can be built and installed from source" bash -c "pip install --break-system-packages pycairo==${pycairo_smoke_version}"
 
 # additional developer tools
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate pkg-config is working and has the correct version" bash -c "pkg-config --version | grep '${pkg_config_version}'"
-check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
-check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
+check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_compatibility_version}'"
+check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version#*:}'"
 check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
 if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
     check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
@@ -106,6 +111,6 @@ fi
 check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"
 
 # Qemu target-related tools
-check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version}'"
-check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version}'"
+check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version#*:}'"
+check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version#*:}'"
 check "validate sshpass is working and has the correct version" bash -c "sshpass -V | grep '${sshpass_version}'"

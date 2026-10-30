@@ -14,6 +14,7 @@
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load(":multitool.bzl", "multitool_aliases")
 load(":python_tool.bzl", "python_tool")
+load(":score_tools/python_tools.bzl", "PYTHON_TOOLS")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -21,7 +22,7 @@ package(default_visibility = ["//visibility:public"])
 # loaded directly by python_tool.bzl. Export both because they are public
 # metadata shipped with the score_devcontainer module.
 exports_files(glob([
-    "lockfiles/*.bzl",
+    "score_tools/*.bzl",
     "lockfiles/*.lock.json",
 ]))
 
@@ -49,7 +50,9 @@ multitool_aliases("opencode")
 
 # Python distributions are resolved through pinned uvx because they do not
 # provide the platform-specific release binaries consumed by rules_multitool.
-python_tool("pre-commit")
+# Derive every public Python target from the owning dictionary. Adding a tool
+# must not require synchronizing a second handwritten command list here.
+[python_tool(name) for name in PYTHON_TOOLS]
 
 # This contract test keeps Bazel's shell launcher and the container installer
 # aligned with their shared catalog.
@@ -59,7 +62,9 @@ sh_test(
     data = [
         "internal/devcontainer/install.py",
         "internal/run_python_tool.sh",
-        "lockfiles/python_tools.bzl",
+        "score_tools/__init__.py",
+        "score_tools/catalog.py",
+        "score_tools/python_tools.bzl",
     ],
 )
 

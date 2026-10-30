@@ -18,7 +18,7 @@ shell and the pinned uvx executable supplied by rules_multitool.
 """
 
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
-load(":lockfiles/python_tools.bzl", "PYTHON_TOOLS")
+load(":score_tools/python_tools.bzl", "PYTHON_TOOLS")
 
 def python_tool(name):
     """Creates a runnable target from the shared Python tool catalog."""

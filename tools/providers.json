@@ -1,0 +1,609 @@
+{
+  "graphviz": {
+    "provider": "apt",
+    "description": "graphviz",
+    "packages": [
+      "graphviz"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "2.42.2"
+  },
+  "protobuf_compiler": {
+    "provider": "apt",
+    "description": "protobuf compiler",
+    "packages": [
+      "protobuf-compiler"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "3.21.12"
+  },
+  "qemu_system": {
+    "provider": "apt",
+    "description": "qemu system",
+    "packages": [
+      "qemu-system-arm",
+      "qemu-system-x86"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "1:8.2.2"
+  },
+  "sshpass": {
+    "provider": "apt",
+    "description": "sshpass",
+    "packages": [
+      "sshpass"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "1.09"
+  },
+  "gdb": {
+    "provider": "apt",
+    "description": "gdb",
+    "packages": [
+      "gdb"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "15.0.50"
+  },
+  "git": {
+    "provider": "apt",
+    "description": "git",
+    "packages": [
+      "git"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "compatibility_version": "2.43.0"
+  },
+  "git_lfs": {
+    "provider": "apt",
+    "description": "git lfs",
+    "packages": [
+      "git-lfs"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "compatibility_version": "3.4.1"
+  },
+  "gh": {
+    "provider": "apt",
+    "description": "gh",
+    "packages": [
+      "gh"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "compatibility_version": "2.45.0"
+  },
+  "openjdk_21": {
+    "provider": "apt",
+    "description": "openjdk 21",
+    "packages": [
+      "openjdk-21-jdk-headless"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "21.0.12"
+  },
+  "valgrind": {
+    "provider": "apt",
+    "description": "valgrind",
+    "packages": [
+      "valgrind"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "1:3.22.0"
+  },
+  "ripgrep": {
+    "provider": "apt",
+    "description": "ripgrep",
+    "packages": [
+      "ripgrep"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "14.1.0"
+  },
+  "lcov": {
+    "provider": "apt",
+    "description": "lcov",
+    "packages": [
+      "lcov"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "2.0"
+  },
+  "pkg_config": {
+    "provider": "apt",
+    "description": "pkg config",
+    "packages": [
+      "pkg-config"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "1.8.1"
+  },
+  "libcairo2_dev": {
+    "provider": "apt",
+    "description": "libcairo2 dev",
+    "packages": [
+      "libcairo2-dev"
+    ],
+    "policy": "prefix",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review",
+    "version": "1.18.0"
+  },
+  "python": {
+    "provider": "apt",
+    "description": "Distribution Python interpreter",
+    "packages": [
+      "python{version}",
+      "python3-pip",
+      "python3-venv"
+    ],
+    "policy": "package-name",
+    "version": "3.12",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual Ubuntu compatibility review"
+  },
+  "flake8": {
+    "provider": "apt",
+    "description": "flake8",
+    "packages": [
+      "flake8"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "python3-autopep8": {
+    "provider": "apt",
+    "description": "python3-autopep8",
+    "packages": [
+      "python3-autopep8"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "black": {
+    "provider": "apt",
+    "description": "black",
+    "packages": [
+      "black"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "python3-yapf": {
+    "provider": "apt",
+    "description": "python3-yapf",
+    "packages": [
+      "python3-yapf"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "mypy": {
+    "provider": "apt",
+    "description": "mypy",
+    "packages": [
+      "mypy"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "pydocstyle": {
+    "provider": "apt",
+    "description": "pydocstyle",
+    "packages": [
+      "pydocstyle"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "pycodestyle": {
+    "provider": "apt",
+    "description": "pycodestyle",
+    "packages": [
+      "pycodestyle"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "bandit": {
+    "provider": "apt",
+    "description": "bandit",
+    "packages": [
+      "bandit"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "pipenv": {
+    "provider": "apt",
+    "description": "pipenv",
+    "packages": [
+      "pipenv"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "virtualenv": {
+    "provider": "apt",
+    "description": "virtualenv",
+    "packages": [
+      "virtualenv"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "pylint": {
+    "provider": "apt",
+    "description": "pylint",
+    "packages": [
+      "pylint"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "ca-certificates-java": {
+    "provider": "apt",
+    "description": "ca-certificates-java",
+    "packages": [
+      "ca-certificates-java"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "man-db": {
+    "provider": "apt",
+    "description": "man-db",
+    "packages": [
+      "man-db"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "manpages": {
+    "provider": "apt",
+    "description": "manpages",
+    "packages": [
+      "manpages"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "manpages-dev": {
+    "provider": "apt",
+    "description": "manpages-dev",
+    "packages": [
+      "manpages-dev"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "manpages-posix": {
+    "provider": "apt",
+    "description": "manpages-posix",
+    "packages": [
+      "manpages-posix"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "manpages-posix-dev": {
+    "provider": "apt",
+    "description": "manpages-posix-dev",
+    "packages": [
+      "manpages-posix-dev"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories"
+  },
+  "codeql": {
+    "provider": "release",
+    "description": "codeql",
+    "policy": "exact",
+    "platforms": [
+      "linux/x86_64"
+    ],
+    "update": "manual release and checksum review",
+    "version": "2.21.4",
+    "amd64": {
+      "sha256": "6da9f3df228d4e162af877569240a627c1af22f6adbd26352b22357fb8bd7545"
+    },
+    "arm64": {
+      "sha256": "810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399"
+    }
+  },
+  "codeql_coding_standards": {
+    "provider": "release",
+    "description": "codeql coding standards",
+    "policy": "exact",
+    "platforms": [
+      "linux/x86_64"
+    ],
+    "update": "manual release and checksum review",
+    "version": "2.54.0"
+  },
+  "bazel": {
+    "provider": "bazelisk",
+    "description": "bazel",
+    "policy": "exact",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual release and checksum review",
+    "version": "8.6.0"
+  },
+  "bazel_compile_commands": {
+    "provider": "release",
+    "description": "bazel compile commands",
+    "policy": "exact",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual release and checksum review",
+    "version": "0.18.0",
+    "amd64": {
+      "sha256": "6735ea846241497094719792ad3d4f67b1d3123048693d34fcdf7190f8c2da4e"
+    },
+    "arm64": {
+      "sha256": "d73998efa01cbd501b82ad6266642464b78ecd9fc6224a60c9cb558182d52d88"
+    }
+  },
+  "apt-transport-https": {
+    "provider": "apt",
+    "description": "Temporary container build dependency (removed after setup)",
+    "packages": [
+      "apt-transport-https"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories",
+    "phase": "build-only"
+  },
+  "zstd": {
+    "provider": "apt",
+    "description": "Temporary container build dependency (removed after setup)",
+    "packages": [
+      "zstd"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories",
+    "phase": "build-only"
+  },
+  "devcontainers-cli": {
+    "provider": "npm",
+    "description": "Build and test Dev Containers",
+    "package": "@devcontainers/cli",
+    "policy": "latest",
+    "platforms": [
+      "Node.js-supported platforms"
+    ],
+    "update": "npm latest; intentionally unpinned",
+    "phase": "repository setup"
+  },
+  "pycairo-smoke": {
+    "provider": "test",
+    "description": "Source-build smoke dependency; not shipped in the image",
+    "version": "1.29.0",
+    "policy": "exact test fixture",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual fixture review"
+  },
+  "llvm": {
+    "provider": "feature",
+    "description": "Clang, clangd, clang-format and clang-tidy bundle",
+    "policy": "feature option + OCI digest",
+    "config": "src/s-core-devcontainer/.devcontainer/devcontainer.json",
+    "feature": "ghcr.io/devcontainers-community/features/llvm",
+    "compatibility_version": "20.1.8",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Dependabot lock + manual LLVM compatibility review"
+  },
+  "common-utils": {
+    "provider": "feature",
+    "description": "common-utils feature bundle",
+    "policy": "OCI digest",
+    "config": "src/s-core-devcontainer/.devcontainer/devcontainer.json",
+    "feature": "ghcr.io/devcontainers/features/common-utils",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Dev Containers lock maintenance"
+  },
+  "docker-in-docker": {
+    "provider": "feature",
+    "description": "docker-in-docker feature bundle",
+    "policy": "OCI digest",
+    "config": ".devcontainer/devcontainer.json",
+    "feature": "ghcr.io/devcontainers/features/docker-in-docker:4",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Dev Containers lock maintenance"
+  },
+  "published-base": {
+    "provider": "image",
+    "description": "Published image base and updated system CA trust",
+    "policy": "Dockerfile tag; distribution CA refresh",
+    "config": "src/s-core-devcontainer/.devcontainer/Dockerfile",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Dependabot Docker + Ubuntu CA updates"
+  },
+  "repository-base": {
+    "provider": "image",
+    "description": "Repository development Node.js base",
+    "policy": "image tag",
+    "config": ".devcontainer/devcontainer.json",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Dev Containers configuration review"
+  },
+  "workspace-bazel": {
+    "provider": "workspace",
+    "description": "Bazel used to develop this module (separate from image preinstall)",
+    "policy": "workspace version",
+    "config": ".bazelversion",
+    "platforms": [
+      "Bazel-supported platforms"
+    ],
+    "update": "manual workspace compatibility review"
+  }
+}

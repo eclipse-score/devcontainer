@@ -15,8 +15,10 @@
 
 set -euo pipefail
 
+check "verify selected bazel-feature tools and packages" /usr/local/share/score-tools/internal/devcontainer/install.py verify-environment bazel-feature
+
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
 bazelisk_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version bazelisk)"
 buildifier_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version buildifier)"

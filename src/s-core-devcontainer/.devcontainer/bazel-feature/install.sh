@@ -29,7 +29,7 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
 ARCHITECTURE=$(dpkg --print-architecture)
 
@@ -37,10 +37,10 @@ apt-get update
 
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
-apt-get install apt-transport-https -y
+/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase build
 
 # Lockfile-managed Bazel tooling
-/usr/local/share/score-tools/internal/devcontainer/install.py install bazelisk buildifier starpls
+/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature
 
 # Bazelisk + Bazel
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
@@ -49,7 +49,7 @@ ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
 export USE_BAZEL_VERSION=${bazel_version}
 # bazelisk downloads Bazel into the home directory of the user running the command
 # lets assume there is only one user in the devcontainer
-su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
+su "${_REMOTE_USER:-vscode}" -c "bazel help completion bash > /tmp/bazel-complete.bash"
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/bazel/bazel_setup.sh"
@@ -73,7 +73,7 @@ rm /tmp/bazel-compile-commands.deb
 
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
-apt-get remove --purge -y apt-transport-https
+/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase cleanup
 apt-get autoremove -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*

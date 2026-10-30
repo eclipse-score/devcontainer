@@ -20,11 +20,13 @@ SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 
 source "${SCRIPT_DIR}/test-utils.sh" vscode
 
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
+
 # C++ tooling
-check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '20.1.8'"
-check "validate clang-format is working and has the correct version" bash -c "clang-format --version | grep '20.1.8'"
-check "validate clang-tidy is working and has the correct version" bash -c "clang-tidy --version | grep '20.1.8'"
-check "validate clang is working and has the correct version" bash -c "clang --version | grep '20.1.8'"
+check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '${llvm_compatibility_version}'"
+check "validate clang-format is working and has the correct version" bash -c "clang-format --version | grep '${llvm_compatibility_version}'"
+check "validate clang-tidy is working and has the correct version" bash -c "clang-tidy --version | grep '${llvm_compatibility_version}'"
+check "validate clang is working and has the correct version" bash -c "clang --version | grep '${llvm_compatibility_version}'"
 
 # System trust store. Verifies the Dockerfile's CA refresh, so it is sourced
 # explicitly here rather than being discovered; forgetting this line skips it.

@@ -1,0 +1,346 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+"""Read shared tool definitions without installation side effects."""
+
+import ast
+import json
+from collections.abc import Iterator
+from pathlib import Path
+from typing import NotRequired, TypedDict
+
+
+class Binary(TypedDict):
+    """A single binary entry from a tool's lockfile definition."""
+
+    os: str
+    cpu: str
+    kind: str
+    url: str
+    sha256: str
+    type: NotRequired[str]
+    file: NotRequired[str]
+    dir: NotRequired[str]
+
+
+class ToolData(TypedDict):
+    """Tool metadata from a lockfile entry."""
+
+    version: NotRequired[str]
+    description: NotRequired[str]
+    binaries: list[Binary]
+
+
+LOCKFILE_ROOT = Path(__file__).resolve().parents[1] / "lockfiles"
+PYTHON_TOOL_CATALOG = Path(__file__).with_name("python_tools.bzl")
+
+
+class PythonTool(TypedDict):
+    """Metadata shared by the container installer and Bazel launcher."""
+
+    # The distribution and console entrypoint can have different names.
+    package: str
+    version: str
+    entrypoint: str
+    # User-facing text is kept beside the pin so generated docs cannot drift.
+    description: str
+
+
+def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
+    """Yield (tool, lockfile filename, definition) for every catalog entry."""
+    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
+        with path.open(encoding="utf-8") as handle:
+            data = json.load(handle)
+
+        for tool, definition in data.items():
+            if tool.startswith("$"):
+                continue
+            if not isinstance(definition, dict):
+                raise SystemExit(f"Unexpected entry '{tool}' in '{path.name}'")
+            yield tool, path.name, definition
+
+
+def _parse_python_tool_catalog() -> object:
+    """Return the literal assigned to ``PYTHON_TOOLS``.
+
+    The feature installer runs as root, so importing or executing a repository
+    file would cross a privilege boundary. Parsing one assignment and accepting
+    only literal data lets Bazel and the installer share a catalog safely.
+    """
+    try:
+        module = ast.parse(
+            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
+            filename=str(PYTHON_TOOL_CATALOG),
+        )
+    except SyntaxError as exc:
+        raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
+
+    # Exactly one statement preserves the catalog's data-only contract.
+    if len(module.body) != 1:
+        raise SystemExit(
+            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
+        )
+
+    assignment = module.body[0]
+    if not isinstance(assignment, ast.Assign) or len(assignment.targets) != 1:
+        raise SystemExit(
+            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
+        )
+
+    target = assignment.targets[0]
+    if not isinstance(target, ast.Name) or target.id != "PYTHON_TOOLS":
+        raise SystemExit("Python tool catalog must assign its data to PYTHON_TOOLS")
+
+    try:
+        return ast.literal_eval(assignment.value)
+    except (TypeError, ValueError) as exc:
+        raise SystemExit("Python tool catalog must contain only literal data") from exc
+
+
+def _load_python_tools() -> dict[str, PythonTool]:
+    """Validate the shared catalog and return typed Python tool metadata."""
+    catalog = _parse_python_tool_catalog()
+    if not isinstance(catalog, dict):
+        raise SystemExit("PYTHON_TOOLS must be a dictionary")
+
+    tools: dict[str, PythonTool] = {}
+    for command, metadata in catalog.items():
+        if (
+            not isinstance(command, str)
+            or not command
+            or not isinstance(metadata, dict)
+        ):
+            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
+
+        package = metadata.get("package")
+        version = metadata.get("version")
+        entrypoint = metadata.get("entrypoint")
+        description = metadata.get("description")
+        # Central validation gives Bazel, installation, and documentation the
+        # same required-field contract.
+        if not all(
+            isinstance(value, str) and value
+            for value in (package, version, entrypoint, description)
+        ):
+            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
+
+        tools[command] = {
+            "package": package,
+            "version": version,
+            "entrypoint": entrypoint,
+            "description": description,
+        }
+    return tools
+
+
+def load_catalog_versions() -> dict[str, str]:
+    """Return every tool version declared by the lockfile catalog."""
+    versions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        version = definition.get("version")
+        if not isinstance(version, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' does not define a string version"
+            )
+        if tool in versions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        versions[tool] = version
+
+    for tool, definition in _load_python_tools().items():
+        if tool in versions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
+        versions[tool] = definition["version"]
+
+    return versions
+
+
+def load_catalog_descriptions() -> dict[str, str]:
+    """Return every tool description declared by the lockfile catalog.
+
+    Tools without a description are omitted so callers can report a
+    friendly list of undocumented tools instead of failing on the first
+    one encountered.
+    """
+    descriptions: dict[str, str] = {}
+
+    for tool, filename, definition in _iter_catalog():
+        description = definition.get("description")
+        if description is None:
+            continue
+        if not isinstance(description, str):
+            raise SystemExit(
+                f"Tool '{tool}' in '{filename}' has a non-string description"
+            )
+        if tool in descriptions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
+        descriptions[tool] = description
+
+    for tool, definition in _load_python_tools().items():
+        if tool in descriptions:
+            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
+        descriptions[tool] = definition["description"]
+
+    return descriptions
+
+
+def load_providers():
+    """Return provider-specific definitions owned outside native/Python catalogs."""
+    return json.loads((LOCKFILE_ROOT.parent / "providers.json").read_text())
+
+
+def load_environments():
+    """Return environment selections; selections carry no version decisions."""
+    return json.loads((LOCKFILE_ROOT.parent / "environments.json").read_text())
+
+
+def apt_requirements(environment):
+    """Translate selected distribution policies into apt's request syntax."""
+    providers = load_providers()
+    requirements = []
+    for name in load_environments()[environment].get("apt", []):
+        tool = providers[name]
+        for package in tool["packages"]:
+            if tool["policy"] == "package-name":
+                package = package.format(version=tool["version"])
+            elif tool["policy"] == "prefix":
+                package += "=" + tool["version"] + "*"
+            requirements.append(package)
+    return requirements
+
+
+def all_definitions():
+    """Unify inventory views while retaining provider-owned formats."""
+    result = {}
+    for name, filename, definition in _iter_catalog():
+        if name in result:
+            raise ValueError(f"Duplicate tool definition: {name}")
+        result[name] = {
+            **definition,
+            "provider": "native",
+            "policy": "sha256",
+            "source": "tools/lockfiles/" + filename,
+            "platforms": sorted(
+                {b["os"] + "/" + b["cpu"] for b in definition["binaries"]}
+            ),
+            "delivery": "container, Bazel",
+            "update": "release + artifact digest review",
+        }
+    for name, definition in _load_python_tools().items():
+        result[name] = {
+            **definition,
+            "provider": "python",
+            "policy": "top-level exact",
+            "source": "tools/score_tools/python_tools.bzl",
+            "platforms": ["uv-supported platforms"],
+            "delivery": "container, Bazel, uv",
+            "update": "manual Python release review",
+        }
+    for name, definition in load_providers().items():
+        if name in result:
+            raise ValueError(f"Duplicate tool definition: {name}")
+        result[name] = {
+            **resolved_provider(name, definition),
+            "source": "tools/providers.json",
+            "delivery": "container",
+        }
+    return result
+
+
+def validate_catalog():
+    """Reject undefined selections and drift in unavoidable Bazel registrations."""
+    import re
+
+    tools = all_definitions()
+    for environment, selections in load_environments().items():
+        for provider, names in selections.items():
+            if provider not in ("native", "python", "apt", "setup", "build-apt", "npm"):
+                raise ValueError(f"Unknown composition provider: {provider}")
+            if len(names) != len(set(names)):
+                raise ValueError(f"Duplicate selection in {environment}/{provider}")
+            for name in names:
+                if name not in tools:
+                    raise ValueError(f"Undefined tool {name} in {environment}")
+                if provider != "setup" and tools[name]["provider"] != (
+                    "apt" if provider == "build-apt" else provider
+                ):
+                    raise ValueError(f"Wrong provider for {name} in {environment}")
+    root = LOCKFILE_ROOT.parents[1]
+    module = (root / "MODULE.bazel").read_text()
+    declared = re.findall(
+        r'multitool.hub\(lockfile = "//tools:lockfiles/([^"/]+)"\)', module
+    )
+    expected = sorted(p.name for p in LOCKFILE_ROOT.glob("*.lock.json"))
+    if sorted(declared) != expected:
+        raise ValueError("MODULE.bazel native hubs differ from lockfile catalog")
+    build = (root / "tools/BUILD.bazel").read_text()
+    aliases = re.findall(r'multitool_aliases\("([^"]+)"\)', build)
+    native = sorted(
+        name for name, data in tools.items() if data["provider"] == "native"
+    )
+    if sorted(aliases) != native:
+        raise ValueError("Bazel aliases differ from native tool catalog")
+    for name, data in tools.items():
+        if (
+            not data.get("description")
+            or not data.get("platforms")
+            or not data.get("policy")
+        ):
+            raise ValueError(f"Incomplete inventory definition: {name}")
+    return tools
+
+
+def read_jsonc(path):
+    """Read Dev Containers JSON with comments while preserving URL/string content."""
+    import re
+
+    pattern = r'("(?:\\.|[^"\\])*")|//[^\n]*|/\*.*?\*/'
+    return json.loads(
+        re.sub(
+            pattern,
+            lambda match: match.group(1) or "",
+            path.read_text(),
+            flags=re.DOTALL,
+        )
+    )
+
+
+def resolved_provider(name, definition):
+    """Resolve external native configuration by reference instead of copying pins."""
+    if "config" not in definition:
+        return definition
+    root = LOCKFILE_ROOT.parents[1]
+    config = root / definition["config"]
+    result = dict(definition)
+    if definition["provider"] == "feature":
+        settings = read_jsonc(config)["features"][definition["feature"]]
+        resolution = json.loads(config.with_name("devcontainer-lock.json").read_text())[
+            "features"
+        ][definition["feature"]]
+        result["version"] = (
+            str(settings.get("version", "bundle"))
+            + " / feature "
+            + resolution["version"]
+        )
+        result["resolution"] = resolution["resolved"]
+    elif definition["provider"] == "image":
+        if config.suffix == ".json":
+            result["version"] = read_jsonc(config)["image"]
+        else:
+            result["version"] = next(
+                line.split(maxsplit=1)[1]
+                for line in config.read_text().splitlines()
+                if line.startswith("FROM ")
+            )
+    elif definition["provider"] == "workspace":
+        result["version"] = config.read_text().strip()
+    return result

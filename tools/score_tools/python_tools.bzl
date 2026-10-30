@@ -27,4 +27,16 @@ PYTHON_TOOLS = {
         # are reviewed together.
         "description": "Run repository pre-commit hooks",
     },
+    "basedpyright": {
+        "package": "basedpyright",
+        "version": "1.35.0",
+        "entrypoint": "basedpyright",
+        "description": "Type check Python and provide its language server",
+    },
+    "pytest": {
+        "package": "pytest",
+        "version": "9.0.2",
+        "entrypoint": "pytest",
+        "description": "Run Python tests",
+    },
 }

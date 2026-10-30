@@ -1,0 +1,32 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "score-dev-tools"
+version = "0.1.0"
+description = "Run the centrally selected S-CORE Python tools with uv"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+
+[project.scripts]
+score-tool = "score_tools.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "tools"}
+packages = ["score_tools"]
+
+[tool.setuptools.package-data]
+score_tools = ["python_tools.bzl"]
