@@ -41,7 +41,8 @@ definitions.
 
 Bazel's explicit native hubs and aliases are retained and checked against all
 native definitions. Python targets derive from the dictionary. Digest refresh
-derives uvx's repeated version field from uv, the basename-matching release owner. Validation rejects inconsistent generated copies.
+derives uvx's repeated version field from uv, the basename-matching release owner.
+Validation rejects inconsistent generated copies.
 The proxy Dockerfile's base must agree with the default Dockerfile.
 
 APT installation preserves the existing requests, including Debian epochs and
@@ -97,7 +98,7 @@ refresh and deliberately distribution-following tools remain unpinned.
   fails rather than silently leaving a stale digest. Existing Renovate managers
   follow the native definitions; other sources have explicit manual review owners.
 - Remove an environment membership. Generic installation and verification follow
-  it. Special CodeQL/Bazel setup and functional checks query the same selection.
+  it. Special Java/CodeQL/Bazel setup and functional checks query the same selection.
   Dependency validation rejects selecting packs without CodeQL or preinstalled
   Bazel without Bazelisk.
 
@@ -109,11 +110,12 @@ refresh and deliberately distribution-following tools remain unpinned.
 | Catalog/process tests | `python3 -m unittest discover -s tools/tests -p 'test_*.py'`: 20 passing tests; covers malformed definitions, selection drift, installed-version drift, argument/cwd/status boundaries and release-asset refresh |
 | Existing shell/Bazel contracts | `bazel test //tools:python_tool_runner_test //tools:run_tool_test` passed |
 | Real Bazel delivery | `bazel run //tools:pre-commit -- --version` reports 4.7.0; ShellCheck reports 0.10.0 |
-| Git delivery outside checkout | `tools/tests/git_delivery_smoke.sh` passed at local commit `5ebc59a`; real pre-commit 4.7.0, package data, cwd, argument boundaries and status 42 verified |
+| Git delivery outside checkout | `tools/tests/git_delivery_smoke.sh` passed at code commit `e848cc4`: real pre-commit 4.7.0, package data, cwd, argument boundaries and status 42 |
+| Removing environment membership | A disposable container with OpenJDK removed from the selection runs the actual feature setup block without querying javac or changing its Java profile |
 | Repository development image | amd64 and arm64 Dev Containers builds and derived smoke images passed: repository selection verified as node, including npm resolution, Docker, Dev Containers CLI and hook registration |
 | Optional helper | `scripts/install_dive.sh` in disposable amd64 and arm64 development images verifies each artifact and reports dive 0.13.1 |
 | No-host-Python Bazel execution | Minimal Ubuntu image passed with neither python nor python3 on PATH: Bazel runs pre-commit 4.7.0 using uv-managed CPython 3.15.2; a separate native ShellCheck invocation reports 0.10.0 |
-| Published image amd64 | Final-source build and full development-user tests passed without tool/check overlays, including pycairo source compilation, Python/native tools, CodeQL plus packs, Bazel and temporary-package cleanup |
+| Published image amd64 | `score-tooling-reference:final-amd64` built successfully; all 38 embedded tool/feature source files match. Full development-user tests passed without tool/check overlays, including pycairo source compilation, Python/native tools, CodeQL plus packs, Bazel and temporary-package cleanup |
 | Published image arm64 | Earlier arm64 image passed all feature tests with current checks. Final-source emulated build and tests remain outstanding; CodeQL is intentionally unsupported on Linux arm64 |
 | Final inventory / completion audit | Outstanding after final images and checks |
 | PR sequence | Seven-PR dependency sequence specified in tooling-pr-sequence.md; final acceptance awaits final-source arm64 gates |
@@ -125,6 +127,25 @@ Earlier exploratory runs used current tool/check overlays and do not substitute
 for final-source verification. See the [completion audit](tooling-completion-audit.md)
 for the full requirement-by-requirement record.
 
-Live build logs for this local run are under `/tmp/score-image-amd64-final.log`,
-`/tmp/score-image-arm64.log`, `/tmp/score-repository-smoke.log`, and
+The published-image build and functional test commands, from the repository root,
+are below. ARM64 execution on an amd64 host requires working binfmt emulation;
+the local verification uses emulation rather than native ARM hardware.
+
+```bash
+set -euo pipefail
+for architecture in amd64 arm64; do
+    npx --yes @devcontainers/cli build \
+        --workspace-folder src/s-core-devcontainer \
+        --image-name "score-tooling-reference:final-${architecture}" \
+        --platform "linux/${architecture}"
+    docker run --rm --platform "linux/${architecture}" --user vscode \
+        --mount "type=bind,src=${PWD}/src/s-core-devcontainer/test-project,dst=/work/test-project,readonly" \
+        --workdir /work/test-project "score-tooling-reference:final-${architecture}" \
+        bash -lc 'exec bash test.sh'
+done
+```
+
+Live build logs for this local run are under `/tmp/score-image-final-amd64.log`,
+`/tmp/score-image-final-arm64.log`, `/tmp/score-repository-final-amd64.log`,
+`/tmp/score-repository-final-arm64.log`, and
 `/tmp/score-no-host-python.log`. These are local evidence, not publication outputs.

@@ -29,7 +29,7 @@ for this implementation.
 | One version authority; shared installation membership; unavoidable registrations checked | Literal Python owner, native lockfile owners, provider definitions and environment selections; generated sibling release versions and native hub/alias checks; selection/removal/registration checks in the shared reader | Proven |
 | Published and repository environments retain capabilities, including non-root and platform behavior | Final-source amd64 image and full feature tests passed as vscode. Repository builds and derived installation/verification smoke images passed as node on amd64 and arm64. Earlier published arm64 image passed all feature tests with current checks. Final-source published arm64 build/tests remain pending | Outstanding |
 | Native and Python Bazel delivery without host Python | Minimal Ubuntu image verifies neither python nor python3 is on PATH, runs real pre-commit 4.7.0 using uv-managed CPython, and separately runs native ShellCheck 0.10.0. Delivery-source hashes match the current launcher, Bazel macros, Python definitions and module configuration | Proven |
-| Standalone uv from local Git, with packaged data and no Bazel/container installer dependency | `tools/tests/git_delivery_smoke.sh` passed at local commit 0d291ad outside the checkout; it checks the installed catalog and console script, real pre-commit, cwd, quoted/empty arguments and returned status. Latest commit will be rerun before closure | Proven behavior; final revision check pending |
+| Standalone uv from local Git, with packaged data and no Bazel/container installer dependency | `tools/tests/git_delivery_smoke.sh` passed at local code commit `e848cc4` outside the checkout; it checks the installed catalog and console script, real pre-commit, cwd, quoted/empty arguments and returned status. No source checkout or container installer is needed | Proven |
 | Matching real Python package/version/entrypoint across three paths | Shared definition is pre-commit / 4.7.0 / pre-commit. Real Bazel, installed container and Git-selected uv executions report 4.7.0; launch/install argument contracts inspect the exact requirement and entrypoint | Proven |
 | Generated docs, updates and meaningful drift checks use the final owners | README generation and check mode; Renovate derives native requests from lockfiles; digest refresh updates filenames/hashes and generated sibling versions or fails; tests reject selection, installed-version, package-state and process-boundary drift | Proven |
 | Invocation/PATH/strict contract documented and tested; deliberate migration decision | `run_tool_test` verifies existing container/host/strict precedence and errors. `tools/README.md` and maintenance guide remove the PATH version-attestation claim and document explicit Bazel/uv choices; no downstream migration performed | Proven |
@@ -64,15 +64,16 @@ outside the agreed scope.
 
 ## Final-source image checks
 
-The final amd64 build is `score-tooling-reference:verified-amd64`. Before tests,
+The preceding amd64 build is `score-tooling-reference:verified-amd64`. Before tests,
 SHA256 comparisons proved that its embedded catalog reader, container installer,
 provider definitions, environment selections, shell metadata bridge and both
 feature installation scripts match the current sources. The full feature tests
 then ran as vscode with only the test-project directory mounted read-only;
 there was no tool or feature-test overlay.
 
-The analogous `score-tooling-reference:verified-arm64` build is running. It must
-pass the same source comparison and non-root feature tests. Linux arm64 CodeQL
+The final builds `score-tooling-reference:final-amd64` and
+`score-tooling-reference:final-arm64` include the Java selection guard from
+`e848cc4`. They must pass the same source comparison and non-root feature tests. Linux arm64 CodeQL
 omission is intentional and declared; the remaining selected tools must work.
 
 The repository environment is built from its unchanged Dev Containers config on
@@ -80,7 +81,9 @@ both platforms. Derived smoke images copy the current tools, apply the repositor
 selection, switch to node, verify all selected commands/npm resolution, execute
 Docker and Dev Containers CLI, and install a hook in a temporary Git repository.
 The optional dive installer also passed artifact verification and execution in
-disposable amd64 and arm64 development containers.
+disposable amd64 and arm64 development containers. Removing OpenJDK from a
+disposable composition skips the actual Java setup block without querying javac
+or changing the Java profile; the positive branch is covered by feature tests.
 
 ## Evidence locations for this local run
 
@@ -89,18 +92,20 @@ The reusable commands are in the maintenance guide, CI and
 
 - `/tmp/score-baseline-policy-audit.json`: native, migrated policy and external
   configuration comparison against the baseline.
-- `/tmp/score-precommit-current.log`: repository hook checks.
+- `/tmp/score-precommit-final.log`: repository hook checks.
 - `/tmp/score-tests-current-amd64.log`: all final-source amd64 feature tests.
-- `/tmp/score-image-current-arm64.log`: live final-source arm64 build.
+- `/tmp/score-image-final-amd64.log` and `/tmp/score-image-final-arm64.log`:
+  live final-source builds.
 - `/tmp/score-tests-arm64-intermediate.log`: earlier arm64 installation's full
   functional checks; this does not substitute for the pending final image.
-- `/tmp/score-repository-smoke.log` and
-  `/tmp/score-repository-arm64-smoke.log`: repository environment installation,
+- `/tmp/score-repository-final-amd64.log` and
+  `/tmp/score-repository-final-arm64.log`: repository environment installation,
   resolution, non-root invocation and hook setup.
+- `/tmp/score-java-removal.log`: removal of OpenJDK selection and actual setup.
 - `/tmp/score-no-host-python.log` and
   `/tmp/score-no-host-python-native.log`: Python/native Bazel delivery without
   system Python.
-- `/tmp/score-git-delivery-current.log`: Git package and console-boundary smoke.
+- `/tmp/score-git-delivery-final.log`: Git package and console-boundary smoke.
 
 These files are local run evidence. No log upload or other publication is part
 of the goal. Before closure, record the final image identifiers, fresh command

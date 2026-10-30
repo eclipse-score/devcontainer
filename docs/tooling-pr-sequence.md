@@ -111,7 +111,7 @@ Preserve normal APT recommendations, QEMU's explicit exception, Debian epochs,
 Python build support, system paths and the Dev Containers remote user.
 
 CodeQL pack membership is owned once by its bundle and read by download and
-verification. CodeQL/Bazel setup and functional checks query environment
+verification. Java/CodeQL/Bazel setup and functional checks query environment
 membership. Reject undefined tools, provider mismatches, missing dependencies,
 unsupported platforms and unknown APT policies before changing packages; declared
 Linux arm64 CodeQL omissions remain explicit.

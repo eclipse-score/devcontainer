@@ -16,8 +16,11 @@ SPDX-License-Identifier: Apache-2.0
 
 # Goal: consolidate tool management and prove all three delivery paths
 
-This document defines the scope of a future `/goal` run. It does not start that
-run. The work is local until explicitly authorized otherwise.
+This document defines the scope of the active local `/goal` run. The work stays
+local until explicitly authorized otherwise. The
+[reference implementation](tooling-reference-implementation.md),
+[completion audit](tooling-completion-audit.md) and
+[proposed PR sequence](tooling-pr-sequence.md) record its results.
 
 ## Objective
 
