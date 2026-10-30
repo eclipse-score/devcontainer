@@ -70,7 +70,10 @@ Compatibility expectations are separate fields and do not masquerade as install
 pins. Add tool-specific functional checks where package inspection is insufficient.
 
 To update a tool, change its owning definition, refresh native artifact hashes
-where relevant, and regenerate the overview. Existing Renovate release managers
+where relevant, and regenerate the overview. In native lockfiles, the command
+matching the file basename owns the release version; digest refresh derives the
+copies for sibling commands such as uvx from that owner. Validation rejects
+stale generated copies. Existing Renovate release managers
 continue to edit native lockfiles; duplicate apm/opencode YAML managers are removed.
 Other providers currently require the manual review named in the overview.
 

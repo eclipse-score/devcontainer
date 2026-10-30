@@ -17,4 +17,6 @@ set -euo pipefail
 
 # Shared definitions are literal data. The bridge quotes values and validates
 # variable names before emitting exports for provider-specific shell setup.
-eval "$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
+score_feature_metadata="$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
+eval "${score_feature_metadata}"
+unset score_feature_metadata

@@ -50,8 +50,9 @@ if "${installer}" selected s-core-local codeql && [ "$(dpkg --print-architecture
     check "validate CodeQL version" bash -c "codeql --version | grep '${codeql_version}'"
     check "validate CODEQL_HOME" bash -c "test '${CODEQL_HOME}' = /usr/local/codeql"
     if "${installer}" selected s-core-local codeql_coding_standards; then
-        for pack in misra-c misra-cpp cert-c cert-cpp; do
-            check "validate CodeQL ${pack} pack" test -d "${CODEQL_HOME}/qlpacks/codeql/${pack}-coding-standards/${codeql_coding_standards_version}"
-        done
+        codeql_packs="$("${installer}" items codeql_coding_standards packs)"
+        while IFS= read -r pack; do
+            check "validate CodeQL ${pack} pack" test -d "${CODEQL_HOME}/qlpacks/${pack}/${codeql_coding_standards_version}"
+        done <<< "${codeql_packs}"
     fi
 fi

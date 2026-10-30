@@ -86,7 +86,7 @@ Ruff is delivered as a native artifact and is listed above.
 | `flake8`, `python3-autopep8`, `black`, `python3-yapf`, `mypy`, `pydocstyle`, `pycodestyle`, `bandit`, `pipenv`, `virtualenv`, `pylint` | APT repositories at build time | APT, no explicit package versions, system installation | None |
 
 Sources: [s-core-local installer](../src/s-core-devcontainer/.devcontainer/s-core-local/install.sh)
-and [version declarations](../src/s-core-devcontainer/.devcontainer/s-core-local/versions.yaml).
+and [version declarations](https://github.com/eclipse-score/devcontainer/blob/0cc738794384cf32f08ba616c049bf8f3fb7124c/src/s-core-devcontainer/.devcontainer/s-core-local/versions.yaml).
 APT owns package layouts, typically placing commands under `/usr/bin`; these
 paths are not selected by the shared tool installer.
 
@@ -134,7 +134,7 @@ These tools have no public CLI target in `tools/BUILD.bazel`.
 
 Sources: [s-core-local installer](../src/s-core-devcontainer/.devcontainer/s-core-local/install.sh),
 [bazel-feature installer](../src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh),
-and [bazel-feature versions](../src/s-core-devcontainer/.devcontainer/bazel-feature/versions.yaml).
+and [bazel-feature versions](https://github.com/eclipse-score/devcontainer/blob/0cc738794384cf32f08ba616c049bf8f3fb7124c/src/s-core-devcontainer/.devcontainer/bazel-feature/versions.yaml).
 The repository also has a [`.bazelversion`](../.bazelversion) of 8.6.0 for its own
 workspace. The feature's
 [startup helper](../src/s-core-devcontainer/.devcontainer/bazel-feature/install_matching_bazel_version.sh)

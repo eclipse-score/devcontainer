@@ -1,0 +1,128 @@
+<!--
+*******************************************************************************
+Copyright (c) 2026 Contributors to the Eclipse Foundation
+
+See the NOTICE file(s) distributed with this work for additional
+information regarding copyright ownership.
+
+This program and the accompanying materials are made available under the
+terms of the Apache License Version 2.0 which is available at
+https://www.apache.org/licenses/LICENSE-2.0
+
+SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+SPDX-License-Identifier: Apache-2.0
+*******************************************************************************
+-->
+
+# Local tool-management reference
+
+The reference lives on `refactor/tool-management-reference`. Nothing has been
+pushed or published. Validation is in progress; this document does not claim that
+the goal's image and completion gates have all passed.
+
+## Outcome and structure
+
+Tool definitions own version decisions. Environment selections own direct
+membership. Installers, installed-result verification and the generated inventory
+consume those inputs. Existing backend formats and feature lifecycle boundaries
+remain; standalone uv delivery is an additional consumer of the shared Python
+definitions.
+
+| Responsibility | Implemented owner |
+| --- | --- |
+| Native release definitions | `tools/lockfiles/*.lock.json`, consumed by multitool and container installation |
+| Python package/version/entrypoint | Packaged literal `tools/score_tools/python_tools.bzl`, loaded by Bazel analysis and parsed by the shared Python reader |
+| APT constraints and special setup metadata | `tools/providers.json`; exact request, prefix, distribution policy and compatibility expectation are distinct |
+| Local feature/repository membership | `tools/environments.json`, including transient build APT dependencies and repository npm tools |
+| External feature and image membership | Existing Dev Containers configs and locks, referenced from the inventory rather than copied |
+| Installation | Container provider installer plus feature-specific setup, standalone `score-tool`, and existing Bazel macros |
+| Availability and policy verification | `install.py verify-environment`, functional feature tests and process-boundary tests |
+| Inventory and drift | `sync_readme.py`, shared catalog validation and pre-commit/CI checks |
+
+Bazel's explicit native hubs and aliases are retained and checked against all
+native definitions. Python targets derive from the dictionary. Digest refresh derives uvx's repeated version field from uv, the basename-matching
+release owner. Validation rejects inconsistent generated copies.
+The proxy Dockerfile's base must agree with the default Dockerfile.
+
+APT installation preserves the existing requests, including Debian epochs and
+unversioned Git/Git LFS/gh selection. Their separate compatibility expectations
+remain checks rather than fictional install pins. Normal APT recommendations
+remain enabled, with QEMU retaining its existing no-recommendations policy; disabling them in an early local experiment omitted Python
+headers and caused the stronger pycairo source-build test to fail.
+
+Python CLI installs use system entrypoints and isolated tool environments under
+`/usr/local/share/uv/tools`. No installer guesses the development user from home
+directory contents. Bazel completion uses the Dev Containers remote-user setting.
+CodeQL pack members are defined once in the provider bundle and read by setup
+and installed-pack verification. pip and venv retain their separate unpinned
+APT policies, independent of the interpreter package-name constraint.
+The removed yq bootstrap is intentionally absent: existing image Python reads the
+shared data. Optional dive installation now reads its version and hashes from the
+provider definitions, too.
+
+## Delivery and compatibility decisions
+
+Native and Python Bazel targets retain their existing names and working-directory
+behavior. The old exported `tools/lockfiles/python_tools.bzl` label forwards to the
+single literal owner. Bazel CLI execution still carries only shell and pinned uvx
+at runtime; it adds no host Python prerequisite.
+
+`score-dev-tools` packages the literal Python definitions and exposes `score-tool`.
+The caller supplies compatible uv. Git-ref selection, not PyPI publication, binds
+the package to a repository release:
+
+```console
+uvx --from 'git+https://github.com/eclipse-score/devcontainer.git@RELEASE' score-tool pre-commit run --all-files
+```
+
+`run-tool` retains container PATH precedence even with strict mode, host PATH
+precedence without strict mode, and Bazel selection on a strict host invocation.
+Those behaviors have contract tests. Documentation now states the practical
+limit: PATH execution is not a version attestation. Downstream migration can use
+direct Bazel targets or the new explicit uv command when catalog selection is
+required; no downstream repository has been edited.
+
+Exact native artifacts, Python direct pins, APT prefixes and OCI feature digests
+provide different guarantees. Interpreter/transitive Python locking, APT
+snapshots and reproducible image rebuilds remain follow-up work. Trust-store
+refresh and deliberately distribution-following tools remain unpinned.
+
+## Maintenance paths
+
+- Add a definition, select its environment, and add provider-specific behavior
+  only when needed. Explicit native Bazel registrations are checked; Python
+  targets are derived. Availability checks and inventory use the selection.
+- Update the owning version. Refresh native URLs/checksums and regenerate the
+  overview. Release asset refresh now handles filenames containing versions and
+  fails rather than silently leaving a stale digest. Existing Renovate managers
+  follow the native definitions; other sources have explicit manual review owners.
+- Remove an environment membership. Generic installation and verification follow
+  it. Special CodeQL/Bazel setup and functional checks query the same selection.
+  Dependency validation rejects selecting packs without CodeQL or preinstalled
+  Bazel without Bazelisk.
+
+## Validation record (in progress)
+
+| Check | Current evidence |
+| --- | --- |
+| Repository hooks | `pre-commit run --all-files --show-diff-on-failure` passed, including license checks |
+| Catalog/process tests | `python3 -m unittest discover -s tools/tests -p 'test_*.py'`: 18 passing tests; covers malformed definitions, selection drift, installed-version drift, argument/cwd/status boundaries and release-asset refresh |
+| Existing shell/Bazel contracts | `bazel test //tools:python_tool_runner_test //tools:run_tool_test` passed |
+| Real Bazel delivery | `bazel run //tools:pre-commit -- --version` reports 4.7.0; ShellCheck reports 0.10.0 |
+| Git delivery outside checkout | `tools/tests/git_delivery_smoke.sh` passed at local commit `5ebc59a`; real pre-commit 4.7.0, package data, cwd, argument boundaries and status 42 verified |
+| Repository development image | amd64 Dev Containers build and derived smoke image passed: repository selection verified as node, including npm resolution, Docker, Dev Containers CLI and hook registration. arm64 build remains in progress |
+| Optional helper | `scripts/install_dive.sh` in a disposable development image verifies the artifact and reports dive 0.13.1 |
+| No-host-Python Bazel execution | Minimal Ubuntu image passed with neither python nor python3 on PATH: Bazel runs pre-commit 4.7.0 using uv-managed CPython 3.15.2; a separate native ShellCheck invocation reports 0.10.0 |
+| Published image amd64 | Corrected build and full development-user tests passed, including pycairo source compilation, Python/native tools, CodeQL plus packs and Bazel. Final verifier also checks temporary-package cleanup |
+| Published image arm64 | Emulated build in progress; CodeQL is intentionally unsupported on Linux arm64; feature tests remain outstanding |
+| Final inventory / completion audit | Outstanding after final images and checks |
+| PR sequence | To be derived from the validated implementation, not treated as proven yet |
+
+Image functional checks use the installed result with current verifier/catalog and
+feature tests bind-mounted read-only. Image installation artifacts and versions
+come from the local Dev Containers builds. Source changes made after a build
+snapshot still require final installation verification before completion.
+
+Live build logs for this local run are under `/tmp/score-image-amd64-final.log`,
+`/tmp/score-image-arm64.log`, `/tmp/score-repository-smoke.log`, and
+`/tmp/score-no-host-python.log`. These are local evidence, not publication outputs.

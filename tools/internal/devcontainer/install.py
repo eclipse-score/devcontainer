@@ -313,12 +313,15 @@ def _cmd_environment(args: argparse.Namespace) -> int:
             )
             subprocess.run(["apt-get", *action, *packages], check=True)
         return 0
-    requirements = apt_requirements(args.environment)
-    if requirements:
-        subprocess.run(
-            ["apt-get", "install", "-y", *requirements],
-            check=True,
-        )
+    # QEMU intentionally excludes recommendations; other packages retain the
+    # distribution's normal dependency policy (including Python build headers).
+    for recommends in (True, False):
+        requirements = apt_requirements(args.environment, recommends=recommends)
+        if requirements:
+            flags = [] if recommends else ["--no-install-recommends"]
+            subprocess.run(
+                ["apt-get", "install", "-y", *flags, *requirements], check=True
+            )
     native = argparse.Namespace(
         tools=selection["native"],
         lockfile=None,
@@ -356,7 +359,11 @@ def _cmd_shell_metadata(args: argparse.Namespace) -> int:
             print("export " + name + "=" + shlex.quote(value))
 
     for name, definition in load_providers().items():
-        emit(name.replace("-", "_"), definition)
+        # Export only lifecycle setup inputs. Inventory metadata can use keys
+        # such as linux/arm64 which deliberately are not shell identifiers.
+        for field in ("version", "compatibility_version", "amd64", "arm64"):
+            if field in definition:
+                emit(name.replace("-", "_") + "_" + field, definition[field])
     # Python definitions are shared with Bazel and the installed uv package.
     for name, definition in _load_python_tools().items():
         emit(name.replace("-", "_"), definition)
@@ -370,6 +377,7 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
     selection = load_environments()[args.environment]
     versions = load_catalog_versions()
     observed = {}
+    providers = load_providers()
     python_tools = _load_python_tools()
     for name in selection["native"] + selection["python"]:
         entrypoint = python_tools[name]["entrypoint"] if name in python_tools else name
@@ -377,19 +385,29 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
         if command is None:
             raise SystemExit(f"Selected command missing from PATH: {name}")
         flag = "version" if name in ("starpls", "bazelisk") else "--version"
+        environment = os.environ.copy()
+        if name == "bazelisk":
+            # Bazelisk's version command also launches Bazel. Bound this probe
+            # to the declared image preinstall instead of resolving latest when
+            # tests execute outside a workspace with a .bazelversion file.
+            environment["USE_BAZEL_VERSION"] = providers["bazel"]["version"]
         run = subprocess.run(
             [command, flag],
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            check=True,
+            check=False,
+            env=environment,
         )
+        if run.returncode:
+            raise SystemExit(
+                f"Could not inspect {name} (exit {run.returncode}): {run.stdout}"
+            )
         if not re.search(
             r"(?<![0-9.])" + re.escape(versions[name]) + r"(?![0-9.])", run.stdout
         ):
             raise SystemExit(f"Unexpected {name} version: {run.stdout}")
         observed[name] = {"command": command, "reported": run.stdout.strip()}
-    providers = load_providers()
     for name in selection.get("apt", []):
         definition = providers[name]
         for entrypoint in definition.get("commands", []):
@@ -423,6 +441,39 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
             ):
                 raise SystemExit(f"Unexpected {package} version: {version}")
             observed[package] = {"resolved": version, "policy": definition["policy"]}
+    for name in selection.get("npm", []):
+        definition = providers[name]
+        run = subprocess.run(
+            ["npm", "list", "--global", "--depth=0", "--json"],
+            text=True,
+            stdout=subprocess.PIPE,
+            check=True,
+        )
+        installed = (
+            json.loads(run.stdout).get("dependencies", {}).get(definition["package"])
+        )
+        if installed is None or not installed.get("version"):
+            raise SystemExit(f"Selected npm package missing: {definition['package']}")
+        for entrypoint in definition.get("commands", []):
+            if shutil.which(entrypoint) is None:
+                raise SystemExit(
+                    f"Selected npm command missing from PATH: {entrypoint}"
+                )
+        observed[name] = {
+            "resolved": installed["version"],
+            "policy": definition["policy"],
+        }
+    for name in selection.get("build-apt", []):
+        for package in providers[name]["packages"]:
+            run = subprocess.run(
+                ["dpkg-query", "-W", "-f=${Status}", package],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
+            if run.returncode == 0 and run.stdout == "install ok installed":
+                raise SystemExit(f"Temporary build package was not removed: {package}")
     print(json.dumps(observed, indent=2))
     return 0
 
@@ -433,11 +484,33 @@ def _cmd_selected(args: argparse.Namespace) -> int:
     return 0 if any(args.tool in names for names in selections.values()) else 1
 
 
+def _cmd_items(args: argparse.Namespace) -> int:
+    """Expose a provider-owned bundle list to lifecycle setup and verification."""
+    value = load_providers()[args.tool][args.field]
+    if (
+        not isinstance(value, list)
+        or not value
+        or any(not isinstance(item, str) or not item or "\n" in item for item in value)
+    ):
+        raise SystemExit(
+            f"{args.tool}/{args.field} must be a non-empty list of single-line strings"
+        )
+    print("\n".join(value))
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install pinned tools from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    items_parser = subparsers.add_parser(
+        "items", help="Read a provider bundle's owned members."
+    )
+    items_parser.add_argument("tool")
+    items_parser.add_argument("field")
+    items_parser.set_defaults(func=_cmd_items)
 
     selected_parser = subparsers.add_parser(
         "selected", help="Query environment membership for special setup."

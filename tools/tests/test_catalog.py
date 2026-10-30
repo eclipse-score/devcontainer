@@ -77,6 +77,15 @@ class CatalogTest(unittest.TestCase):
         self.assertIn("python3.12", requirements)
         self.assertNotIn("python3.12=3.12*", requirements)
 
+    def test_qemu_excludes_recommendations_without_affecting_python_build_support(self):
+        without_recommends = catalog.apt_requirements("s-core-local", recommends=False)
+        self.assertEqual(
+            without_recommends, ["qemu-system-arm=1:8.2.2*", "qemu-system-x86=1:8.2.2*"]
+        )
+        normal = catalog.apt_requirements("s-core-local", recommends=True)
+        self.assertIn("python3-pip", normal)
+        self.assertFalse(any(item.startswith("qemu-system") for item in normal))
+
     def test_environment_removal_changes_apt_request(self):
         selections = catalog.load_environments()
         selections["s-core-local"]["apt"].remove("graphviz")
@@ -108,6 +117,31 @@ class InstalledResultTest(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("score_container_installer", path)
         cls.installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.installer)
+
+    def test_shell_metadata_quotes_values_and_ignores_inventory_only_keys(self):
+        import argparse
+        import io
+        from contextlib import redirect_stdout
+
+        output = io.StringIO()
+        value = 'literal spaces $(false); "quoted"'
+        providers = {
+            "tool": {"version": value, "omissions": {"linux/arm64": "intentional"}}
+        }
+        with (
+            patch.object(self.installer, "load_providers", return_value=providers),
+            patch.object(self.installer, "_load_python_tools", return_value={}),
+            redirect_stdout(output),
+        ):
+            self.installer._cmd_shell_metadata(argparse.Namespace())
+        self.assertNotIn("omissions", output.getvalue())
+        run = subprocess.run(
+            ["bash", "-c", output.getvalue() + 'printf %s "$tool_version"'],
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        self.assertEqual(run.stdout, value)
 
     def test_installed_native_version_drift_is_rejected(self):
         # A successful command is insufficient: the installed release must match.
@@ -147,6 +181,7 @@ class InstalledResultTest(unittest.TestCase):
         selection = {"image": {"native": [], "python": [], "apt": ["graphviz"]}}
         with (
             patch.object(self.installer, "load_environments", return_value=selection),
+            patch.object(self.installer.shutil, "which", return_value="/test/dot"),
             patch.object(
                 self.installer.subprocess,
                 "run",

@@ -203,12 +203,17 @@ def load_environments():
     return json.loads((LOCKFILE_ROOT.parent / "environments.json").read_text())
 
 
-def apt_requirements(environment):
+def apt_requirements(environment, *, recommends=None):
     """Translate selected distribution policies into apt's request syntax."""
     providers = load_providers()
     requirements = []
     for name in load_environments()[environment].get("apt", []):
         tool = providers[name]
+        if (
+            recommends is not None
+            and tool.get("install_recommends", True) != recommends
+        ):
+            continue
         for package in tool["packages"]:
             if tool["policy"] == "package-name":
                 package = package.format(version=tool["version"])
@@ -220,6 +225,10 @@ def apt_requirements(environment):
 
 def all_definitions():
     """Unify inventory views while retaining provider-owned formats."""
+    import re
+
+    root = LOCKFILE_ROOT.parents[1]
+    managers = read_jsonc(root / ".github/renovate.json5")["customManagers"]
     result = {}
     for name, filename, definition in _iter_catalog():
         if name in result:
@@ -233,7 +242,15 @@ def all_definitions():
                 {b["os"] + "/" + b["cpu"] for b in definition["binaries"]}
             ),
             "delivery": "container, Bazel",
-            "update": "release + artifact digest review",
+            "update": (
+                "Renovate + digest refresh"
+                if any(
+                    re.search(pattern, "tools/lockfiles/" + filename)
+                    for manager in managers
+                    for pattern in manager.get("fileMatch", [])
+                )
+                else "manual release + artifact digest review"
+            ),
         }
     for name, definition in _load_python_tools().items():
         if name in result:
@@ -252,7 +269,7 @@ def all_definitions():
             raise ValueError(f"Duplicate tool definition: {name}")
         result[name] = {
             **resolved_provider(name, definition),
-            "source": "tools/providers.json",
+            "source": definition.get("config", "tools/providers.json"),
             "delivery": "container",
         }
     return result
@@ -263,6 +280,16 @@ def validate_catalog():
     import re
 
     tools = all_definitions()
+    # Related commands in a multitool lockfile share a release decision (uv and
+    # uvx). The backend format repeats that field, so reject inconsistent copies.
+    release_versions = {}
+    for name, filename, definition in _iter_catalog():
+        version = definition.get("version")
+        if not isinstance(version, str) or not version:
+            raise ValueError(f"Missing native version: {name}")
+        if filename in release_versions and release_versions[filename] != version:
+            raise ValueError(f"Inconsistent shared release in {filename}")
+        release_versions[filename] = version
     for environment, selections in load_environments().items():
         for provider, names in selections.items():
             if provider not in ("native", "python", "apt", "setup", "build-apt", "npm"):
@@ -303,6 +330,16 @@ def validate_catalog():
             or not data.get("policy")
         ):
             raise ValueError(f"Incomplete inventory definition: {name}")
+    dockerfile = root / "src/s-core-devcontainer/.devcontainer/Dockerfile"
+    proxyfile = dockerfile.with_name("with-proxy-vars.Dockerfile")
+    base = next(
+        line for line in dockerfile.read_text().splitlines() if line.startswith("FROM ")
+    )
+    proxy_base = next(
+        line for line in proxyfile.read_text().splitlines() if line.startswith("FROM ")
+    )
+    if base != proxy_base:
+        raise ValueError("Proxy and default Dockerfiles select different base images")
     return tools
 
 
@@ -329,15 +366,25 @@ def resolved_provider(name, definition):
     config = root / definition["config"]
     result = dict(definition)
     if definition["provider"] == "feature":
-        settings = read_jsonc(config)["features"][definition["feature"]]
+        selections = read_jsonc(config)["features"]
+        # Reference stable feature identity, leaving requested tags/options with
+        # the Dev Containers config rather than copying a major-version pin.
+        identity = definition["feature"]
+        key = next(
+            key
+            for key in selections
+            if key == identity
+            or key.startswith(identity + ":")
+            or key.startswith(identity + "@")
+        )
+        settings = selections[key]
         resolution = json.loads(config.with_name("devcontainer-lock.json").read_text())[
             "features"
-        ][definition["feature"]]
-        result["version"] = (
-            str(settings.get("version", "bundle"))
-            + " / feature "
-            + resolution["version"]
+        ][key]
+        request = settings.get(
+            "version", key.removeprefix(identity).removeprefix(":") or "bundle"
         )
+        result["version"] = str(request) + " / feature " + resolution["version"]
         result["resolution"] = resolution["resolved"]
     elif definition["provider"] == "image":
         if config.suffix == ".json":

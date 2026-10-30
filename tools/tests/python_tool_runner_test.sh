@@ -47,6 +47,7 @@ set -euo pipefail
 if [[ -n "${ENV_OUTPUT:-}" ]]; then
     printf '%s\n%s\n' "${UV_TOOL_BIN_DIR:-}" "${UV_TOOL_DIR:-}" > "${ENV_OUTPUT}"
 fi
+exit "${FAKE_UV_EXIT_CODE:-0}"
 EOF
 chmod +x "${fake_uvx}"
 
@@ -100,3 +101,13 @@ if [[ -e "${output}" ]]; then
     echo "uv was invoked before all requested tools were validated" >&2
     exit 1
 fi
+
+# Hook failures must reach Bazel/CI as failures instead of being swallowed by
+# the shell boundary after the working-directory change.
+set +e
+FAKE_UV_EXIT_CODE=37 OUTPUT_FILE="${output}" \
+    BUILD_WORKING_DIRECTORY="${working_directory}" \
+    "${runner}" "${fake_uvx}" "pre-commit==${catalog_version}" pre-commit run
+status=$?
+set -e
+[[ "${status}" -eq 37 ]]

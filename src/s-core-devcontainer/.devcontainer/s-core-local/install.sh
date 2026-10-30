@@ -86,11 +86,10 @@ if [ "${VARIANT}" != "noinstall" ]; then
     echo "export CODEQL_HOME=${codeql_install_dir}/codeql" > /etc/profile.d/codeql.sh
 
     if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql_coding_standards; then
-    codeql pack download codeql/misra-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/misra-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/cert-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/cert-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-
+        codeql_packs="$(/usr/local/share/score-tools/internal/devcontainer/install.py items codeql_coding_standards packs)"
+        while IFS= read -r pack; do
+            codeql pack download "${pack}@${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
+        done <<< "${codeql_packs}"
     fi
 
     # slim down codeql bundle (1.7GB -> 1.1 GB) by removing unnecessary language extractors and qlpacks

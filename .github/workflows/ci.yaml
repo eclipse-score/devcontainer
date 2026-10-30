@@ -94,6 +94,9 @@ jobs:
             # rules_multitool, Bazel runfiles, uvx, and the Python package.
             bazelisk run //tools:pre-commit -- --version
 
+            # Prove the Git package carries its catalog outside the checkout.
+            tools/tests/git_delivery_smoke.sh
+
             # Create builder for multi-arch builds
             ./scripts/create_builder.sh
 

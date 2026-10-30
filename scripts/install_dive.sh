@@ -19,16 +19,19 @@ echo "Installing dive..."
 
 DIVE_NAME="/tmp/dive.deb"
 
-VERSION="0.13.1"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+# Read the same owned definition used by the generated inventory. Quoting and
+# variable-name validation happen in the stdlib-only metadata bridge.
+score_dive_metadata="$(python3 "${SCRIPT_DIR}/../tools/internal/devcontainer/install.py" shell-metadata)"
+eval "${score_dive_metadata}"
+unset score_dive_metadata
+VERSION="${dive_version}"
 
-ARCHITECTURE="$(uname -m)"
-if [ "${ARCHITECTURE}" = "x86_64" ]; then
-  ARCH="amd64"
-  SHA256SUM="0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
-else
-  ARCH="arm64"
-  SHA256SUM="80203401b3d7c4feffd13575755a07834a2d2f35f49e8612f0749b318c3f2fa5"
-fi
+case "$(uname -m)" in
+  x86_64) ARCH=amd64; SHA256SUM="${dive_amd64_sha256}" ;;
+  aarch64|arm64) ARCH=arm64; SHA256SUM="${dive_arm64_sha256}" ;;
+  *) echo "Unsupported architecture for dive" >&2; exit 1 ;;
+esac
 
 curl -L "https://github.com/wagoodman/dive/releases/download/v${VERSION}/dive_${VERSION}_linux_${ARCH}.deb" -o "${DIVE_NAME}"
 echo "${SHA256SUM} /tmp/dive.deb" | sha256sum -c - || exit 1

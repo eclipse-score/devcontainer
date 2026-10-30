@@ -50,7 +50,8 @@
     "commands": [
       "qemu-system-aarch64",
       "qemu-system-x86_64"
-    ]
+    ],
+    "install_recommends": false
   },
   "sshpass": {
     "provider": "apt",
@@ -241,9 +242,7 @@
     "provider": "apt",
     "description": "Distribution Python interpreter",
     "packages": [
-      "python{version}",
-      "python3-pip",
-      "python3-venv"
+      "python{version}"
     ],
     "policy": "package-name",
     "version": "3.12",
@@ -253,8 +252,7 @@
     ],
     "update": "manual Ubuntu compatibility review",
     "commands": [
-      "python3",
-      "pip3"
+      "python3"
     ]
   },
   "flake8": {
@@ -528,6 +526,9 @@
     },
     "arm64": {
       "sha256": "810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399"
+    },
+    "omissions": {
+      "linux/arm64": "The selected bundle has no supported Linux arm64 artifact"
     }
   },
   "codeql_coding_standards": {
@@ -541,6 +542,15 @@
     "version": "2.54.0",
     "requires": [
       "codeql"
+    ],
+    "omissions": {
+      "linux/arm64": "Not installed without the CodeQL bundle"
+    },
+    "packs": [
+      "codeql/misra-cpp-coding-standards",
+      "codeql/misra-c-coding-standards",
+      "codeql/cert-cpp-coding-standards",
+      "codeql/cert-c-coding-standards"
     ]
   },
   "bazel": {
@@ -611,7 +621,10 @@
       "Node.js-supported platforms"
     ],
     "update": "npm latest; intentionally unpinned",
-    "phase": "repository setup"
+    "phase": "repository setup",
+    "commands": [
+      "devcontainer"
+    ]
   },
   "pycairo-smoke": {
     "provider": "test",
@@ -622,7 +635,8 @@
       "linux/x86_64",
       "linux/arm64"
     ],
-    "update": "manual fixture review"
+    "update": "manual fixture review",
+    "phase": "published-image source-build test only"
   },
   "llvm": {
     "provider": "feature",
@@ -635,7 +649,7 @@
       "linux/x86_64",
       "linux/arm64"
     ],
-    "update": "Dependabot lock + manual LLVM compatibility review"
+    "update": "manual published feature lock and LLVM compatibility review"
   },
   "common-utils": {
     "provider": "feature",
@@ -647,19 +661,19 @@
       "linux/x86_64",
       "linux/arm64"
     ],
-    "update": "Dev Containers lock maintenance"
+    "update": "manual published feature lock review"
   },
   "docker-in-docker": {
     "provider": "feature",
     "description": "docker-in-docker feature bundle",
     "policy": "OCI digest",
     "config": ".devcontainer/devcontainer.json",
-    "feature": "ghcr.io/devcontainers/features/docker-in-docker:4",
+    "feature": "ghcr.io/devcontainers/features/docker-in-docker",
     "platforms": [
       "linux/x86_64",
       "linux/arm64"
     ],
-    "update": "Dev Containers lock maintenance"
+    "update": "Dependabot root Dev Containers + lock review"
   },
   "published-base": {
     "provider": "image",
@@ -681,7 +695,7 @@
       "linux/x86_64",
       "linux/arm64"
     ],
-    "update": "Dev Containers configuration review"
+    "update": "Dependabot root Dev Containers + compatibility review"
   },
   "workspace-bazel": {
     "provider": "workspace",
@@ -692,5 +706,55 @@
       "Bazel-supported platforms"
     ],
     "update": "manual workspace compatibility review"
+  },
+  "dive": {
+    "provider": "release",
+    "description": "Optional local image inspection helper",
+    "version": "0.13.1",
+    "policy": "exact deb + sha256",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "manual release and checksum review",
+    "phase": "optional image inspection",
+    "amd64": {
+      "sha256": "0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
+    },
+    "arm64": {
+      "sha256": "80203401b3d7c4feffd13575755a07834a2d2f35f49e8612f0749b318c3f2fa5"
+    }
+  },
+  "python3-pip": {
+    "provider": "apt",
+    "description": "Distribution pip (independent of the interpreter package-name constraint)",
+    "packages": [
+      "python3-pip"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories",
+    "commands": [
+      "pip3"
+    ]
+  },
+  "python3-venv": {
+    "provider": "apt",
+    "description": "Distribution Python venv support",
+    "packages": [
+      "python3-venv"
+    ],
+    "policy": "distribution",
+    "platforms": [
+      "linux/x86_64",
+      "linux/arm64"
+    ],
+    "update": "Ubuntu repositories",
+    "modules": [
+      "venv"
+    ]
   }
 }

@@ -32,6 +32,7 @@ import json
 import os
 import sys
 import urllib.request
+from pathlib import Path
 
 GITHUB_API = "https://api.github.com"
 
@@ -79,6 +80,20 @@ def refresh_lockfile(path, token=None, cache=None):
 
     cache = {} if cache is None else cache
     changed = []
+    # A native lockfile owns one release. The entry matching its basename is
+    # authoritative; other commands from that release carry generated versions
+    # required by the flat backend format (uvx shares uv's release decision).
+    owner = Path(path).name.removesuffix(".lock.json")
+    owner_version = data.get(owner, {}).get("version")
+    if owner_version:
+        for tool_name, tool in data.items():
+            if (
+                isinstance(tool, dict)
+                and "binaries" in tool
+                and tool.get("version") != owner_version
+            ):
+                tool["version"] = owner_version
+                changed.append(tool_name + "/version")
     for tool_name, tool in data.items():
         if not isinstance(tool, dict) or "binaries" not in tool:
             continue
@@ -89,11 +104,7 @@ def refresh_lockfile(path, token=None, cache=None):
         first_url = tool["binaries"][0].get("url", "")
         parsed = _parse_release_url(first_url)
         if parsed is None:
-            print(
-                f"  ! {tool_name}: cannot derive repo from {first_url!r}",
-                file=sys.stderr,
-            )
-            continue
+            raise ValueError(f"{tool_name}: cannot derive release from {first_url!r}")
         owner, repo, first_tag, _ = parsed
 
         # Release tags are not uniformly prefixed: most projects publish
@@ -106,14 +117,18 @@ def refresh_lockfile(path, token=None, cache=None):
 
         for binary in tool["binaries"]:
             binary_parts = _parse_release_url(binary.get("url", ""))
-            asset = binary_parts[3] if binary_parts else None
+            if binary_parts is None:
+                raise ValueError(f"{tool_name}: invalid release asset URL")
+            # Some releases embed the version in filenames (ShellCheck and
+            # actionlint); others keep stable asset names (uv). Both follow the
+            # single version field edited by Renovate or the maintainer.
+            previous_version = binary_parts[2].removeprefix("v")
+            asset = binary_parts[3].replace(previous_version, version)
             digest = digests.get(asset)
             if not digest:
-                print(
-                    f"  ! {tool_name}: no digest for asset {asset!r} in {tag}",
-                    file=sys.stderr,
+                raise ValueError(
+                    f"{tool_name}: no digest for asset {asset!r} in {tag}; review the release manually"
                 )
-                continue
             sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
             # Rebuild the URL from the version so the file is consistent
             # whether or not Renovate already updated the URL.
@@ -149,7 +164,7 @@ def main(argv):
         print(f"Refreshing {path}")
         try:
             changed = refresh_lockfile(path, token, cache)
-        except Exception as exc:
+        except (OSError, ValueError, KeyError, TypeError) as exc:
             print(f"  ! failed: {exc}", file=sys.stderr)
             failed = True
             continue
