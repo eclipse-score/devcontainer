@@ -99,6 +99,68 @@ class CatalogTest(unittest.TestCase):
             )
 
 
+class InstalledResultTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+
+        path = Path(__file__).resolve().parents[1] / "internal/devcontainer/install.py"
+        spec = importlib.util.spec_from_file_location("score_container_installer", path)
+        cls.installer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.installer)
+
+    def test_installed_native_version_drift_is_rejected(self):
+        # A successful command is insufficient: the installed release must match.
+        import argparse
+
+        selection = {"image": {"native": ["uv"], "python": []}}
+        with (
+            patch.object(self.installer, "load_environments", return_value=selection),
+            patch.object(self.installer.shutil, "which", return_value="/test/uv"),
+            patch.object(
+                self.installer.subprocess,
+                "run",
+                return_value=subprocess.CompletedProcess([], 0, "uv 999.0.0"),
+            ),
+            self.assertRaisesRegex(SystemExit, "Unexpected uv version"),
+        ):
+            self.installer._cmd_verify_environment(
+                argparse.Namespace(environment="image")
+            )
+
+    def test_nonroot_missing_command_is_rejected(self):
+        import argparse
+
+        selection = {"image": {"native": [], "python": ["pre-commit"]}}
+        with (
+            patch.object(self.installer, "load_environments", return_value=selection),
+            patch.object(self.installer.shutil, "which", return_value=None),
+            self.assertRaisesRegex(SystemExit, "Selected command missing"),
+        ):
+            self.installer._cmd_verify_environment(
+                argparse.Namespace(environment="image")
+            )
+
+    def test_installed_apt_prefix_drift_is_rejected(self):
+        import argparse
+
+        selection = {"image": {"native": [], "python": [], "apt": ["graphviz"]}}
+        with (
+            patch.object(self.installer, "load_environments", return_value=selection),
+            patch.object(
+                self.installer.subprocess,
+                "run",
+                return_value=subprocess.CompletedProcess(
+                    [], 0, "install ok installed\n999.0"
+                ),
+            ),
+            self.assertRaisesRegex(SystemExit, "Unexpected graphviz version"),
+        ):
+            self.installer._cmd_verify_environment(
+                argparse.Namespace(environment="image")
+            )
+
+
 class StandaloneTest(unittest.TestCase):
     def test_uv_receives_catalog_selection_cwd_arguments_and_propagates_exit(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -34,7 +34,9 @@ verification. Standalone delivery imports no container installation code.
 | `.bazelversion` | Workspace Bazel version, independent of the image's preinstalled version |
 
 `score_tools.catalog` reads these definitions without installation side effects.
-It accepts only a literal Python-tool dictionary. Bazel loads that same Starlark
+The old `tools/lockfiles/python_tools.bzl` label remains a forwarding export
+for Bazel consumers; it carries no separate pins. The reader accepts only a
+literal Python-tool dictionary. Bazel loads that same Starlark
 file during analysis; its runtime launcher carries immutable arguments and the
 catalog-pinned uvx binary, so host Python is unnecessary.
 

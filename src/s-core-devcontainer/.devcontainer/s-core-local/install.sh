@@ -55,6 +55,9 @@ JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
 export JAVA_HOME
 echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
+# Special setup also consumes environment membership, so removing a selection
+# removes its installation rather than only changing the generated overview.
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql; then
 # CodeQL
 if [ "${ARCHITECTURE}" = "amd64" ]; then
     VARIANT=linux64
@@ -82,10 +85,13 @@ if [ "${VARIANT}" != "noinstall" ]; then
     export CODEQL_HOME=${codeql_install_dir}/codeql
     echo "export CODEQL_HOME=${codeql_install_dir}/codeql" > /etc/profile.d/codeql.sh
 
+    if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql_coding_standards; then
     codeql pack download codeql/misra-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
     codeql pack download codeql/misra-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
     codeql pack download codeql/cert-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
     codeql pack download codeql/cert-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
+
+    fi
 
     # slim down codeql bundle (1.7GB -> 1.1 GB) by removing unnecessary language extractors and qlpacks
     codeql_purge_dirs=(
@@ -122,6 +128,8 @@ if [ "${VARIANT}" != "noinstall" ]; then
             rm -rf "${dir}"
         fi
     done
+fi
+
 fi
 
 # Cleanup

@@ -80,6 +80,11 @@ jobs:
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit 1
 
+            # Validate composition ownership and the standalone CLI's process
+            # boundary before building the images for either architecture.
+            python3 tools/internal/sync_readme.py --check
+            python3 -m unittest discover -s tools/tests -p 'test_*.py'
+
             # A fake uv executable makes the launcher contract deterministic:
             # arguments, cwd, and environment are checked without network I/O.
             bazelisk test //tools:python_tool_runner_test --test_output=errors

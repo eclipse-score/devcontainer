@@ -15,102 +15,43 @@
 
 set -euo pipefail
 
-ARCHITECTURE=$(dpkg --print-architecture)
-KERNEL=$(uname -s)
-
-check "verify selected s-core-local tools and packages" /usr/local/share/score-tools/internal/devcontainer/install.py verify-environment s-core-local
-
-# Read tool versions + metadata into environment variables
+installer=/usr/local/share/score-tools/internal/devcontainer/install.py
 . /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
-basedpyright_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version basedpyright)"
-pytest_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version pytest)"
+# Selection determines availability checks. The verifier inspects installed
+# package state, requested constraints, executable access and CLI releases as
+# the development user rather than comparing generated inputs with each other.
+check "verify selected s-core-local tools and packages" "${installer}" verify-environment s-core-local
 
-shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
-ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"
-actionlint_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version actionlint)"
-yamlfmt_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version yamlfmt)"
-uv_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version uv)"
-uvx_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version uvx)"
-apm_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version apm)"
-opencode_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version opencode)"
-
-# The shared catalog is the assertion source, so installation metadata and the
-# executable exposed on PATH are checked against the same release.
-pre_commit_catalog_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version pre-commit)"
-
-# Verify the system-wide uv installation exposes the catalogued release to the
-# non-root user running feature tests.
-check "validate pre-commit is working and has the correct version" bash -c "pre-commit --version | grep '${pre_commit_catalog_version}'"
-
-# Common tooling
-check "validate shellcheck is working and has the correct version" bash -c "shellcheck --version | grep '${shellcheck_lockfile_version}'"
-
-# For an unknown reason, dot -V reports on Ubuntu Noble a version 2.43.0, while the package has a different version.
-# Hence, we have to work around that.
-check "validate graphviz is working" bash -c "dot -V"
-check "validate graphviz has the correct version" bash -c "dpkg -s graphviz | grep 'Version: ${graphviz_version}'"
-
-# Other build-related tools
-check "validate protoc is working and has the correct version" bash -c "protoc --version | grep 'libprotoc ${protobuf_compiler_version}'"
-
-# Common tooling
-check "validate git is working and has the correct version" bash -c "git --version | grep '${git_compatibility_version}'"
-check "validate git-lfs is working and has the correct version" bash -c "git lfs version | grep '${git_lfs_compatibility_version}'"
-
-# Python-related tools (a selected sub-set; others may be added later)
-check "validate python3 is working and has the correct version" bash -c "python3 --version | grep '${python_version}'"
-check "validate pip3 is working and has the correct version" bash -c "pip3 --version | grep '${python_version}'"
-check "validate black is working and has the correct version" bash -c "black --version | grep '${python_version}'"
-check "validate pytest is working and has the correct version" bash -c "pytest --version | grep '${pytest_version}'"
-check "validate basedpyright is working and has the correct version" bash -c "basedpyright --version | grep '${basedpyright_version}'"
-# cannot grep versions as they do not match the Python version
-check "validate virtualenv is working" bash -c "virtualenv --version"
-check "validate flake8 is working" bash -c "flake8 --version"
-check "validate pytest is working" bash -c "pytest --version"
-check "validate pylint is working" bash -c "pylint --version"
-
-# OpenJDK
-check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
-check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
-
-# ruff
-check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_lockfile_version}'"
-
-# actionlint
-check "validate actionlint is working and has the correct version" bash -c "actionlint --version | grep '${actionlint_lockfile_version}'"
-
-# yamlfmt
-check "validate yamlfmt is working and has the correct version" bash -c "yamlfmt --version | grep '${yamlfmt_lockfile_version}'"
-
-# apm
-check "validate apm is working and has the correct version" bash -c "apm --version | grep '${apm_lockfile_version}'"
-
-# opencode
-check "validate opencode is working and has the correct version" bash -c "opencode --version | grep '${opencode_lockfile_version}'"
-
-# uv
-check "validate uv is working and has the correct version" bash -c "uv --version | grep '${uv_lockfile_version}'"
-check "validate uvx is working and has the correct version" bash -c "uvx --version | grep '${uvx_lockfile_version}'"
-
-# pycairo build from source (requires pkg-config and libcairo2-dev)
-check "validate pycairo can be built and installed from source" bash -c "pip install --break-system-packages pycairo==${pycairo_smoke_version}"
-
-# additional developer tools
-check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
-check "validate pkg-config is working and has the correct version" bash -c "pkg-config --version | grep '${pkg_config_version}'"
-check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_compatibility_version}'"
-check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version#*:}'"
-check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
-if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
-    check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
-    check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
+# These are behavioral or independent compatibility checks beyond availability.
+if "${installer}" selected s-core-local graphviz; then
+    check "validate Graphviz can execute" dot -V
 fi
-
-# lcov
-check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"
-
-# Qemu target-related tools
-check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version#*:}'"
-check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version#*:}'"
-check "validate sshpass is working and has the correct version" bash -c "sshpass -V | grep '${sshpass_version}'"
+if "${installer}" selected s-core-local git; then
+    check "validate Git compatibility" bash -c "git --version | grep '${git_compatibility_version}'"
+fi
+if "${installer}" selected s-core-local git_lfs; then
+    check "validate Git LFS compatibility" bash -c "git lfs version | grep '${git_lfs_compatibility_version}'"
+fi
+if "${installer}" selected s-core-local gh; then
+    check "validate GitHub CLI compatibility" bash -c "gh --version | grep '${gh_compatibility_version}'"
+fi
+if "${installer}" selected s-core-local openjdk_21; then
+    check "validate Java executes" java -version
+    check "validate JAVA_HOME" bash -c "test -x '${JAVA_HOME}/bin/javac'"
+fi
+if "${installer}" selected s-core-local black; then
+    check "validate Black executes" black --version
+fi
+if "${installer}" selected s-core-local pkg_config && "${installer}" selected s-core-local libcairo2_dev; then
+    check "validate pycairo builds from source" bash -c "pip install --break-system-packages --no-binary=pycairo pycairo==${pycairo_smoke_version}"
+fi
+if "${installer}" selected s-core-local codeql && [ "$(dpkg --print-architecture)" = amd64 ]; then
+    check "validate CodeQL version" bash -c "codeql --version | grep '${codeql_version}'"
+    check "validate CODEQL_HOME" bash -c "test '${CODEQL_HOME}' = /usr/local/codeql"
+    if "${installer}" selected s-core-local codeql_coding_standards; then
+        for pack in misra-c misra-cpp cert-c cert-cpp; do
+            check "validate CodeQL ${pack} pack" test -d "${CODEQL_HOME}/qlpacks/codeql/${pack}-coding-standards/${codeql_coding_standards_version}"
+        done
+    fi
+fi

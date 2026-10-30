@@ -42,6 +42,7 @@ apt-get update
 # Lockfile-managed Bazel tooling
 /usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature
 
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then
 # Bazelisk + Bazel
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
 
@@ -54,10 +55,13 @@ mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/bazel/bazel_setup.sh"
 
+fi
+
 # Configure Bazel to use system trust store for SSL/TLS connections
 # This is required for corporate environments with custom CA certificates
 echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
 
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel_compile_commands; then
 # Code completion for C++ code of Bazel projects
 # (see https://github.com/kiron1/bazel-compile-commands)
 source /etc/lsb-release
@@ -70,6 +74,8 @@ fi
 echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit 1
 apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
 rm /tmp/bazel-compile-commands.deb
+
+fi
 
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES

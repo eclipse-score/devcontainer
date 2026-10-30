@@ -66,9 +66,9 @@ nor a container and packages the same Python definitions used by both.
 | `ca-certificates-java` — ca-certificates-java | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `codeql` — codeql | release / exact | 2.21.4 | s-core-local | linux/x86_64 | manual release and checksum review |
 | `codeql_coding_standards` — codeql coding standards | release / exact | 2.54.0 | s-core-local | linux/x86_64 | manual release and checksum review |
-| `common-utils` — common-utils feature bundle | feature / OCI digest | bundle / feature 2.5.4 | setup | linux/x86_64, linux/arm64 | Dev Containers lock maintenance |
+| `common-utils` — common-utils feature bundle | feature / OCI digest | bundle / feature 2.5.4 | published image | linux/x86_64, linux/arm64 | Dev Containers lock maintenance |
 | `devcontainers-cli` — Build and test Dev Containers | npm / latest | distribution/latest | repository | Node.js-supported platforms | npm latest; intentionally unpinned |
-| `docker-in-docker` — docker-in-docker feature bundle | feature / OCI digest | bundle / feature 4.1.3 | setup | linux/x86_64, linux/arm64 | Dev Containers lock maintenance |
+| `docker-in-docker` — docker-in-docker feature bundle | feature / OCI digest | bundle / feature 4.1.3 | repository | linux/x86_64, linux/arm64 | Dev Containers lock maintenance |
 | `flake8` — flake8 | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `gdb` — gdb | apt / prefix | 15.0.50 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `gh` — gh | apt / distribution | distribution/latest (compatibility: 2.45.0) | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
@@ -77,7 +77,7 @@ nor a container and packages the same Python definitions used by both.
 | `graphviz` — graphviz | apt / prefix | 2.42.2 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `lcov` — lcov | apt / prefix | 2.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `libcairo2_dev` — libcairo2 dev | apt / prefix | 1.18.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
-| `llvm` — Clang, clangd, clang-format and clang-tidy bundle | feature / feature option + OCI digest | 20 / feature 3.2.0 (compatibility: 20.1.8) | setup | linux/x86_64, linux/arm64 | Dependabot lock + manual LLVM compatibility review |
+| `llvm` — Clang, clangd, clang-format and clang-tidy bundle | feature / feature option + OCI digest | 20 / feature 3.2.0 (compatibility: 20.1.8) | published image | linux/x86_64, linux/arm64 | Dependabot lock + manual LLVM compatibility review |
 | `man-db` — man-db | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `manpages` — manpages | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `manpages-dev` — manpages-dev | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
@@ -90,7 +90,7 @@ nor a container and packages the same Python definitions used by both.
 | `pkg_config` — pkg config | apt / prefix | 1.8.1 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `pre-commit` — Run repository pre-commit hooks | python / top-level exact | 4.7.0 | s-core-local, repository | uv-supported platforms | manual Python release review |
 | `protobuf_compiler` — protobuf compiler | apt / prefix | 3.21.12 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
-| `published-base` — Published image base and updated system CA trust | image / Dockerfile tag; distribution CA refresh | buildpack-deps:noble-curl | setup | linux/x86_64, linux/arm64 | Dependabot Docker + Ubuntu CA updates |
+| `published-base` — Published image base and updated system CA trust | image / Dockerfile tag; distribution CA refresh | buildpack-deps:noble-curl | published image | linux/x86_64, linux/arm64 | Dependabot Docker + Ubuntu CA updates |
 | `pycairo-smoke` — Source-build smoke dependency; not shipped in the image | test / exact test fixture | 1.29.0 | setup | linux/x86_64, linux/arm64 | manual fixture review |
 | `pycodestyle` — pycodestyle | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `pydocstyle` — pydocstyle | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
@@ -100,7 +100,7 @@ nor a container and packages the same Python definitions used by both.
 | `python3-autopep8` — python3-autopep8 | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `python3-yapf` — python3-yapf | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 | `qemu_system` — qemu system | apt / prefix | 1:8.2.2 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
-| `repository-base` — Repository development Node.js base | image / image tag | mcr.microsoft.com/devcontainers/javascript-node:4-24 | setup | linux/x86_64, linux/arm64 | Dev Containers configuration review |
+| `repository-base` — Repository development Node.js base | image / image tag | mcr.microsoft.com/devcontainers/javascript-node:4-24 | repository | linux/x86_64, linux/arm64 | Dev Containers configuration review |
 | `ripgrep` — ripgrep | apt / prefix | 14.1.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `ruff` — Check and format Python code | native / sha256 | 0.11.13 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | release + artifact digest review |
 | `shellcheck` — Check shell scripts | native / sha256 | 0.10.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | release + artifact digest review |
@@ -110,7 +110,7 @@ nor a container and packages the same Python definitions used by both.
 | `uvx` — Run Python tools in isolated environments | native / sha256 | 0.13.6 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | release + artifact digest review |
 | `valgrind` — valgrind | apt / prefix | 1:3.22.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review |
 | `virtualenv` — virtualenv | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
-| `workspace-bazel` — Bazel used to develop this module (separate from image preinstall) | workspace / workspace version | 8.6.0 | setup | Bazel-supported platforms | manual workspace compatibility review |
+| `workspace-bazel` — Bazel used to develop this module (separate from image preinstall) | workspace / workspace version | 8.6.0 | published image | Bazel-supported platforms | manual workspace compatibility review |
 | `yamlfmt` — Format YAML files | native / sha256 | 0.17.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | release + artifact digest review |
 | `zstd` — Temporary container build dependency (removed after setup) | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories |
 

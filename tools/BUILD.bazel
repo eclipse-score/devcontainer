@@ -23,6 +23,7 @@ package(default_visibility = ["//visibility:public"])
 # metadata shipped with the score_devcontainer module.
 exports_files(glob([
     "score_tools/*.bzl",
+    "lockfiles/*.bzl",
     "lockfiles/*.lock.json",
 ]))
 

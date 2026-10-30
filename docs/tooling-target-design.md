@@ -18,7 +18,8 @@ SPDX-License-Identifier: Apache-2.0
 
 Local discussion draft for #190. The [status quo](tooling-status-quo.md) describes
 today's implementation. This document proposes how to organize tool management
-across the repository; it does not change existing behavior. The agreed local
+across the repository. A local reference implementation is being developed on
+`refactor/tool-management-reference`; its validation is still in progress. The agreed local
 implementation scope and completion criteria are in the
 [refactoring goal](tooling-refactor-goal.md).
 

@@ -74,7 +74,7 @@ repos:
         pass_filenames: false
         # Both catalog formats feed the generated table; watching both keeps
         # user-facing versions synchronized with their sources of truth.
-        files: ^(MODULE\.bazel|pyproject\.toml|tools/(README\.md|BUILD\.bazel|environments\.json|providers\.json|score_tools/.*|internal/sync_readme\.py|lockfiles/.*))$
+        files: ^(\.devcontainer/.*|src/s-core-devcontainer/\.devcontainer/.*|\.bazelversion|MODULE\.bazel|pyproject\.toml|tools/(README\.md|BUILD\.bazel|environments\.json|providers\.json|score_tools/.*|internal/sync_readme\.py|lockfiles/.*))$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

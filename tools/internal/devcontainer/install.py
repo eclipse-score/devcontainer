@@ -370,8 +370,10 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
     selection = load_environments()[args.environment]
     versions = load_catalog_versions()
     observed = {}
+    python_tools = _load_python_tools()
     for name in selection["native"] + selection["python"]:
-        command = shutil.which(name)
+        entrypoint = python_tools[name]["entrypoint"] if name in python_tools else name
+        command = shutil.which(entrypoint)
         if command is None:
             raise SystemExit(f"Selected command missing from PATH: {name}")
         flag = "version" if name in ("starpls", "bazelisk") else "--version"
@@ -390,6 +392,21 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
     providers = load_providers()
     for name in selection.get("apt", []):
         definition = providers[name]
+        for entrypoint in definition.get("commands", []):
+            if shutil.which(entrypoint) is None:
+                raise SystemExit(
+                    f"Selected APT command missing from PATH: {entrypoint}"
+                )
+        for module in definition.get("modules", []):
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    "import importlib, sys; importlib.import_module(sys.argv[1])",
+                    module,
+                ],
+                check=True,
+            )
         for package in definition["packages"]:
             package = package.format(version=definition.get("version", ""))
             run = subprocess.run(
@@ -410,11 +427,24 @@ def _cmd_verify_environment(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_selected(args: argparse.Namespace) -> int:
+    """Return whether a tool is selected, for provider-specific lifecycle setup."""
+    selections = load_environments()[args.environment]
+    return 0 if any(args.tool in names for names in selections.values()) else 1
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install pinned tools from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    selected_parser = subparsers.add_parser(
+        "selected", help="Query environment membership for special setup."
+    )
+    selected_parser.add_argument("environment")
+    selected_parser.add_argument("tool")
+    selected_parser.set_defaults(func=_cmd_selected)
 
     verify_parser = subparsers.add_parser(
         "verify-environment", help="Inspect actual installed selections."

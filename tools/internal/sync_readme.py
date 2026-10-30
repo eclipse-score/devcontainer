@@ -42,6 +42,12 @@ def _render_table(tools, environments):
             for env, selections in environments.items()
             if any(name in names for names in selections.values())
         ]
+        if "config" in definition:
+            selected.append(
+                "repository"
+                if definition["config"].startswith(".devcontainer/")
+                else "published image"
+            )
         version = definition.get("version", "distribution/latest")
         if "compatibility_version" in definition:
             version += " (compatibility: " + definition["compatibility_version"] + ")"

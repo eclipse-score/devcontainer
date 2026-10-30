@@ -236,6 +236,8 @@ def all_definitions():
             "update": "release + artifact digest review",
         }
     for name, definition in _load_python_tools().items():
+        if name in result:
+            raise ValueError(f"Duplicate tool definition: {name}")
         result[name] = {
             **definition,
             "provider": "python",
@@ -274,6 +276,11 @@ def validate_catalog():
                     "apt" if provider == "build-apt" else provider
                 ):
                     raise ValueError(f"Wrong provider for {name} in {environment}")
+        selected = {name for names in selections.values() for name in names}
+        for name in selected:
+            for dependency in tools[name].get("requires", []):
+                if dependency not in selected:
+                    raise ValueError(f"{name} requires {dependency} in {environment}")
     root = LOCKFILE_ROOT.parents[1]
     module = (root / "MODULE.bazel").read_text()
     declared = re.findall(
