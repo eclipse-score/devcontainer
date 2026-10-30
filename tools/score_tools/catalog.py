@@ -223,12 +223,16 @@ def apt_requirements(environment, *, recommends=None):
     return requirements
 
 
-def all_definitions():
+def all_definitions(*, repository_metadata=True):
     """Unify inventory views while retaining provider-owned formats."""
     import re
 
     root = LOCKFILE_ROOT.parents[1]
-    managers = read_jsonc(root / ".github/renovate.json5")["customManagers"]
+    managers = (
+        read_jsonc(root / ".github/renovate.json5")["customManagers"]
+        if repository_metadata
+        else []
+    )
     result = {}
     for name, filename, definition in _iter_catalog():
         if name in result:
@@ -268,11 +272,59 @@ def all_definitions():
         if name in result:
             raise ValueError(f"Duplicate tool definition: {name}")
         result[name] = {
-            **resolved_provider(name, definition),
+            **(
+                resolved_provider(name, definition)
+                if repository_metadata
+                else definition
+            ),
             "source": definition.get("config", "tools/providers.json"),
             "delivery": "container",
         }
     return result
+
+
+def validate_environment(environment, tools, *, platform=None):
+    """Validate a composition before any installation side effects.
+
+    Container images only carry tools/, so this check uses the portable catalog
+    without resolving repository configs, update managers or Bazel registrations.
+    """
+    selections = load_environments()[environment]
+    for provider, names in selections.items():
+        if provider not in ("native", "python", "apt", "setup", "build-apt", "npm"):
+            raise ValueError(f"Unknown composition provider: {provider}")
+        if len(names) != len(set(names)):
+            raise ValueError(f"Duplicate selection in {environment}/{provider}")
+        for name in names:
+            if name not in tools:
+                raise ValueError(f"Undefined tool {name} in {environment}")
+            if provider != "setup" and tools[name]["provider"] != (
+                "apt" if provider == "build-apt" else provider
+            ):
+                raise ValueError(f"Wrong provider for {name} in {environment}")
+    selected = {name for names in selections.values() for name in names}
+    for name in selected:
+        for dependency in tools[name].get("requires", []):
+            if dependency not in selected:
+                raise ValueError(f"{name} requires {dependency} in {environment}")
+    if platform is not None:
+        for name in selected:
+            tool = tools[name]
+            if (
+                tool["provider"] in ("native", "apt", "release", "bazelisk")
+                and platform not in tool["platforms"]
+                and platform not in tool.get("omissions", {})
+            ):
+                raise ValueError(
+                    f"{name} is unsupported on {platform} in {environment}"
+                )
+    for name in selections.get("apt", []):
+        tool = tools[name]
+        if tool["policy"] not in ("distribution", "prefix", "package-name"):
+            raise ValueError(f"Unknown APT policy for {name}: {tool['policy']}")
+        if tool["policy"] != "distribution" and not tool.get("version"):
+            raise ValueError(f"Missing APT version constraint: {name}")
+    return selections
 
 
 def validate_catalog():
@@ -290,24 +342,8 @@ def validate_catalog():
         if filename in release_versions and release_versions[filename] != version:
             raise ValueError(f"Inconsistent shared release in {filename}")
         release_versions[filename] = version
-    for environment, selections in load_environments().items():
-        for provider, names in selections.items():
-            if provider not in ("native", "python", "apt", "setup", "build-apt", "npm"):
-                raise ValueError(f"Unknown composition provider: {provider}")
-            if len(names) != len(set(names)):
-                raise ValueError(f"Duplicate selection in {environment}/{provider}")
-            for name in names:
-                if name not in tools:
-                    raise ValueError(f"Undefined tool {name} in {environment}")
-                if provider != "setup" and tools[name]["provider"] != (
-                    "apt" if provider == "build-apt" else provider
-                ):
-                    raise ValueError(f"Wrong provider for {name} in {environment}")
-        selected = {name for names in selections.values() for name in names}
-        for name in selected:
-            for dependency in tools[name].get("requires", []):
-                if dependency not in selected:
-                    raise ValueError(f"{name} requires {dependency} in {environment}")
+    for environment in load_environments():
+        validate_environment(environment, tools)
     root = LOCKFILE_ROOT.parents[1]
     module = (root / "MODULE.bazel").read_text()
     declared = re.findall(
@@ -373,9 +409,7 @@ def resolved_provider(name, definition):
         key = next(
             key
             for key in selections
-            if key == identity
-            or key.startswith(identity + ":")
-            or key.startswith(identity + "@")
+            if key == identity or key.startswith((identity + ":", identity + "@"))
         )
         settings = selections[key]
         resolution = json.loads(config.with_name("devcontainer-lock.json").read_text())[

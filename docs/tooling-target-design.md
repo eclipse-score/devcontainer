@@ -170,19 +170,23 @@ Full dependency locking, APT snapshots, a formal SBOM, and identical image rebui
 are separate work. The model should support that work without making it a
 prerequisite for every cleanup here.
 
-## 6. Decisions still open
+## 6. Decisions made in the local reference
 
-- **Storage:** how to connect the existing backend definitions and environment
-  selections without creating another version-bearing registry.
-- **APT policy:** which tools need explicit constraints and which intentionally
-  follow the distribution; what compatibility checks are independently required.
-- **Invocation:** whether users choose direct execution paths or use a common
-  dispatcher, and what a pinned invocation guarantees. Arbitrary PATH commands
-  cannot be considered verified solely because they run inside a container.
+- **Storage:** native artifacts retain multitool-compatible JSON. Python pins use
+  one packaged literal Starlark dictionary. `providers.json` owns other provider
+  policies, while `environments.json` owns local membership. Existing feature
+  configs/locks and image definitions retain their own version decisions.
+- **APT policy:** preserve existing prefixes and epochs, distribution-following
+  installs and separate compatibility expectations. Normal recommendations remain
+  enabled, with QEMU's existing exception. Resolved packages are inspected rather
+  than described as a fully locked environment.
+- **Invocation:** keep run-tool behavior for compatibility, including strict
+  container PATH precedence. Document its limits and offer explicit Bazel targets
+  and standalone `score-tool` when catalog-selected execution is required.
 
-This draft does not decide the future of `run-tool`, its defaults, or its strict
-mode. Those decisions follow the execution contract rather than determine the
-organization of all tool metadata.
+The [reference implementation](tooling-reference-implementation.md) records the
+concrete arrangement and validation. The [completion audit](tooling-completion-audit.md)
+tracks evidence still required before the goal can close.
 
 ## 7. Implement the complete local target before splitting PRs
 
@@ -199,6 +203,8 @@ Once the end state works, derive small, independently reviewable PRs that each
 leave a working repository and lead to the validated result. Helper extraction
 or a Python-only demonstration is not the end goal.
 
+The [local PR sequence](tooling-pr-sequence.md) maps review outcomes and dependencies
+from the implementation. Its final acceptance follows the full validation gates.
 See the [refactoring goal](tooling-refactor-goal.md) for acceptance criteria,
 validation expectations, and boundaries. All work remains local; no pushes,
 publication, or GitHub issue updates are authorized.

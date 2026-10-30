@@ -40,15 +40,15 @@ definitions.
 | Inventory and drift | `sync_readme.py`, shared catalog validation and pre-commit/CI checks |
 
 Bazel's explicit native hubs and aliases are retained and checked against all
-native definitions. Python targets derive from the dictionary. Digest refresh derives uvx's repeated version field from uv, the basename-matching
-release owner. Validation rejects inconsistent generated copies.
+native definitions. Python targets derive from the dictionary. Digest refresh
+derives uvx's repeated version field from uv, the basename-matching release owner. Validation rejects inconsistent generated copies.
 The proxy Dockerfile's base must agree with the default Dockerfile.
 
 APT installation preserves the existing requests, including Debian epochs and
 unversioned Git/Git LFS/gh selection. Their separate compatibility expectations
 remain checks rather than fictional install pins. Normal APT recommendations
-remain enabled, with QEMU retaining its existing no-recommendations policy; disabling them in an early local experiment omitted Python
-headers and caused the stronger pycairo source-build test to fail.
+remain enabled, including Python build support, with QEMU retaining its existing
+no-recommendations policy.
 
 Python CLI installs use system entrypoints and isolated tool environments under
 `/usr/local/share/uv/tools`. No installer guesses the development user from home
@@ -106,22 +106,24 @@ refresh and deliberately distribution-following tools remain unpinned.
 | Check | Current evidence |
 | --- | --- |
 | Repository hooks | `pre-commit run --all-files --show-diff-on-failure` passed, including license checks |
-| Catalog/process tests | `python3 -m unittest discover -s tools/tests -p 'test_*.py'`: 18 passing tests; covers malformed definitions, selection drift, installed-version drift, argument/cwd/status boundaries and release-asset refresh |
+| Catalog/process tests | `python3 -m unittest discover -s tools/tests -p 'test_*.py'`: 20 passing tests; covers malformed definitions, selection drift, installed-version drift, argument/cwd/status boundaries and release-asset refresh |
 | Existing shell/Bazel contracts | `bazel test //tools:python_tool_runner_test //tools:run_tool_test` passed |
 | Real Bazel delivery | `bazel run //tools:pre-commit -- --version` reports 4.7.0; ShellCheck reports 0.10.0 |
 | Git delivery outside checkout | `tools/tests/git_delivery_smoke.sh` passed at local commit `5ebc59a`; real pre-commit 4.7.0, package data, cwd, argument boundaries and status 42 verified |
-| Repository development image | amd64 Dev Containers build and derived smoke image passed: repository selection verified as node, including npm resolution, Docker, Dev Containers CLI and hook registration. arm64 build remains in progress |
-| Optional helper | `scripts/install_dive.sh` in a disposable development image verifies the artifact and reports dive 0.13.1 |
+| Repository development image | amd64 and arm64 Dev Containers builds and derived smoke images passed: repository selection verified as node, including npm resolution, Docker, Dev Containers CLI and hook registration |
+| Optional helper | `scripts/install_dive.sh` in disposable amd64 and arm64 development images verifies each artifact and reports dive 0.13.1 |
 | No-host-Python Bazel execution | Minimal Ubuntu image passed with neither python nor python3 on PATH: Bazel runs pre-commit 4.7.0 using uv-managed CPython 3.15.2; a separate native ShellCheck invocation reports 0.10.0 |
-| Published image amd64 | Corrected build and full development-user tests passed, including pycairo source compilation, Python/native tools, CodeQL plus packs and Bazel. Final verifier also checks temporary-package cleanup |
-| Published image arm64 | Emulated build in progress; CodeQL is intentionally unsupported on Linux arm64; feature tests remain outstanding |
+| Published image amd64 | Final-source build and full development-user tests passed without tool/check overlays, including pycairo source compilation, Python/native tools, CodeQL plus packs, Bazel and temporary-package cleanup |
+| Published image arm64 | Earlier arm64 image passed all feature tests with current checks. Final-source emulated build and tests remain outstanding; CodeQL is intentionally unsupported on Linux arm64 |
 | Final inventory / completion audit | Outstanding after final images and checks |
-| PR sequence | To be derived from the validated implementation, not treated as proven yet |
+| PR sequence | Seven-PR dependency sequence specified in tooling-pr-sequence.md; final acceptance awaits final-source arm64 gates |
 
-Image functional checks use the installed result with current verifier/catalog and
-feature tests bind-mounted read-only. Image installation artifacts and versions
-come from the local Dev Containers builds. Source changes made after a build
-snapshot still require final installation verification before completion.
+The final-source amd64 image embeds the current installer, catalog, provider and
+composition data, metadata bridge and feature installation scripts; SHA256 checks
+confirm the match. Its functional tests mount only the test project read-only.
+Earlier exploratory runs used current tool/check overlays and do not substitute
+for final-source verification. See the [completion audit](tooling-completion-audit.md)
+for the full requirement-by-requirement record.
 
 Live build logs for this local run are under `/tmp/score-image-amd64-final.log`,
 `/tmp/score-image-arm64.log`, `/tmp/score-repository-smoke.log`, and

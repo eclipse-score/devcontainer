@@ -49,10 +49,12 @@ from score_tools.catalog import (
     Binary,
     ToolData,
     _load_python_tools,
+    all_definitions,
     apt_requirements,
     load_catalog_versions,
     load_environments,
     load_providers,
+    validate_environment,
 )
 
 
@@ -297,8 +299,11 @@ def _cmd_install(args: argparse.Namespace) -> int:
 
 def _cmd_environment(args: argparse.Namespace) -> int:
     """Apply a named environment's native/Python selection in dependency order."""
-    selections = load_environments()
-    selection = selections[args.environment]
+    selection = validate_environment(
+        args.environment,
+        all_definitions(repository_metadata=False),
+        platform=_detect_os() + "/" + _detect_cpu(),
+    )
     if args.phase != "runtime":
         packages = [
             package

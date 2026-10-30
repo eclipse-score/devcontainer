@@ -60,6 +60,17 @@ class CatalogTest(unittest.TestCase):
         ):
             catalog.validate_catalog()
 
+    def test_unsupported_platform_requires_an_explicit_omission(self):
+        definitions = catalog.all_definitions(repository_metadata=False)
+        with self.assertRaisesRegex(ValueError, "unsupported on windows"):
+            catalog.validate_environment(
+                "repository", definitions, platform="windows/x86_64"
+            )
+        # The published feature deliberately omits CodeQL on Linux arm64.
+        catalog.validate_environment(
+            "s-core-local", definitions, platform="linux/arm64"
+        )
+
     def test_python_catalog_rejects_executable_content(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "catalog.bzl"
@@ -71,16 +82,39 @@ class CatalogTest(unittest.TestCase):
                 catalog._load_python_tools()
 
     def test_apt_requests_distinguish_prefix_distribution_and_package_name(self):
-        requirements = catalog.apt_requirements("s-core-local")
-        self.assertIn("git", requirements)
-        self.assertIn("valgrind=1:3.22.0*", requirements)
-        self.assertIn("python3.12", requirements)
-        self.assertNotIn("python3.12=3.12*", requirements)
+        # Fictional fixture versions test request syntax without duplicating any
+        # maintained tool pin from the actual provider definitions.
+        providers = {
+            "git": {"packages": ["git"], "policy": "distribution"},
+            "debugger": {
+                "packages": ["debugger"],
+                "policy": "prefix",
+                "version": "7:1.2.3",
+            },
+            "python": {
+                "packages": ["python{version}"],
+                "policy": "package-name",
+                "version": "3.99",
+            },
+        }
+        with (
+            patch.object(catalog, "load_providers", return_value=providers),
+            patch.object(
+                catalog,
+                "load_environments",
+                return_value={"fixture": {"apt": list(providers)}},
+            ),
+        ):
+            self.assertEqual(
+                catalog.apt_requirements("fixture"),
+                ["git", "debugger=7:1.2.3*", "python3.99"],
+            )
 
     def test_qemu_excludes_recommendations_without_affecting_python_build_support(self):
         without_recommends = catalog.apt_requirements("s-core-local", recommends=False)
         self.assertEqual(
-            without_recommends, ["qemu-system-arm=1:8.2.2*", "qemu-system-x86=1:8.2.2*"]
+            [item.split("=", 1)[0] for item in without_recommends],
+            ["qemu-system-arm", "qemu-system-x86"],
         )
         normal = catalog.apt_requirements("s-core-local", recommends=True)
         self.assertIn("python3-pip", normal)
@@ -117,6 +151,21 @@ class InstalledResultTest(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("score_container_installer", path)
         cls.installer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.installer)
+
+    def test_installation_rejects_undefined_selection_before_mutating_packages(self):
+        import argparse
+
+        with (
+            patch.object(
+                catalog, "load_environments", return_value={"image": {"apt": ["typo"]}}
+            ),
+            patch.object(self.installer.subprocess, "run") as run,
+            self.assertRaisesRegex(ValueError, "Undefined tool typo"),
+        ):
+            self.installer._cmd_environment(
+                argparse.Namespace(environment="image", phase="runtime")
+            )
+        run.assert_not_called()
 
     def test_shell_metadata_quotes_values_and_ignores_inventory_only_keys(self):
         import argparse
