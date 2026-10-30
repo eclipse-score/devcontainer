@@ -16,8 +16,8 @@ SPDX-License-Identifier: Apache-2.0
 
 # Goal: consolidate tool management and prove all three delivery paths
 
-This document defines the scope of the active local `/goal` run. The work stays
-local until explicitly authorized otherwise. The
+This document defines the scope and acceptance criteria of the local `/goal` run.
+The work stays local until explicitly authorized otherwise. The
 [reference implementation](tooling-reference-implementation.md),
 [completion audit](tooling-completion-audit.md) and
 [proposed PR sequence](tooling-pr-sequence.md) record its results.
@@ -122,27 +122,30 @@ complete result, not substitutes for it.
 
 ## Completion criteria
 
-- [ ] All explicitly managed tools and helpers from the baseline have a place in
+Verified locally on 2026-10-30. The [completion audit](tooling-completion-audit.md)
+records the evidence for every criterion.
+
+- [x] All explicitly managed tools and helpers from the baseline have a place in
   the resulting ownership/composition model, with intentional omissions documented.
-- [ ] Repeated handwritten version decisions and environment installation lists
+- [x] Repeated handwritten version decisions and environment installation lists
   are removed; unavoidable registrations have consistency checks.
-- [ ] The published image and repository development environment retain their
+- [x] The published image and repository development environment retain their
   intended capabilities, including platform-specific behavior and non-root access.
-- [ ] Existing native and Python Bazel delivery remains functional without adding
+- [x] Existing native and Python Bazel delivery remains functional without adding
   a host-Python prerequisite.
-- [ ] Standalone uv delivery works from local Git and includes its catalog in the
+- [x] Standalone uv delivery works from local Git and includes its catalog in the
   installed package. It requires neither Bazel nor container installation code.
-- [ ] A real tool invocation demonstrates matching Python package/version/entrypoint
+- [x] A real tool invocation demonstrates matching Python package/version/entrypoint
   selection across container, Bazel, and standalone uv delivery.
-- [ ] Generated documentation, update automation, and meaningful checks consume
+- [x] Generated documentation, update automation, and meaningful checks consume
   the final authoritative sources and detect relevant drift.
-- [ ] The invocation/version contract is documented and verified, including PATH
+- [x] The invocation/version contract is documented and verified, including PATH
   selection and strict behavior. Existing runner behavior is changed only with a
   deliberate compatibility/migration decision recorded in the local result.
-- [ ] Appropriate repository checks, affected image builds/tests, and delivery
+- [x] Appropriate repository checks, affected image builds/tests, and delivery
   smoke checks pass. Record commands, outcomes, and any limitations. Unavailable
   required verification remains outstanding rather than being reported as passed.
-- [ ] A local PR breakdown describes each change's outcome, dependencies, and
+- [x] A local PR breakdown describes each change's outcome, dependencies, and
   validation, and leads to the fully implemented reference state. Do not create PRs.
 
 Adding a tool, updating its version, and removing it from an environment must each

@@ -16,12 +16,11 @@ SPDX-License-Identifier: Apache-2.0
 
 # Proposed tool management architecture
 
-Local discussion draft for #190. The [status quo](tooling-status-quo.md) describes
-today's implementation. This document proposes how to organize tool management
-across the repository. A local reference implementation is being developed on
-`refactor/tool-management-reference`; its validation is still in progress. The agreed local
-implementation scope and completion criteria are in the
-[refactoring goal](tooling-refactor-goal.md).
+Validated local design for #190. The [status quo](tooling-status-quo.md) describes
+the baseline; this document explains the resulting architecture from high level
+to detail. The complete reference is implemented and validated on
+`refactor/tool-management-reference`. The agreed implementation scope and
+completion criteria are in the [refactoring goal](tooling-refactor-goal.md).
 
 ## 1. The goal
 
@@ -186,7 +185,7 @@ prerequisite for every cleanup here.
 
 The [reference implementation](tooling-reference-implementation.md) records the
 concrete arrangement and validation. The [completion audit](tooling-completion-audit.md)
-tracks evidence still required before the goal can close.
+maps all goal criteria to the completed verification.
 
 ## 7. Implement the complete local target before splitting PRs
 
@@ -204,7 +203,8 @@ leave a working repository and lead to the validated result. Helper extraction
 or a Python-only demonstration is not the end goal.
 
 The [local PR sequence](tooling-pr-sequence.md) maps review outcomes and dependencies
-from the implementation. Its final acceptance follows the full validation gates.
+from the validated implementation, including working intermediate states and
+validation gates for each PR.
 See the [refactoring goal](tooling-refactor-goal.md) for acceptance criteria,
 validation expectations, and boundaries. All work remains local; no pushes,
 publication, or GitHub issue updates are authorized.

@@ -16,9 +16,10 @@ SPDX-License-Identifier: Apache-2.0
 
 # Local tool-management reference
 
-The reference lives on `refactor/tool-management-reference`. Nothing has been
-pushed or published. Validation is in progress; this document does not claim that
-the goal's image and completion gates have all passed.
+The complete reference is implemented and validated locally on
+`refactor/tool-management-reference`. All goal criteria passed on 2026-10-30;
+nothing has been pushed or published. The
+[completion audit](tooling-completion-audit.md) maps each criterion to evidence.
 
 ## Outcome and structure
 
@@ -102,7 +103,7 @@ refresh and deliberately distribution-following tools remain unpinned.
   Dependency validation rejects selecting packs without CodeQL or preinstalled
   Bazel without Bazelisk.
 
-## Validation record (in progress)
+## Validation record
 
 | Check | Current evidence |
 | --- | --- |
@@ -116,16 +117,16 @@ refresh and deliberately distribution-following tools remain unpinned.
 | Optional helper | `scripts/install_dive.sh` in disposable amd64 and arm64 development images verifies each artifact and reports dive 0.13.1 |
 | No-host-Python Bazel execution | Minimal Ubuntu image passed with neither python nor python3 on PATH: Bazel runs pre-commit 4.7.0 using uv-managed CPython 3.15.2; a separate native ShellCheck invocation reports 0.10.0 |
 | Published image amd64 | `score-tooling-reference:final-amd64` built successfully; all 38 embedded tool/feature source files match. Full development-user tests passed without tool/check overlays, including pycairo source compilation, Python/native tools, CodeQL plus packs, Bazel and temporary-package cleanup |
-| Published image arm64 | Earlier arm64 image passed all feature tests with current checks. Final-source emulated build and tests remain outstanding; CodeQL is intentionally unsupported on Linux arm64 |
-| Final inventory / completion audit | Outstanding after final images and checks |
-| PR sequence | Seven-PR dependency sequence specified in tooling-pr-sequence.md; final acceptance awaits final-source arm64 gates |
+| Published image arm64 | `score-tooling-reference:final-arm64` built successfully; all 38 embedded tool/feature source files match. Full development-user tests passed without overlays, including pycairo source compilation and Bazel; CodeQL is intentionally unsupported on Linux arm64 |
+| Final inventory / completion audit | 63 definitions validated and generated; all ten goal criteria have direct evidence in tooling-completion-audit.md |
+| PR sequence | Seven dependency-ordered PRs derived from the validated reference, with concrete outcomes, working intermediate states and validation gates in tooling-pr-sequence.md |
 
-The final-source amd64 image embeds the current installer, catalog, provider and
+Both final-source images embed the current installer, catalog, provider and
 composition data, metadata bridge and feature installation scripts; SHA256 checks
-confirm the match. Its functional tests mount only the test project read-only.
-Earlier exploratory runs used current tool/check overlays and do not substitute
-for final-source verification. See the [completion audit](tooling-completion-audit.md)
-for the full requirement-by-requirement record.
+confirm all 38 tool/feature source files match in each image. Functional tests
+mount only the test project read-only. See the
+[completion audit](tooling-completion-audit.md) for the requirement-by-requirement
+record, exact local image identifiers and evidence locations.
 
 The published-image build and functional test commands, from the repository root,
 are below. ARM64 execution on an amd64 host requires working binfmt emulation;
@@ -145,7 +146,35 @@ for architecture in amd64 arm64; do
 done
 ```
 
-Live build logs for this local run are under `/tmp/score-image-final-amd64.log`,
+Repository validation first builds its existing configuration:
+
+```console
+npx --yes @devcontainers/cli build --workspace-folder . --image-name score-tooling-repository:local --platform linux/amd64
+npx --yes @devcontainers/cli build --workspace-folder . --image-name score-tooling-repository:arm64 --platform linux/arm64
+```
+
+The derived smoke image uses the following Dockerfile. For arm64, its FROM is
+`score-tooling-repository:arm64`. Build it from the repository root with
+`docker build --platform linux/amd64 -f SMOKE_DOCKERFILE .` (or linux/arm64).
+The install runs as root; verification, command execution and hook registration
+run as node, matching the repository's development user.
+
+```dockerfile
+FROM score-tooling-repository:local
+USER root
+COPY tools /usr/local/share/score-tools
+RUN /usr/local/share/score-tools/internal/devcontainer/install.py environment repository
+USER node
+RUN /usr/local/share/score-tools/internal/devcontainer/install.py verify-environment repository \
+    && docker --version \
+    && devcontainer --version \
+    && mkdir /tmp/score-hook-smoke \
+    && cd /tmp/score-hook-smoke \
+    && git init \
+    && pre-commit install
+```
+
+Build logs for this local run are under `/tmp/score-image-final-amd64.log`,
 `/tmp/score-image-final-arm64.log`, `/tmp/score-repository-final-amd64.log`,
 `/tmp/score-repository-final-arm64.log`, and
 `/tmp/score-no-host-python.log`. These are local evidence, not publication outputs.

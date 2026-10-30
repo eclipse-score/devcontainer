@@ -16,10 +16,10 @@ SPDX-License-Identifier: Apache-2.0
 
 # Proposed PR sequence from the local reference
 
-This is a local breakdown of the implemented reference, not a set of published
-PRs. Its final acceptance remains subject to the outstanding image verification
-recorded in [the reference](tooling-reference-implementation.md). The discovery
-commits are deliberately not the proposed PR boundaries.
+This local breakdown derives from the complete, validated
+[reference](tooling-reference-implementation.md). It specifies review outcomes
+and dependencies; no PRs have been created. The discovery commits are deliberately
+not the proposed PR boundaries.
 
 ## Dependency order and resulting behavior
 
