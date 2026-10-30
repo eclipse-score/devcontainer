@@ -49,11 +49,14 @@ bash -c "yes || true" | unminimize
 # installation runs before tool-specific lifecycle configuration below.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local
 
-# OpenJDK 21, via APT
-# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
-JAVA_HOME="$(dirname "$(dirname "$(realpath "$(command -v javac)")")")"
-export JAVA_HOME
-echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local openjdk_21; then
+    # OpenJDK 21, via APT
+    # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
+    JAVA_HOME="$(dirname "$(dirname "$(realpath "$(command -v javac)")")")"
+    export JAVA_HOME
+    echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
+
+fi
 
 # Special setup also consumes environment membership, so removing a selection
 # removes its installation rather than only changing the generated overview.
