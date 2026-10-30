@@ -45,10 +45,11 @@ jobs:
         with:
           # Pull requests from forks do not have access to secrets
           token: ${{ secrets.RENOVATE_TOKEN }}
-          configurationFile: .github/renovate.json5
         env:
           LOG_LEVEL: debug
           RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Enable only this runner; repository config disables other instances.
+          RENOVATE_FORCE: '{"enabled": true}'
           # Allow the post-upgrade tasks that refresh lockfile URLs and sha256
           # digests and re-sync the generated tool table in tools/README.md
           # (allowedCommands is a global-only option, so it must be set here
