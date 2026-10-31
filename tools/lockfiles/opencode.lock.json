@@ -1,45 +1,45 @@
 {
-    "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
-    "opencode": {
-        "version": "2.2.3",
-        "description": "Run the OpenCode CLI",
-        "binaries": [
-            {
-                "kind": "archive",
-                "file": "opencode",
-                "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-darwin-arm64.zip",
-                "sha256": "65db03573e5717e6da245ae3e5c2ffa35915b90689d37c43d4e1ade4d47f55f9",
-                "type": "zip",
-                "os": "macos",
-                "cpu": "arm64"
-            },
-            {
-                "kind": "archive",
-                "file": "opencode",
-                "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-darwin-x64.zip",
-                "sha256": "e6b67deeb327ad25eff94bb3c39d8b15466c3de0224e3a0a47a385b69a266d4c",
-                "type": "zip",
-                "os": "macos",
-                "cpu": "x86_64"
-            },
-            {
-                "kind": "archive",
-                "file": "opencode",
-                "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-linux-x64.tar.gz",
-                "sha256": "ef3aeeaf5522b10d69a3da7bbd6e6d8d259f845833d96b8310767d3407b18a35",
-                "type": "tar.gz",
-                "os": "linux",
-                "cpu": "x86_64"
-            },
-            {
-                "kind": "archive",
-                "file": "opencode",
-                "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-linux-arm64.tar.gz",
-                "sha256": "72aac82c021268f6cc9810de913f8d47d05626b1ad974d7f5dc5b087e1ad0f68",
-                "type": "tar.gz",
-                "os": "linux",
-                "cpu": "arm64"
-            }
-        ]
-    }
+  "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
+  "opencode": {
+    "version": "2.2.5",
+    "description": "Run the OpenCode CLI",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "opencode",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.5/opencode-darwin-arm64.zip",
+        "sha256": "25ba9908979fa7d764792c82589b4b5768ab1511154e0317d98aa77d216ce767",
+        "type": "zip",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "opencode",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.5/opencode-darwin-x64.zip",
+        "sha256": "4d4419022e6ffbd48afc97c5101bdf001d38b0499f516169b9a80a87a340fd56",
+        "type": "zip",
+        "os": "macos",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "file": "opencode",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.5/opencode-linux-x64.tar.gz",
+        "sha256": "09f44302c10fd036912f59c81fd1aef5df45dd06f649197f9dfc9bbe2a79614e",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "file": "opencode",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.2.5/opencode-linux-arm64.tar.gz",
+        "sha256": "5a528f42caf576c6cdece6a191eb273d3db54effa5518e0402684d8f8026aeb6",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "arm64"
+      }
+    ]
+  }
 }
