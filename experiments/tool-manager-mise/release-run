@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# Experiment only: explicitly select a release config, then restore caller cwd.
+set -euo pipefail
+probe_dir="$(cd -- "$(dirname -- "$0")" && pwd)"
+release_dir="$(cd -- "${1:?release config directory required}" && pwd)"
+shift
+caller_dir="$PWD"
+export SCORE_MISE_PROBE_HOST_PATH="$PATH"
+exec "${probe_dir}/mise-probe" -C "${release_dir}" exec -- \
+    /bin/sh -c 'cd -- "$1"; shift; exec "$@"' sh "${caller_dir}" "$@"

@@ -1,0 +1,10 @@
+INFO: Analyzed target //tools:prepared_runtime_test (0 packages loaded, 1 target configured).
+INFO: Found 1 test target...
+Target //tools:prepared_runtime_test up-to-date:
+  bazel-bin/tools/prepared_runtime_test
+INFO: Elapsed time: 0.359s, Critical Path: 0.15s
+INFO: 2 processes: 5 action cache hit, 2 linux-sandbox.
+INFO: Build completed successfully, 2 total actions
+//tools:prepared_runtime_test                                            PASSED in 0.1s
+
+Executed 1 out of 1 test: 1 test passes.

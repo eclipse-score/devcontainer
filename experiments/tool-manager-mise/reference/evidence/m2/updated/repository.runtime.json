@@ -1,0 +1,47 @@
+{
+  "ruff": {
+    "version": "0.11.12",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12/ruff-x86_64-unknown-linux-gnu"
+  },
+  "bazelisk": {
+    "version": "1.27.0",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-bazelbuild-bazelisk/1.27.0",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-bazelbuild-bazelisk/1.27.0"
+  },
+  "buildifier": {
+    "version": "8.2.1",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1"
+  },
+  "yamlfmt": {
+    "version": "0.17.0",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-google-yamlfmt/0.17.0",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-google-yamlfmt/0.17.0"
+  },
+  "shellcheck": {
+    "version": "0.10.0",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0"
+  },
+  "actionlint": {
+    "version": "1.7.7",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-rhysd-actionlint/1.7.7",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-rhysd-actionlint/1.7.7"
+  },
+  "pre-commit": {
+    "version": "4.7.0",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin"
+  },
+  "uv": {
+    "version": "0.13.6",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/uv/0.13.6",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu"
+  },
+  "uvx": {
+    "version": "0.13.6",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/uv/0.13.6",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu"
+  }
+}

@@ -20,6 +20,7 @@ runner="${runfiles_root}/tools/run-tool"
 fake_bin="${TEST_TMPDIR}/bin"
 tool_output="${TEST_TMPDIR}/tool.args"
 bazel_output="${TEST_TMPDIR}/bazel.args"
+provisioned_output="${TEST_TMPDIR}/provisioned.args"
 mkdir -p "${fake_bin}"
 
 cat > "${fake_bin}/shellcheck" <<'EOF'
@@ -40,6 +41,20 @@ EOF
 
 chmod +x "${fake_bin}/shellcheck" "${fake_bin}/bazel"
 
+# Mimic provision.py's absolute link into a versioned mise install. Strict host
+# calls accept this known prefix and ignore the unrelated PATH command above.
+provisioned_bin="${TEST_TMPDIR}/provisioned-bin"
+provisioned_target="${TEST_TMPDIR}/mise-data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck"
+mkdir -p "${provisioned_bin}" "$(dirname -- "${provisioned_target}")"
+cat > "${provisioned_target}" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "${PWD}" "$@" > "${PROVISIONED_OUTPUT}"
+exit "${FAKE_PROVISIONED_EXIT_CODE:-0}"
+EOF
+chmod +x "${provisioned_target}"
+ln -s "${provisioned_target}" "${provisioned_bin}/shellcheck"
+
 assert_lines() {
     local actual_file="$1"
     shift
@@ -51,9 +66,10 @@ assert_lines() {
 export PATH="${fake_bin}:${PATH}"
 export TOOL_OUTPUT="${tool_output}"
 export BAZEL_OUTPUT="${bazel_output}"
+export PROVISIONED_OUTPUT="${provisioned_output}"
 
 reset_outputs() {
-    rm -f "${tool_output}" "${bazel_output}"
+    rm -f "${tool_output}" "${bazel_output}" "${provisioned_output}"
 }
 
 # 1. Inside container: executes the container command on PATH directly (untouched).
@@ -90,9 +106,12 @@ echo "${stderr_output}" | grep -q "failed with exit code 42"
 [[ ! -e "${bazel_output}" ]]
 unset FAIL_LOCAL_TOOL
 
-# 4. On host: --strict flag bypasses local tool and invokes Bazel.
+# 4. On host: --strict with no provisioned link bypasses local PATH and invokes Bazel.
 reset_outputs
-"${runner}" --strict shellcheck scripts/example.sh
+empty_provisioned_bin="${TEST_TMPDIR}/empty-provisioned-bin"
+mkdir -p "${empty_provisioned_bin}"
+SCORE_TOOLS_BIN_DIR="${empty_provisioned_bin}" \
+    "${runner}" --strict shellcheck scripts/example.sh
 assert_lines "${bazel_output}" \
     "run" \
     "@score_devcontainer//tools:shellcheck" \
@@ -100,7 +119,35 @@ assert_lines "${bazel_output}" \
     "scripts/example.sh"
 [[ ! -e "${tool_output}" ]]
 
-# 5. On host or container missing tool: falls back to Bazel.
+# A provisioned strict host call ignores arbitrary PATH, preserves caller cwd
+# and arguments, and uses the direct versioned executable link.
+reset_outputs
+workspace_dir="${TEST_TMPDIR}/provisioned-workspace"
+mkdir -p "${workspace_dir}"
+pushd "${workspace_dir}" > /dev/null
+RUN_TOOL_CONTAINER_MODE=host SCORE_TOOLS_BIN_DIR="${provisioned_bin}" \
+    "${runner}" --strict shellcheck scripts/strict.sh --check
+popd > /dev/null
+assert_lines "${provisioned_output}" \
+    "${workspace_dir}" \
+    "scripts/strict.sh" \
+    "--check"
+[[ ! -e "${tool_output}" ]]
+[[ ! -e "${bazel_output}" ]]
+
+# The direct executable's failure status is preserved without Bazel fallback.
+reset_outputs
+set +e
+RUN_TOOL_CONTAINER_MODE=host \
+    SCORE_TOOLS_BIN_DIR="${provisioned_bin}" \
+    FAKE_PROVISIONED_EXIT_CODE=43 \
+    "${runner}" --strict shellcheck scripts/strict.sh
+status=$?
+set -e
+[[ "${status}" -eq 43 ]]
+[[ ! -e "${bazel_output}" ]]
+
+# 6. On host or container missing tool: falls back to Bazel.
 reset_outputs
 "${runner}" missing-tool check.sh
 assert_lines "${bazel_output}" \
@@ -110,7 +157,7 @@ assert_lines "${bazel_output}" \
     "check.sh"
 [[ ! -e "${tool_output}" ]]
 
-# 6. Neither tool nor Bazel is on PATH: exits with 127.
+# 7. Neither tool nor Bazel is on PATH: exits with 127.
 no_bin="${TEST_TMPDIR}/empty-bin"
 mkdir -p "${no_bin}"
 set +e

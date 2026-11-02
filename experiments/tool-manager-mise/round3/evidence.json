@@ -1,0 +1,434 @@
+{
+  "state": "/tmp/score-mise-evaluation/round3-package-0skzkvy6",
+  "uv": "/home/alex/.local/bin/uv",
+  "uvx": "/home/alex/.local/bin/uvx",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "init",
+        "-q"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer/export-bazel.py"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "Exported Ruff lockfile and Python target metadata into /tmp/score-mise-evaluation/round3-package-0skzkvy6/producer/generated\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/round3/generate-package.py",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+        "0.1.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "Generated standard metadata for 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        "."
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=Probe",
+        "-c",
+        "user.email=probe@example.invalid",
+        "commit",
+        "-qm",
+        "Generated release 0.1.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "tag",
+        "v0.1.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "2fb4804ab6ab101135eaedfde22fce93cbbed9ec\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "add",
+        "--raw",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.1.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\n   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.1.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (2fb4804ab6ab101135eaedfde22fce93cbbed9ec)\nResolved 3 packages in 225ms\n   Building score-tools-probe @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@2fb4804ab6ab101135eaedfde22fce93cbbed9ec\nDownloading ruff (11.0MiB)\n Downloaded ruff\n      Built score-tools-probe @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@2fb4804ab6ab101135eaedfde22fce93cbbed9ec\nPrepared 2 packages in 611ms\nInstalled 2 packages in 1ms\n + ruff==0.11.13\n + score-tools-probe==0.1.0 (from git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@2fb4804ab6ab101135eaedfde22fce93cbbed9ec)\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "Resolved 3 packages in 1ms\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "sync",
+        "--locked"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "Resolved 3 packages in 0.78ms\nChecked 2 packages in 0.08ms\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "run",
+        "--locked",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "run",
+        "--locked",
+        "python",
+        "-c",
+        "import importlib.metadata as m; print(m.metadata('score-tools-probe').get_all('Requires-Dist'))"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "['ruff==0.11.13; extra == \"ruff\"']\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uvx",
+        "--from",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.1.0",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": "   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.1.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (2fb4804ab6ab101135eaedfde22fce93cbbed9ec)\nInstalled 2 packages in 4ms\nwarning: An executable named `ruff` is not provided by package `score-tools-probe` but is available via the dependency `ruff`. Consider using `uvx --from ruff ruff` instead.\n"
+    },
+    {
+      "argv": [
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise-probe",
+        "-C",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+        "use",
+        "--env",
+        "native",
+        "--pin",
+        "aqua:astral-sh/ruff@0.11.12"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "mise /tmp/score-mise-evaluation/round3-package-0skzkvy6/producer/mise.native.toml tools: aqua:astral-sh/ruff@0.11.12\n",
+      "stderr": "mise by @jdx \u2013 installing 1 tool\nmise \u21e2 aqua:astral-sh/ruff@0.11.12  2ms \u00b7 already installed\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                   \u2713 2 targets checked\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 0 tools \u00b7 1 already installed in 596ms\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-x64\nmise lock                   \u2713 3 targets checked\n"
+    },
+    {
+      "argv": [
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "ruff 0.11.12\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer/export-bazel.py"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "Exported Ruff lockfile and Python target metadata into /tmp/score-mise-evaluation/round3-package-0skzkvy6/producer/generated\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/round3/generate-package.py",
+        "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+        "0.2.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "Generated standard metadata for 0.11.12\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        "."
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-c",
+        "user.name=Probe",
+        "-c",
+        "user.email=probe@example.invalid",
+        "commit",
+        "-qm",
+        "Generated release 0.2.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "tag",
+        "v0.2.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "ffbb3aa6f03829855e194f61667abcac09bf8986\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "add",
+        "--raw",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.2.0"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.2.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (ffbb3aa6f03829855e194f61667abcac09bf8986)\nResolved 3 packages in 120ms\n   Building score-tools-probe @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@ffbb3aa6f03829855e194f61667abcac09bf8986\nDownloading ruff (11.0MiB)\n      Built score-tools-probe @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@ffbb3aa6f03829855e194f61667abcac09bf8986\n Downloaded ruff\nPrepared 2 packages in 445ms\nUninstalled 2 packages in 0.46ms\nInstalled 2 packages in 1ms\n - ruff==0.11.13\n + ruff==0.11.12\n - score-tools-probe==0.1.0 (from git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@2fb4804ab6ab101135eaedfde22fce93cbbed9ec)\n + score-tools-probe==0.2.0 (from git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@ffbb3aa6f03829855e194f61667abcac09bf8986)\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "Resolved 3 packages in 0.80ms\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "sync",
+        "--locked"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "",
+      "stderr": "Resolved 3 packages in 0.88ms\nChecked 2 packages in 0.04ms\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "run",
+        "--locked",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.12\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "run",
+        "--locked",
+        "python",
+        "-c",
+        "import importlib.metadata as m; print(m.metadata('score-tools-probe').get_all('Requires-Dist'))"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "['ruff==0.11.12; extra == \"ruff\"']\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uvx",
+        "--from",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.2.0",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.12\n",
+      "stderr": "   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.2.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (ffbb3aa6f03829855e194f61667abcac09bf8986)\nInstalled 2 packages in 3ms\nwarning: An executable named `ruff` is not provided by package `score-tools-probe` but is available via the dependency `ruff`. Consider using `uvx --from ruff ruff` instead.\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "v0.1.0",
+        "v0.2.0",
+        "--",
+        "mise.native.toml"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "diff --git a/mise.native.toml b/mise.native.toml\nindex 6a99020..b38bcb5 100644\n--- a/mise.native.toml\n+++ b/mise.native.toml\n@@ -2,4 +2,4 @@\n # SPDX-License-Identifier: Apache-2.0\n \n [tools]\n-\"aqua:astral-sh/ruff\" = \"0.11.13\"\n+\"aqua:astral-sh/ruff\" = \"0.11.12\"\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "v0.1.0",
+        "v0.2.0",
+        "--",
+        "mise.native.lock",
+        "generated/ruff.lock.json",
+        "pyproject.toml"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/producer",
+      "status": 0,
+      "stdout": "diff --git a/generated/ruff.lock.json b/generated/ruff.lock.json\nindex 4917059..4435e1f 100644\n--- a/generated/ruff.lock.json\n+++ b/generated/ruff.lock.json\n@@ -1,13 +1,13 @@\n {\n   \"ruff\": {\n-    \"version\": \"0.11.13\",\n+    \"version\": \"0.11.12\",\n     \"description\": \"Check and format Python code\",\n     \"binaries\": [\n       {\n         \"kind\": \"archive\",\n         \"file\": \"ruff-aarch64-unknown-linux-gnu/ruff\",\n-        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-unknown-linux-gnu.tar.gz\",\n-        \"sha256\": \"551af2ebc439d8268dcaf871ea60ad035f688728d30943dcbb2bf775e105213e\",\n+        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-unknown-linux-gnu.tar.gz\",\n+        \"sha256\": \"a14bf81d237e10abd7fc751cf55249cef10e7952a4267fb9425296e12132f2f2\",\n         \"type\": \"tar.gz\",\n         \"os\": \"linux\",\n         \"cpu\": \"arm64\"\n@@ -15,8 +15,8 @@\n       {\n         \"kind\": \"archive\",\n         \"file\": \"ruff-x86_64-unknown-linux-gnu/ruff\",\n-        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-x86_64-unknown-linux-gnu.tar.gz\",\n-        \"sha256\": \"01aa32d29d00876b8d1429c617ed63a00b1fc81abfa4183bb05c9cb647fbc3d0\",\n+        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-x86_64-unknown-linux-gnu.tar.gz\",\n+        \"sha256\": \"a2a6c25916f05b351164ae638169b9edb2149ad7f33e45360beb1ac271eae34e\",\n         \"type\": \"tar.gz\",\n         \"os\": \"linux\",\n         \"cpu\": \"x86_64\"\n@@ -24,8 +24,8 @@\n       {\n         \"kind\": \"archive\",\n         \"file\": \"ruff-aarch64-apple-darwin/ruff\",\n-        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-apple-darwin.tar.gz\",\n-        \"sha256\": \"7d5e8feea7ee5c3962807996cad557e8a0c4d676c1cba6223bfb0e8b2ca07723\",\n+        \"url\": \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-apple-darwin.tar.gz\",\n+        \"sha256\": \"6e8bce88be5063d3378b6fa51430655884794f6cd04a059721839dc012b7ee7d\",\n         \"type\": \"tar.gz\",\n         \"os\": \"macos\",\n         \"cpu\": \"arm64\"\ndiff --git a/mise.native.lock b/mise.native.lock\nindex 6d6a560..070f7e2 100644\n--- a/mise.native.lock\n+++ b/mise.native.lock\n@@ -3,24 +3,21 @@\n lockfile_version = 3\n \n [[tools.\"aqua:astral-sh/ruff\"]]\n-version = \"0.11.13\"\n+version = \"0.11.12\"\n backend = \"aqua:astral-sh/ruff\"\n-specifiers = [\"0.11.13\"]\n+specifiers = [\"0.11.12\"]\n \n [tools.\"aqua:astral-sh/ruff\".\"platforms.linux-arm64\"]\n-checksum = \"sha256:551af2ebc439d8268dcaf871ea60ad035f688728d30943dcbb2bf775e105213e\"\n-checksum_source = \"mise-versions\"\n-url = \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-unknown-linux-gnu.tar.gz\"\n-url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/261348024\"\n+checksum = \"sha256:a14bf81d237e10abd7fc751cf55249cef10e7952a4267fb9425296e12132f2f2\"\n+url = \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-unknown-linux-gnu.tar.gz\"\n+url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/259154026\"\n \n [tools.\"aqua:astral-sh/ruff\".\"platforms.linux-x64\"]\n-checksum = \"sha256:01aa32d29d00876b8d1429c617ed63a00b1fc81abfa4183bb05c9cb647fbc3d0\"\n-checksum_source = \"mise-versions\"\n-url = \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-x86_64-unknown-linux-gnu.tar.gz\"\n-url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/261348069\"\n+checksum = \"sha256:a2a6c25916f05b351164ae638169b9edb2149ad7f33e45360beb1ac271eae34e\"\n+url = \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-x86_64-unknown-linux-gnu.tar.gz\"\n+url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/259154063\"\n \n [tools.\"aqua:astral-sh/ruff\".\"platforms.macos-arm64\"]\n-checksum = \"sha256:7d5e8feea7ee5c3962807996cad557e8a0c4d676c1cba6223bfb0e8b2ca07723\"\n-checksum_source = \"mise-versions\"\n-url = \"https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-apple-darwin.tar.gz\"\n-url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/261348019\"\n+checksum = \"sha256:6e8bce88be5063d3378b6fa51430655884794f6cd04a059721839dc012b7ee7d\"\n+url = \"https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-apple-darwin.tar.gz\"\n+url_api = \"https://api.github.com/repos/astral-sh/ruff/releases/assets/259154023\"\ndiff --git a/pyproject.toml b/pyproject.toml\nindex 00726d5..2719df8 100644\n--- a/pyproject.toml\n+++ b/pyproject.toml\n@@ -7,11 +7,11 @@ build-backend = \"setuptools.build_meta\"\n \n [project]\n name = \"score-tools-probe\"\n-version = \"0.1.0\"\n+version = \"0.2.0\"\n requires-python = \">=3.10\"\n \n [project.optional-dependencies]\n-ruff = [\"ruff==0.11.13\"]\n+ruff = [\"ruff==0.11.12\"]\n \n [tool.setuptools]\n packages = []\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uvx",
+        "--with",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.1.0",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": "   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.1.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (2fb4804ab6ab101135eaedfde22fce93cbbed9ec)\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uvx",
+        "--with",
+        "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.2.0",
+        "ruff",
+        "--version"
+      ],
+      "cwd": "/tmp/score-mise-evaluation/round3-package-0skzkvy6/consumer",
+      "status": 0,
+      "stdout": "ruff 0.11.12\n",
+      "stderr": "   Updating file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (v0.2.0)\n    Updated file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer (ffbb3aa6f03829855e194f61667abcac09bf8986)\n"
+    }
+  ],
+  "releases": [
+    {
+      "package_version": "0.1.0",
+      "tag": "v0.1.0",
+      "commit": "2fb4804ab6ab101135eaedfde22fce93cbbed9ec",
+      "authoritative_ruff": "0.11.13",
+      "native": "ruff 0.11.13",
+      "bazel_metadata_version": "0.11.13",
+      "uv_project": "ruff 0.11.13",
+      "uv_locked_ruff": "0.11.13",
+      "requires_dist": "['ruff==0.11.13; extra == \"ruff\"']",
+      "uvx": "ruff 0.11.13",
+      "consumer_requirement": "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.1.0",
+      "uvx_with": "ruff 0.11.13"
+    },
+    {
+      "package_version": "0.2.0",
+      "tag": "v0.2.0",
+      "commit": "ffbb3aa6f03829855e194f61667abcac09bf8986",
+      "authoritative_ruff": "0.11.12",
+      "native": "ruff 0.11.12",
+      "bazel_metadata_version": "0.11.12",
+      "uv_project": "ruff 0.11.12",
+      "uv_locked_ruff": "0.11.12",
+      "requires_dist": "['ruff==0.11.12; extra == \"ruff\"']",
+      "uvx": "ruff 0.11.12",
+      "consumer_requirement": "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.2.0",
+      "uvx_with": "ruff 0.11.12"
+    }
+  ]
+}

@@ -30,21 +30,53 @@ $ .devcontainer/run-tool ruff check .
 
 Everything after the command is passed to that command. In the DevContainer,
 it runs the installed executable. Outside the container, it uses the local tool
-when available or Bazel otherwise (`--strict` selects Bazel on the host).
+when available or Bazel otherwise (`--strict` selects a prepared host command
+or the pinned Bazel fallback).
 Container PATH remains preferred even with `--strict`. PATH execution does not
 verify a version; direct Bazel targets select the catalog release. The first
 host-side Bazel invocation may require network access to download the binary.
 
 ## Standalone Python tools
 
-With compatible uv already installed, select a published Git release:
+With compatible uv and Python installed, use the ordinary dependency wheel
+provided by a maintainer. In an independent uv project, select its release and
+the desired extra, then lock, sync and run the real command. Changing the
+facade release requirement updates its owner-selected dependencies; consumers
+do not copy Ruff pins or invoke a SCORE wrapper.
+For example, add `chosen-local-dependency-name[ruff]==0.8.1` to the project's
+dependencies, substituting the name and version supplied with the handoff.
 
 ```console
-uvx --from 'git+https://github.com/eclipse-score/devcontainer.git@RELEASE' score-tool pre-commit --version
+uv lock --find-links /absolute/path/to/handoff/wheels
+uv sync --locked --find-links /absolute/path/to/handoff/wheels
+uv run --no-sync ruff --version
 ```
 
-Replace `RELEASE` with the intended release ref. This path needs neither Bazel
-nor a container and packages the same Python definitions used by both.
+The package name and release version must match the maintainer's handoff.
+The [release and user update guide](internal/mise/README.md) includes the
+project dependency, ordinary uvx use, and native-prefix updates. Public naming
+and hosting remain undecided.
+
+## Local mise candidate integration
+
+In this mise candidate, selected CLI versions are authored in
+[`tools/mise/`](mise/). Native lockfiles and Python catalog versions are
+compatibility outputs. Direct feature and repository provisioning uses the
+selected owner versions and creates command paths without a runtime manager.
+Other OS/feature ownership remains on its existing path. uv/uvx share the
+native uv decision; Renovate updates the owner and then regenerates this table.
+
+Refresh the current owner locks and compatibility files with:
+
+```sh
+tools/internal/mise/refresh.sh
+python3 tools/internal/mise/refresh.py --check
+```
+
+The [complete maintained sequence](internal/mise/README.md) builds and verifies
+an ordinary dependency wheel from these owners with an explicit package name
+and release version. Its extras include `ruff` and `pre-commit`; the guide
+covers local artifact handoff, user updates and compatibility validation.
 
 ## Available tools
 
@@ -53,19 +85,20 @@ nor a container and packages the same Python definitions used by both.
 
 | Tool / purpose | Provider / policy | Version request | Environments | Platforms | Update owner | Version source |
 | --- | --- | --- | --- | --- | --- | --- |
-| `actionlint` — Check GitHub Actions workflow files | native / sha256 | 1.7.7 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/actionlint.lock.json) |
-| `apm` — Manage APM packages | native / sha256 | 0.35.0 | s-core-local | linux/arm64, linux/x86_64, macos/arm64, macos/x86_64 | Renovate + digest refresh | [definition](lockfiles/apm.lock.json) |
+| `actionlint` — Check GitHub Actions workflow files | native / sha256 | 1.7.7 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/actionlint.lock.json) |
+| `apm` — Manage APM packages | native / sha256 | 0.35.0 | s-core-local | linux/arm64, linux/x86_64, macos/arm64, macos/x86_64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/apm.lock.json) |
 | `apt-transport-https` — Temporary container build dependency (removed after setup) | apt / distribution | distribution/latest | s-core-local, bazel-feature | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `bandit` — bandit | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
-| `basedpyright` — Type check Python and provide its language server | python / top-level exact | 1.35.0 | s-core-local | uv-supported platforms | manual Python release review | [definition](score_tools/python_tools.bzl) |
+| `basedpyright` — Type check Python and provide its language server | python / top-level exact | 1.35.0 | s-core-local | uv-supported platforms | Renovate mise manager + lock/export refresh | [definition](score_tools/python_tools.bzl) |
 | `bazel` — bazel | bazelisk / exact | 8.6.0 | bazel-feature | linux/x86_64, linux/arm64 | manual release and checksum review | [definition](providers.json) |
 | `bazel_compile_commands` — bazel compile commands | release / exact | 0.18.0 | bazel-feature | linux/x86_64, linux/arm64 | manual release and checksum review | [definition](providers.json) |
-| `bazelisk` — Run the Bazel version selected by a repository | native / sha256 | 1.27.0 | bazel-feature, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/bazelisk.lock.json) |
+| `bazelisk` — Run the Bazel version selected by a repository | native / sha256 | 1.27.0 | bazel-feature, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/bazelisk.lock.json) |
 | `black` — black | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
-| `buildifier` — Format and lint Bazel files | native / sha256 | 8.2.1 | bazel-feature, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/buildifier.lock.json) |
+| `buildifier` — Format and lint Bazel files | native / sha256 | 8.2.1 | bazel-feature, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/buildifier.lock.json) |
 | `ca-certificates-java` — ca-certificates-java | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `codeql` — codeql | release / exact | 2.21.4 | s-core-local | linux/x86_64 | manual release and checksum review | [definition](providers.json) |
 | `codeql_coding_standards` — codeql coding standards | release / exact | 2.54.0 | s-core-local | linux/x86_64 | manual release and checksum review | [definition](providers.json) |
+| `codespell` — Find common spelling mistakes in source files | python / top-level exact | 2.4.1 | s-core-local | uv-supported platforms | Renovate mise manager + lock/export refresh | [definition](score_tools/python_tools.bzl) |
 | `common-utils` — common-utils feature bundle | feature / OCI digest | bundle / feature 2.5.4 | published image | linux/x86_64, linux/arm64 | manual published feature lock review | [definition](../src/s-core-devcontainer/.devcontainer/devcontainer.json) |
 | `devcontainers-cli` — Build and test Dev Containers | npm / latest | distribution/latest | repository | Node.js-supported platforms | npm latest; intentionally unpinned | [definition](providers.json) |
 | `dive` — Optional local image inspection helper | release / exact deb + sha256 | 0.13.1 | optional image inspection | linux/x86_64, linux/arm64 | manual release and checksum review | [definition](providers.json) |
@@ -85,18 +118,18 @@ nor a container and packages the same Python definitions used by both.
 | `manpages-posix` — manpages-posix | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `manpages-posix-dev` — manpages-posix-dev | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `mypy` — mypy | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
-| `opencode` — Run the OpenCode CLI | native / sha256 | 2.2.3 | s-core-local | linux/arm64, linux/x86_64, macos/arm64, macos/x86_64 | Renovate + digest refresh | [definition](lockfiles/opencode.lock.json) |
+| `opencode` — Run the OpenCode CLI | native / sha256 | 2.2.3 | s-core-local | linux/arm64, linux/x86_64, macos/arm64, macos/x86_64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/opencode.lock.json) |
 | `openjdk_21` — openjdk 21 | apt / prefix | 21.0.12 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
 | `pipenv` — pipenv | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `pkg_config` — pkg config | apt / prefix | 1.8.1 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
-| `pre-commit` — Run repository pre-commit hooks | python / top-level exact | 4.7.0 | s-core-local, repository | uv-supported platforms | manual Python release review | [definition](score_tools/python_tools.bzl) |
+| `pre-commit` — Run repository pre-commit hooks | python / top-level exact | 4.7.0 | s-core-local, repository | uv-supported platforms | Renovate mise manager + lock/export refresh | [definition](score_tools/python_tools.bzl) |
 | `protobuf_compiler` — protobuf compiler | apt / prefix | 3.21.12 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
 | `published-base` — Published image base and updated system CA trust | image / Dockerfile tag; distribution CA refresh | buildpack-deps:noble-curl | published image | linux/x86_64, linux/arm64 | Dependabot Docker + Ubuntu CA updates | [definition](../src/s-core-devcontainer/.devcontainer/Dockerfile) |
 | `pycairo-smoke` — Source-build smoke dependency; not shipped in the image | test / exact test fixture | 1.29.0 | published-image source-build test only | linux/x86_64, linux/arm64 | manual fixture review | [definition](providers.json) |
 | `pycodestyle` — pycodestyle | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `pydocstyle` — pydocstyle | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `pylint` — pylint | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
-| `pytest` — Run Python tests | python / top-level exact | 9.0.2 | s-core-local | uv-supported platforms | manual Python release review | [definition](score_tools/python_tools.bzl) |
+| `pytest` — Run Python tests | python / top-level exact | 9.0.2 | s-core-local | uv-supported platforms | Renovate mise manager + lock/export refresh | [definition](score_tools/python_tools.bzl) |
 | `python` — Distribution Python interpreter | apt / package-name | 3.12 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
 | `python3-autopep8` — python3-autopep8 | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `python3-pip` — Distribution pip (independent of the interpreter package-name constraint) | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
@@ -105,16 +138,16 @@ nor a container and packages the same Python definitions used by both.
 | `qemu_system` — qemu system | apt / prefix | 1:8.2.2 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
 | `repository-base` — Repository development Node.js base | image / image tag | mcr.microsoft.com/devcontainers/javascript-node:4-24 | repository | linux/x86_64, linux/arm64 | Dependabot root Dev Containers + compatibility review | [definition](../.devcontainer/devcontainer.json) |
 | `ripgrep` — ripgrep | apt / prefix | 14.1.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
-| `ruff` — Check and format Python code | native / sha256 | 0.11.13 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/ruff.lock.json) |
-| `shellcheck` — Check shell scripts | native / sha256 | 0.10.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/shellcheck.lock.json) |
+| `ruff` — Check and format Python code | native / sha256 | 0.11.13 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/ruff.lock.json) |
+| `shellcheck` — Check shell scripts | native / sha256 | 0.10.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/shellcheck.lock.json) |
 | `sshpass` — sshpass | apt / prefix | 1.09 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
-| `starpls` — Provide language-server support for Starlark | native / sha256 | 0.1.22 | bazel-feature | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/starpls.lock.json) |
-| `uv` — Manage Python projects and packages | native / sha256 | 0.13.6 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate + digest refresh | [definition](lockfiles/uv.lock.json) |
-| `uvx` — Run Python tools in isolated environments | native / sha256 | 0.13.6 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate + digest refresh | [definition](lockfiles/uv.lock.json) |
+| `starpls` — Provide language-server support for Starlark | native / sha256 | 0.1.22 | bazel-feature | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/starpls.lock.json) |
+| `uv` — Manage Python projects and packages | native / sha256 | 0.13.6 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/uv.lock.json) |
+| `uvx` — Run Python tools in isolated environments | native / sha256 | 0.13.6 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/uv.lock.json) |
 | `valgrind` — valgrind | apt / prefix | 1:3.22.0 | s-core-local | linux/x86_64, linux/arm64 | manual Ubuntu compatibility review | [definition](providers.json) |
 | `virtualenv` — virtualenv | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 | `workspace-bazel` — Bazel used to develop this module (separate from image preinstall) | workspace / workspace version | 8.6.0 | repository | Bazel-supported platforms | manual workspace compatibility review | [definition](../.bazelversion) |
-| `yamlfmt` — Format YAML files | native / sha256 | 0.17.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | manual release + artifact digest review | [definition](lockfiles/yamlfmt.lock.json) |
+| `yamlfmt` — Format YAML files | native / sha256 | 0.17.0 | s-core-local, repository | linux/arm64, linux/x86_64, macos/arm64 | Renovate mise manager + lock/export refresh | [definition](lockfiles/yamlfmt.lock.json) |
 | `zstd` — Temporary container build dependency (removed after setup) | apt / distribution | distribution/latest | s-core-local | linux/x86_64, linux/arm64 | Ubuntu repositories | [definition](providers.json) |
 
 Native tools support container and Bazel delivery; Python tools additionally support standalone uv.

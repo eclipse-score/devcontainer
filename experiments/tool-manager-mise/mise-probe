@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+set -euo pipefail
+probe_dir="$(cd -- "$(dirname -- "$0")" && pwd)"
+probe_state="${SCORE_MISE_PROBE_STATE:-/tmp/score-mise-evaluation}"
+export MISE_CONFIG_DIR="${probe_state}/config"
+export MISE_SYSTEM_CONFIG_DIR="${probe_state}/system-config"
+export MISE_DATA_DIR="${probe_state}/data"
+export MISE_CACHE_DIR="${probe_state}/cache"
+export MISE_STATE_DIR="${probe_state}/state"
+export MISE_TRUSTED_CONFIG_PATHS="${probe_dir}:${probe_state}"
+export UV_CACHE_DIR="${probe_state}/uv-cache"
+export UV_PYTHON_INSTALL_DIR="${probe_state}/uv-python"
+export MISE_YES=1
+export PATH="${probe_state}/bin:${SCORE_MISE_PROBE_HOST_PATH:-/usr/bin:/bin}"
+cd "${probe_dir}"
+exec "${probe_state}/bin/mise-v2026.10.24-linux-x64" -E native,python "$@"

@@ -1,0 +1,12 @@
+{
+  "ruff": {
+    "version": "0.11.13",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu"
+  },
+  "pre-commit": {
+    "version": "4.7.0",
+    "root": "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0",
+    "bin": "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin"
+  }
+}

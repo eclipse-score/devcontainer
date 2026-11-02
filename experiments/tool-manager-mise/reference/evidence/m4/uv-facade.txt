@@ -1,0 +1,14 @@
+Built artifact: `score_mise_reference-0.6.1-py3-none-any.whl` from fresh release package version `0.6.1`.
+
+Exact wheel metadata for the new extra:
+```text
+Provides-Extra: codespell
+Requires-Dist: codespell==2.4.1; extra == "codespell"
+```
+
+Other facade extras remain: ruff, codespell, pytest, basedpyright, pre-commit.
+
+Normal consumer use with prepared uv/uvx 0.13.6 (system Python 3.12.3; network was available):
+- Consumer project declares only `score-mise-reference[codespell] @ file://<wheel>`; `uv lock`, `uv sync --locked`, and `uv run --locked codespell --version` passed and reported 2.4.1. The generated `uv.lock` resolves `codespell` to 2.4.1.
+- `uv run --locked codespell /tmp/score-m4-mise/codespell-typo.txt` exited 65 and reported `teh ==> the`.
+- `uvx --with "score-mise-reference[codespell] @ file://<wheel>" codespell --version` passed; the same uvx extra produced the same typo diagnostic. No second codespell pin was supplied.

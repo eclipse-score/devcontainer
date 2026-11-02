@@ -37,53 +37,14 @@
   "automerge": false,
   "postUpgradeTasks": {
     "commands": [
-      "tools/internal/refresh_lockfile_digests.py",
-      "tools/internal/sync_readme.py"
+      "tools/internal/mise/refresh.sh"
     ],
     "fileFilters": ["**/*"],
     "executionMode": "update"
   },
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/apm\\.lock\\.json$"
-      ],
-      "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/apm",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/opencode\\.lock\\.json$"
-      ],
-      "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "anomalyco/opencode",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/uv\\.lock\\.json$"
-      ],
-      "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "astral-sh/uv",
-      "versioningTemplate": "semver"
-    }
-  ],
-  "enabledManagers": [
-    "custom.regex"
-  ],
+  // mise owns every live tool version; experiments are not dependency owners.
+  "ignorePaths": ["experiments/**"],
+  "enabledManagers": ["mise"],
   "ignoreDeps": [],
   "labels": [
     "type:dependencies"

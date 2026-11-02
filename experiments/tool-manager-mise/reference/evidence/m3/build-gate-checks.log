@@ -1,0 +1,14 @@
+missing-context: exit=1
+Prepared mise runtime context is missing: /tmp/score-m3-mise/not-a-context
+incorrect-platform: exit=1
+Prepared runtime targets linux/amd64, but this build requests linux/arm64. Prepare a matching runtime with experiments/tool-manager-mise/reference/prepare-production.sh.
+missing-standard-build-context: exit=1
+Error: SCORE_MISE_PREPARED_CONTEXT is required for this mise DevContainer build.
+stale-standard-build-context: exit=1
+Prepared runtime targets unknown, but this build requests linux/amd64. Prepare a matching runtime with experiments/tool-manager-mise/reference/prepare-production.sh.
+Error: the prepared mise runtime is missing, stale, or targets another platform.
+unsupported-standard-arm64: exit=1
++ echo 'Error: the prepared mise runtime currently supports linux/amd64 only; refusing scripts/build.sh --arm64. No Docker build was started.'
+Error: the prepared mise runtime currently supports linux/amd64 only; refusing scripts/build.sh --arm64. No Docker build was started.
+unsupported-producer-platform: exit=2
+Mise production preparation currently supports linux/amd64 only; requested linux/arm64.

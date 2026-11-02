@@ -1,0 +1,7 @@
+Pinned mise: 2026.10.24 (binary SHA256 verified by the existing bootstrap).
+
+Exact starpls routes:
+- `mise latest aqua:withered-magic/starpls`: warning `registry not available: no aqua-registry found for withered-magic/starpls` (mise command exit 0).
+- `mise latest github:withered-magic/starpls`: 0.1.22. Exact lock and install generated authenticated-by-checksum release metadata; local lock covered seven mise platforms.
+- Current owner config uses `github:withered-magic/starpls = \"0.1.22\"`; the published native lock and root compatibility artifact cover linux-x64, linux-arm64, macos-arm64. The top-level archive member is `starpls`.
+- `mise latest pypi:codespell`: 2.4.3. The experiment owner deliberately pins `pypi:codespell = \"2.4.1\"` (2.4.1), as allowed by the contract.

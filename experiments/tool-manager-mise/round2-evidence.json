@@ -1,0 +1,132 @@
+[
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise-probe",
+      "-C",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "use",
+      "--env",
+      "native",
+      "--pin",
+      "aqua:astral-sh/ruff@0.11.12"
+    ],
+    "cwd": "None",
+    "status": 0,
+    "stdout": "mise /tmp/score-mise-evaluation/round2-7a72nhwk/release/mise.native.toml tools: aqua:astral-sh/ruff@0.11.12\n",
+    "stderr": "mise by @jdx \u2013 installing 1 tool\nmise \u21e2 aqua:astral-sh/ruff@0.11.12  1ms \u00b7 already installed\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                   \u2713 2 targets checked\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 0 tools \u00b7 1 already installed in 216ms\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-x64\nmise lock                   \u2713 3 targets checked\n"
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "init",
+      "-q",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout"
+    ],
+    "cwd": "None",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "ruff",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "add",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "pre-commit",
+      "run",
+      "observe-cwd",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 0,
+    "stdout": "Observe consumer cwd.....................................................Passed\n- hook id: observe-cwd\n- duration: 0.01s\n\n/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout\n\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/release-run",
+      "/tmp/score-mise-evaluation/round2-7a72nhwk/release",
+      "pre-commit",
+      "run",
+      "observe-cwd",
+      "--all-files"
+    ],
+    "cwd": "/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout",
+    "status": 1,
+    "stdout": "Observe consumer cwd.....................................................Failed\n- hook id: observe-cwd\n- exit code: 1\n\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nAssertionError\n/tmp/score-mise-evaluation/round2-7a72nhwk/external consumer/nested checkout\n\n",
+    "stderr": ""
+  }
+]

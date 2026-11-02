@@ -14,9 +14,9 @@
 # *******************************************************************************
 
 # Consumer repositories install this runner as .devcontainer/run-tool.
-# It runs an available CLI tool from PATH in a container, from local PATH on the host
-# when available, or through Bazel otherwise.
-# Use --strict to bypass local tools on the host and force execution through Bazel.
+# It runs a container command directly, a local PATH command on the host when
+# available, or the selected Bazel target otherwise. Host --strict uses only a
+# provisioner-created mise link before falling back to Bazel.
 # See https://github.com/eclipse-score/devcontainer/tree/main/tools.
 
 set -euo pipefail
@@ -51,20 +51,54 @@ in_container() {
     esac
 }
 
+# Strict host mode must not trust an arbitrary executable found through PATH.
+# provision.py creates absolute symlinks into mise's versioned install tree;
+# that installed path is the evidence that the executable was provisioned.
+provisioned_tool() {
+    local bin_dir candidate target
+    local -a bin_dirs=()
+    if [[ -n "${SCORE_TOOLS_BIN_DIR:-}" ]]; then
+        bin_dirs+=("${SCORE_TOOLS_BIN_DIR}")
+    else
+        if [[ -n "${HOME:-}" ]]; then
+            bin_dirs+=("${HOME}/.local/bin")
+        fi
+        bin_dirs+=("/usr/local/bin")
+    fi
+
+    for bin_dir in "${bin_dirs[@]}"; do
+        candidate="${bin_dir}/${tool_name}"
+        if [[ -L "${candidate}" && -x "${candidate}" ]]; then
+            target="$(readlink "${candidate}")"
+            if [[ "${target}" == */installs/* ]]; then
+                printf '%s\n' "${candidate}"
+                return 0
+            fi
+        fi
+    done
+    return 1
+}
+
 # Container PATH remains preferred for compatibility, including --strict.
 # Container detection is an execution shortcut, not a version attestation.
 # shellcheck disable=SC2310
 if in_container && command -v "${tool_name}" >/dev/null 2>&1; then
     exec "${tool_name}" "$@"
+# Prepared strict host calls resolve only links created by the provisioner.
+# The link target contains the selected backend/version under mise's installs/
+# tree, so arbitrary PATH entries cannot shadow the selected executable.
+elif [[ "${strict}" -eq 1 ]] && provisioned_command="$(provisioned_tool)"; then
+    exec "${provisioned_command}" "$@"
 # On the host, prefer the local tool on PATH for faster execution unless --strict
-# is set. If local execution fails, suggest --strict to run the pinned Bazel target.
+# is set. If local execution fails, suggest --strict to use the provisioned or
+# pinned Bazel executable.
 elif [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
     if "${tool_name}" "$@"; then
         exit 0
     else
         exit_code=$?
         echo "Execution of local '${tool_name}' failed with exit code ${exit_code}." >&2
-        echo "Use '--strict' to bypass the local tool and run the pinned version via Bazel." >&2
+        echo "Use '--strict' to use the provisioned tool or pinned version via Bazel." >&2
         exit "${exit_code}"
     fi
 elif command -v bazel >/dev/null 2>&1; then

@@ -39,8 +39,9 @@ apt-get update
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase build
 
-# Lockfile-managed Bazel tooling
-/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature
+# Install the selected Bazel commands and expose their direct pinned paths.
+/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase runtime
+python3 /usr/local/share/score-tools/internal/mise/provision.py bazel-feature
 
 if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then
     # Bazelisk + Bazel

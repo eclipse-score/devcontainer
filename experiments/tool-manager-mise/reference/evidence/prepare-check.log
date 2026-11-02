@@ -1,0 +1,56 @@
+→ Targeting 3 platform(s) for /tmp/score-mise-reference-final-runtime/releases/0.1.0/mise.native.lock: linux-arm64, linux-x64, macos-arm64
+→ Processing 1 tool(s): aqua:astral-sh/ruff@0.11.13
+mise lock                   ✓ 3 targets checked
+✓ Lockfile ready at /tmp/score-mise-reference-final-runtime/releases/0.1.0/mise.native.lock
+→ Targeting 3 platform(s) for /tmp/score-mise-reference-final-runtime/releases/0.1.0/mise.published.lock: linux-arm64, linux-x64, macos-arm64
+→ Processing 1 tool(s): aqua:koalaman/shellcheck@0.10.0
+mise lock                     aqua:koalaman/shellcheck@0.10.0 linux-x64
+mise lock                     aqua:koalaman/shellcheck@0.10.0 linux-arm64
+mise lock                     aqua:koalaman/shellcheck@0.10.0 macos-arm64
+mise lock                   ✓ 3 targets checked
+✓ Lockfile ready at /tmp/score-mise-reference-final-runtime/releases/0.1.0/mise.published.lock
+mise by @jdx – installing 4 tools
+mise ⇢ aqua:koalaman/shellcheck@0.10.0  0ms · already installed
+mise ⇢ pypi:pre-commit@4.7.0            0ms · already installed
+mise ⇢ uv@0.13.6                        0ms · already installed
+mise ⇢ aqua:astral-sh/ruff@0.11.13      0ms · already installed
+mise ████████████████ 4/4 · installed 0 tools · 4 already installed in 1ms
+mise all tools are installed
+mise by @jdx – installing 3 tools
+mise ⇢ pypi:pre-commit@4.7.0        0ms · already installed
+mise ⇢ uv@0.13.6                    0ms · already installed
+mise ⇢ aqua:astral-sh/ruff@0.11.13  0ms · already installed
+mise ████████████████ 3/3 · installed 0 tools · 3 already installed in 1ms
+mise all tools are installed
+→ Targeting 3 platform(s) for /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.native.lock: linux-arm64, linux-x64, macos-arm64
+→ Processing 1 tool(s): aqua:astral-sh/ruff@0.11.12
+mise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64
+mise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64
+mise lock                     aqua:astral-sh/ruff@0.11.12 linux-x64
+mise lock                   ✓ 3 targets checked
+✓ Pruned 1 stale version entry from /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.native.lock: aqua:astral-sh/ruff@0.11.13
+✓ Lockfile ready at /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.native.lock
+✓ Pruned 1 stale version entry from /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.native.lock: aqua:astral-sh/ruff@0.11.13
+→ Targeting 3 platform(s) for /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.published.lock: linux-arm64, linux-x64, macos-arm64
+→ Processing 1 tool(s): aqua:koalaman/shellcheck@0.10.0
+mise lock                     aqua:koalaman/shellcheck@0.10.0 linux-x64
+mise lock                     aqua:koalaman/shellcheck@0.10.0 linux-arm64
+mise lock                     aqua:koalaman/shellcheck@0.10.0 macos-arm64
+mise lock                   ✓ 3 targets checked
+✓ Lockfile ready at /tmp/score-mise-reference-final-runtime/releases/0.2.0/mise.published.lock
+mise by @jdx – installing 4 tools
+mise ⇢ aqua:koalaman/shellcheck@0.10.0  0ms · already installed
+mise ⇢ pypi:pre-commit@4.7.0            0ms · already installed
+mise ⇢ uv@0.13.6                        0ms · already installed
+mise ⇢ aqua:astral-sh/ruff@0.11.12      0ms · already installed
+mise ████████████████ 4/4 · installed 0 tools · 4 already installed in 1ms
+mise all tools are installed
+mise by @jdx – installing 3 tools
+mise ⇢ pypi:pre-commit@4.7.0        0ms · already installed
+mise ⇢ uv@0.13.6                    0ms · already installed
+mise ⇢ aqua:astral-sh/ruff@0.11.12  0ms · already installed
+mise ████████████████ 3/3 · installed 0 tools · 3 already installed in 1ms
+mise all tools are installed
+/tmp/score-mise-reference-final-runtime/releases/0.1.0
+/tmp/score-mise-reference-final-runtime/releases/0.2.0
+PASS /tmp/score-mise-reference-final-runtime/evidence

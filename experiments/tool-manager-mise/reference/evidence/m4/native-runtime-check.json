@@ -1,0 +1,88 @@
+{
+  "versions": {
+    "starpls": "0.1.22",
+    "codespell": "2.4.1"
+  },
+  "uid": 1000,
+  "commands": [
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "/tmp/score-onboarding-ddrcolr1/clean.txt"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "/tmp/score-onboarding-ddrcolr1/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/tmp/score-onboarding-ddrcolr1/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    }
+  ],
+  "starpls_lsp": {
+    "version": "0.1.22",
+    "scope": "initialize/shutdown protocol; no project-analysis assertion",
+    "initialize": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "capabilities": {
+          "completionProvider": {
+            "triggerCharacters": [
+              ".",
+              "\"",
+              "'",
+              "/",
+              ":",
+              "@"
+            ]
+          },
+          "declarationProvider": true,
+          "definitionProvider": true,
+          "documentSymbolProvider": true,
+          "hoverProvider": true,
+          "referencesProvider": true,
+          "signatureHelpProvider": {
+            "triggerCharacters": [
+              "(",
+              ",",
+              ")"
+            ]
+          },
+          "textDocumentSync": 2
+        }
+      }
+    },
+    "shutdown": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": null
+    },
+    "exit": 0
+  },
+  "starpls_stderr": "[2026-11-01T19:54:19Z INFO  starpls::commands::server] starpls, v0.1.22\n[2026-11-01T19:54:19Z DEBUG starpls::event_loop] initializing state and starting event loop\n[2026-11-01T19:54:19Z DEBUG starpls::server] fetching Bazel configuration using Bazel executable at \"bazel\"\n[2026-11-01T19:54:21Z ERROR starpls::server] failed to initialize Bazel context: failed to run `bazel info`: failed to run Bazel command with exit status exit status: 2, stderr=\"OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.\\nERROR: Error accessing registry https://bcr.bazel.build/: Failed to fetch registry file https://bcr.bazel.build/modules/buildozer/7.1.2/MODULE.bazel: Unknown host: bcr.bazel.build\\n\"\n[2026-11-01T19:54:21Z INFO  starpls::commands::server] connection closed, exiting\n",
+  "result": "passed"
+}

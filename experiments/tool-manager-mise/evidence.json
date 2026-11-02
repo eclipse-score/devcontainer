@@ -1,0 +1,50 @@
+[
+  {
+    "command": "mise-probe exec -- ruff check --isolated /tmp/score-mise-smoke-tvpxjt6n/bad.py",
+    "exit": 1,
+    "stdout": "/tmp/score-mise-smoke-tvpxjt6n/bad.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  },
+  {
+    "command": "mise-probe exec -- sh -c cd \"$1\"; exec pre-commit run --all-files sh /tmp/score-mise-smoke-tvpxjt6n",
+    "exit": 0,
+    "stdout": "local smoke..............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "command": "mise-probe use --env native --pin aqua:astral-sh/ruff@0.11.12",
+    "exit": 0,
+    "stdout": "mise ~/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise.native.toml tools: aqua:astral-sh/ruff@0.11.12\n",
+    "stderr": "mise by @jdx \u2013 installing 1 tool\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                   \u2713 2 targets checked\nmise \u2713 aqua:astral-sh/ruff@0.11.12  1.7s  ruff-x86_64-unknown-linux-gnu.tar.gz\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 1 tool in 1.7s\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-x64\nmise lock                     aqua:astral-sh/ruff@0.11.12 linux-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.12 macos-arm64\nmise lock                   \u2713 3 targets checked\n"
+  },
+  {
+    "command": "mise-probe exec -- ruff --version",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "command": "mise-probe use --env native --pin aqua:astral-sh/ruff@0.11.13",
+    "exit": 0,
+    "stdout": "mise ~/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise.native.toml tools: aqua:astral-sh/ruff@0.11.13\n",
+    "stderr": "mise by @jdx \u2013 installing 1 tool\nmise \u21e2 aqua:astral-sh/ruff@0.11.13  1ms \u00b7 already installed\nmise lock                     aqua:astral-sh/ruff@0.11.13 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.13 linux-arm64\nmise lock                   \u2713 2 targets checked\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 0 tools \u00b7 1 already installed in 3ms\nmise lock                     aqua:astral-sh/ruff@0.11.13 linux-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.13 macos-arm64\nmise lock                     aqua:astral-sh/ruff@0.11.13 linux-x64\nmise lock                   \u2713 3 targets checked\n"
+  },
+  {
+    "command": "mise-probe use --env repository --pin aqua:astral-sh/ruff@0.11.13",
+    "exit": 0,
+    "stdout": "mise ~/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise.repository.toml tools: aqua:astral-sh/ruff@0.11.13\n",
+    "stderr": "mise by @jdx \u2013 installing 1 tool\nmise \u21e2 aqua:astral-sh/ruff@0.11.13  1ms \u00b7 already installed\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 0 tools \u00b7 1 already installed in 2ms\nmise lock                   \u2713 3 targets checked\n"
+  },
+  {
+    "command": "mise-probe unuse --env repository --no-prune aqua:astral-sh/ruff",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "mise removed: astral-sh/ruff from ~/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/mise.repository.toml\n"
+  },
+  {
+    "command": "mise-probe -E native,python,repository exec -- shellcheck --version",
+    "exit": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": ""
+  }
+]

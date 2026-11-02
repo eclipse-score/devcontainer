@@ -225,14 +225,14 @@ def apt_requirements(environment, *, recommends=None):
 
 def all_definitions(*, repository_metadata=True):
     """Unify inventory views while retaining provider-owned formats."""
-    import re
-
     root = LOCKFILE_ROOT.parents[1]
-    managers = (
-        read_jsonc(root / ".github/renovate.json5")["customManagers"]
-        if repository_metadata
-        else []
-    )
+    update_policy = "manual release + artifact digest review"
+    if repository_metadata:
+        managers = read_jsonc(root / ".github/renovate.json5").get(
+            "enabledManagers", []
+        )
+        if "mise" in managers:
+            update_policy = "Renovate mise manager + lock/export refresh"
     result = {}
     for name, filename, definition in _iter_catalog():
         if name in result:
@@ -246,15 +246,7 @@ def all_definitions(*, repository_metadata=True):
                 {b["os"] + "/" + b["cpu"] for b in definition["binaries"]}
             ),
             "delivery": "container, Bazel",
-            "update": (
-                "Renovate + digest refresh"
-                if any(
-                    re.search(pattern, "tools/lockfiles/" + filename)
-                    for manager in managers
-                    for pattern in manager.get("fileMatch", [])
-                )
-                else "manual release + artifact digest review"
-            ),
+            "update": update_policy,
         }
     for name, definition in _load_python_tools().items():
         if name in result:
@@ -266,7 +258,7 @@ def all_definitions(*, repository_metadata=True):
             "source": "tools/score_tools/python_tools.bzl",
             "platforms": ["uv-supported platforms"],
             "delivery": "container, Bazel, uv",
-            "update": "manual Python release review",
+            "update": update_policy,
         }
     for name, definition in load_providers().items():
         if name in result:

@@ -1,0 +1,10 @@
+- bash syntax: rc=0
+- shellcheck: rc=0
+- ruff check: rc=0
+- ruff format: rc=0
+- buildifier: rc=0
+- tool README drift: rc=0
+- release root drift: rc=0
+- prepared context drift: rc=0
+- diff whitespace: rc=0
+- `tools/internal/sync_readme.py` regenerated the generated inventory; `--check` passes. Ruff check/format, ShellCheck, Buildifier, shell syntax, root/release drift, context drift, Python AST parse, and `git diff --check` pass.

@@ -1,0 +1,251 @@
+[
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "build",
+      "--wheel",
+      "--out-dir",
+      "/tmp/score-mise-m2/releases/0.4.0/dist",
+      "/tmp/score-mise-m2/releases/0.4.0"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_mise_reference.egg-info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nCopying score_mise_reference.egg-info to build/bdist.linux-x86_64/wheel/./score_mise_reference-0.4.0-py3.12.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_mise_reference-0.4.0.dist-info/WHEEL\ncreating '/tmp/score-mise-m2/releases/0.4.0/dist/.tmp-t5_08b3f/score_mise_reference-0.4.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_mise_reference-0.4.0.dist-info/METADATA'\nadding 'score_mise_reference-0.4.0.dist-info/WHEEL'\nadding 'score_mise_reference-0.4.0.dist-info/top_level.txt'\nadding 'score_mise_reference-0.4.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built /tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "add",
+      "--raw",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 14 packages in 111ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 429ms\nInstalled 13 packages in 11ms\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + nodeenv==1.12.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pre-commit==4.7.0\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-mise-reference==0.4.0 (from file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "python",
+      "-c",
+      "import importlib.metadata as m,json; print(json.dumps(m.metadata(\"score-mise-reference\").get_all(\"Requires-Dist\")))"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "[\"ruff==0.11.12; extra == \\\"ruff\\\"\", \"pytest==9.0.2; extra == \\\"pytest\\\"\", \"basedpyright==1.35.0; extra == \\\"basedpyright\\\"\", \"pre-commit==4.7.0; extra == \\\"pre-commit\\\"\"]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Installed 13 packages in 12ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-repository",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "add",
+      "--raw",
+      "score-mise-reference[ruff,pre-commit,pytest,basedpyright] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 21 packages in 19ms\nInstalled 19 packages in 229ms\n + basedpyright==1.35.0\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + iniconfig==2.3.1\n + nodeenv==1.12.0\n + nodejs-wheel-binaries==24.19.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pluggy==1.7.0\n + pre-commit==4.7.0\n + pygments==2.21.0\n + pytest==9.0.2\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-mise-reference==0.4.0 (from file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "python",
+      "-c",
+      "import importlib.metadata as m,json; print(json.dumps(m.metadata(\"score-mise-reference\").get_all(\"Requires-Dist\")))"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "[\"ruff==0.11.12; extra == \\\"ruff\\\"\", \"pytest==9.0.2; extra == \\\"pytest\\\"\", \"basedpyright==1.35.0; extra == \\\"basedpyright\\\"\", \"pre-commit==4.7.0; extra == \\\"pre-commit\\\"\"]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit,pytest,basedpyright] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Installed 19 packages in 208ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit,pytest,basedpyright] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pytest",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "pytest 9.0.2\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit,pytest,basedpyright] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "pytest",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "pytest 9.0.2\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "basedpyright",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit,pytest,basedpyright] @ file:///tmp/score-mise-m2/releases/0.4.0/dist/score_mise_reference-0.4.0-py3-none-any.whl",
+      "basedpyright",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pytest",
+      "-q",
+      "test_selected.py"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 0,
+    "stdout": ".                                                                        [100%]\n1 passed in 0.00s\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "basedpyright",
+      "type_error.py"
+    ],
+    "cwd": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published",
+    "status": 1,
+    "stdout": "/tmp/score-mise-m2/evidence/updated-uv/consumer-published/type_error.py\n  /tmp/score-mise-m2/evidence/updated-uv/consumer-published/type_error.py:1:14 - error: Type \"Literal['wrong']\" is not assignable to declared type \"int\"\n  \u00a0\u00a0\"Literal['wrong']\" is not assignable to \"int\" (reportAssignmentType)\n1 error, 0 warnings, 0 notes\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,154 @@
+[
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": "2026/10/31 22:48:47 Downloading https://releases.bazel.build/8.6.0/release/bazel-8.6.0-linux-x86_64...\nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (84 packages loaded, 579 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.857s, Critical Path: 0.02s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:bazelisk",
+      "--",
+      "--output_user_root=/tmp/score-mise-m2-nested-bazel",
+      "version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "Bazelisk version: v1.27.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:bazelisk (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:bazelisk (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:bazelisk (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/bazelisk:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/bazelisk/cwd\nINFO: Elapsed time: 0.951s, Critical Path: 0.00s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/bazelisk/cwd <args omitted>\nExtracting Bazel installation...\nStarting local Bazel server (8.6.0) and connecting to it...\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:buildifier",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:buildifier (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:buildifier (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:buildifier (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/buildifier:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/buildifier/cwd\nINFO: Elapsed time: 0.274s, Critical Path: 0.00s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/buildifier/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:yamlfmt",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "yamlfmt 0.17.0 (45e5cb5)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:yamlfmt (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:yamlfmt (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:yamlfmt (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/yamlfmt:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/yamlfmt/cwd\nINFO: Elapsed time: 0.267s, Critical Path: 0.01s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/yamlfmt/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:shellcheck",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.617s, Critical Path: 0.01s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:actionlint",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:actionlint (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:actionlint (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:actionlint (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/actionlint:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/actionlint/cwd\nINFO: Elapsed time: 0.235s, Critical Path: 0.01s\nINFO: 2 processes: 5 action cache hit, 2 internal.\nINFO: Build completed successfully, 2 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/actionlint/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:pre-commit",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (1 packages loaded, 555 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.744s, Critical Path: 0.01s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\nDownloading cpython-3.15.2-linux-x86_64-gnu (download) (36.4MiB)\n Downloaded cpython-3.15.2-linux-x86_64-gnu (download)\nDownloading virtualenv (5.3MiB)\n   Building pyyaml==6.0.3\n Downloaded virtualenv\n      Built pyyaml==6.0.3\nInstalled 11 packages in 6ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:uv",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:uv (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:uv (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:uv (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/uv:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/uv/cwd\nINFO: Elapsed time: 0.449s, Critical Path: 0.03s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/uv/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "run",
+      "//tools:uvx",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:uvx (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:uvx (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:uvx (0 packages loaded, 4 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/uvx:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/uvx/cwd\nINFO: Elapsed time: 0.147s, Critical Path: 0.00s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/uvx/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "mod",
+      "deps",
+      "--lockfile_mode=error"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "<root> (score_devcontainer@_)\n\n",
+    "stderr": " no actions running\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-m2-root-bazel",
+      "mod",
+      "tidy"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "",
+    "stderr": " no actions running\n"
+  }
+]

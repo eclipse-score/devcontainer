@@ -1,0 +1,17 @@
+# Generated from mise.native.toml; do not maintain Ruff pins here.
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "score-tools-probe"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+ruff = ["ruff==0.11.13"]
+
+[tool.setuptools]
+packages = []

@@ -1,0 +1,710 @@
+[
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "build",
+      "--wheel",
+      "--out-dir",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0/dist",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_mise_reference.egg-info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nCopying score_mise_reference.egg-info to build/bdist.linux-x86_64/wheel/./score_mise_reference-0.1.0-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_mise_reference-0.1.0.dist-info/WHEEL\ncreating '/tmp/score-mise-reference-final-runtime/releases/0.1.0/dist/.tmp-rr4w90at/score_mise_reference-0.1.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_mise_reference-0.1.0.dist-info/METADATA'\nadding 'score_mise_reference-0.1.0.dist-info/WHEEL'\nadding 'score_mise_reference-0.1.0.dist-info/top_level.txt'\nadding 'score_mise_reference-0.1.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built dist/score_mise_reference-0.1.0-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "git",
+      "init",
+      "-q"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "add",
+      "--raw",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.1.0/dist/score_mise_reference-0.1.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 14 packages in 222ms\nDownloading virtualenv (5.3MiB)\nDownloading ruff (11.0MiB)\n Downloaded virtualenv\n Downloaded ruff\nPrepared 12 packages in 830ms\nInstalled 13 packages in 10ms\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + nodeenv==1.12.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pre-commit==4.7.0\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.13\n + score-mise-reference==0.1.0 (from file:///tmp/score-mise-reference-final-runtime/releases/0.1.0/dist/score_mise_reference-0.1.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "lock",
+      "--check"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Resolved 14 packages in 1ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "python",
+      "-c",
+      "import json,importlib.metadata as m;print(json.dumps(m.metadata(\"score-mise-reference\").get_all(\"Requires-Dist\")))"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "[\"ruff==0.11.13; extra == \\\"ruff\\\"\", \"pre-commit==4.7.0; extra == \\\"pre-commit\\\"\"]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pre-commit",
+      "run",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "Observe cwd and arguments................................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-mise-reference-final-runtime/consumer-0.1.0\n\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.1.0/dist/score_mise_reference-0.1.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": "Installed 13 packages in 9ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.1.0/dist/score_mise_reference-0.1.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.1.0",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "init",
+      "-q"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": "Starting local Bazel server (8.6.0) and connecting to it...\nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (77 packages loaded, 526 targets configured).\n[1 / 1] no actions running\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 9.593s, Critical Path: 0.03s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:shellcheck",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (33 packages loaded, 163 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.650s, Critical Path: 0.01s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:pre-commit",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (1 packages loaded, 502 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.453s, Critical Path: 0.00s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.140s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:shellcheck",
+      "--",
+      "fixture with space.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 1,
+    "stdout": "\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.111s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:pre-commit",
+      "--",
+      "run",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer",
+    "status": 0,
+    "stdout": "Observe cwd and arguments................................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-mise-reference-final-runtime/releases/0.1.0/bazel-consumer\n\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.108s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bash",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0/install.sh",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/published",
+      "published"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network=none",
+      "--user=12345:12345",
+      "--tmpfs",
+      "/work:rw,mode=1777",
+      "--workdir",
+      "/work",
+      "--env",
+      "HOME=/work/home",
+      "--env",
+      "PATH=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu:/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0:/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=published",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.13",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "--env",
+      "SCORE_EXPECT_SHELLCHECK=0.10.0",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/runtime-check.sh,dst=/check.sh,readonly",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "-c",
+      "mkdir -p \"$HOME\"; exec bash /check.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0",
+    "status": 0,
+    "stdout": "ruff 0.11.13\npre-commit 4.7.0\nShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.btpOn4\n\nReference runtime passed: profile=published uid=12345 cwd=/tmp/score-reference-consumer.btpOn4\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "bash",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0/install.sh",
+      "/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/repository",
+      "repository"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network=none",
+      "--user=12345:12345",
+      "--tmpfs",
+      "/work:rw,mode=1777",
+      "--workdir",
+      "/work",
+      "--env",
+      "HOME=/work/home",
+      "--env",
+      "PATH=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu:/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=repository",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.13",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/repository/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.13,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.1.0/images/repository/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/runtime-check.sh,dst=/check.sh,readonly",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "-c",
+      "mkdir -p \"$HOME\"; exec bash /check.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.1.0",
+    "status": 0,
+    "stdout": "ruff 0.11.13\npre-commit 4.7.0\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.jbHPSn\n\nReference runtime passed: profile=repository uid=12345 cwd=/tmp/score-reference-consumer.jbHPSn\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "build",
+      "--wheel",
+      "--out-dir",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0/dist",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_mise_reference.egg-info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_mise_reference.egg-info/PKG-INFO\nwriting dependency_links to score_mise_reference.egg-info/dependency_links.txt\nwriting requirements to score_mise_reference.egg-info/requires.txt\nwriting top-level names to score_mise_reference.egg-info/top_level.txt\nreading manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nwriting manifest file 'score_mise_reference.egg-info/SOURCES.txt'\nCopying score_mise_reference.egg-info to build/bdist.linux-x86_64/wheel/./score_mise_reference-0.2.0-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_mise_reference-0.2.0.dist-info/WHEEL\ncreating '/tmp/score-mise-reference-final-runtime/releases/0.2.0/dist/.tmp-90mcp6w4/score_mise_reference-0.2.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_mise_reference-0.2.0.dist-info/METADATA'\nadding 'score_mise_reference-0.2.0.dist-info/WHEEL'\nadding 'score_mise_reference-0.2.0.dist-info/top_level.txt'\nadding 'score_mise_reference-0.2.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built dist/score_mise_reference-0.2.0-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "git",
+      "init",
+      "-q"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "add",
+      "--raw",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.2.0/dist/score_mise_reference-0.2.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 14 packages in 86ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 899ms\nInstalled 13 packages in 9ms\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + nodeenv==1.12.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pre-commit==4.7.0\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-mise-reference==0.2.0 (from file:///tmp/score-mise-reference-final-runtime/releases/0.2.0/dist/score_mise_reference-0.2.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "lock",
+      "--check"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": "Resolved 14 packages in 1ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "python",
+      "-c",
+      "import json,importlib.metadata as m;print(json.dumps(m.metadata(\"score-mise-reference\").get_all(\"Requires-Dist\")))"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "[\"ruff==0.11.12; extra == \\\"ruff\\\"\", \"pre-commit==4.7.0; extra == \\\"pre-commit\\\"\"]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "ruff",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--locked",
+      "pre-commit",
+      "run",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "Observe cwd and arguments................................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-mise-reference-final-runtime/consumer-0.2.0\n\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.2.0/dist/score_mise_reference-0.2.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Installed 13 packages in 9ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uvx",
+      "--with",
+      "score-mise-reference[ruff,pre-commit] @ file:///tmp/score-mise-reference-final-runtime/releases/0.2.0/dist/score_mise_reference-0.2.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/consumer-0.2.0",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "init",
+      "-q"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "WARNING: Running Bazel server needs to be killed, because the following startup options are different:\n  - Only in old server: bazel(0.1.0) --workspace_directory=/tmp/score-mise-reference-final-runtime/releases/0.1.0\n  - Only in new server: --workspace_directory=/tmp/score-mise-reference-final-runtime/releases/0.2.0 bazel(0.2.0)\nStarting local Bazel server (8.6.0) and connecting to it...\nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (77 packages loaded, 526 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 8.053s, Critical Path: 0.03s\nINFO: 2 processes: 4 action cache hit, 2 internal.\nINFO: Build completed successfully, 2 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:shellcheck",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.288s, Critical Path: 0.01s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:pre-commit",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (1 packages loaded, 502 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.203s, Critical Path: 0.01s\nINFO: 3 processes: 3 action cache hit, 3 internal.\nINFO: Build completed successfully, 3 total actions\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.178s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:shellcheck",
+      "--",
+      "fixture with space.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 1,
+    "stdout": "\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.114s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-mise-reference-final-runtime/bazel-output",
+      "run",
+      "//tools:pre-commit",
+      "--",
+      "run",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer",
+    "status": 0,
+    "stdout": "Observe cwd and arguments................................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-mise-reference-final-runtime/releases/0.2.0/bazel-consumer\n\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.115s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bash",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0/install.sh",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/published",
+      "published"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network=none",
+      "--user=12345:12345",
+      "--tmpfs",
+      "/work:rw,mode=1777",
+      "--workdir",
+      "/work",
+      "--env",
+      "HOME=/work/home",
+      "--env",
+      "PATH=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12/ruff-x86_64-unknown-linux-gnu:/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0:/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=published",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.12",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "--env",
+      "SCORE_EXPECT_SHELLCHECK=0.10.0",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-koalaman-shellcheck/0.10.0,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/published/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/runtime-check.sh,dst=/check.sh,readonly",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "-c",
+      "mkdir -p \"$HOME\"; exec bash /check.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0",
+    "status": 0,
+    "stdout": "ruff 0.11.12\npre-commit 4.7.0\nShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.BORbMe\n\nReference runtime passed: profile=published uid=12345 cwd=/tmp/score-reference-consumer.BORbMe\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "bash",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0/install.sh",
+      "/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/repository",
+      "repository"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network=none",
+      "--user=12345:12345",
+      "--tmpfs",
+      "/work:rw,mode=1777",
+      "--workdir",
+      "/work",
+      "--env",
+      "HOME=/work/home",
+      "--env",
+      "PATH=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12/ruff-x86_64-unknown-linux-gnu:/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=repository",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.12",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/repository/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12,dst=/tmp/score-mise-evaluation-fresh/data/installs/aqua-astral-sh-ruff/0.11.12,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-mise-reference-final-runtime/releases/0.2.0/images/repository/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/runtime-check.sh,dst=/check.sh,readonly",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "-c",
+      "mkdir -p \"$HOME\"; exec bash /check.sh"
+    ],
+    "cwd": "/tmp/score-mise-reference-final-runtime/releases/0.2.0",
+    "status": 0,
+    "stdout": "ruff 0.11.12\npre-commit 4.7.0\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.1txYpT\n\nReference runtime passed: profile=repository uid=12345 cwd=/tmp/score-reference-consumer.1txYpT\n",
+    "stderr": ""
+  }
+]

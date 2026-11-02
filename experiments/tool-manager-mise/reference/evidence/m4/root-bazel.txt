@@ -1,0 +1,6 @@
+Network: Bazel commands used the normal online/default host network; no whole image was built.
+
+- `bazel --output_base=/tmp/score-m4-mise/bazel-root run //tools:starpls -- version` — exit 0; `starpls version: v0.1.22`. The root target consumed the generated archive lock.
+- `bazel --output_base=/tmp/score-m4-mise/bazel-root run //tools:codespell -- --version` — exit 0; codespell 2.4.1. The target is generated from `PYTHON_TOOLS`.
+- `bazel --output_base=/tmp/score-m4-mise/bazel-root run //tools:codespell -- /tmp/score-m4-mise/bazel-typo.txt` — exit 65 for the expected spelling diagnostic: `/tmp/score-m4-mise/bazel-typo.txt:1: teh ==> the`.
+- `bazel test //tools:prepared_runtime_test //tools:python_tool_runner_test` — passed. The handoff regression checks both new prepared skips, unchanged APT/unmigrated provider paths, and the unprepared starpls catalog fallback.

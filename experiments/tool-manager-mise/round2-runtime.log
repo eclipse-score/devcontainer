@@ -1,0 +1,18 @@
+ruff 0.11.13
+pre-commit 4.7.0
+fixture with space.py:1:8: F401 [*] `os` imported but unused
+  |
+1 | import os
+  |        ^^ F401
+  |
+  = help: Remove unused import: `os`
+
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
+Ruff diagnostic exit: 1
+Observe consumer cwd.....................................................Passed
+- hook id: observe-cwd
+- duration: 0.01s
+
+/work/consumer
+

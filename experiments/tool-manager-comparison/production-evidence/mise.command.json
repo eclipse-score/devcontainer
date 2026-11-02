@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--name",
+  "score-mise-m3-parent-shared",
+  "--user",
+  "vscode",
+  "--network",
+  "none",
+  "--mount",
+  "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/repository-runtime-check.py,dst=/check.py,readonly",
+  "--mount",
+  "type=bind,src=/tmp/score-m3-mise/parent-shared.expected.json,dst=/expected.json,readonly",
+  "sha256:63d2cc6b87577fa1c61ce08d5c6d3703ceec20c9b0fdbdd20489a70507f14113",
+  "bash",
+  "-lc",
+  "python3 /check.py /expected.json /usr/local/share/score-tools/run-tool"
+]

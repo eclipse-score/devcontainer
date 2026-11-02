@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=none",
+    "--user=12345:12345",
+    "--mount",
+    "type=bind,src=/tmp/score-mise-evaluation/data/installs/aqua-astral-sh-ruff/0.11.12,dst=/tmp/score-mise-evaluation/data/installs/aqua-astral-sh-ruff/0.11.12,readonly",
+    "--mount",
+    "type=bind,src=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,dst=/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0,readonly",
+    "--env",
+    "PATH=/tmp/score-mise-evaluation/data/installs/aqua-astral-sh-ruff/0.11.12/.mise-bins:/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin:/usr/bin:/bin",
+    "sha256:1b1ebf493ffb1a5a3a4d3c4c2a822cfe0da563d7028159078b0a02a12122a28d",
+    "bash",
+    "-c",
+    "set -eu; test \"$(id -u)\" = 12345; ruff --version; pre-commit --version"
+  ],
+  "status": 0,
+  "stdout": "ruff 0.11.12\npre-commit 4.7.0\n",
+  "stderr": ""
+}

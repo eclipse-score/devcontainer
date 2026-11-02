@@ -11,15 +11,15 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Install pinned tools from the shared `tools/lockfiles` catalog.
+"""Handle selected OS providers and verify installed tool environments.
 
-Dependency-free (stdlib only) so feature installers can use the Python already
-present in the image. Bazel executes Python tools through a shell launcher and
-the pinned uvx runtime, keeping this installer container-specific.
+Dependency-free so feature lifecycle scripts can use the Python already
+present in the image. mise owns native and Python CLI provisioning; this module
+retains APT/npm setup, metadata queries, and installed-state verification.
 
 Usage:
-  install.py install shellcheck yamlfmt
-  install.py install-python pre-commit
+  install.py environment s-core-local --phase build
+  install.py environment s-core-local
   install.py version shellcheck
 """
 
@@ -28,26 +28,18 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import platform
 import shutil
 import subprocess
 import sys
-import tarfile
-import tempfile
-import urllib.request
-import zipfile
 from pathlib import Path
 
 # Container images copy the complete tools directory; source execution and
 # Bazel runfiles use the same import root without installing a host package.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from score_tools.catalog import (
-    LOCKFILE_ROOT,
-    Binary,
-    ToolData,
     _load_python_tools,
     all_definitions,
     apt_requirements,
@@ -59,7 +51,7 @@ from score_tools.catalog import (
 
 
 def _detect_os() -> str:
-    """Map Python's platform string to the lockfile schema's OS names."""
+    """Map Python's platform string to the catalog's OS names."""
     system = platform.system()
     if system == "Linux":
         return "linux"
@@ -69,7 +61,7 @@ def _detect_os() -> str:
 
 
 def _detect_cpu() -> str:
-    """Map Python's machine string to the lockfile schema's CPU names."""
+    """Map Python's machine string to the catalog's CPU names."""
     machine = platform.machine().lower()
     if machine in {"x86_64", "amd64"}:
         return "x86_64"
@@ -78,227 +70,18 @@ def _detect_cpu() -> str:
     raise SystemExit(f"Unsupported CPU architecture: {machine}")
 
 
-def _lockfile_path(lockfile: str) -> Path:
-    """Resolve a lockfile basename like `ruff` to `ruff.lock.json`."""
-    return LOCKFILE_ROOT / f"{lockfile}.lock.json"
-
-
-def _load_tool(lockfile: str, tool: str) -> ToolData:
-    """Load one tool entry from a lockfile and fail with a clear message."""
-    with _lockfile_path(lockfile).open(encoding="utf-8") as handle:
-        data = json.load(handle)
-
-    try:
-        return data[tool]
-    except KeyError as exc:
-        raise SystemExit(
-            f"Tool '{tool}' not found in lockfile '{lockfile}.lock.json'",
-        ) from exc
-
-
-def _find_lockfile(tool: str) -> str:
-    """Find the lockfile basename that declares a tool."""
-    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
-        with path.open(encoding="utf-8") as handle:
-            data = json.load(handle)
-        if tool in data:
-            return path.name.removesuffix(".lock.json")
-
-    raise SystemExit(f"Tool '{tool}' not found in lockfile catalog")
-
-
-def _resolve_lockfile(tool: str, lockfile: str | None = None) -> str:
-    """Return the lockfile basename for *tool*, auto-detecting when needed."""
-    if lockfile is not None:
-        return lockfile
-    if _lockfile_path(tool).exists():
-        return tool
-    return _find_lockfile(tool)
-
-
-def _select_binary(tool_data: ToolData, os_name: str, cpu: str) -> Binary:
-    """Pick the binary entry matching the requested platform."""
-    for binary in tool_data["binaries"]:
-        if binary["os"] == os_name and binary["cpu"] == cpu:
-            return binary
-
-    raise SystemExit(
-        f"No binary defined for os={os_name!r}, cpu={cpu!r}",
-    )
-
-
 def _cmd_version(args: argparse.Namespace) -> int:
-    """Print the declared version for one tool."""
-    if args.lockfile is None:
-        versions = load_catalog_versions()
-        try:
-            print(versions[args.tool])
-        except KeyError as exc:
-            raise SystemExit(
-                f"Tool '{args.tool}' not found in lockfile catalog"
-            ) from exc
-        return 0
-
-    args.lockfile = _resolve_lockfile(args.tool, args.lockfile)
-    tool_data = _load_tool(args.lockfile, args.tool)
-    version = tool_data.get("version")
-    if version is None:
-        raise SystemExit(
-            f"Tool '{args.tool}' in '{args.lockfile}.lock.json' does not define a version",
-        )
-    print(version)
-    return 0
-
-
-def _cmd_install_python(args: argparse.Namespace) -> int:
-    """Install catalogued Python CLIs into the DevContainer with pinned uv."""
-    # Resolve uv from PATH by default so feature scripts use the binary already
-    # installed from uv.lock.json, while tests can inject a controlled binary.
-    uv = shutil.which(args.uv)
-    if uv is None:
-        raise SystemExit(
-            f"Could not install Python tools: '{args.uv}' was not found on PATH"
-        )
-
-    # Fixed system paths make feature installs independent of the root account's
-    # uv defaults and expose the entrypoints to every container user.
-    environment = os.environ.copy()
-    if args.bin_dir is not None:
-        environment["UV_TOOL_BIN_DIR"] = args.bin_dir
-    if args.tool_dir is not None:
-        environment["UV_TOOL_DIR"] = args.tool_dir
-
-    # Resolve every requested name before changing the filesystem. A typo in a
-    # later argument must not leave the container with a partially applied set.
-    catalog = _load_python_tools()
-    requirements: list[str] = []
-    for tool in args.tools:
-        try:
-            tool_data = catalog[tool]
-        except KeyError as exc:
-            raise SystemExit(f"Tool '{tool}' not found in Python tool catalog") from exc
-        requirements.append(f"{tool_data['package']}=={tool_data['version']}")
-
-    for requirement in requirements:
-        # --force reapplies the catalog pin when a persistent layer already
-        # contains another version, making container rebuilds deterministic.
-        subprocess.run(
-            [uv, "tool", "install", "--force", requirement],
-            check=True,
-            env=environment,
-        )
-    return 0
-
-
-def _place_binary(source: Path, destination: Path) -> None:
-    """Copy a file to its destination with executable permissions."""
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, destination)
-    destination.chmod(0o755)
-
-
-def _extract_member(
-    binary: Binary, archive_path: Path, out_path: Path, tool: str
-) -> None:
-    """Extract one member from an archive and write it to *out_path*."""
-    archive_type = binary.get("type", "")
-    member = binary.get("file")
-    if member is None:
-        raise SystemExit(f"Binary entry for {tool} does not define 'file' field")
-
-    if archive_type in ("tar.gz", "tgz", "tar.xz", "txz"):
-        with tarfile.open(archive_path) as tf:
-            reader = tf.extractfile(member)
-            if reader is None:
-                raise SystemExit(f"Cannot extract '{member}' from archive for {tool}")
-            out_path.write_bytes(reader.read())
-    elif archive_type == "zip":
-        with zipfile.ZipFile(archive_path) as zf:
-            out_path.write_bytes(zf.read(member))
-    else:
-        raise SystemExit(f"Unsupported archive type '{archive_type}' for {tool}")
-
-
-def _extract_dir(binary: Binary, archive_path: Path, out_dir: Path, tool: str) -> None:
-    """Extract a directory from a tar archive, stripping the top-level prefix."""
-    dir_prefix = binary.get("dir")
-    if dir_prefix is None:
-        raise SystemExit(f"Binary entry for {tool} does not define 'dir' field")
-    prefix = dir_prefix.rstrip("/") + "/"
-
+    """Print the owner-derived declared version for one tool."""
+    versions = load_catalog_versions()
     try:
-        with tarfile.open(archive_path) as tf:
-            for member in tf.getmembers():
-                if not member.name.startswith(prefix):
-                    continue
-                rel = member.name[len(prefix) :]
-                if not rel:
-                    continue
-                dest = out_dir / rel
-                if member.isdir():
-                    dest.mkdir(parents=True, exist_ok=True)
-                elif member.isfile():
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    reader = tf.extractfile(member)
-                    if reader is not None:
-                        dest.write_bytes(reader.read())
-                    if member.mode & 0o111:
-                        dest.chmod(dest.stat().st_mode | 0o111)
-    except tarfile.TarError as exc:
-        raise SystemExit(f"Failed to extract tar archive for {tool}: {exc}") from exc
-
-
-def _cmd_install(args: argparse.Namespace) -> int:
-    """Download, verify, and install tools from the lockfile catalog."""
-    dest_dir = Path(args.destination)
-
-    for tool in args.tools:
-        lockfile = _resolve_lockfile(tool, args.lockfile)
-        tool_data = _load_tool(lockfile, tool)
-        binary = _select_binary(tool_data, args.os, args.cpu)
-
-        kind = binary["kind"]
-        url = binary["url"]
-        expected_sha256 = binary["sha256"]
-        destination = dest_dir / tool
-
-        with tempfile.TemporaryDirectory() as tmp:
-            tmp = Path(tmp)
-            download = tmp / "download"
-
-            urllib.request.urlretrieve(url, download)
-
-            actual = hashlib.sha256(download.read_bytes()).hexdigest()
-            if actual != expected_sha256:
-                raise SystemExit(
-                    f"Checksum mismatch for {tool}: "
-                    + f"expected {expected_sha256}, got {actual}"
-                )
-
-            if kind == "file":
-                _place_binary(download, destination)
-            elif kind == "archive":
-                if "dir" in binary:
-                    extracted_dir = tmp / "extracted_dir"
-                    extracted_dir.mkdir()
-                    _extract_dir(binary, download, extracted_dir, tool)
-                    shutil.copytree(
-                        str(extracted_dir), str(dest_dir), dirs_exist_ok=True
-                    )
-                    destination.chmod(0o755)
-                else:
-                    extracted = tmp / "extracted"
-                    _extract_member(binary, download, extracted, tool)
-                    if extracted.exists():
-                        _place_binary(extracted, destination)
-            else:
-                raise SystemExit(f"Unsupported kind '{kind}' for {tool}")
-
+        print(versions[args.tool])
+    except KeyError as exc:
+        raise SystemExit(f"Tool '{args.tool}' not found in tool catalog") from exc
     return 0
 
 
 def _cmd_environment(args: argparse.Namespace) -> int:
-    """Apply a named environment's native/Python selection in dependency order."""
+    """Apply only the selected environment's OS and npm provider work."""
     selection = validate_environment(
         args.environment,
         all_definitions(repository_metadata=False),
@@ -318,6 +101,7 @@ def _cmd_environment(args: argparse.Namespace) -> int:
             )
             subprocess.run(["apt-get", *action, *packages], check=True)
         return 0
+
     # QEMU intentionally excludes recommendations; other packages retain the
     # distribution's normal dependency policy (including Python build headers).
     for recommends in (True, False):
@@ -327,25 +111,9 @@ def _cmd_environment(args: argparse.Namespace) -> int:
             subprocess.run(
                 ["apt-get", "install", "-y", *flags, *requirements], check=True
             )
-    native = argparse.Namespace(
-        tools=selection["native"],
-        lockfile=None,
-        destination=args.destination,
-        os=_detect_os(),
-        cpu=_detect_cpu(),
-    )
-    _cmd_install(native)
-    if selection["python"]:
-        python = argparse.Namespace(
-            tools=selection["python"],
-            uv=str(Path(args.destination) / "uv"),
-            bin_dir=args.destination,
-            tool_dir=args.tool_dir,
-        )
-        _cmd_install_python(python)
+    providers = load_providers()
     for name in selection.get("npm", []):
-        definition = load_providers()[name]
-        subprocess.run(["npm", "install", "-g", definition["package"]], check=True)
+        subprocess.run(["npm", "install", "-g", providers[name]["package"]], check=True)
     return 0
 
 
@@ -506,7 +274,7 @@ def _cmd_items(args: argparse.Namespace) -> int:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Install pinned tools from multitool-compatible lockfiles.",
+        description="Apply selected OS providers and inspect installed environments.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -542,51 +310,13 @@ def _build_parser() -> argparse.ArgumentParser:
     environment_parser.add_argument(
         "--phase", choices=("runtime", "build", "cleanup"), default="runtime"
     )
-    environment_parser.add_argument("--destination", default="/usr/local/bin")
-    environment_parser.add_argument("--tool-dir", default="/usr/local/share/uv/tools")
     environment_parser.set_defaults(func=_cmd_environment)
-
-    install_parser = subparsers.add_parser(
-        "install",
-        help="Download, verify, and install tools.",
-    )
-    install_parser.add_argument("tools", nargs="+")
-    install_parser.add_argument("--lockfile")
-    install_parser.add_argument("--destination", default="/usr/local/bin")
-    install_parser.add_argument("--os", default=_detect_os())
-    install_parser.add_argument("--cpu", default=_detect_cpu())
-    install_parser.set_defaults(func=_cmd_install)
-
-    install_python_parser = subparsers.add_parser(
-        "install-python",
-        help="Install Python command-line tools declared in python_tools.bzl.",
-    )
-    install_python_parser.add_argument(
-        "tools",
-        nargs="+",
-        help="Catalog command names to install.",
-    )
-    install_python_parser.add_argument(
-        "--uv",
-        default="uv",
-        help="uv executable installed from the native tool lockfile.",
-    )
-    install_python_parser.add_argument(
-        "--bin-dir",
-        help="Directory in which uv exposes console entrypoints.",
-    )
-    install_python_parser.add_argument(
-        "--tool-dir",
-        help="Directory in which uv stores isolated tool environments.",
-    )
-    install_python_parser.set_defaults(func=_cmd_install_python)
 
     version_parser = subparsers.add_parser(
         "version",
         help="Print the declared version for a tool.",
     )
     version_parser.add_argument("tool")
-    version_parser.add_argument("--lockfile")
     version_parser.set_defaults(func=_cmd_version)
 
     return parser

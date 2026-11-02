@@ -1,0 +1,45 @@
+{"argv": ["actionlint", "-version"], "exit": 0, "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["/run-tool", "actionlint", "-version"], "exit": 0, "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "actionlint", "-version"], "exit": 0, "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n", "stderr": ""}
+{"argv": ["/run-tool", "basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n", "stderr": ""}
+{"argv": ["bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.27.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": "Extracting Bazel installation...\nStarting local Bazel server (8.6.0) and connecting to it...\n"}
+{"argv": ["/run-tool", "bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.27.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.27.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": ""}
+{"argv": ["buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n", "stderr": ""}
+{"argv": ["/run-tool", "buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n", "stderr": ""}
+{"argv": ["pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["/run-tool", "pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["pytest", "--version"], "exit": 0, "stdout": "pytest 9.0.2\n", "stderr": ""}
+{"argv": ["/run-tool", "pytest", "--version"], "exit": 0, "stdout": "pytest 9.0.2\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "pytest", "--version"], "exit": 0, "stdout": "pytest 9.0.2\n", "stderr": ""}
+{"argv": ["ruff", "--version"], "exit": 0, "stdout": "ruff 0.11.13\n", "stderr": ""}
+{"argv": ["/run-tool", "ruff", "--version"], "exit": 0, "stdout": "ruff 0.11.13\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "ruff", "--version"], "exit": 0, "stdout": "ruff 0.11.13\n", "stderr": ""}
+{"argv": ["shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["/run-tool", "shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["uv", "--version"], "exit": 0, "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/run-tool", "uv", "--version"], "exit": 0, "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "uv", "--version"], "exit": 0, "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/run-tool", "uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.17.0 (45e5cb5)\n", "stderr": ""}
+{"argv": ["/run-tool", "yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.17.0 (45e5cb5)\n", "stderr": ""}
+{"argv": ["/run-tool", "--strict", "yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.17.0 (45e5cb5)\n", "stderr": ""}
+{"argv": ["git", "init", "-q"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["ruff", "check", "--isolated", "fixture with space.py"], "exit": 1, "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n", "stderr": ""}
+{"argv": ["shellcheck", "fixture with space.sh"], "exit": 1, "stdout": "\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n", "stderr": ""}
+{"argv": ["actionlint", "/tmp/score-repository-runtime-qkx9pjhn/invalid-workflow.yaml"], "exit": 1, "stdout": "invalid-workflow.yaml:6:5: unexpected key \"invalid-key\" for \"job\" section. expected one of \"concurrency\", \"container\", \"continue-on-error\", \"defaults\", \"env\", \"environment\", \"if\", \"name\", \"needs\", \"outputs\", \"permissions\", \"runs-on\", \"secrets\", \"services\", \"steps\", \"strategy\", \"timeout-minutes\", \"uses\", \"with\" [syntax-check]\n  |\n6 |     invalid-key: nope\n  |     ^~~~~~~~~~~~\n", "stderr": ""}
+{"argv": ["yamlfmt", "/tmp/score-repository-runtime-qkx9pjhn/format.yaml"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["buildifier", "/tmp/score-repository-runtime-qkx9pjhn/BUILD.bazel"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["buildifier", "-mode=check", "/tmp/score-repository-runtime-qkx9pjhn/BUILD.bazel"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["git", "add", "."], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["pre-commit", "run", "--all-files", "--verbose"], "exit": 0, "stdout": "Consumer cwd and arguments...............................................Passed\n- hook id: cwd-and-args\n- duration: 0s\n", "stderr": ""}
+{"argv": ["pytest", "-q", "test_selected.py"], "exit": 0, "stdout": ".                                                                        [100%]\n1 passed in 0.00s\n", "stderr": ""}
+{"argv": ["basedpyright", "--pythonpath", "/usr/bin/python3", "type_error.py"], "exit": 1, "stdout": "/tmp/score-repository-runtime-qkx9pjhn/type_error.py\n  /tmp/score-repository-runtime-qkx9pjhn/type_error.py:1:14 - error: Type \"Literal['wrong']\" is not assignable to declared type \"int\"\n  \u00a0\u00a0\"Literal['wrong']\" is not assignable to \"int\" (reportAssignmentType)\n1 error, 0 warnings, 0 notes\n", "stderr": ""}
+{"profile": "published", "result": "passed", "versions": {"ruff": "0.11.13", "bazelisk": "1.27.0", "buildifier": "8.2.1", "yamlfmt": "0.17.0", "shellcheck": "0.10.0", "actionlint": "1.7.7", "basedpyright": "1.35.0", "pre-commit": "4.7.0", "pytest": "9.0.2", "uv": "0.13.6", "uvx": "0.13.6"}, "uid": 12345, "commands": 44}

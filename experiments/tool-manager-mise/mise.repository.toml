@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+
+# A repository-specific tool extends the common selections without repeating pins.
+[tools]
+"aqua:koalaman/shellcheck" = "0.10.0"

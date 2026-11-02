@@ -18,9 +18,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-# Apply the repository environment selection with the same installation policy
-# as the published image's local features.
+# Apply the repository OS/npm providers, then install mise-owned commands once
+# and expose their direct pinned paths for hooks and later shell sessions.
 sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" environment repository
+sudo python3 "${REPOSITORY_ROOT}/tools/internal/mise/provision.py" repository
 
 # Hooks can only be registered after the catalogued executable is on PATH.
 pre-commit install

@@ -1,0 +1,145 @@
+{
+  "format": 1,
+  "observed_at": "2026-11-01",
+  "scope": "Public etas-contrib mise candidate; task-owned preparation and command inspection only.",
+  "manager": {
+    "path": "/tmp/score-m4-mise/bootstrap-check/mise",
+    "version": "2026.10.24 linux-x64 (2026-10-30)",
+    "sha256": "be97dbac1c0b1fe08bd8c0cf01690f4273ea9aa02ad766b98d4e20c43eb9059d",
+    "bootstrap_sha256_match": true
+  },
+  "candidate_config": {
+    "source": "experiments/tool-manager-mise/reference/mise.native.toml",
+    "source_sha256": "a11342ade07efce535b83cdd9b960c4ccf06b0f2d7c6b5310b2cb427c4e948c6",
+    "task_copy": "/tmp/score-retirement-mise/mise.native.toml",
+    "task_copy_sha256": "36a00ab2c11d1c84cb97d19fd9ff8dcb8b4f6a1f623b22220e843fa4e2c0b277",
+    "additions": {
+      "github:microsoft/apm": "0.35.0",
+      "aqua:anomalyco/opencode": "2.2.3"
+    }
+  },
+  "commands": [
+    {
+      "command": "mise -C /tmp/score-retirement-mise -E native install --verbose github:microsoft/apm aqua:anomalyco/opencode",
+      "result": "Both exact configured versions installed successfully.",
+      "network_required": true,
+      "network_hosts_observed": [
+        "mise-versions.jdx.dev",
+        "github.com",
+        "opencode.ai"
+      ]
+    },
+    {
+      "command": "mise -C /tmp/score-retirement-mise -E native lock --platform linux-x64,linux-arm64,macos-arm64,macos-x64 github:microsoft/apm aqua:anomalyco/opencode",
+      "result": "Eight tool/platform entries checked; task-owned mise.native.lock written.",
+      "all_locked_platform_sha256_values_match_legacy_catalog": true,
+      "network_available": true,
+      "offline_mode_checked": false
+    }
+  ],
+  "platforms": [
+    "linux-arm64",
+    "linux-x64",
+    "macos-arm64",
+    "macos-x64"
+  ],
+  "tools": {
+    "apm": {
+      "requested_version": "0.35.0",
+      "mise_backend": "github:microsoft/apm",
+      "legacy_linux_x64_url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
+      "legacy_sha256": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
+      "downloaded_sha256_matches": true,
+      "platform_sha256": {
+        "linux-arm64": "ada8901ce1b29e5d188629eeed64e8499853a8cb5f047630ebedbde24008508e",
+        "linux-x64": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
+        "macos-arm64": "cb2c54152e3bd39acfe2fbda4a2aa91d2af914e24859d3623423efd7b27e3dd0",
+        "macos-x64": "ee17daf433c49ed481d9f2ddee31825cbced9390637cab9a5138815bbace327c"
+      },
+      "install_path": "/tmp/score-retirement-mise/data/installs/github-microsoft-apm/0.35.0/apm",
+      "installed_tree_size": "24 MiB",
+      "runtime_observations": {
+        "bundled": [
+          "libpython3.12.so.1.0",
+          "base_library.zip",
+          "Python dependencies",
+          "APM templates"
+        ],
+        "version_output": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)",
+        "commands_succeeded_with_system_path": [
+          "apm --help",
+          "apm install --help"
+        ],
+        "symlinked_direct_invocation_succeeded": true,
+        "empty_path_help_result": "Failed during GitPython import: git executable not found.",
+        "empty_path_with_GIT_PYTHON_GIT_EXECUTABLE_result": "apm install --help exited 0 using /usr/bin/git.",
+        "requires_git_in_existing_image": true,
+        "without_internal_directory": {
+          "command": "task-owned copy of apm ELF only: ./apm --help",
+          "exit": 255,
+          "stderr": "Failed to load Python shared library '_internal/libpython3.12.so.1.0'."
+        }
+      },
+      "checksum_verification_observed": {
+        "manager_output": "Used GitHub API digest for checksum verification; no GitHub artifact attestations found.",
+        "sha256_matches_legacy_catalog": true
+      }
+    },
+    "opencode": {
+      "requested_version": "2.2.3",
+      "mise_backend": "aqua:anomalyco/opencode",
+      "legacy_linux_x64_url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-linux-x64.tar.gz",
+      "mise_linux_x64_url": "https://opencode.ai/files/bin/2.2.3/opencode-linux-x64.tar.gz",
+      "legacy_sha256": "ef3aeeaf5522b10d69a3da7bbd6e6d8d259f845833d96b8310767d3407b18a35",
+      "downloaded_sha256_matches": true,
+      "mise_and_legacy_linux_x64_archives_match": true,
+      "platform_sha256": {
+        "linux-arm64": "72aac82c021268f6cc9810de913f8d47d05626b1ad974d7f5dc5b087e1ad0f68",
+        "linux-x64": "ef3aeeaf5522b10d69a3da7bbd6e6d8d259f845833d96b8310767d3407b18a35",
+        "macos-arm64": "65db03573e5717e6da245ae3e5c2ffa35915b90689d37c43d4e1ade4d47f55f9",
+        "macos-x64": "e6b67deeb327ad25eff94bb3c39d8b15466c3de0224e3a0a47a385b69a266d4c"
+      },
+      "install_path": "/tmp/score-retirement-mise/data/installs/aqua-anomalyco-opencode/2.2.3/opencode",
+      "installed_tree_size": "241 MiB",
+      "version_output": "opencode v2.2.3",
+      "commands_succeeded_with_empty_path": [
+        "opencode --version",
+        "opencode --help"
+      ],
+      "symlinked_direct_invocation_succeeded": true
+    }
+  },
+  "existing_artifacts": {
+    "mise_evaluation_cache": {
+      "path": "/tmp/score-mise-evaluation-fresh/data",
+      "size": "540 MiB",
+      "apm_install_present": false,
+      "opencode_install_present": false
+    },
+    "m3_prepared_runtime": {
+      "path": "/tmp/score-m3-mise/prepared-runtime/data",
+      "size": "399 MiB",
+      "apm_install_present": false,
+      "opencode_install_present": false
+    }
+  },
+  "not_performed": [
+    "macOS or Linux arm64 execution",
+    "APM package installation/authentication/network workflow",
+    "OpenCode interactive/server/model-provider workflow",
+    "full image rebuild",
+    "repository test suite",
+    "startup timing measurement",
+    "Docker mutation"
+  ],
+  "registry_resolution": {
+    "apm": [
+      "github:microsoft/apm"
+    ],
+    "opencode_registry_order": [
+      "npm:@opencode/cli",
+      "aqua:anomalyco/opencode"
+    ],
+    "opencode_selected_backend": "aqua:anomalyco/opencode"
+  }
+}

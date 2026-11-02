@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "target_platform": "linux/amd64",
+  "owner_sha256": "ba8584fab412006a192c8739fa29ae8cc76122242b3b4d98d8706ccc8d392b98",
+  "tools": {
+    "actionlint": {
+      "version": "1.7.7",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-rhysd-actionlint/1.7.7",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-rhysd-actionlint/1.7.7/actionlint",
+      "sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+    },
+    "basedpyright": {
+      "version": "1.35.0",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/pypi-basedpyright/1.35.0",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/pypi-basedpyright/1.35.0/bin/basedpyright",
+      "sha256": "a7990863aa6bd97ea89e5a197293fc38d0de61d1b79473ecd76f563d63fe264a"
+    },
+    "bazelisk": {
+      "version": "1.27.0",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-bazelbuild-bazelisk/1.27.0",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-bazelbuild-bazelisk/1.27.0/bazelisk",
+      "sha256": "e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76"
+    },
+    "buildifier": {
+      "version": "8.2.1",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1/buildifier",
+      "sha256": "6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a"
+    },
+    "pre-commit": {
+      "version": "4.7.0",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/pypi-pre-commit/4.7.0",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "sha256": "d812a5eb2f37497a066e2075e4706297ef2bd28b461639689b6ead42dea2256e"
+    },
+    "pytest": {
+      "version": "9.0.2",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/pypi-pytest/9.0.2",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/pypi-pytest/9.0.2/bin/pytest",
+      "sha256": "32395870761c37ea08adbf68bd4507fec2e6c5a7bb9ed55a31d6de727ab69ea2"
+    },
+    "ruff": {
+      "version": "0.11.13",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-astral-sh-ruff/0.11.13",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu/ruff",
+      "sha256": "934898b2a680435c864137ae7b6e6b32a055b69f2bc92440c417c60786a1e883"
+    },
+    "shellcheck": {
+      "version": "0.10.0",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-koalaman-shellcheck/0.10.0",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0/shellcheck",
+      "sha256": "f35ae15a4677945428bdfe61ccc297490d89dd1e544cc06317102637638c6deb"
+    },
+    "uv": {
+      "version": "0.13.6",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/uv/0.13.6",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uv",
+      "sha256": "23803452c0fbe125033054cd9ff245f1d649fb65b4b73f68429f4abda432436d"
+    },
+    "uvx": {
+      "version": "0.13.6",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/uv/0.13.6",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uvx",
+      "sha256": "2f286670c2c09915c57555ddd95931ae0ab3feeaa09dfc73e21de9e8789306d5"
+    },
+    "yamlfmt": {
+      "version": "0.17.0",
+      "root": "/opt/score-tools/prepared-runtime/data/installs/aqua-google-yamlfmt/0.17.0",
+      "executable": "/opt/score-tools/prepared-runtime/data/installs/aqua-google-yamlfmt/0.17.0/yamlfmt",
+      "sha256": "c2f4acd79553ecd757197ebc7a06cc33ef9aa6d43c38f27bede1c25ca1bdfed2"
+    }
+  }
+}

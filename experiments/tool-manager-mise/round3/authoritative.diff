@@ -1,0 +1,10 @@
+diff --git a/mise.native.toml b/mise.native.toml
+index 6a99020..b38bcb5 100644
+--- a/mise.native.toml
++++ b/mise.native.toml
+@@ -2,4 +2,4 @@
+ # SPDX-License-Identifier: Apache-2.0
+ 
+ [tools]
+-"aqua:astral-sh/ruff" = "0.11.13"
++"aqua:astral-sh/ruff" = "0.11.12"

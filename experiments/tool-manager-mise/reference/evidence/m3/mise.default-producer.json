@@ -1,0 +1,19 @@
+{
+  "result": "passed",
+  "producer_image": "buildpack-deps:noble-curl",
+  "producer_os": "Ubuntu 24.04",
+  "target_platform": "linux/amd64",
+  "tools": 11,
+  "python_base_links": {
+    "opt/score-tools/prepared-runtime/data/installs/pypi-pre-commit/4.7.0/pre-commit/bin/python": "/usr/bin/python3",
+    "opt/score-tools/prepared-runtime/data/installs/pypi-pytest/9.0.2/pytest/bin/python": "/usr/bin/python3",
+    "opt/score-tools/prepared-runtime/data/installs/pypi-basedpyright/1.35.0/basedpyright/bin/python": "/usr/bin/python3"
+  },
+  "preparation_command": [
+    "experiments/tool-manager-mise/reference/prepare-production.sh",
+    "/tmp/score-m3-mise-parent-noble",
+    "linux/amd64",
+    "0.5.0"
+  ],
+  "regression": "The prior python:3.12-slim default exported venv links into disposable producer state. The default now uses target-compatible system Python with managed downloads disabled."
+}

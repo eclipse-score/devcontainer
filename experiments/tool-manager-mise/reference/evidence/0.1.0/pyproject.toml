@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "score-mise-reference"
+version = "0.1.0"
+requires-python = ">=3.10"
+[project.optional-dependencies]
+ruff = ["ruff==0.11.13"]
+pre-commit = ["pre-commit==4.7.0"]
+[tool.setuptools]
+packages = []

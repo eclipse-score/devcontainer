@@ -6,43 +6,43 @@
     "binaries": [
       {
         "kind": "archive",
-        "type": "tar.gz",
-        "dir": "apm-darwin-arm64",
-        "file": "apm-darwin-arm64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-arm64.tar.gz",
-        "sha256": "cb2c54152e3bd39acfe2fbda4a2aa91d2af914e24859d3623423efd7b27e3dd0",
-        "os": "macos",
-        "cpu": "arm64"
-      },
-      {
-        "kind": "archive",
-        "type": "tar.gz",
-        "dir": "apm-darwin-x86_64",
-        "file": "apm-darwin-x86_64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-x86_64.tar.gz",
-        "sha256": "ee17daf433c49ed481d9f2ddee31825cbced9390637cab9a5138815bbace327c",
-        "os": "macos",
-        "cpu": "x86_64"
-      },
-      {
-        "kind": "archive",
-        "type": "tar.gz",
-        "dir": "apm-linux-x86_64",
-        "file": "apm-linux-x86_64/apm",
-        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
-        "sha256": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
-        "os": "linux",
-        "cpu": "x86_64"
-      },
-      {
-        "kind": "archive",
-        "type": "tar.gz",
-        "dir": "apm-linux-arm64",
-        "file": "apm-linux-arm64/apm",
         "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-arm64.tar.gz",
         "sha256": "ada8901ce1b29e5d188629eeed64e8499853a8cb5f047630ebedbde24008508e",
         "os": "linux",
-        "cpu": "arm64"
+        "cpu": "arm64",
+        "dir": "apm-linux-arm64",
+        "file": "apm-linux-arm64/apm",
+        "type": "tar.gz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
+        "sha256": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
+        "os": "linux",
+        "cpu": "x86_64",
+        "dir": "apm-linux-x86_64",
+        "file": "apm-linux-x86_64/apm",
+        "type": "tar.gz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-arm64.tar.gz",
+        "sha256": "cb2c54152e3bd39acfe2fbda4a2aa91d2af914e24859d3623423efd7b27e3dd0",
+        "os": "macos",
+        "cpu": "arm64",
+        "dir": "apm-darwin-arm64",
+        "file": "apm-darwin-arm64/apm",
+        "type": "tar.gz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-darwin-x86_64.tar.gz",
+        "sha256": "ee17daf433c49ed481d9f2ddee31825cbced9390637cab9a5138815bbace327c",
+        "os": "macos",
+        "cpu": "x86_64",
+        "dir": "apm-darwin-x86_64",
+        "file": "apm-darwin-x86_64/apm",
+        "type": "tar.gz"
       }
     ]
   }

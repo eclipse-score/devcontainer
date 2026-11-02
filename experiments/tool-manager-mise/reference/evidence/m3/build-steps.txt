@@ -1,0 +1,26 @@
+[2026-11-01T18:03:06.665Z] Start: Run: docker buildx build --platform linux/amd64 --load --build-arg BUILDKIT_INLINE_CACHE=1 -f /tmp/devcontainercli-alex/container-features/0.90.0-1793556184770/Dockerfile-with-features -t ghcr.io/eclipse-score/devcontainer:mise-m3-final-amd64 --target dev_containers_target_stage --cache-from ghcr.io/eclipse-score/devcontainer --build-arg HTTP_PROXY= --build-arg HTTPS_PROXY= --build-arg http_proxy= --build-arg https_proxy= --build-arg NO_PROXY= --build-arg no_pro
+#5 transferring context: 401B done
+[2026-11-01T18:03:08.268Z] #12 transferring context: 36.32kB done
+[2026-11-01T18:03:10.484Z] #10 transferring score_mise_runtime: 383.80MB 2.0s done
+#19 [dev_container_auto_added_stage_label 4/7] COPY --from=score_mise_runtime /opt/score-tools/prepared-runtime/data/ /opt/score-tools/prepared-runtime/data/
+#20 [dev_container_auto_added_stage_label 5/7] COPY --from=score_mise_runtime /usr/local/bin /usr/local/bin
+#21 [dev_container_auto_added_stage_label 6/7] COPY --from=score_mise_runtime /usr/local/share/score-tools/prepared-tools.json /usr/local/share/score-tools/prepared-tools.json
+#28 [dev_containers_target_stage 4/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=common-utils_0,target=/tmp/build-features-src/common-utils_0     cp -ar /tmp/build-features-src/common-utils_0 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/common-utils_0  && cd /tmp/dev-container-features/common-utils_0  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/common-utils_0
+#29 [dev_containers_target_stage 5/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=llvm_1,target=/tmp/build-features-src/llvm_1     cp -ar /tmp/build-features-src/llvm_1 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/llvm_1  && cd /tmp/dev-container-features/llvm_1  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/llvm_1
+#29 24.94 + apt-get install -y clang-20 lldb-20 lld-20 clangd-20 clang-tidy-20 clang-format-20 clang-tools-20 llvm-20-dev lld-20 lldb-20 llvm-20-tools libomp-20-dev libc++-20-dev libc++abi-20-dev libclang-common-20-dev libclang-20-dev libclang-cpp20-dev liblldb-20-dev libunwind-20-dev libclang-rt-20-dev libpolly-20-dev
+#30 [dev_containers_target_stage 6/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=s-core-local_2,target=/tmp/build-features-src/s-core-local_2     cp -ar /tmp/build-features-src/s-core-local_2 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/s-core-local_2  && cd /tmp/dev-container-features/s-core-local_2  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/s-core-local_2
+[2026-11-01T18:08:02.571Z] #30 214.6 Verified prepared native runtime for s-core-local; skipping catalog installation of: actionlint, ruff, shellcheck, uv, uvx, yamlfmt
+#30 214.6 Verified prepared python runtime for s-core-local; skipping catalog installation of: basedpyright, pre-commit, pytest
+[2026-11-01T18:08:26.568Z] #30 238.4 Installed fresh codeql/misra-cpp-coding-standards@2.54.0
+[2026-11-01T18:08:30.460Z] #30 242.3 Installed fresh codeql/misra-c-coding-standards@2.54.0
+[2026-11-01T18:08:33.535Z] #30 245.4 Installed fresh codeql/cert-cpp-coding-standards@2.54.0
+[2026-11-01T18:08:36.592Z] #30 248.4 Installed fresh codeql/cert-c-coding-standards@2.54.0
+#30 249.9 Removing apt-transport-https (2.8.3) ...
+#31 [dev_containers_target_stage 7/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=bazel_3,target=/tmp/build-features-src/bazel_3     cp -ar /tmp/build-features-src/bazel_3 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/bazel_3  && cd /tmp/dev-container-features/bazel_3  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/bazel_3
+[2026-11-01T18:08:46.720Z] #31 6.970 Verified prepared native runtime for bazel-feature; skipping catalog installation of: bazelisk, buildifier
+[2026-11-01T18:08:46.943Z] #31 7.043 2026/11/01 18:08:46 Downloading https://releases.bazel.build/8.6.0/release/bazel-8.6.0-linux-x86_64...
+#31 15.24 Get:1 /tmp/bazel-compile-commands.deb bazel-compile-commands amd64 0.18.0 [3605 kB]
+#31 16.08 Setting up bazel-compile-commands (0.18.0) ...
+#31 17.77 Removing apt-transport-https (2.8.3) ...
+#32 naming to ghcr.io/eclipse-score/devcontainer:mise-m3-final-amd64 done
+[2026-11-01T18:10:16.324Z] #32 DONE 77.6s

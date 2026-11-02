@@ -55,8 +55,7 @@ multitool_aliases("opencode")
 # must not require synchronizing a second handwritten command list here.
 [python_tool(name) for name in PYTHON_TOOLS]
 
-# This contract test keeps Bazel's shell launcher and the container installer
-# aligned with their shared catalog.
+# This contract test preserves the public uvx argument, cwd, and exit boundary.
 sh_test(
     name = "python_tool_runner_test",
     srcs = ["tests/python_tool_runner_test.sh"],
@@ -76,4 +75,39 @@ sh_test(
     data = [
         "run-tool",
     ],
+)
+
+py_test(
+    name = "mise_provision_test",
+    srcs = ["tests/test_mise_provision.py"],
+    data = [
+        "environments.json",
+        "internal/mise/provision.py",
+        "mise/mise.native.toml",
+        "mise/mise.published.toml",
+        "mise/mise.python.toml",
+        "score_tools/__init__.py",
+        "score_tools/catalog.py",
+        "score_tools/python_tools.bzl",
+    ] + glob(["lockfiles/*.lock.json"]),
+    main = "tests/test_mise_provision.py",
+    python_version = "PY3",
+)
+
+# Check ordinary package metadata without making experiments part of the
+# maintained updater or release generator.
+py_test(
+    name = "mise_python_package_test",
+    srcs = ["tests/test_mise_python_package.py"],
+    data = [
+        "internal/mise/python_package.py",
+        "internal/mise/refresh.py",
+        "mise/mise.native.toml",
+        "mise/mise.python.toml",
+        "score_tools/__init__.py",
+        "score_tools/catalog.py",
+        "score_tools/python_tools.bzl",
+    ],
+    main = "tests/test_mise_python_package.py",
+    python_version = "PY3",
 )

@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# Published-only native tools extend the common selection; version and artifact
+# metadata are shared by direct provisioning and the Bazel compatibility export.
+[tools]
+"github:withered-magic/starpls" = "0.1.22"

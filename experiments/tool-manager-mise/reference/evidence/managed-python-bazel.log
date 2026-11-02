@@ -1,0 +1,22 @@
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Analyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)
+Analyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)
+
+INFO: Analyzed target //tools:pre-commit (0 packages loaded, 0 targets configured).
+INFO: Found 1 target...
+Target //tools:pre-commit up-to-date:
+  bazel-bin/tools/pre-commit
+INFO: Elapsed time: 0.123s, Critical Path: 0.00s
+INFO: 1 process: 1 internal.
+INFO: Build completed successfully, 1 total action
+INFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>
+Downloading cpython-3.15.2-linux-x86_64-gnu (download) (36.4MiB)
+ Downloaded cpython-3.15.2-linux-x86_64-gnu (download)
+Downloading virtualenv (5.3MiB)
+   Building pyyaml==6.0.3
+ Downloaded virtualenv
+      Built pyyaml==6.0.3
+Installed 11 packages in 7ms
+pre-commit 4.7.0

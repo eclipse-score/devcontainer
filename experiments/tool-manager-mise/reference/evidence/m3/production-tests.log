@@ -1,0 +1,465 @@
+
+🧪 Testing validate clangd is working and has the correct version
+Ubuntu clangd version 20.1.8 (++20250804090239+87f0227cb601-1~exp1~20250804210352.139)
+✅  Passed!
+
+🧪 Testing validate clang-format is working and has the correct version
+Ubuntu clang-format version 20.1.8 (++20250804090239+87f0227cb601-1~exp1~20250804210352.139)
+✅  Passed!
+
+🧪 Testing validate clang-tidy is working and has the correct version
+Ubuntu LLVM version 20.1.8
+✅  Passed!
+
+🧪 Testing validate clang is working and has the correct version
+Ubuntu clang version 20.1.8 (++20250804090239+87f0227cb601-1~exp1~20250804210352.139)
+✅  Passed!
+
+🧪 Testing validate the system CA bundle is present and parsable
+✅  Passed!
+
+🧪 Testing validate the compromised emSign ECC Root CA - G3 is not in the system CA bundle
+✅  Passed!
+
+🧪 Testing validate the Java keystore is present and parsable
+Warning: use -cacerts option to access cacerts keystore
+✅  Passed!
+
+🧪 Testing validate the compromised emSign ECC Root CA - G3 is not in the Java keystore
+Warning: use -cacerts option to access cacerts keystore
+✅  Passed!
+
+🧪 Testing verify selected s-core-local tools and packages
+{
+  "shellcheck": {
+    "command": "/usr/local/bin/shellcheck",
+    "reported": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net"
+  },
+  "ruff": {
+    "command": "/usr/local/bin/ruff",
+    "reported": "ruff 0.11.13"
+  },
+  "actionlint": {
+    "command": "/usr/local/bin/actionlint",
+    "reported": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64"
+  },
+  "yamlfmt": {
+    "command": "/usr/local/bin/yamlfmt",
+    "reported": "yamlfmt 0.17.0 (45e5cb5)"
+  },
+  "uv": {
+    "command": "/usr/local/bin/uv",
+    "reported": "uv 0.13.6 (x86_64-unknown-linux-gnu)"
+  },
+  "uvx": {
+    "command": "/usr/local/bin/uvx",
+    "reported": "uvx 0.13.6 (x86_64-unknown-linux-gnu)"
+  },
+  "apm": {
+    "command": "/usr/local/bin/apm",
+    "reported": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)"
+  },
+  "opencode": {
+    "command": "/usr/local/bin/opencode",
+    "reported": "opencode v2.2.3"
+  },
+  "pre-commit": {
+    "command": "/usr/local/bin/pre-commit",
+    "reported": "pre-commit 4.7.0"
+  },
+  "basedpyright": {
+    "command": "/usr/local/bin/basedpyright",
+    "reported": "basedpyright 1.35.0\nbased on pyright 1.1.407"
+  },
+  "pytest": {
+    "command": "/usr/local/bin/pytest",
+    "reported": "pytest 9.0.2"
+  },
+  "graphviz": {
+    "resolved": "2.42.2-9ubuntu0.1",
+    "policy": "prefix"
+  },
+  "protobuf-compiler": {
+    "resolved": "3.21.12-8.2ubuntu0.4",
+    "policy": "prefix"
+  },
+  "qemu-system-arm": {
+    "resolved": "1:8.2.2+ds-0ubuntu1.18",
+    "policy": "prefix"
+  },
+  "qemu-system-x86": {
+    "resolved": "1:8.2.2+ds-0ubuntu1.18",
+    "policy": "prefix"
+  },
+  "sshpass": {
+    "resolved": "1.09-1",
+    "policy": "prefix"
+  },
+  "gdb": {
+    "resolved": "15.0.50.20240403-0ubuntu1",
+    "policy": "prefix"
+  },
+  "git": {
+    "resolved": "1:2.43.0-1ubuntu7.4",
+    "policy": "distribution"
+  },
+  "git-lfs": {
+    "resolved": "3.4.1-1ubuntu0.4",
+    "policy": "distribution"
+  },
+  "gh": {
+    "resolved": "2.45.0-1ubuntu0.3",
+    "policy": "distribution"
+  },
+  "openjdk-21-jdk-headless": {
+    "resolved": "21.0.12.1+1-1~24.04.4",
+    "policy": "prefix"
+  },
+  "valgrind": {
+    "resolved": "1:3.22.0-0ubuntu3",
+    "policy": "prefix"
+  },
+  "ripgrep": {
+    "resolved": "14.1.0-1",
+    "policy": "prefix"
+  },
+  "lcov": {
+    "resolved": "2.0-4ubuntu2",
+    "policy": "prefix"
+  },
+  "pkg-config": {
+    "resolved": "1.8.1-2build1",
+    "policy": "prefix"
+  },
+  "libcairo2-dev": {
+    "resolved": "1.18.0-3build1",
+    "policy": "prefix"
+  },
+  "python3.12": {
+    "resolved": "3.12.3-1ubuntu0.17",
+    "policy": "package-name"
+  },
+  "python3-pip": {
+    "resolved": "24.0+dfsg-1ubuntu1.3",
+    "policy": "distribution"
+  },
+  "python3-venv": {
+    "resolved": "3.12.3-0ubuntu2.1",
+    "policy": "distribution"
+  },
+  "flake8": {
+    "resolved": "7.0.0-1",
+    "policy": "distribution"
+  },
+  "python3-autopep8": {
+    "resolved": "2.0.4-2",
+    "policy": "distribution"
+  },
+  "black": {
+    "resolved": "24.2.0-1ubuntu1",
+    "policy": "distribution"
+  },
+  "python3-yapf": {
+    "resolved": "0.33.0-1",
+    "policy": "distribution"
+  },
+  "mypy": {
+    "resolved": "1.9.0-4ubuntu1",
+    "policy": "distribution"
+  },
+  "pydocstyle": {
+    "resolved": "6.3.0-1.1",
+    "policy": "distribution"
+  },
+  "pycodestyle": {
+    "resolved": "2.11.1-1",
+    "policy": "distribution"
+  },
+  "bandit": {
+    "resolved": "1.6.2-3",
+    "policy": "distribution"
+  },
+  "pipenv": {
+    "resolved": "2023.12.1+ds-1",
+    "policy": "distribution"
+  },
+  "virtualenv": {
+    "resolved": "20.25.0+ds-2",
+    "policy": "distribution"
+  },
+  "pylint": {
+    "resolved": "3.0.3-2",
+    "policy": "distribution"
+  },
+  "ca-certificates-java": {
+    "resolved": "20240118",
+    "policy": "distribution"
+  },
+  "man-db": {
+    "resolved": "2.12.0-4build2",
+    "policy": "distribution"
+  },
+  "manpages": {
+    "resolved": "6.7-2",
+    "policy": "distribution"
+  },
+  "manpages-dev": {
+    "resolved": "6.7-2",
+    "policy": "distribution"
+  },
+  "manpages-posix": {
+    "resolved": "2017a-2",
+    "policy": "distribution"
+  },
+  "manpages-posix-dev": {
+    "resolved": "2017a-2",
+    "policy": "distribution"
+  }
+}
+✅  Passed!
+
+🧪 Testing validate Graphviz can execute
+dot - graphviz version 2.43.0 (0)
+✅  Passed!
+
+🧪 Testing validate Git compatibility
+git version 2.43.0
+✅  Passed!
+
+🧪 Testing validate Git LFS compatibility
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+✅  Passed!
+
+🧪 Testing validate GitHub CLI compatibility
+gh version 2.45.0 (2025-07-18 Ubuntu 2.45.0-1ubuntu0.3)
+https://github.com/cli/cli/releases/tag/v2.45.0
+✅  Passed!
+
+🧪 Testing validate Java executes
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-24.04.4-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-24.04.4-Ubuntu, mixed mode, sharing)
+✅  Passed!
+
+🧪 Testing validate JAVA_HOME
+✅  Passed!
+
+🧪 Testing validate Black executes
+black, 24.2.0 (compiled: no)
+Python (CPython) 3.12.3
+✅  Passed!
+
+🧪 Testing validate pycairo builds from source
+Defaulting to user installation because normal site-packages is not writeable
+Collecting pycairo==1.29.0
+  Downloading pycairo-1.29.0.tar.gz (665 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 665.9/665.9 kB 9.4 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: pycairo
+  Building wheel for pycairo (pyproject.toml): started
+  Building wheel for pycairo (pyproject.toml): finished with status 'done'
+  Created wheel for pycairo: filename=pycairo-1.29.0-cp312-cp312-linux_x86_64.whl size=133811 sha256=f4b2f67bcbde7648c3620698f28d0fb9b5af0416b1a22195d872e249744d6825
+  Stored in directory: /home/vscode/.cache/pip/wheels/c2/b5/c9/d810ed5a32d4b48af508383b5084496753574ded51b82ab6e7
+Successfully built pycairo
+Installing collected packages: pycairo
+Successfully installed pycairo-1.29.0
+✅  Passed!
+
+🧪 Testing validate CodeQL version
+CodeQL command-line toolchain release 2.21.4.
+✅  Passed!
+
+🧪 Testing validate CODEQL_HOME
+✅  Passed!
+
+🧪 Testing validate CodeQL codeql/misra-cpp-coding-standards pack
+✅  Passed!
+
+🧪 Testing validate CodeQL codeql/misra-c-coding-standards pack
+✅  Passed!
+
+🧪 Testing validate CodeQL codeql/cert-cpp-coding-standards pack
+✅  Passed!
+
+🧪 Testing validate CodeQL codeql/cert-c-coding-standards pack
+✅  Passed!
+
+🧪 Testing verify selected Bazel tooling
+{
+  "bazelisk": {
+    "command": "/usr/local/bin/bazelisk",
+    "reported": "Bazelisk version: v1.27.0\nWARNING: Invoking Bazel in batch mode since it is not invoked from within a workspace (below a directory having a MODULE.bazel file).\nOpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720"
+  },
+  "buildifier": {
+    "command": "/usr/local/bin/buildifier",
+    "reported": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353"
+  },
+  "starpls": {
+    "command": "/usr/local/bin/starpls",
+    "reported": "starpls version: v0.1.22"
+  }
+}
+✅  Passed!
+
+🧪 Testing validate preinstalled Bazel
+WARNING: Invoking Bazel in batch mode since it is not invoked from within a workspace (below a directory having a MODULE.bazel file).
+OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+Build label: 8.6.0
+✅  Passed!
+
+🧪 Testing validate compilation database helper
+bazel-compile-commands: 0.18.0
+✅  Passed!
+
+🧪 Testing validate environment variable CODEQL_HOME is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable DEBUGINFOD_URLS is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable HOME is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable HOSTNAME is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable JAVA_HOME is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable PATH is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable PWD is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable SHLVL is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable basedpyright_description is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable basedpyright_entrypoint is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable basedpyright_package is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable basedpyright_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable bazel_compile_commands_amd64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable bazel_compile_commands_arm64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable bazel_compile_commands_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable bazel_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable codeql_amd64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable codeql_arm64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable codeql_coding_standards_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable codeql_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable dive_amd64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable dive_arm64_sha256 is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable dive_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable gdb_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable gh_compatibility_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable git_compatibility_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable git_lfs_compatibility_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable graphviz_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable lcov_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable libcairo2_dev_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable llvm_compatibility_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable openjdk_21_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pkg_config_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pre_commit_description is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pre_commit_entrypoint is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pre_commit_package is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pre_commit_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable protobuf_compiler_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pycairo_smoke_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pytest_description is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pytest_entrypoint is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pytest_package is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable pytest_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable python_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable qemu_system_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable ripgrep_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable sshpass_version is not empty
+✅  Passed!
+
+🧪 Testing validate environment variable valgrind_version is not empty
+✅  Passed!
+
+💯  All passed!

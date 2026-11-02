@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+
+[tools]
+"pypi:pre-commit" = "4.7.0"
+"pypi:codespell" = "2.4.1"
+"pypi:pytest" = "9.0.2"
+"pypi:basedpyright" = "1.35.0"

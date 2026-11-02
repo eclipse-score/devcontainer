@@ -1,0 +1,56 @@
+[2026-11-01T17:42:06.785Z] Start: Run: docker buildx build --platform linux/amd64 --load --build-arg BUILDKIT_INLINE_CACHE=1 -f /tmp/devcontainercli-alex/container-features/0.90.0-1793554924586/Dockerfile-with-features -t score-mise-m3:local-amd64 --target dev_containers_target_stage --build-arg HTTP_PROXY= --build-arg HTTPS_PROXY= --build-arg http_proxy= --build-arg https_proxy= --build-arg NO_PROXY= --build-arg no_proxy= --build-context score_mise_runtime=/tmp/score-m3-mise/prepared-context-re
+#3 [context score_mise_runtime] load .dockerignore
+#3 transferring score_mise_runtime: 2B done
+#5 transferring context: 2B done
+#8 [context score_mise_runtime] load from client
+#9 [context score_mise_runtime] load from client
+#10 [context score_mise_runtime] load from client
+#12 transferring context: 33.44kB done
+#10 [context score_mise_runtime] load from client
+#16 [dev_container_auto_added_stage_label 2/7] RUN apt-get update     && apt-get install -y --no-install-recommends ca-certificates     && update-ca-certificates --fresh     && apt-get clean     && rm -rf /var/lib/apt/lists/*
+#10 [context score_mise_runtime] load from client
+#9 [context score_mise_runtime] load from client
+#9 transferring score_mise_runtime: 1.61kB done
+#10 [context score_mise_runtime] load from client
+#10 [context score_mise_runtime] load from client
+#10 [context score_mise_runtime] load from client
+#8 [context score_mise_runtime] load from client
+#8 transferring score_mise_runtime: 4.11kB 0.7s done
+#10 [context score_mise_runtime] load from client
+[2026-11-01T17:42:10.339Z] #10 transferring score_mise_runtime: 383.83MB 2.3s done
+#18 [dev_container_auto_added_stage_label 4/7] COPY --from=score_mise_runtime /tmp/score-m3-mise/prepared-runtime/data /tmp/score-m3-mise/prepared-runtime/data
+#19 [dev_container_auto_added_stage_label 5/7] COPY --from=score_mise_runtime /usr/local/bin /usr/local/bin
+#20 [dev_container_auto_added_stage_label 6/7] COPY --from=score_mise_runtime /usr/local/share/score-tools/prepared-tools.json /usr/local/share/score-tools/prepared-tools.json
+#26 [dev_containers_target_stage 3/7] RUN echo "_CONTAINER_USER_HOME=$( (command -v getent >/dev/null 2>&1 && getent passwd 'root' || grep -E '^root|^[^:]*:[^:]*:root:' /etc/passwd || true) | cut -d: -f6)" >> /tmp/dev-container-features/devcontainer-features.builtin.env && echo "_REMOTE_USER_HOME=$( (command -v getent >/dev/null 2>&1 && getent passwd 'vscode' || grep -E '^vscode|^[^:]*:[^:]*:vscode:' /etc/passwd || true) | cut -d: -f6)" >> /tmp/dev-container-features/devcontainer-features.builti
+#27 [dev_containers_target_stage 4/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=common-utils_0,target=/tmp/build-features-src/common-utils_0     cp -ar /tmp/build-features-src/common-utils_0 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/common-utils_0  && cd /tmp/dev-container-features/common-utils_0  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/common-utils_0
+#28 [dev_containers_target_stage 5/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=llvm_1,target=/tmp/build-features-src/llvm_1     cp -ar /tmp/build-features-src/llvm_1 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/llvm_1  && cd /tmp/dev-container-features/llvm_1  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/llvm_1
+#29 197.9 Setting up openjdk-21-jre-headless:amd64 (21.0.12.1+1-1~24.04.4) ...
+[2026-11-01T17:46:49.728Z] #29 199.3 Setting up graphviz (2.42.2-9ubuntu0.1) ...
+#29 201.6 Setting up openjdk-21-jdk-headless:amd64 (21.0.12.1+1-1~24.04.4) ...
+[2026-11-01T17:47:07.460Z] #29 217.1 Verified prepared native runtime for s-core-local; skipping catalog installation of: actionlint, ruff, shellcheck, uv, uvx, yamlfmt
+#29 217.1 Verified prepared python runtime for s-core-local; skipping catalog installation of: basedpyright, pre-commit, pytest
+[2026-11-01T17:47:35.126Z] #29 244.8 Package specifications to check for download: codeql/misra-cpp-coding-standards@2.54.0
+[2026-11-01T17:47:38.326Z] #29 247.8 Installed fresh codeql/misra-cpp-coding-standards@2.54.0
+[2026-11-01T17:47:38.535Z] #29 248.2 Package specifications to check for download: codeql/misra-c-coding-standards@2.54.0
+[2026-11-01T17:47:42.117Z] #29 251.6 Installed fresh codeql/misra-c-coding-standards@2.54.0
+[2026-11-01T17:47:42.326Z] #29 252.0 Package specifications to check for download: codeql/cert-cpp-coding-standards@2.54.0
+[2026-11-01T17:47:45.158Z] #29 254.7 Installed fresh codeql/cert-cpp-coding-standards@2.54.0
+[2026-11-01T17:47:45.373Z] #29 255.0 Package specifications to check for download: codeql/cert-c-coding-standards@2.54.0
+[2026-11-01T17:47:48.144Z] #29 257.7 Installed fresh codeql/cert-c-coding-standards@2.54.0
+#29 258.9 The following packages will be REMOVED:
+#29 259.1 Removing apt-transport-https (2.8.3) ...
+#29 259.1 Removing zstd (1.5.5+dfsg2-2build1.1) ...
+#30 [dev_containers_target_stage 7/7] RUN --mount=type=bind,from=dev_containers_feature_content_source,source=bazel_3,target=/tmp/build-features-src/bazel_3     cp -ar /tmp/build-features-src/bazel_3 /tmp/dev-container-features  && chmod -R 0755 /tmp/dev-container-features/bazel_3  && cd /tmp/dev-container-features/bazel_3  && chmod +x ./devcontainer-features-install.sh  && ./devcontainer-features-install.sh  && rm -rf /tmp/dev-container-features/bazel_3
+[2026-11-01T17:47:56.847Z] #30 5.700 Verified prepared native runtime for bazel-feature; skipping catalog installation of: bazelisk, buildifier
+[2026-11-01T17:47:57.076Z] #30 5.779 2026/11/01 17:47:56 Downloading https://releases.bazel.build/8.6.0/release/bazel-8.6.0-linux-x86_64...
+[2026-11-01T17:48:04.389Z] #30 13.09 /tmp/bazel-compile-commands.deb: OK
+[2026-11-01T17:48:05.284Z] #30 13.96   bazel-compile-commands
+#30 13.99 Get:1 /tmp/bazel-compile-commands.deb bazel-compile-commands amd64 0.18.0 [3605 kB]
+[2026-11-01T17:48:05.856Z] #30 14.71 Selecting previously unselected package bazel-compile-commands.
+#30 14.73 Preparing to unpack .../tmp/bazel-compile-commands.deb ...
+#30 14.73 Unpacking bazel-compile-commands (0.18.0) ...
+#30 14.83 Setting up bazel-compile-commands (0.18.0) ...
+#30 16.41 The following packages will be REMOVED:
+#30 16.60 Removing apt-transport-https (2.8.3) ...
+#31 naming to docker.io/library/score-mise-m3:local-amd64 done
+[2026-11-01T17:49:27.928Z] #31 DONE 79.0s

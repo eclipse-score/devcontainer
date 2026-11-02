@@ -1,0 +1,80 @@
+[
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "ruff-format",
+      "--files",
+      "tools/score_tools/catalog.py"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "[INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.\n[INFO] Initializing environment for https://github.com/eclipse-score/tooling.\n[INFO] Initializing environment for https://codeberg.org/fsfe/reuse-tool.\n[INFO] Initializing environment for https://codeberg.org/fsfe/reuse-tool:.[charset-normalizer,chardet].\nruff format..............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "ruff-check",
+      "--files",
+      "tools/score_tools/catalog.py"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "ruff check...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "shellcheck",
+      "--files",
+      "tools/run-tool"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "shellcheck...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "yamlfmt",
+      "--files",
+      ".pre-commit-config.yaml"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "yamlfmt..................................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "buildifier",
+      "--files",
+      "tools/BUILD.bazel"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "buildifier...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-mise-evaluation-fresh/data/installs/pypi-pre-commit/4.7.0/bin/pre-commit",
+      "run",
+      "actionlint",
+      "--files",
+      ".github/workflows/ci.yaml"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "status": 0,
+    "stdout": "actionlint...............................................................Passed\n",
+    "stderr": ""
+  }
+]

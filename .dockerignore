@@ -1,0 +1,12 @@
+# The root context is used only for Dockerfile COPY inputs. Dev Container local
+# feature sources are transported by the CLI's separate feature context.
+**
+!tools/
+!tools/**
+!src/
+!src/s-core-devcontainer/
+!src/s-core-devcontainer/.devcontainer/
+!src/s-core-devcontainer/.devcontainer/unset-proxy.sh
+tools/**/__pycache__/
+tools/**/*.pyc
+tools/**/.ruff_cache/

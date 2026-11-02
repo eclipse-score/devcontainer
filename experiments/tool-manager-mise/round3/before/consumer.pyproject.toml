@@ -1,0 +1,7 @@
+[project]
+name="round3-consumer"
+version="0.0.0"
+requires-python=">=3.10"
+dependencies=[
+    "score-tools-probe[ruff] @ git+file:///tmp/score-mise-evaluation/round3-package-0skzkvy6/producer@v0.1.0",
+]

@@ -1,0 +1,35 @@
+{
+  "shellcheck": {
+    "version": "0.10.0",
+    "description": "Check shell scripts",
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.aarch64.tar.xz",
+        "sha256": "324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb",
+        "os": "linux",
+        "cpu": "arm64",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "type": "tar.xz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz",
+        "sha256": "6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87",
+        "os": "linux",
+        "cpu": "x86_64",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "type": "tar.xz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.darwin.aarch64.tar.xz",
+        "sha256": "bbd2f14826328eee7679da7221f2bc3afb011f6a928b848c80c321f6046ddf81",
+        "os": "macos",
+        "cpu": "arm64",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "type": "tar.xz"
+      }
+    ]
+  }
+}

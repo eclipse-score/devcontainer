@@ -1,0 +1,7 @@
+[project]
+name="real-consumer"
+version="0.0.0"
+requires-python=">=3.12"
+dependencies = [
+    "score-mise-reference[basedpyright,pre-commit,pytest,ruff] @ file:///tmp/score-mise-m2/releases/0.3.1/dist/score_mise_reference-0.3.0-py3-none-any.whl",
+]
