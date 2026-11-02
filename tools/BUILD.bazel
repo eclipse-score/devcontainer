@@ -57,6 +57,7 @@ sh_test(
     name = "python_tool_runner_test",
     srcs = ["tests/python_tool_runner_test.sh"],
     data = [
+        "internal/catalog.py",
         "internal/devcontainer/install.py",
         "internal/run_python_tool.sh",
         "lockfiles/python_tools.bzl",

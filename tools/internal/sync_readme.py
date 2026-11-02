@@ -19,7 +19,9 @@ import argparse
 import sys
 from pathlib import Path
 
-from devcontainer.install import load_catalog_descriptions, load_catalog_versions
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from catalog import load_catalog_descriptions, load_catalog_versions
 
 
 TOOLS_DIR = Path(__file__).resolve().parent.parent
