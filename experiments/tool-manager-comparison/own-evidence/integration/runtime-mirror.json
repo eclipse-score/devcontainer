@@ -1,0 +1,7 @@
+{
+  "original_url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-linux-x64.tar.gz",
+  "mirror_url": "file:///tmp/score-own-copilot/opencode-linux-x64.tar.gz",
+  "sha256": "ef3aeeaf5522b10d69a3da7bbd6e6d8d259f845833d96b8310767d3407b18a35",
+  "version": "2.2.3",
+  "reason": "Container urllib timed out three times; bounded host curl succeeded; no production owner changed"
+}

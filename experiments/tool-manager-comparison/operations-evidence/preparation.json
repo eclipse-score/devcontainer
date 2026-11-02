@@ -1,0 +1,117 @@
+{
+  "date": "2026-11-01",
+  "online_preparation": true,
+  "nix_target_store": "Fresh disposable container, network none; unsigned local fixture cache explicitly trusted",
+  "mise_default_lock": "Accepted M4 lock with checksum_source=mise-versions; online locked installation succeeded",
+  "mise_revalidated_lock_env": {
+    "MISE_USE_VERSIONS_HOST": "0"
+  },
+  "mise_revalidated_prepare": [
+    {
+      "argv": [
+        "/tmp/score-m4-mise/bootstrap-check/mise",
+        "-C",
+        "/tmp/score-operations-20261101/mise-revalidated",
+        "lock",
+        "--platform",
+        "linux-x64"
+      ],
+      "exit": 0,
+      "stdout": "\u2192 Targeting 1 platform(s) for /tmp/score-operations-20261101/mise-revalidated/mise.lock: linux-x64\n\u2192 Processing 1 tool(s): github:withered-magic/starpls@0.1.22\n\u2713 Lockfile ready at /tmp/score-operations-20261101/mise-revalidated/mise.lock\n",
+      "stderr": "mise lock            github:withered-magic/starpls@0.1.22 linux-x64\nmise lock          \u2713 1 targets checked\n"
+    },
+    {
+      "argv": [
+        "/tmp/score-m4-mise/bootstrap-check/mise",
+        "-C",
+        "/tmp/score-operations-20261101/mise-revalidated",
+        "--locked",
+        "install"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "mise by @jdx \u2013 installing 1 tool\nmise \u2713 github:withered-magic/starpls@0.1.22  634ms  starpls-linux-amd64.tar.gz\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 1 tool in 636ms\n"
+    }
+  ],
+  "mise_default_prepare_log": "mise by @jdx \u2013 installing 1 tool\nmise \u2713 github:withered-magic/starpls@0.1.22  715ms  starpls-linux-amd64.tar.gz\nmise \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 1/1 \u00b7 installed 1 tool in 716ms\n",
+  "aqua_prepare_log": "\u001b[2mNov  1 22:00:26.690\u001b[0m \u001b[92mINF\u001b[0m updating a package checksum \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0mwithered-magic/starpls \u001b[2mpackage_version=\u001b[0mv0.1.22 \u001b[2mpackage_registry=\u001b[0mscore-local\n/tmp/score-operations-20261101/aqua/aqua-checksums.json\n\u001b[2mNov  1 22:00:26.955\u001b[0m \u001b[92mINF\u001b[0m download and unarchive the package \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0maqua-proxy \u001b[2mpackage_version=\u001b[0mv1.2.14 \u001b[2mregistry=\u001b[0m\"\"\n\u001b[2mNov  1 22:00:27.362\u001b[0m \u001b[92mINF\u001b[0m create a symbolic link \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0maqua-proxy \u001b[2mpackage_version=\u001b[0mv1.2.14 \u001b[2mregistry=\u001b[0m\"\"\n\u001b[2mNov  1 22:00:27.362\u001b[0m \u001b[92mINF\u001b[0m create a symbolic link \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0mwithered-magic/starpls \u001b[2mpackage_version=\u001b[0mv0.1.22 \u001b[2mcommand=\u001b[0mstarpls\n\u001b[2mNov  1 22:00:27.362\u001b[0m \u001b[92mINF\u001b[0m download and unarchive the package \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0mwithered-magic/starpls \u001b[2mpackage_version=\u001b[0mv0.1.22 \u001b[2mregistry=\u001b[0mscore-local\n",
+  "runtime_identities": [
+    {
+      "argv": [
+        "/tmp/score-m4-mise/bootstrap-check/mise",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2026.10.24 linux-x64 (2026-10-30)\n",
+      "stderr": "mise WARN  mise version 2026.10.25 available\nmise WARN  To update, run mise self-update\n"
+    },
+    {
+      "argv": [
+        "/tmp/score-aqua-eval/bootstrap/aqua",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "aqua version 2.65.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "nix (Nix) 2.35.4\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "score-mise-m3:local-amd64",
+        "--format",
+        "{{.Id}}"
+      ],
+      "exit": 0,
+      "stdout": "sha256:63d2cc6b87577fa1c61ce08d5c6d3703ceec20c9b0fdbdd20489a70507f14113\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "image",
+        "inspect",
+        "nixos/nix@sha256:f159a58f390677f41e8e900a74b6e2f9c7f27b364122ae6acf7a652ce6c551c0",
+        "--format",
+        "{{.Id}}"
+      ],
+      "exit": 0,
+      "stdout": "sha256:f159a58f390677f41e8e900a74b6e2f9c7f27b364122ae6acf7a652ce6c551c0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-eval-nix-m3-agent",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "path-info",
+        "--recursive",
+        "--json",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "{\"/nix/store/00fs4zz9c0jjcvs62wg39b91dydz7zqb-libidn2-2.3.8\":{\"ca\":null,\"deriver\":\"/nix/store/jpk0d1hjlr347h3wnl1s98p2mss58a83-libidn2-2.3.8.drv\",\"narHash\":\"sha256-AhKbCYdHqUpcwW9Bi6Ba0HHw6kIBI9PssbPafvFQx18=\",\"narSize\":372320,\"references\":[\"/nix/store/00fs4zz9c0jjcvs62wg39b91dydz7zqb-libidn2-2.3.8\",\"/nix/store/bx7jdvkba26sy20ryr4l617qqmzj9hff-libunistring-1.4.2\"],\"registrationTime\":1793553766,\"signatures\":[\"cache.nixos.org-1:42RF+Ij2rMW2JT0meHpkQtf8sy0Lj7I2eH3L5fmPPxqedTqkW1xjdxmFdZ9OsCdCCHcGLPkfDGisXwDaXCLkBA==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc\":{\"ca\":null,\"deriver\":\"/nix/store/3cqm2fqsxmr4063q0sb0mm4i2yianffl-gcc-16.2.0.drv\",\"narHash\":\"sha256-xB1g+UeyanBZ3S05VeEvG92IAdkdo3pqjTY7aZsS5uI=\",\"narSize\":202344,\"references\":[],\"registrationTime\":1793553765,\"signatures\":[\"cache.nixos.org-1:rORimX3Ya2/u3/0cci8VKBhm4GqvxxCzel3ooQ0ilykoEZixkR4BzRc2MV0u9rFSBh3LitYN6FKSnKtkMXaeDQ==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22\":{\"ca\":null,\"deriver\":\"/nix/store/w0jsay7npdn9abi1g292s1znnfxww6x4-starpls-0.1.22.drv\",\"narHash\":\"sha256-/a7jnDoBKp975sziHBynWMR7sg9bkgjYi01qi2DWpac=\",\"narSize\":14253232,\"references\":[\"/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib\",\"/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57\"],\"registrationTime\":1793562267,\"signatures\":[\"cache.nixos.org-1:8QoBO38DTfCEe1Yc61rvQ6/FncIxkOa7Ni9wxjMgbOPbd/qCvJOCVOZRfAQH9Sjisa4Jecz/usvMSytgJMznAw==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib\":{\"ca\":null,\"deriver\":\"/nix/store/3cqm2fqsxmr4063q0sb0mm4i2yianffl-gcc-16.2.0.drv\",\"narHash\":\"sha256-NY15ebdkUZiYoOSI9xJ7LBipHMJLBerHvZlxwTYU0zg=\",\"narSize\":10813624,\"references\":[\"/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc\",\"/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib\",\"/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57\"],\"registrationTime\":1793553767,\"signatures\":[\"cache.nixos.org-1:bk/hhki7CHSu/HgHfTPHrmc91TXfKiajawigyDEcQqYN0/BQLyekGugDAVB5PVYXDQmdwvnJHKFPgEw+UU58AA==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/bx7jdvkba26sy20ryr4l617qqmzj9hff-libunistring-1.4.2\":{\"ca\":null,\"deriver\":\"/nix/store/yx02z8md2355mdxcr8g6jqxc80pfimfg-libunistring-1.4.2.drv\",\"narHash\":\"sha256-hTXroDuc+1L8tRw5lvnmzEnp0PIENcKwQp5IRJtT70A=\",\"narSize\":2083096,\"references\":[\"/nix/store/bx7jdvkba26sy20ryr4l617qqmzj9hff-libunistring-1.4.2\"],\"registrationTime\":1793553765,\"signatures\":[\"cache.nixos.org-1:vupxPsj00vtvZtkkKLehtEFNm96zNG0z2+bCtb26Gbf6FMdDCTFS4Dx7qsDuWIT06QNlT5rnjJul4AsnGs7ODA==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/pkkjnyk4z46n18fkyqwlg24p272apb69-xgcc-16.2.0-libgcc\":{\"ca\":null,\"deriver\":\"/nix/store/6fl0gjqksasg1zh79h0ii1ixqg69w4g2-xgcc-16.2.0.drv\",\"narHash\":\"sha256-L5spLmHxo4zwWB8LQ5ZMgJqzfnjpt/GDVZ0nnobVmQk=\",\"narSize\":202272,\"references\":[],\"registrationTime\":1793553766,\"signatures\":[\"cache.nixos.org-1:wov6/qudcO/gwpyv/mPGNQ2WITw0nnzm2SGmva3J0h46zCHTjS21CMsAv9i6SDsvgd7RKisA1Ecvp5HiIf6xBg==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1},\"/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57\":{\"ca\":null,\"deriver\":\"/nix/store/lnsl90590vdiyzk0zas3anx25rkfbnqx-glibc-2.44-57.drv\",\"narHash\":\"sha256-vbneyMia3r6fPMNYX5wvLVdZ47Ws2tur3csaoOj2wPw=\",\"narSize\":35578240,\"references\":[\"/nix/store/00fs4zz9c0jjcvs62wg39b91dydz7zqb-libidn2-2.3.8\",\"/nix/store/pkkjnyk4z46n18fkyqwlg24p272apb69-xgcc-16.2.0-libgcc\",\"/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57\"],\"registrationTime\":1793553766,\"signatures\":[\"cache.nixos.org-1:08DGqOESH9djmWf+cH4ZCSvTDfFe7oGh9ij8M1AinBgYTyEU2YncnE3mHHRYideglZifz85QSqHNPCs1JorFAg==\"],\"storeDir\":\"/nix/store\",\"ultimate\":false,\"version\":1}}\n",
+      "stderr": "warning: '--json' without '--json-format' is deprecated; please specify '--json-format 1' or '--json-format 2'. This will become an error in a future release.\n"
+    }
+  ],
+  "manager_sha256": {
+    "mise": "be97dbac1c0b1fe08bd8c0cf01690f4273ea9aa02ad766b98d4e20c43eb9059d",
+    "aqua": "2543ef3ff53c73d7f0b845c96326a444a2ee9f50e808accc0453a9380747d011"
+  }
+}

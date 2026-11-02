@@ -1,0 +1,172 @@
+{
+  "format": 1,
+  "candidate": "mise",
+  "authored_policy": [
+    {
+      "tool": "starpls",
+      "owner": "github:withered-magic/starpls",
+      "version": "0.1.22",
+      "selection": "published-only native; existing bazel-feature member"
+    },
+    {
+      "tool": "codespell",
+      "owner": "pypi:codespell",
+      "version": "2.4.1",
+      "selection": "published-only; s-core-local Python composition"
+    }
+  ],
+  "selection": {
+    "repository_unchanged_vs_HEAD": true,
+    "s_core_local_apt_unchanged": true,
+    "s_core_local_native_unchanged": true,
+    "s_core_local_python_added": [
+      "codespell"
+    ],
+    "prepared": {
+      "s-core-local": {
+        "native": [
+          "shellcheck",
+          "ruff",
+          "actionlint",
+          "yamlfmt",
+          "uv",
+          "uvx"
+        ],
+        "python": [
+          "pre-commit",
+          "basedpyright",
+          "pytest",
+          "codespell"
+        ]
+      },
+      "bazel-feature": {
+        "native": [
+          "bazelisk",
+          "buildifier",
+          "starpls"
+        ],
+        "python": []
+      }
+    }
+  },
+  "authoring_and_adapter_burden": [
+    {
+      "edit": "Add tool/version to the existing mise profile config; add feature membership when required.",
+      "frequency": "normal per tool"
+    },
+    {
+      "edit": "Add Python package/entrypoint/description identity metadata to the existing data-only root Python catalog; preparation derives its version from the mise owner.",
+      "frequency": "normal per new Python CLI; no second version owner"
+    },
+    {
+      "edit": "Map the native backend identity and executable name for GitHub starpls, and map pypi:codespell to its console script.",
+      "frequency": "normal when a new backend or executable mapping is introduced"
+    },
+    {
+      "edit": "Generate published locks only for non-PyPI tools in that profile; preserve direct Python pins and omit the Python dependency graph.",
+      "frequency": "one-time profile-lock integration gap fixed for future published native tools"
+    },
+    {
+      "edit": "Permit checksum-verified bootstrap binary reuse and opt-in root-output refresh during fresh production preparation.",
+      "frequency": "one-time producer operation gap; not repeated per tool"
+    }
+  ],
+  "generated_outputs": [
+    {
+      "path": "experiments/tool-manager-mise/reference/mise.published.lock",
+      "observation": "native GitHub release checksum lock for linux-x64, linux-arm64, macos-arm64"
+    },
+    {
+      "path": "tools/lockfiles/starpls.lock.json",
+      "observation": "root rules_multitool archive with top-level member starpls; version 0.1.22; 3 supported platforms"
+    },
+    {
+      "path": "tools/score_tools/python_tools.bzl",
+      "observation": "codespell entrypoint generated at version 2.4.1; BUILD comprehension exposes //tools:codespell"
+    },
+    {
+      "path": "tools/prepared-selection.json",
+      "observation": "owner hash 47cda0a64cd22fc610df127fa6b5356ff1fbd39ccffe6ddf814e80862b81f717; codespell and starpls selected in the intended feature compositions"
+    },
+    {
+      "path": "/tmp/score-m4-mise/prepared-context-m4.release",
+      "observation": "fresh immutable local package release 0.6.1 with native and Python runtime outputs"
+    },
+    {
+      "path": "/tmp/score-m4-mise/prepared-context-m4",
+      "observation": "fresh linux/amd64 prepared handoff; manifest contains current owner versions and executable hashes"
+    }
+  ],
+  "observations": [
+    {
+      "area": "starpls registry",
+      "result": "standard Aqua registry lookup reports no aqua-registry package; native github backend resolves and locks the authentic withered-magic release at the existing version"
+    },
+    {
+      "area": "facade metadata",
+      "result": "Requires-Dist: codespell==2.4.1; extra == \"codespell\""
+    },
+    {
+      "area": "runtime behavior",
+      "result": "native and prepared outputs pass the shared absolute-path checker offline; root Bazel labels and ordinary uv/uvx flows report the declared versions and typo diagnostic"
+    }
+  ],
+  "execution": [
+    {
+      "check": "native release behavior",
+      "result": "passed",
+      "network": "disabled",
+      "evidence": "native-runtime-check.json"
+    },
+    {
+      "check": "prepared context behavior",
+      "result": "passed",
+      "network": "disabled",
+      "evidence": "prepared-runtime-check.json"
+    },
+    {
+      "check": "root Bazel labels and focused regressions",
+      "result": "passed",
+      "network": "default/online allowed",
+      "evidence": "root-bazel.txt"
+    },
+    {
+      "check": "ordinary facade wheel, uv project lock/sync/run, and uvx extra",
+      "result": "passed",
+      "network": "default/online allowed",
+      "evidence": "uv-facade.txt"
+    },
+    {
+      "check": "source, generated docs, owner/release/context drift",
+      "result": "passed",
+      "network": "not required",
+      "evidence": "source-checks.txt"
+    }
+  ],
+  "limitations": [
+    "The offline starpls protocol exchange completes, but stderr records an asynchronous Bazel Central Registry cache miss; project indexing/analysis is not asserted.",
+    "The historical M3 image was only a producer/cache base. No fresh M4 full DevContainer image build or current-owner image proof was performed.",
+    "The producer target is linux/amd64; ARM64 and macOS execution are not claimed.",
+    "No publication, update-bot, full-catalog migration, or downstream compatibility work is included."
+  ],
+  "peer_cross_read": {
+    "aqua": {
+      "sources": [
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/aqua.yaml",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/starpls-registry.yaml",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/export_native.py",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/prepare.py"
+      ],
+      "finding": "Aqua defines a local raw GitHub release recipe because its pinned standard registry lacks Starpls; the producer snapshots registry/policy and its root-lock exporter maps raw asset names and Linux arm64 to aarch64."
+    },
+    "nix": {
+      "sources": [
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/experiments/tool-manager-nix/reference/nix/flake.nix",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/experiments/tool-manager-nix/reference/prepare.py",
+        "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/experiments/tool-manager-nix/reference/evidence/m4/maintenance.json"
+      ],
+      "finding": "The locked flake selects pkgs.starpls 0.1.22 and pkgs.codespell 2.4.3 in published; its exporter retains existing Starpls root asset checksums when version is unchanged. Codespell follows each candidate native owner: Aqua/mise pin PyPI 2.4.1, while Nix uses its available native package at 2.4.3."
+    },
+    "transferable": "Registry recipes, package attributes, and raw-asset adapters are manager-specific. Compare concrete owner-to-consumer work and preserve each owner version; generate facade/catalog compatibility outputs instead of duplicating a version pin."
+  }
+}

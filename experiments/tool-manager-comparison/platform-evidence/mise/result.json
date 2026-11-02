@@ -1,0 +1,425 @@
+{
+  "candidate": "mise",
+  "candidate_evidence_sha256": {
+    "/tmp/score-m7-mise/final.md": "0f7a4836f58a0950fb31b18c9124142da28d00cf8dd9d476b952a33643301999",
+    "experiments/tool-manager-mise/reference/README-m7.md": "b02bb626d99946a253280d7752b01af36c483cdf7e76bb61952583632fc6f6ab"
+  },
+  "candidate_head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+  "candidate_worktree": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+  "checks": {
+    "bazelisk_negative": {
+      "bazel_downloaded_or_run": false,
+      "command": "USE_BAZEL_FALLBACK_VERSION=error:m7-prepared-no-bazel-call timeout 5s /tmp/score-m7-mise/runtime/bin/bazelisk --version",
+      "result": "exit 1; could not get Bazel version: not allowed to use fallback version \"m7-prepared-no-bazel-call\"",
+      "self_version_output_available_at_selected_pin": false
+    },
+    "diff_check": "git diff --check: passed",
+    "direct_and_strict": "Ruff and pre-commit outputs matched; forced host strict mode bypassed mise and Bazel; poison markers untouched",
+    "functional": {
+      "actionlint": "fixture passed",
+      "basedpyright": "0 errors, 0 warnings, 0 notes",
+      "buildifier": "format fixture passed",
+      "codespell_negative": "expected exit 65, reported teh ==> the",
+      "pre_commit": "fixture config valid",
+      "pytest": "1 passed",
+      "ruff_negative": "expected exit 1, F821 undefined name",
+      "shellcheck": "fixture passed",
+      "uvx_from_local_wheel": "passed offline: ruff 0.11.13"
+    },
+    "macos_arm64": {
+      "execution": "not run",
+      "review_log": "/tmp/score-m7-mise/logs/macos-arm64-audit.log",
+      "static_review": "all 9 native lock records plus Starpls have macOS ARM URL+sha256; bootstrap has Darwin arm64 branch+sha256; four PyPI entries use generic Python/uv resolution"
+    },
+    "maintained_refresh_check": "python3 tools/internal/mise/refresh.py --check: passed, owner locks and compatibility outputs current",
+    "package_check": "python3 tools/internal/mise/python_package.py check /tmp/score-m7-mise/dependency-release: passed",
+    "provision_commands": [
+      "docker exec score-m7-mise-arm64-provision /bin/bash -lc 'set -eu; bash /tmp/score-m7-mise/source/tools/internal/mise/bootstrap.sh /tmp/score-m7-mise/runtime/mise; /tmp/score-m7-mise/runtime/mise/mise --version'",
+      "docker exec score-m7-mise-arm64-provision /bin/bash -lc 'set -eu; python3 /tmp/score-m7-mise/source/tools/internal/mise/provision.py s-core-local --owner-root /tmp/score-m7-mise/source/tools/mise --data-dir /tmp/score-m7-mise/runtime/data --bin-dir /tmp/score-m7-mise/runtime/bin --mise /tmp/score-m7-mise/runtime/mise/mise'",
+      "docker exec score-m7-mise-arm64-provision /bin/bash -lc 'set -eu; python3 /tmp/score-m7-mise/source/tools/internal/mise/provision.py bazel-feature --owner-root /tmp/score-m7-mise/source/tools/mise --data-dir /tmp/score-m7-mise/runtime/data --bin-dir /tmp/score-m7-mise/runtime/bin --mise /tmp/score-m7-mise/runtime/mise/mise'"
+    ],
+    "release_build_command": "python3 tools/internal/mise/python_package.py build --output /tmp/score-m7-mise/dependency-release --version 0.6.1 --package-name score-mise-dependencies --uv /tmp/score-m5-mise/provision-bin/uv",
+    "release_check_command": "python3 tools/internal/mise/python_package.py check /tmp/score-m7-mise/dependency-release",
+    "runtime_commands": [
+      "docker exec score-m7-mise-arm64-runtime /tmp/score-m7-mise/probes/selected-versions.sh",
+      "docker exec score-m7-mise-arm64-runtime /tmp/score-m7-mise/probes/execute-behaviors.sh",
+      "docker exec score-m7-mise-arm64-consumer /bin/bash -lc 'set -eu; id; uname -m; uv lock --offline; uv sync --offline; uv run --offline --no-sync ruff --version'"
+    ],
+    "source_changes_for_m7": "none; only experiments/tool-manager-mise/reference/README-m7.md added",
+    "uvx_prefetch_command": "docker exec --user 1000:1000 -e HOME=/home/vscode -e PATH=/tmp/score-m7-mise/runtime/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin -e UV_CACHE_DIR=/tmp/score-m7-mise/runtime/uv-cache -e UV_PYTHON=/usr/bin/python3 -e UV_PYTHON_PREFERENCE=only-system score-m7-mise-arm64-provision /bin/bash -c '/tmp/score-m7-mise/runtime/bin/uvx --from \"score-mise-dependencies[ruff] @ file:///tmp/score-m7-mise/runtime/release/score_mise_dependencies-0.6.1-py3-none-any.whl\" ruff --version'",
+    "uvx_prefetch_result": "exit 0; ruff 0.11.13; cache then exercised offline in runtime"
+  },
+  "date": "2026-11-02",
+  "execution": {
+    "base_image": "score-tooling-reference:final-arm64",
+    "container_arch": "aarch64 / linux-arm64",
+    "containers": {
+      "provisioner": {
+        "id": "5402e7823ef315159e0cb317d5f47deab0e47b8bd501db59f8b8a059165efbdc",
+        "name": "score-m7-mise-arm64-provision",
+        "network": "bridge / online for locked artifact and package/cache preparation",
+        "user": "root for mise bootstrap/install; uid 1000 for uvx cache prewarm"
+      },
+      "runtime": {
+        "id": "ece568bc4bb19519a315faf23384fbb4ec4860b7937495df7789df01c20b346e",
+        "name": "score-m7-mise-arm64-runtime",
+        "network": "none",
+        "root_filesystem": "read-only",
+        "user": "1000:1000 (vscode)"
+      },
+      "wheel_consumer": {
+        "id": "eed30ce2cf41a41fe6e1881b7dbfa22e53ee6e514c8c525ae20e92f130d99ed9",
+        "name": "score-m7-mise-arm64-consumer",
+        "network": "none",
+        "root_filesystem": "read-only",
+        "user": "1000:1000 (vscode)"
+      }
+    },
+    "docker_host_arch": "amd64; ARM64 ran under QEMU user emulation, not physical ARM hardware",
+    "fresh_prefix": "/tmp/score-m7-mise/runtime",
+    "full_image_build": false,
+    "image_id": "sha256:b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a",
+    "mise_bootstrap": "2026.10.24 linux-arm64; checksum verified",
+    "old_installed_m5_m6_payload_reused": false,
+    "os": "Ubuntu 24.04.5 LTS",
+    "python": "3.12.3",
+    "staged_source_bytes": 70716,
+    "staged_source_count": 22,
+    "staged_source_directory": "/tmp/score-m7-mise/source",
+    "staged_source_matches_worktree": true,
+    "staged_sources": {
+      "tools/environments.json": {
+        "matches_worktree": true,
+        "sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586",
+        "staged_sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586"
+      },
+      "tools/internal/mise/bootstrap.sh": {
+        "matches_worktree": true,
+        "sha256": "1c4ec69e27eb6ac8230370aefdc17ca7ef2b23f32014ba4e4194e6c087a5c8ae",
+        "staged_sha256": "1c4ec69e27eb6ac8230370aefdc17ca7ef2b23f32014ba4e4194e6c087a5c8ae"
+      },
+      "tools/internal/mise/provision.py": {
+        "matches_worktree": true,
+        "sha256": "2ef61c222642aa2b20fc1a074a3eb232dcf8188b9e4ae70bb278a8fc69ba6978",
+        "staged_sha256": "2ef61c222642aa2b20fc1a074a3eb232dcf8188b9e4ae70bb278a8fc69ba6978"
+      },
+      "tools/lockfiles/actionlint.lock.json": {
+        "matches_worktree": true,
+        "sha256": "f6b6f5f64b94f2739e24774fdc9e5c10e864251793d1306af9c0cd078d49c4ee",
+        "staged_sha256": "f6b6f5f64b94f2739e24774fdc9e5c10e864251793d1306af9c0cd078d49c4ee"
+      },
+      "tools/lockfiles/apm.lock.json": {
+        "matches_worktree": true,
+        "sha256": "da8fe03f10c98fb8751fd77f043b9cd795eaefb462d112c0777667a3dba88c83",
+        "staged_sha256": "da8fe03f10c98fb8751fd77f043b9cd795eaefb462d112c0777667a3dba88c83"
+      },
+      "tools/lockfiles/bazelisk.lock.json": {
+        "matches_worktree": true,
+        "sha256": "22e20c34ef471d8cdd507f01a96ea51e879e1febec52b7a842a16add4dd10a3d",
+        "staged_sha256": "22e20c34ef471d8cdd507f01a96ea51e879e1febec52b7a842a16add4dd10a3d"
+      },
+      "tools/lockfiles/buildifier.lock.json": {
+        "matches_worktree": true,
+        "sha256": "d9ec4fe2557cc324da33c4d3d1b2333311a065696243ad70e1db34d45c2b9aab",
+        "staged_sha256": "d9ec4fe2557cc324da33c4d3d1b2333311a065696243ad70e1db34d45c2b9aab"
+      },
+      "tools/lockfiles/opencode.lock.json": {
+        "matches_worktree": true,
+        "sha256": "775a4dfeede65c88f782f9aac1212ad3e55ec32a29d10b7a83b006ce12a99366",
+        "staged_sha256": "775a4dfeede65c88f782f9aac1212ad3e55ec32a29d10b7a83b006ce12a99366"
+      },
+      "tools/lockfiles/ruff.lock.json": {
+        "matches_worktree": true,
+        "sha256": "66d3185318f0211e9f1a0e4ac29ff5f1305413e6122e1d9929c2c77fb4543a50",
+        "staged_sha256": "66d3185318f0211e9f1a0e4ac29ff5f1305413e6122e1d9929c2c77fb4543a50"
+      },
+      "tools/lockfiles/shellcheck.lock.json": {
+        "matches_worktree": true,
+        "sha256": "b10aa53bbb92fbd5ef47f85a40833c43961b6283bb2bc1fb9f10e369139166a4",
+        "staged_sha256": "b10aa53bbb92fbd5ef47f85a40833c43961b6283bb2bc1fb9f10e369139166a4"
+      },
+      "tools/lockfiles/starpls.lock.json": {
+        "matches_worktree": true,
+        "sha256": "f3ebb7159568624d2bbb75428f917b4f54b9a8280de78bbe4161c34a3a178b32",
+        "staged_sha256": "f3ebb7159568624d2bbb75428f917b4f54b9a8280de78bbe4161c34a3a178b32"
+      },
+      "tools/lockfiles/uv.lock.json": {
+        "matches_worktree": true,
+        "sha256": "62db6c35ffac3cb0cd84bc5410351e7c863a975460e7edfac6bafd8ff12734ee",
+        "staged_sha256": "62db6c35ffac3cb0cd84bc5410351e7c863a975460e7edfac6bafd8ff12734ee"
+      },
+      "tools/lockfiles/yamlfmt.lock.json": {
+        "matches_worktree": true,
+        "sha256": "2dcff5a43cdd94ea0510dffed0b4d8079e7fab3c2aad51103cc2f1b188237c41",
+        "staged_sha256": "2dcff5a43cdd94ea0510dffed0b4d8079e7fab3c2aad51103cc2f1b188237c41"
+      },
+      "tools/mise/mise.native.lock": {
+        "matches_worktree": true,
+        "sha256": "d9e203cf1cb4199ea57f20c4792215ffbca7d6bf2df26fe361d1251e8b8ebc12",
+        "staged_sha256": "d9e203cf1cb4199ea57f20c4792215ffbca7d6bf2df26fe361d1251e8b8ebc12"
+      },
+      "tools/mise/mise.native.toml": {
+        "matches_worktree": true,
+        "sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558",
+        "staged_sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558"
+      },
+      "tools/mise/mise.published.lock": {
+        "matches_worktree": true,
+        "sha256": "a31d79e87c9842253af9963466e6fc176266fa908e6910a2007444af9d534e0a",
+        "staged_sha256": "a31d79e87c9842253af9963466e6fc176266fa908e6910a2007444af9d534e0a"
+      },
+      "tools/mise/mise.published.toml": {
+        "matches_worktree": true,
+        "sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe",
+        "staged_sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe"
+      },
+      "tools/mise/mise.python.toml": {
+        "matches_worktree": true,
+        "sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f",
+        "staged_sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f"
+      },
+      "tools/run-tool": {
+        "matches_worktree": true,
+        "sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31",
+        "staged_sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31"
+      },
+      "tools/score_tools/__init__.py": {
+        "matches_worktree": true,
+        "sha256": "f38b241f96dc6130b76c545c1238eeae213c6791970ae14b2727e30121d5c909",
+        "staged_sha256": "f38b241f96dc6130b76c545c1238eeae213c6791970ae14b2727e30121d5c909"
+      },
+      "tools/score_tools/catalog.py": {
+        "matches_worktree": true,
+        "sha256": "a9779fb46b052278494ab4c8ee972f621eed66ee6b8cec1872643cdd554213d2",
+        "staged_sha256": "a9779fb46b052278494ab4c8ee972f621eed66ee6b8cec1872643cdd554213d2"
+      },
+      "tools/score_tools/python_tools.bzl": {
+        "matches_worktree": true,
+        "sha256": "b6bc3c418be7b8c8b20f2b2f8ab35358660b129ed14705ef6bffb9073e9c54d9",
+        "staged_sha256": "b6bc3c418be7b8c8b20f2b2f8ab35358660b129ed14705ef6bffb9073e9c54d9"
+      }
+    }
+  },
+  "inherited_dirty_work_preserved": true,
+  "limitations": [
+    "ARM64 execution used QEMU on amd64; no physical ARM hardware claim.",
+    "macOS ARM received configuration review only; no install or execution.",
+    "Bazelisk 1.27.0 self-version cannot be obtained offline without allowing Bazel resolution; safe guard behavior was verified instead.",
+    "Online setup/cache preparation ran as root for provision and uid 1000 for uvx prewarm; final runtime and wheel consumer were non-root and network isolated.",
+    "No full feature image build, publication, commit, push, or winner/adoption decision."
+  ],
+  "m6_root_gates": "all six passed per root-owned docs/tooling-integration-milestone.md",
+  "maintained_source_sha256": {
+    "tools/internal/mise/python_package.py": "1dc0ccb5321ac2d4836bfa2206fdef4e5cc56d1b723b360c133f33cea2ea29c2",
+    "tools/internal/mise/refresh.py": "7d02d13e98e7c54fe233cbc003b540e57ad761f721e63cedb2056e8312a1d4a3",
+    "tools/tests/test_mise_provision.py": "bd33858938733c73960d5eddba0525c191398dda157263e22cfc6241aca1e6a6",
+    "tools/tests/test_mise_python_package.py": "4b9ae004dd5c656dad431d2f54911f0ca7aab7d0e90101e7286ad82419f3022c"
+  },
+  "maintenance_ledger": {
+    "one_time_m7": "fresh ARM prefix provisioning, output fingerprints, non-root offline checks, and macOS ARM static config review",
+    "platform_install": "bootstrap.sh and provision.py provide recurring setup and selected-command reconciliation",
+    "prepared_execution": "tools/run-tool retains direct strict host execution and Bazel fallback",
+    "python_release": "refresh.py owns compatibility exports; python_package.py builds/checks normal dependency package; release operator supplies explicit version and package identity and selects future host",
+    "recurring_platform_work": "keep locks/extras aligned to owner sources and repeat fresh-prefix execution for supported platforms",
+    "selection_and_pins": "environments.json plus mise owner manifests and generated artifact locks; maintain versions once at the owner"
+  },
+  "milestone": "M7",
+  "profile": {
+    "commands": {
+      "actionlint": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/actionlint",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-rhysd-actionlint/1.7.7/actionlint",
+        "sha256": "446687e63fac45472b0a66bae28975c28678af062670af119c11a7087baf35cc",
+        "version_result": "1.7.7"
+      },
+      "apm": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/apm",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/github-microsoft-apm/0.35.0/apm",
+        "sha256": "9d2f7cf34ec2fa0b3d806a4711abd223ee429839ec96787279f1c5d82abd25b8",
+        "version_result": "0.35.0"
+      },
+      "basedpyright": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/basedpyright",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/pypi-basedpyright/1.35.0/basedpyright/bin/basedpyright",
+        "sha256": "f2574f0a95bd41a48ba983e74a92bf1533fbbe6b83dea322d3e6771893a42514",
+        "version_result": "1.35.0"
+      },
+      "bazelisk": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/bazelisk",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-bazelbuild-bazelisk/1.27.0/bazelisk",
+        "sha256": "bb608519a440d45d10304eb684a73a2b6bb7699c5b0e5434361661b25f113a5d",
+        "version_result": "1.27.0 (safe fallback-guard invocation exit 1; no self-version output)"
+      },
+      "buildifier": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/buildifier",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1/buildifier",
+        "sha256": "3baa1cf7eb41d51f462fdd1fff3a6a4d81d757275d05b2dd5f48671284e9a1a5",
+        "version_result": "8.2.1"
+      },
+      "codespell": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/codespell",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+        "sha256": "c0573b24fcc695a7aae73f2c79df224bac3cad14ff4700bfc5b85367fa7b19e0",
+        "version_result": "2.4.1"
+      },
+      "opencode": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/opencode",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-anomalyco-opencode/2.2.3/opencode",
+        "sha256": "d6ccc061d9da0ad6a207a6ee1f79734aba0b9ac28e6ed6ffc4196f25f4634a70",
+        "version_result": "2.2.3"
+      },
+      "pre-commit": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/pre-commit",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/pypi-pre-commit/4.7.0/pre-commit/bin/pre-commit",
+        "sha256": "95957d22439f420b246775a67b289d9ffd1a252c084f196d0d7475217cdac1fd",
+        "version_result": "4.7.0"
+      },
+      "pytest": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/pytest",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/pypi-pytest/9.0.2/pytest/bin/pytest",
+        "sha256": "fa9d8fab639d6747e93e01e53d903a2858b2dda55a598b2171411fce8002c87f",
+        "version_result": "9.0.2"
+      },
+      "ruff": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/ruff",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-astral-sh-ruff/0.11.13/ruff-aarch64-unknown-linux-gnu/ruff",
+        "sha256": "e3c731446ef2dd7938d34bc0e8ca9bb3bdbe399e2555a019a9b508c06404df8b",
+        "version_result": "0.11.13"
+      },
+      "shellcheck": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/shellcheck",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0/shellcheck",
+        "sha256": "4111c09318d10b93653a42179381273f31061b34987978346fbd19a6e81a74c3",
+        "version_result": "0.10.0"
+      },
+      "starpls": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/starpls",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+        "sha256": "55877ec4c3ff03e1d90d59c76f69a3a144b6c29688747c8ac4d77993e2eef1ad",
+        "version_result": "0.1.22"
+      },
+      "uv": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/uv",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/uv/0.13.6/uv-aarch64-unknown-linux-gnu/uv",
+        "sha256": "7d60258dc76bca41d7b3591cdd829fa9633827fad944970bf5e1fb2a8c01476d",
+        "version_result": "0.13.6"
+      },
+      "uvx": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/uvx",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/uv/0.13.6/uv-aarch64-unknown-linux-gnu/uvx",
+        "sha256": "9b3cadb1a15326792f24fd210b6d10428457b68eb00b92f2c92b36f85a23fe54",
+        "version_result": "0.13.6"
+      },
+      "yamlfmt": {
+        "exposed_path": "/tmp/score-m7-mise/runtime/bin/yamlfmt",
+        "prepared_target": "/tmp/score-m7-mise/runtime/data/installs/aqua-google-yamlfmt/0.17.0/yamlfmt",
+        "sha256": "4b0eb758288a7a7143008b7e3e174276262e38b62fa8df8bba8176c10d282b1f",
+        "version_result": "0.17.0"
+      }
+    },
+    "environments": [
+      "s-core-local",
+      "bazel-feature"
+    ],
+    "owner_sources": [
+      "tools/environments.json",
+      "tools/mise/mise.native.toml",
+      "tools/mise/mise.native.lock",
+      "tools/mise/mise.published.toml",
+      "tools/mise/mise.published.lock",
+      "tools/mise/mise.python.toml",
+      "tools/lockfiles/*.lock.json"
+    ],
+    "pins_changed": false
+  },
+  "raw_logs": {
+    "bazelisk-no-bazel-negative.log": {
+      "path": "/tmp/score-m7-mise/logs/bazelisk-no-bazel-negative.log",
+      "sha256": "878c643b450cac695f537b40260de72ffb7491fa72009dcea2d3a8113b8de1c0"
+    },
+    "bootstrap.log": {
+      "path": "/tmp/score-m7-mise/logs/bootstrap.log",
+      "sha256": "4a17a37436498837ef52c22a936ba63ee0d0ea4eab52ccea270113237b34bb6e"
+    },
+    "macos-arm64-audit.log": {
+      "path": "/tmp/score-m7-mise/logs/macos-arm64-audit.log",
+      "sha256": "dc06cfa129978865fc97fb63530d3a01dbf70deb72ac88a04312a50c6111672f"
+    },
+    "offline-behaviors-final.log": {
+      "path": "/tmp/score-m7-mise/logs/offline-behaviors-final.log",
+      "sha256": "6577a90dcdbf519aac55186012a893b6168056b93af838adbe54985f1a7d3d68"
+    },
+    "offline-behaviors.log": {
+      "path": "/tmp/score-m7-mise/logs/offline-behaviors.log",
+      "sha256": "1b8b7f63878d6891004d34978019343d9c0b421a45ab2d9ca4d8fb81be3f356e"
+    },
+    "provision-bazel-feature.log": {
+      "path": "/tmp/score-m7-mise/logs/provision-bazel-feature.log",
+      "sha256": "dddcca430c0d95cbccd772f97e79be3d375905c4d7947948fee526e94f0b582c"
+    },
+    "provision-s-core-local.log": {
+      "path": "/tmp/score-m7-mise/logs/provision-s-core-local.log",
+      "sha256": "3a6a974da2f31be4b85b479fecc3b6b51b230eda632d89e54a5b94d2c89fa570"
+    },
+    "python-package-check.log": {
+      "path": "/tmp/score-m7-mise/logs/python-package-check.log",
+      "sha256": "3c83af12e654d6604eabc874d9403860e3f92c64b5902fff1471f290f635803f"
+    },
+    "runtime-context.log": {
+      "path": "/tmp/score-m7-mise/logs/runtime-context.log",
+      "sha256": "5094095109e97cba2e10dca36fc4385ea0909d94ea8cb022f2d5ba0f92e71c1b"
+    },
+    "selected-versions-final.log": {
+      "path": "/tmp/score-m7-mise/logs/selected-versions-final.log",
+      "sha256": "ebaa70c3395259647bce26cd20d33a8c148d75cadfdc8972953acdecf2887050"
+    },
+    "selected-versions-safe.log": {
+      "path": "/tmp/score-m7-mise/logs/selected-versions-safe.log",
+      "sha256": "7b48f298c408a8b286dacf37abf5329935514efba0ec498c10f502c11bc15018"
+    },
+    "selected-versions.log": {
+      "path": "/tmp/score-m7-mise/logs/selected-versions.log",
+      "sha256": "ebaa70c3395259647bce26cd20d33a8c148d75cadfdc8972953acdecf2887050"
+    },
+    "substrate.log": {
+      "path": "/tmp/score-m7-mise/logs/substrate.log",
+      "sha256": "bf4e1e608cfc60df666893665a98eb8dce7aa1ae19acd218880cabc1f26bb19e"
+    },
+    "uv-consumer-offline-final.log": {
+      "path": "/tmp/score-m7-mise/logs/uv-consumer-offline-final.log",
+      "sha256": "281bbc868fe3c3d21bf8b0f0ce551050969772ecf91c0e978af67e4c0796db40"
+    },
+    "uv-consumer-offline.log": {
+      "path": "/tmp/score-m7-mise/logs/uv-consumer-offline.log",
+      "sha256": "6cb4bbf492fc5b54d025fd077c5eb722e10f61f1b79651e468244c2ca931d858"
+    },
+    "uv-consumer-prefetch.log": {
+      "path": "/tmp/score-m7-mise/logs/uv-consumer-prefetch.log",
+      "sha256": "d2ed27aa85237eb453ae8a02b8be072e6eb19028b99692227f01743bd372a16c"
+    },
+    "uvx-offline-verbose.log": {
+      "path": "/tmp/score-m7-mise/logs/uvx-offline-verbose.log",
+      "sha256": "b66883828dba3e0046d80756cece27bf22a3cf9de394b7a10e94d0bab1f29f3a"
+    },
+    "uvx-prefetch-success.log": {
+      "path": "/tmp/score-m7-mise/logs/uvx-prefetch-success.log",
+      "sha256": "dc1a0e123cb753db8c397aa018434051e16b22e34e6c2bc1e708758eb53a7d35"
+    },
+    "uvx-prefetch.log": {
+      "path": "/tmp/score-m7-mise/logs/uvx-prefetch.log",
+      "sha256": "8f5157533e8d44ead9189c75c1f49d6cb3863b58785adb7ba5706217581cf788"
+    }
+  },
+  "release": {
+    "built_and_checked_with_maintained_python_package_api": true,
+    "package_name": "score-mise-dependencies",
+    "public_identity_or_host_selected": false,
+    "published": false,
+    "uv_lock_sync_run_offline": "passed using local wheel dependency; uv run returned ruff 0.11.13",
+    "uvx_offline": "passed using local wheel [ruff] extra; returned ruff 0.11.13",
+    "version": "0.6.1",
+    "wheel": "/tmp/score-m7-mise/dependency-release/dist/score_mise_dependencies-0.6.1-py3-none-any.whl",
+    "wheel_sha256": "2518871b2c815a56480f1f35c370eca02af52e67e0bed606efeec4fcb98b73a1"
+  },
+  "status": "stable for root comparison; no winner/adoption claim"
+}

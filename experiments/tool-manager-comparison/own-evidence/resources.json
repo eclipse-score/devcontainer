@@ -1,0 +1,8 @@
+{
+  "captured_at": "2026-11-02T13:33:22.768804+00:00",
+  "cleanup": "Exact task resources only; no system, volume or cache prune.",
+  "free_bytes": 43250679808,
+  "free_gib": 40.28,
+  "initial_free_gib_after_parent_cleanup_approx": 42,
+  "task_test_containers_or_builders_still_running": []
+}

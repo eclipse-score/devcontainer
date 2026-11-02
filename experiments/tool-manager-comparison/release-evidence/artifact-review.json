@@ -1,0 +1,125 @@
+{
+  "captured_utc": "2026-11-02T10:23:25.373138+00:00",
+  "scope": "Independent actual local wheels, same-project authored requirements and resolver locks; no new runtime execution",
+  "candidates": {
+    "mise": {
+      "wheels": {
+        "a": {
+          "path": "/tmp/score-m8-mise/handoff/wheels/score_mise_m8_local-0.8.0-py3-none-any.whl",
+          "name": "score-mise-m8-local",
+          "version": "0.8.0",
+          "requires_dist": [
+            "ruff==0.11.13; extra == \"ruff\"",
+            "basedpyright==1.35.0; extra == \"basedpyright\"",
+            "codespell==2.4.1; extra == \"codespell\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "pytest==9.0.2; extra == \"pytest\""
+          ],
+          "sha256": "8f1329084e0558a4817fba6857f1fa06e17efda6d7284840cc74a4b0c787a491"
+        },
+        "b": {
+          "path": "/tmp/score-m8-mise/handoff/wheels/score_mise_m8_local-0.8.1-py3-none-any.whl",
+          "name": "score-mise-m8-local",
+          "version": "0.8.1",
+          "requires_dist": [
+            "ruff==0.14.6; extra == \"ruff\"",
+            "basedpyright==1.35.0; extra == \"basedpyright\"",
+            "codespell==2.4.1; extra == \"codespell\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "pytest==9.0.2; extra == \"pytest\""
+          ],
+          "sha256": "bfbffe7f199610a6f71f07c18733a8ea9cff7e23b41cca3f4a817a5462e7e4e1"
+        }
+      },
+      "consumer_release_only_edit_verified": true,
+      "resolver_versions": {
+        "a": "0.11.13",
+        "b": "0.14.6"
+      }
+    },
+    "aqua": {
+      "wheels": {
+        "a": {
+          "path": "/tmp/score-m8-aqua/handoff/wheels/score_aqua_m8_local-0.8.0-py3-none-any.whl",
+          "name": "score-aqua-m8-local",
+          "version": "0.8.0",
+          "requires_dist": [
+            "pre-commit==4.7.0; extra == \"repository\"",
+            "ruff==0.11.12; extra == \"repository\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "ruff==0.11.12; extra == \"ruff\"",
+            "pre-commit==4.7.0; extra == \"published\"",
+            "pytest==9.0.2; extra == \"published\"",
+            "basedpyright==1.35.0; extra == \"published\"",
+            "codespell==2.4.1; extra == \"published\"",
+            "ruff==0.11.12; extra == \"published\"",
+            "pytest==9.0.2; extra == \"pytest\"",
+            "basedpyright==1.35.0; extra == \"basedpyright\"",
+            "codespell==2.4.1; extra == \"codespell\""
+          ],
+          "sha256": "5fb94ac928e3253dc3d76fd537f5c341fb3b941ac50a09478850deced57543f1"
+        },
+        "b": {
+          "path": "/tmp/score-m8-aqua/handoff/wheels/score_aqua_m8_local-0.8.1-py3-none-any.whl",
+          "name": "score-aqua-m8-local",
+          "version": "0.8.1",
+          "requires_dist": [
+            "pre-commit==4.7.0; extra == \"repository\"",
+            "ruff==0.14.6; extra == \"repository\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "ruff==0.14.6; extra == \"ruff\"",
+            "pre-commit==4.7.0; extra == \"published\"",
+            "pytest==9.0.2; extra == \"published\"",
+            "basedpyright==1.35.0; extra == \"published\"",
+            "codespell==2.4.1; extra == \"published\"",
+            "ruff==0.14.6; extra == \"published\"",
+            "pytest==9.0.2; extra == \"pytest\"",
+            "basedpyright==1.35.0; extra == \"basedpyright\"",
+            "codespell==2.4.1; extra == \"codespell\""
+          ],
+          "sha256": "dc3203a6557b0db411bb6aab5204b9993f898d4a4a929a073ca8437c560f7012"
+        }
+      },
+      "consumer_release_only_edit_verified": true,
+      "resolver_versions": {
+        "a": "0.11.12",
+        "b": "0.14.6"
+      }
+    },
+    "nix": {
+      "wheels": {
+        "a": {
+          "path": "/tmp/score-m8-nix/handoff/score_devcontainer_nix_candidate-0.8.0-py3-none-any.whl",
+          "name": "score-devcontainer-nix-candidate",
+          "version": "0.8.0",
+          "requires_dist": [
+            "ruff==0.17.2; extra == \"ruff\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "basedpyright==1.39.8; extra == \"basedpyright\"",
+            "pytest==9.1.1; extra == \"pytest\"",
+            "codespell==2.4.3; extra == \"codespell\""
+          ],
+          "sha256": "301ea5c2fe6ccd982aa88525c17613e44402f5018332cffca0016f68f2d79615"
+        },
+        "b": {
+          "path": "/tmp/score-m8-nix/handoff/score_devcontainer_nix_candidate-0.8.1-py3-none-any.whl",
+          "name": "score-devcontainer-nix-candidate",
+          "version": "0.8.1",
+          "requires_dist": [
+            "ruff==0.14.6; extra == \"ruff\"",
+            "pre-commit==4.7.0; extra == \"pre-commit\"",
+            "basedpyright==1.39.8; extra == \"basedpyright\"",
+            "pytest==9.1.1; extra == \"pytest\"",
+            "codespell==2.4.3; extra == \"codespell\""
+          ],
+          "sha256": "efe7e3d95573dce1e6dd4557a2bd366a6d537c56d71615ccc0899a3442b48499"
+        }
+      },
+      "consumer_release_only_edit_verified": true,
+      "resolver_versions": {
+        "a": "0.17.2",
+        "b": "0.14.6"
+      }
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "date": "2026-11-02",
+  "scope": "Prepared Linux amd64 M4 native/Python commands only; no strict-host or all-tool claim",
+  "candidates": {
+    "mise": {
+      "versions": {
+        "starpls": "starpls version: v0.1.22",
+        "codespell": "2.4.1",
+        "strace": "strace -- version 6.8"
+      },
+      "timings": {
+        "native": {
+          "summary": {
+            "exposed": {
+              "median_ms": 0.6361574999999999,
+              "min_ms": 0.589825,
+              "p10_ms": 0.599264,
+              "p90_ms": 0.721041,
+              "max_ms": 0.880354
+            },
+            "underlying": {
+              "median_ms": 0.6423325,
+              "min_ms": 0.587669,
+              "p10_ms": 0.604235,
+              "p90_ms": 0.708295,
+              "max_ms": 0.953595
+            }
+          },
+          "paired_delta_median_ms": -0.004813499999999971,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        },
+        "python": {
+          "summary": {
+            "exposed": {
+              "median_ms": 28.3136845,
+              "min_ms": 26.802398,
+              "p10_ms": 27.257673,
+              "p90_ms": 29.301416,
+              "max_ms": 37.805041
+            },
+            "underlying": {
+              "median_ms": 27.9572185,
+              "min_ms": 26.747301,
+              "p10_ms": 27.048881,
+              "p90_ms": 28.994296,
+              "max_ms": 29.681813
+            }
+          },
+          "paired_delta_median_ms": 0.4186925000000006,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        }
+      },
+      "trace_counts": {
+        "native-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 0
+        },
+        "python-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-reference-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-typo": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-reference-typo": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        }
+      },
+      "signal_cases": 4
+    },
+    "aqua": {
+      "versions": {
+        "starpls": "starpls version: v0.1.22",
+        "codespell": "2.4.1",
+        "strace": "strace -- version 6.8"
+      },
+      "timings": {
+        "native": {
+          "summary": {
+            "exposed": {
+              "median_ms": 0.6643875,
+              "min_ms": 0.603716,
+              "p10_ms": 0.619282,
+              "p90_ms": 0.715404,
+              "max_ms": 0.79507
+            },
+            "underlying": {
+              "median_ms": 0.671538,
+              "min_ms": 0.607753,
+              "p10_ms": 0.615657,
+              "p90_ms": 0.765302,
+              "max_ms": 1.001295
+            }
+          },
+          "paired_delta_median_ms": -0.00016500000000002624,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        },
+        "python": {
+          "summary": {
+            "exposed": {
+              "median_ms": 28.983535,
+              "min_ms": 27.472151,
+              "p10_ms": 27.895111,
+              "p90_ms": 30.889442,
+              "max_ms": 32.766999
+            },
+            "underlying": {
+              "median_ms": 29.373374,
+              "min_ms": 27.447917,
+              "p10_ms": 27.808456,
+              "p90_ms": 32.159173,
+              "max_ms": 41.976962
+            }
+          },
+          "paired_delta_median_ms": -0.15310899999999883,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        }
+      },
+      "trace_counts": {
+        "native-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 0
+        },
+        "python-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-reference-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-typo": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        },
+        "python-reference-typo": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 5
+        }
+      },
+      "signal_cases": 4
+    },
+    "nix": {
+      "versions": {
+        "starpls": "starpls version: v0.1.22",
+        "codespell": "2.4.3",
+        "strace": "strace -- version 6.8"
+      },
+      "timings": {
+        "native": {
+          "summary": {
+            "exposed": {
+              "median_ms": 0.722763,
+              "min_ms": 0.650563,
+              "p10_ms": 0.664238,
+              "p90_ms": 0.857591,
+              "max_ms": 0.938222
+            },
+            "underlying": {
+              "median_ms": 0.720056,
+              "min_ms": 0.637771,
+              "p10_ms": 0.654249,
+              "p90_ms": 0.816449,
+              "max_ms": 0.909638
+            }
+          },
+          "paired_delta_median_ms": 0.004315500000000028,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        },
+        "python": {
+          "summary": {
+            "exposed": {
+              "median_ms": 42.7925735,
+              "min_ms": 40.657666,
+              "p10_ms": 41.089187,
+              "p90_ms": 46.078619,
+              "max_ms": 51.027126
+            },
+            "underlying": {
+              "median_ms": 41.267426,
+              "min_ms": 38.655124,
+              "p10_ms": 39.389743,
+              "p90_ms": 43.672484,
+              "max_ms": 44.679377
+            }
+          },
+          "paired_delta_median_ms": 1.8355525000000021,
+          "warmups_per_route": 3,
+          "interleaved": true,
+          "traced": false
+        }
+      },
+      "trace_counts": {
+        "native-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 0
+        },
+        "python-version": {
+          "exec_events": 2,
+          "nonthread_process_creation": 0,
+          "network_events": 4,
+          "file_mutation_attempts": 1
+        },
+        "python-reference-version": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 0
+        },
+        "python-typo": {
+          "exec_events": 2,
+          "nonthread_process_creation": 0,
+          "network_events": 4,
+          "file_mutation_attempts": 1
+        },
+        "python-reference-typo": {
+          "exec_events": 1,
+          "nonthread_process_creation": 0,
+          "network_events": 0,
+          "file_mutation_attempts": 0
+        }
+      },
+      "signal_cases": 4
+    }
+  },
+  "trace_archive_sha256": "4d95150f09d33a89c6dbdf2f57e1a8b5e7ab538698f270a2567b2558f46ebba8"
+}

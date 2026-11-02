@@ -1,0 +1,18 @@
+{
+  "scope": "Current M6 source and prepared runtimes; five direct-versus-strict checks per candidate under poisoned PATH, including Ruff nonzero exit and filename with spaces. No bootstrap or full-image inference.",
+  "mise": {
+    "runtime": "Fresh M6 host bin directory reusing cached manager payloads",
+    "prefix": "/tmp/score-m6-mise/provision-bin"
+  },
+  "aqua": {
+    "runtime": "Fresh M6 real-manager prefix after selected-native exposure fix, independently checked with current strict runner",
+    "prefix": "/tmp/score-m6-aqua/prefix-exposure-fix/bin"
+  },
+  "nix": {
+    "runtime": "Validated M6 full native store mounted read-only in existing audit image, network disabled, user 1000:1000",
+    "audit_image": "score-execution-audit:20261102",
+    "source_mount": "Read-only candidate checkout at /candidate",
+    "store_mount": "/tmp/score-m6-nix/release-amd64/native/nix/store -> /nix/store",
+    "bundle": "/nix/store/lmyiv2bydv1zr9x0wf1kky7sz44m9l5s-score-tools-published/bin"
+  }
+}

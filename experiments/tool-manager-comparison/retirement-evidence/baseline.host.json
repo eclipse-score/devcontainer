@@ -1,0 +1,85 @@
+{
+  "result": "passed",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "provisioning": "Existing catalog installer; fresh native downloads of ruff/shellcheck/starpls with SHA-256 verification and explicit task-local destination; existing uv installs pre-commit at task-local bin/tool directories",
+  "execution": "Absolute installed paths; PATH=/usr/bin:/bin; no Bazel/mise/aqua/Nix invocation required",
+  "network": "Network available during provisioning and execution; no network-isolation or timing claim",
+  "commands": [
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/ruff",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/ruff",
+        "check",
+        "--no-cache",
+        "--isolated",
+        "--select",
+        "F821",
+        "/tmp/score-retirement-baseline/fixtures/bad.py"
+      ],
+      "exit": 1,
+      "stdout": "bad.py:1:7: F821 Undefined name `undefined_name`\n  |\n1 | print(undefined_name)\n  |       ^^^^^^^^^^^^^^ F821\n  |\n\nFound 1 error.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/shellcheck",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/shellcheck",
+        "/tmp/score-retirement-baseline/fixtures/bad.sh"
+      ],
+      "exit": 1,
+      "stdout": "\nIn /tmp/score-retirement-baseline/fixtures/bad.sh line 2:\necho $value\n     ^----^ SC2154 (warning): value is referenced but not assigned.\n     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$value\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2154 -- value is referenced but not assig...\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/pre-commit",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "pre-commit 4.7.0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/bin/pre-commit",
+        "validate-config",
+        "/tmp/score-retirement-baseline/fixtures/pre-commit.yaml"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "pre_commit_entrypoint": "#!/tmp/score-retirement-baseline/python-tools/pre-commit/bin/python",
+  "limits": [
+    "Host Linux amd64 only",
+    "No production run-tool strict interface implementation or release publication",
+    "No starpls project analysis proof",
+    "Runtime process tracing not performed; launcher source/path inspected"
+  ]
+}

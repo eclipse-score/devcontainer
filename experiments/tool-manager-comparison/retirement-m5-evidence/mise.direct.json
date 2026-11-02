@@ -1,0 +1,76 @@
+{
+  "candidate": "mise",
+  "runner_sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31",
+  "prefix": "/tmp/score-m5-mise/provision-bin",
+  "prefix_variable": "SCORE_TOOLS_BIN_DIR",
+  "checks": [
+    {
+      "tool": "uv",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/tmp/score-m5-mise/provision-data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uv",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "uvx",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/tmp/score-m5-mise/provision-data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uvx",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/tmp/score-m5-mise/provision-data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu/ruff",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "pre-commit",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/tmp/score-m5-mise/provision-data/installs/pypi-pre-commit/4.7.0/pre-commit/bin/pre-commit",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "pre-commit 4.7.0\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "check",
+        "--select",
+        "F821",
+        "--output-format",
+        "concise",
+        "bad input.py"
+      ],
+      "resolved_executable": "/tmp/score-m5-mise/provision-data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu/ruff",
+      "direct_exit": 1,
+      "strict_exit": 1,
+      "stdout": "bad input.py:1:1: F821 Undefined name `missing_name`\nFound 1 error.\n",
+      "stderr": "",
+      "identical_results": true
+    }
+  ],
+  "scope": "Prepared command execution; no bootstrap or fresh-image claim",
+  "unexpected_path_calls": [],
+  "passed": true
+}

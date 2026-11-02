@@ -1,0 +1,27 @@
+{
+  "method": "git grep over tracked source, including hidden feature directories; test references retained where feature-local",
+  "matches": [
+    ".devcontainer/post_create_command.sh:23:sudo \"${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py\" environment repository",
+    ".github/renovate.json5:40:      \"tools/internal/refresh_lockfile_digests.py\",",
+    ".github/workflows/daily.yml:57:          RENOVATE_ALLOWED_COMMANDS: '[\"^tools/internal/refresh_lockfile_digests\\\\.py$\", \"^tools/internal/sync_readme\\\\.py$\"]'",
+    "scripts/install_dive.sh:25:score_dive_metadata=\"$(python3 \"${SCRIPT_DIR}/../tools/internal/devcontainer/install.py\" shell-metadata)\"",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh:40:/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase build",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh:43:/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh:45:if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh:63:if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel_compile_commands; then",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh:81:/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase cleanup",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh:18:installer=/usr/local/share/score-tools/internal/devcontainer/install.py",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:46:/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local --phase build",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:50:/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:52:if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local openjdk_21; then",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:63:if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql; then",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:91:        if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql_coding_standards; then",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:92:            codeql_packs=\"$(/usr/local/share/score-tools/internal/devcontainer/install.py items codeql_coding_standards packs)\"",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh:139:/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local --phase cleanup",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh:18:installer=/usr/local/share/score-tools/internal/devcontainer/install.py",
+    "tools/BUILD.bazel:64:        \"internal/devcontainer/install.py\",",
+    "tools/internal/README.md:92:`install.py verify-environment NAME` inspects selected executables' reported",
+    "tools/internal/devcontainer/load_feature_versions.sh:20:score_feature_metadata=\"$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)\""
+  ],
+  "scope": "Consolidated local reference at shared HEAD 2e337e4 plus current working-tree changes"
+}

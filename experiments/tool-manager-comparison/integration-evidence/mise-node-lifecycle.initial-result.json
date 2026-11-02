@@ -1,0 +1,10 @@
+{
+  "candidate": "mise",
+  "gate": "root-generic-node-lifecycle",
+  "status": "failed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+  "workspace_retained": false,
+  "interactive_terminal_check": "failed-or-not-reached",
+  "volume_journal": "/tmp/score-m6-gates/mise-lifecycle-20261102T002835Z-dc12f30c/volume-journal.json",
+  "log": "/tmp/score-m6-gates/mise-lifecycle-20261102T002835Z-dc12f30c/lifecycle.log"
+}

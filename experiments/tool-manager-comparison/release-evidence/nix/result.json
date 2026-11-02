@@ -1,0 +1,219 @@
+{
+  "milestone": "M8",
+  "candidate": "nix",
+  "result": "passed requested local release/update acceptance",
+  "repository": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix",
+  "work_directory": "/tmp/score-m8-nix",
+  "releases": {
+    "a": {
+      "path": "/tmp/score-m8-nix/release-a",
+      "package": {
+        "name": "score-devcontainer-nix-candidate",
+        "version": "0.8.0",
+        "extras": {
+          "ruff": [
+            "ruff==0.17.2"
+          ],
+          "pre-commit": [
+            "pre-commit==4.7.0"
+          ],
+          "basedpyright": [
+            "basedpyright==1.39.8"
+          ],
+          "pytest": [
+            "pytest==9.1.1"
+          ],
+          "codespell": [
+            "codespell==2.4.3"
+          ]
+        }
+      },
+      "ruff": "0.17.2",
+      "system": "x86_64-linux",
+      "bundles": {
+        "published": "/nix/store/lmyiv2bydv1zr9x0wf1kky7sz44m9l5s-score-tools-published",
+        "repository": "/nix/store/9h03gxnw4r3dxify1a043220qmf1ds9x-score-tools-repository"
+      },
+      "store_objects": 183,
+      "wheel": "/tmp/score-m8-nix/handoff/score_devcontainer_nix_candidate-0.8.0-py3-none-any.whl",
+      "wheel_sha256": "301ea5c2fe6ccd982aa88525c17613e44402f5018332cffca0016f68f2d79615",
+      "manifest_sha256": "d2b63ccb85cdae59b909cc9a5e325764f92feefe11b873be9b2e81f5612920c0",
+      "pyproject_sha256": "c2f2d3580c765cbfa230f8e7ac2d92f47dd710b277fa228d9bcd88a6c7bdf2dd",
+      "native_ruff_sha256": "18079845eb7a786fb28beb3b46ef266466dc62d1ca8949068fa455c66d25374e",
+      "owner_hashes": {
+        "flake.nix": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+        "flake.lock": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+        "opencode-hashes.json": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72"
+      }
+    },
+    "b": {
+      "path": "/tmp/score-m8-nix/release-b",
+      "package": {
+        "name": "score-devcontainer-nix-candidate",
+        "version": "0.8.1",
+        "extras": {
+          "ruff": [
+            "ruff==0.14.6"
+          ],
+          "pre-commit": [
+            "pre-commit==4.7.0"
+          ],
+          "basedpyright": [
+            "basedpyright==1.39.8"
+          ],
+          "pytest": [
+            "pytest==9.1.1"
+          ],
+          "codespell": [
+            "codespell==2.4.3"
+          ]
+        }
+      },
+      "ruff": "0.14.6",
+      "system": "x86_64-linux",
+      "bundles": {
+        "published": "/nix/store/dli3v2lhymp7dc8ksb6zx93w8qvvqvm4-score-tools-published",
+        "repository": "/nix/store/qpdl6d748ifn6rahwcia5lmyjwhdpjm1-score-tools-repository"
+      },
+      "store_objects": 191,
+      "wheel": "/tmp/score-m8-nix/handoff/score_devcontainer_nix_candidate-0.8.1-py3-none-any.whl",
+      "wheel_sha256": "efe7e3d95573dce1e6dd4557a2bd366a6d537c56d71615ccc0899a3442b48499",
+      "manifest_sha256": "b6a4f12bdc696635cd5606c06f6f18169a47eec5577e70575f6052dd41700333",
+      "pyproject_sha256": "ac4df8784e89fe3c9bb2e684f93b42a49b221c80437119c0b7ed45ce39a11cec",
+      "native_ruff_sha256": "b4f561be202bb8cb497874d5710ba0c7bee2a450b18f4ee869603d6baac9748e",
+      "owner_hashes": {
+        "flake.nix": "f3602f4b33c649eeda3836a711b2ad303ba705998f07e22689e6d40007794e0f",
+        "flake.lock": "2f1defa1d47b864b716a219544bead204c99304ab5320280a8b3927cc8544a51",
+        "opencode-hashes.json": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72"
+      }
+    }
+  },
+  "acceptance": {
+    "owner_edit_stale_refresh_check": "passed: isolated independent Ruff input; stale output exit1; normal refresh/check exit0; only Ruff changed; both profiles unchanged",
+    "ordinary_wheels_and_binding": "passed: 0.8.0/0.8.1 same local package identity; owner/release checks pass; A against B rejects exit1; closure identity verified",
+    "same_uv_project_and_uvx": "passed: only facade requirement changed; uv lock/sync/run and uvx both owner versions; F401 exit1 for both releases and both execution paths",
+    "same_user_owned_native_profile": "passed: UID65534 profile A\u2192B; unrelated fixed-store user tool and buildifier path preserved; direct/strict B version and F401; poison PATH no intercept",
+    "public_bazel_ruff": "passed: cached Bazel8.6.0 //tools:ruff 0.14.6; relative spaced filename and caller tools/ cwd yield F401/exit1",
+    "supported_workflow_and_cleanup": "passed: maintained docs; immutable payload reuse API and targeted tests; obsolete standalone Dockerfile and its export removed; optional helpers retained with rationale"
+  },
+  "source_changes": [
+    "prepare.py adds opt-in immutable store hardlink reuse; missing objects transferred from current producer; metadata fresh",
+    "test_prepare.py adds two actual inode/symlink/missing-transfer regression tests",
+    "tools/internal/nix/Dockerfile removed; prepare.py stops exporting obsolete comparison-image Dockerfile",
+    "tools/internal/nix/README.md documents supported maintainer/native/Python/Bazel workflow; tools/internal/README.md removes redundant required package-generation example"
+  ],
+  "removed_paths": [
+    "tools/internal/nix/Dockerfile"
+  ],
+  "retained_paths_reason": {
+    "package.py generate": "optional package-only generation from validated archived release, not a required extra prepare step",
+    "python-package-check.py": "existing pre-commit smoke helper remains useful; M8 uses ordinary uv commands directly",
+    "profile-replacement-check.py": "membership deselection regression remains useful",
+    "release profiles/*.sh": "small exported profile metadata remains useful; no compatibility deletion warranted",
+    "historical reports": "preserved"
+  },
+  "tests": {
+    "prepare_unit_tests": 9,
+    "new_regression_tests": 2,
+    "ruff_lint": "passed",
+    "python_compile": "passed",
+    "git_diff_check": "passed",
+    "final_owner_release_checks": "passed",
+    "closure_owner_identity": "passed",
+    "actual_worktree_current_release_and_overview_check": "passed"
+  },
+  "source_sha256": {
+    "tools/internal/nix/prepare.py": "f710bb18d60b58e00b838755c4a490edc9d05863ed06c1bc8a8be28c9413afd4",
+    "tools/internal/nix/test_prepare.py": "0a2f3010a490494788558ab4762ad6e383ee76429321aeaf85cc46cd1ff39585",
+    "tools/internal/nix/README.md": "440275e515412edbf76dca50cf6640aa19e795468c33ed9478954b4dac5aa2ff",
+    "tools/internal/README.md": "f7f4fb59cd64e79d73dc2de082e7d64b2bcbbd214e2d779a794d8b4d62b0f744",
+    "tools/nix/flake.nix": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+    "tools/nix/flake.lock": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+    "tools/nix/opencode-hashes.json": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72",
+    "tools/internal/nix/package.py": "3d5f49923f013cf8a704349ec8afec6b01d3286cc5db4babc2facc33e2e1e6fc",
+    "tools/internal/nix/sync.py": "22e15184c8966ed6425d7fb1067191b9b9322ff7ab743748d986a7e546227e10",
+    "tools/nix/install-host.sh": "d7d2764b30c86c66e36451ec8c2f2042232168955378cda1fd7c8ab08222af4a",
+    "tools/run-tool": "eef754867dc07214e822fddbd2964e76e2eb4a66bcd5151f8fac103f750a748d"
+  },
+  "evidence_sha256": {
+    "authored-owner.diff": "4298711c499f08988bc30c6e24c77a776e098f4a10ba7ef451cec43058959e71",
+    "generated.diff": "b725d3aed4ec71ff1b65274266360f696456df18aef7f9f9dc4eeb7626930c40",
+    "release-check.json": "6cf29ae0b8d630e9ec2e678edc88e7104e1b08fe1849a1a9f3b5b60f6d2d684b",
+    "closure-check.json": "c2f1d5c984ab4cb12707ba887359c719ae9bec90973ca16fbdd15e6c9434570f",
+    "consumer-commands.json": "608c76861b8621fca58642815d94f8509cd92396c2718b99de0cee2cc1d51eb0",
+    "native-commands.json": "46d4c2fa4e580192555d2e5bab0d385cdfd1c7557635a4bcf17a6b8c4f408abb",
+    "bazel-commands.json": "d03ddb298f196e36d79ce1efa6a39bf5f9aa9dd591245688179ae411b9793422",
+    "bazel-selection.json": "56f8b88d4ae058b7c27642f1a0594e095f051025ac252ed053e8cb907a940cf5",
+    "consumer-a.toml": "c07e5d80e5fe683858ff02265a80312739c8bb923dccb341d0e509676c813989",
+    "consumer-b.toml": "568eb811da0b5ad20ec9689f733f68ae9a4e6e0bb10081d10626d112589a68f8",
+    "uv-a.lock": "fb3105f13f292ae444131baa7d94606a57cff0b87ce9e4171045a0e022dfb9c7",
+    "uv-b.lock": "50cbc221ba185e691e7b95758dc21823ea0352571fc1c4a3bb5bbb500a29f509",
+    "wheel-a-METADATA.txt": "175695e6921ba16918ffd8b6052d4f8152782ba4607ea53983ce07466ef264b2",
+    "wheel-b-METADATA.txt": "a908fe349f41a10b7e3ecb582090a98f2b37b3b7a2ce4aaa368b2093bfbd2529",
+    "source-tests-final.log": "e5b23e674d40c636ec949a28c1fac5c79f385cf0203fd2a6d1ac72f05f540e93",
+    "source-lint.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "diff-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepare-a-final.log": "11809bd8afc77d0a65170f67ac28565ccd573ffd0e30f1c75d3474ead2751b39",
+    "prepare-b-final.log": "6cf1feb380a328ac6f6df5ba9d8461c8b570ba76183142b48ddeb058776351f8",
+    "worktree-current-check.log": "1ca83af448368d0a30053e44931bf415c89576ce20b8f5a24d51d55d98cd5913",
+    "worktree-readme-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stale-b.log": "633ee56e5ba01ee0a1e9ad336fcf18a2032ad4a971b9272e731d383926201d9c",
+    "lock-b.log": "ead27d90f7e3f9dd0ba199a7597fd3ae62149fe693d0c4aa80ba5ff4ec5a75f9"
+  },
+  "commands": {
+    "staging": "python3 /tmp/score-m8-nix/stage.py",
+    "owner_edit": "python3 /tmp/score-m8-nix/edit-owner.py",
+    "consumer": "python3 /tmp/score-m8-nix/consumer-check.py",
+    "native": "python3 /tmp/score-m8-nix/native-check.py",
+    "bazel": "python3 /tmp/score-m8-nix/bazel-check.py",
+    "final_release_check": "python3 /tmp/score-m8-nix/release-check.py",
+    "closure_check": "python3 /tmp/score-m8-nix/closure-check.py",
+    "tests": "python3 -m unittest discover -s tools/internal/nix -p test_prepare.py",
+    "exact_argv_cwd_results": [
+      "consumer-commands.json",
+      "native-commands.json",
+      "bazel-commands.json",
+      "release-check.json"
+    ],
+    "final_prepare_logs": [
+      "prepare-a-final.log",
+      "prepare-b-final.log"
+    ]
+  },
+  "responsibility_ledger": {
+    "one_time": "immutable payload reuse repair, two regressions, obsolete Dockerfile removal, supported workflow docs",
+    "per_version": "choose/check historical snapshot and substitute availability; isolated input may be needed; lock, stale reject, refresh portable URLs/digests/overview",
+    "per_release": "explicit release identity, realize/probe selected profiles, prepare/check owner binding, wheel build, runtime and consumer validation",
+    "per_platform": "Nix substitutes, custom asset recipes, Python wheel availability and real execution verification; not executed beyond amd64 in M8",
+    "python_user": "change facade release only; uv lock/sync/run or uvx extra; dependency index/cache required",
+    "native_user": "update owner checkout; rerun installer into same dedicated user profile; Nix only at provisioning"
+  },
+  "constraints": [
+    "owner worktree pins unchanged from M7; B Ruff0.14.6 only in isolated source copy",
+    "historical b6018f87da91d19d0ab4cf979885689b469cdd41 snapshot reused from prior knowledge; discovery not automated",
+    "native amd64 Linux only; no emulation/native ARM/macOS or full image gate in M8",
+    "producer preparation uses root; native profile provisioning/runtime uses UID65534 and daemon; Python/Bazel consumers host UID1000 Python3.12.3 uv0.13.6",
+    "acquisition used Nix/GitHub/PyPI network; prepared checks had manager/Bazel poison interception protection, not separate network namespace",
+    "installer upgrade --all also considers independently updatable entries; unrelated preservation proved for actual fixed store user entry",
+    "reuse requires same filesystem and trusted immutable store objects; never mutate/chmod hardlinked regular payload files",
+    "package name is candidate-local only; no identity/hosting/publication selection",
+    "no nested agents/CLIs, commit/push, global install/prune, image pull/full build, other-worktree edits or external messages"
+  ],
+  "resources": {
+    "incremental_host_bytes_after_shared_M6_inodes": 455647232,
+    "producer_historical_snapshot": "446 MiB",
+    "producer_substitutes": "9 objects, 22.9MiB download / 83.6MiB unpacked",
+    "initial_payload_reuse": {
+      "a": "183 reused / 0 transferred",
+      "b": "180 reused / 11 transferred"
+    },
+    "final_payload_reuse": {
+      "a": "183 reused / 0 transferred",
+      "b": "191 reused / 0 transferred"
+    },
+    "last_free_space": "about 9GiB; floor4GiB respected"
+  },
+  "remaining_issues": [],
+  "maintained_instructions": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/tools/internal/nix/README.md",
+  "durable_report": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/experiments/tool-manager-nix/reference/README-m8.md"
+}

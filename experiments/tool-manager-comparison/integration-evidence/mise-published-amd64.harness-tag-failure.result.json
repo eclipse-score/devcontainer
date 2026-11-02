@@ -1,0 +1,12 @@
+{
+  "candidate": "mise",
+  "gate": "fresh-published-amd64-build-and-feature-tests",
+  "status": "failed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+  "output": "type=cacheonly; no image loaded or launched",
+  "source_strategy": "task-local source snapshot",
+  "workspace_retained": false,
+  "log": "/tmp/score-m6-gates/mise-published-20261102T005423Z-57287e9b/published-build.log",
+  "builder": "score-m6-gates-mise-301d7e0a",
+  "builder_removed": true
+}

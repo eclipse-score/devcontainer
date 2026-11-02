@@ -1,0 +1,92 @@
+{
+  "scope": "Primary-agent finalized record after codex-1 candidate investigation and independent parent reproductions; no M1-M4 owners changed",
+  "candidate": "nix",
+  "locked_nixpkgs": "1c89083e451e891152365b799595cf7790a43325",
+  "apm": {
+    "attribute": "pkgs.apm-cli",
+    "version": "0.35.0",
+    "status": "Exact locked existing package installed and direct CLI exercised",
+    "runtime": "Packaged Python and script dependencies retained; optional provider workflows not established"
+  },
+  "opencode": {
+    "locked_version": "2.2.1",
+    "requested": "2.2.3",
+    "binary_route": "Verified working local binary derivation preserving embedded payload with dontStrip=true; detailed primary proof in nix.exact-opencode.json",
+    "source_route": "Task-local copy of locked Nixpkgs recipe also built and its direct --version reports2.2.3; source archive hash and generated Bun dependency-tree hash were updated",
+    "source_hash": "sha256-OM2O7WC81SQRlxgZAu30UbZQNM3UqJWKkXcgeyd7yeo=",
+    "generated_dependency_tree_hash": "sha256-wCVLmi4uS7W/qT2UykOWovkd2T3radm05oUz2HxVzHs=",
+    "source_graph_is_optional": true
+  },
+  "observed_commands": [
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-eval-nix-m3-agent",
+        "/tmp/score-retirement-nix/apm-profile/bin/apm",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "Agent Package Manager (APM) CLI version 0.35.0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "--workdir",
+        "/tmp/score-retirement-nix/apm-fixture",
+        "score-eval-nix-m3-agent",
+        "/tmp/score-retirement-nix/apm-profile/bin/apm",
+        "list"
+      ],
+      "exit": 0,
+      "stdout": "[!] No scripts found.\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500  Add scripts to your apm.yml file \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502 scripts:                                                                     \u2502\n\u2502   start: \"codex run main.prompt.md\"                                          \u2502\n\u2502   fast: \"llm prompt main.prompt.md -m github/gpt-4o-mini\"                    \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-eval-nix-m3-agent",
+        "/tmp/score-retirement-nix/opencode-source-profile/bin/opencode",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "opencode v2.2.3\n",
+      "stderr": ""
+    }
+  ],
+  "caller_audit": {
+    "still_reachable": [
+      "s-core-local feature environment installation",
+      "bazel-feature environment installation",
+      "root post_create repository installation"
+    ],
+    "removable_after_migration": [
+      "native catalog download/checksum/extraction functions and install subcommand",
+      "Python image installer and install-python subcommand if all Python callers move",
+      "old native refresh helper after all native version owners and CI update commands migrate"
+    ],
+    "retained": [
+      "APT and feature lifecycle setup",
+      "provider metadata/verification",
+      "portable Bazel artifacts and public labels",
+      "standard Python dependency package export and release binding"
+    ]
+  },
+  "execution": "Direct packaged commands do not require per-call Nix resolution; runtime environment wrappers remain. Bazel/uv invocation compatibility paths remain optional alternatives.",
+  "recommendation": "For current Ubuntu/features scope, no demonstrated effort advantage over consolidated baseline. Choose Nix if runtime closure ownership becomes a deliberate goal; exact unavailable versions require input selection or maintained package overrides.",
+  "limits": [
+    "Linux amd64 only",
+    "No full image rebuild or installed-production-user proof",
+    "No installer retirement implemented",
+    "No arbitrary version/platform coverage claim",
+    "No provider authentication, network-service or interactive OpenCode workflow claim"
+  ],
+  "source_logs": [
+    "/tmp/score-retirement-nix/cli.log",
+    "/tmp/score-retirement-nix/progress.md",
+    "/tmp/score-retirement-nix/opencode-source-install.log"
+  ]
+}

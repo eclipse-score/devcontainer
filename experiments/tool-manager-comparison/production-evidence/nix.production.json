@@ -1,0 +1,113 @@
+{
+  "candidate": "nix",
+  "date": "2026-11-01",
+  "release": {
+    "version": "0.5.0",
+    "profile": "published",
+    "store_paths": 103,
+    "versions": {
+      "actionlint": "1.7.12",
+      "basedpyright": "1.39.8",
+      "bazelisk": "1.29.0",
+      "buildifier": "10.2.0",
+      "pre-commit": "4.7.0",
+      "pytest": "9.1.1",
+      "ruff": "0.17.2",
+      "shellcheck": "0.11.0",
+      "uv": "0.13.5",
+      "uvx": "0.13.5",
+      "yamlfmt": "0.21.0"
+    },
+    "prepared_command_count": 11,
+    "prepared_bytes": 732467200,
+    "root_drift_status": 0,
+    "target_platform": "linux/amd64",
+    "profile_member_count": 11
+  },
+  "build": {
+    "command": "BUILDX_BUILDER=default SCORE_NIX_PREPARED_RELEASE=/tmp/score-m3-nix/release-gated scripts/build.sh --amd64 m3-nix-gate",
+    "status": 0,
+    "devcontainer_cli": "0.90.0",
+    "feature_lock": {
+      "ghcr.io/devcontainers-community/features/llvm": {
+        "version": "3.2.0",
+        "resolved": "ghcr.io/devcontainers-community/features/llvm@sha256:4f464ab97a59439286a55490b55ba9851616f6f76ac3025e134127ac08ad79e2",
+        "integrity": "sha256:4f464ab97a59439286a55490b55ba9851616f6f76ac3025e134127ac08ad79e2"
+      },
+      "ghcr.io/devcontainers/features/common-utils": {
+        "version": "2.5.4",
+        "resolved": "ghcr.io/devcontainers/features/common-utils@sha256:00fd45550f578d9d515044d9e2226e908dbc3d7aa6fcb9dee4d8bdb60be114cf",
+        "integrity": "sha256:00fd45550f578d9d515044d9e2226e908dbc3d7aa6fcb9dee4d8bdb60be114cf"
+      }
+    },
+    "platform": "linux/amd64",
+    "image_tag": "ghcr.io/eclipse-score/devcontainer:m3-nix-gate-amd64",
+    "image_id": "sha256:cbb7d6e72680f393f1b1d92076a3413f410cfcde153eeccddf819867c7694fec",
+    "image_size_bytes": 7308450863,
+    "context_bytes_transferred": 669220000,
+    "proxy_variables_present": false,
+    "feature_handoff_log_markers": {
+      "activated_prepared_commands": 2,
+      "native_and_python_skip_lines": 33,
+      "explicit_bazel_download": true,
+      "temporary_apt_transport_removed": true
+    },
+    "builder": "default",
+    "cache_source": "ghcr.io/eclipse-score/devcontainer",
+    "temporary_context_removed": true,
+    "entrypoint_preserves_standard_lock_behavior": true
+  },
+  "production_test": {
+    "status": 0,
+    "user": "vscode uid=1000",
+    "network": "bridge",
+    "check_count": 75,
+    "all_passed": true,
+    "covers_codeql_packs": true
+  },
+  "focused_offline_test": {
+    "status": 0,
+    "user": "vscode uid=1000",
+    "network": "none",
+    "runtime_cache_bind_mounts": [],
+    "passed": true,
+    "pytest": true,
+    "bazel_label": true,
+    "both_run_tool_modes": true,
+    "readonly_fixture_mounts": 2
+  },
+  "source_checks": {
+    "catalog_unit_tests": {
+      "status": 0,
+      "tests": 24
+    },
+    "tool_readme_drift": 0,
+    "prepared_release_drift": 0,
+    "shell_syntax": 0,
+    "python_compile": 0,
+    "diff_check": 0
+  },
+  "limits": [
+    "The full production test suite ran online; both focused and shared runtime acceptances ran with networking disabled.",
+    "The proxy-enabled Dockerfile was kept in parity but was not selected because no proxy variables were present.",
+    "Existing M2 ordinary uv/uvx consumer and repository-hook evidence was preserved and not rerun.",
+    "Only Linux amd64 execution was built and tested; scripts/build.sh rejects an amd64 prepared runtime for --arm64."
+  ],
+  "task_local_logs": "/tmp/score-m3-nix/",
+  "shared_offline_acceptance": {
+    "status": 0,
+    "commands": 44,
+    "uid": 1000,
+    "network": "none",
+    "readonly_mounts": 2,
+    "runtime_producer_cache_mounts": 0,
+    "passed": true
+  },
+  "build_entrypoint_gates": {
+    "missing_release_probe_status": 1,
+    "missing_release_has_prepare_command": true,
+    "amd64_release_to_arm64_probe_status": 1,
+    "wrong_platform_rejected_before_docker": true,
+    "current_release_check_status": 0
+  }
+}

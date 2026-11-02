@@ -1,0 +1,280 @@
+{
+  "candidate": "nix",
+  "milestone": "M7",
+  "status": "linux-arm64-published-profile-executed; bazelisk-unverified",
+  "release": {
+    "path": "/tmp/score-m7-nix/release-arm64",
+    "sha256_release_json": "3b979d7212f0aaea2e7dd0d79264bde05416a1bad1153626c7a73e8c4ec0d22a",
+    "identity": "0.0.0+m7.nix",
+    "package": "score-devcontainer-nix-candidate",
+    "system": "aarch64-linux",
+    "target_platform": "linux/arm64",
+    "published_bundle": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published",
+    "repository_bundle": "/nix/store/mfykpcgc682fync1bnyalmyr7kr770bl-score-tools-repository",
+    "store_path_count": 181,
+    "native_observation": {
+      "status": "deferred",
+      "producer_system": "x86_64-linux",
+      "target_system": "aarch64-linux",
+      "reason": "Target executables must be checked in the matching target runtime."
+    },
+    "versions": {
+      "actionlint": "1.7.12",
+      "apm": "0.35.0",
+      "basedpyright": "1.39.8",
+      "bazelisk": "1.29.0",
+      "buildifier": "10.2.0",
+      "codespell": "2.4.3",
+      "opencode": "2.2.3",
+      "pre-commit": "4.7.0",
+      "pytest": "9.1.1",
+      "ruff": "0.17.2",
+      "shellcheck": "0.11.0",
+      "starpls": "0.1.22",
+      "uv": "0.13.5",
+      "uvx": "0.13.5",
+      "yamlfmt": "0.21.0"
+    },
+    "profiles": {
+      "published": [
+        "actionlint",
+        "apm",
+        "bazelisk",
+        "basedpyright",
+        "buildifier",
+        "codespell",
+        "opencode",
+        "pre-commit",
+        "pytest",
+        "ruff",
+        "shellcheck",
+        "starpls",
+        "uv",
+        "uvx",
+        "yamlfmt"
+      ],
+      "repository": [
+        "actionlint",
+        "bazelisk",
+        "buildifier",
+        "pre-commit",
+        "ruff",
+        "shellcheck",
+        "uv",
+        "uvx",
+        "yamlfmt"
+      ]
+    }
+  },
+  "provisioning": {
+    "command": "python3 tools/internal/nix/prepare.py /tmp/score-m7-nix/release-arm64 --release-version '0.0.0+m7.nix' --package-name score-devcontainer-nix-candidate --system aarch64-linux --defer-native-observation --allow-aarch64-emulation",
+    "nix_dry_run_log": "/tmp/score-m7-nix/arm64-substitution-dry-run.log",
+    "substituter": "https://cache.nixos.org/",
+    "substituted_paths": 228,
+    "download": "329.2 MiB",
+    "unpacked": "1.1 GiB",
+    "small_derivations_built": 4,
+    "versions_changed": false,
+    "package_check": "passed; 5 extras",
+    "sync_check_command": "python3 tools/internal/nix/sync.py --check --release /tmp/score-m7-nix/release-arm64 --system aarch64-linux",
+    "sync_check_result": "passed; Stale outputs empty",
+    "closure_owner_check_command": "python3 /tmp/score-m7-nix/verify-release-closure.py /tmp/score-m7-nix/release-arm64",
+    "closure_owner_check_result": "passed; both bundle paths and all 181 store paths match current owner"
+  },
+  "runtime": {
+    "image_id": "sha256:b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a",
+    "image_platform": "linux/arm64",
+    "emulation": "QEMU/binfmt; actual ARM64 binaries executed",
+    "uid_gid": "1000:1000",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "store_and_fixtures": "read-only bind mounts",
+    "observed_uname_m": "aarch64",
+    "base_python": "3.12.3",
+    "selected_python": "Nix Python 3.14; pytest fixture asserted version 3.14 and aarch64",
+    "fresh_prefix": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin",
+    "manager_or_bazel_fallback": "not used by successful checks; strict missing-tool check ran with PATH=/m7/empty",
+    "launch_command": "docker run --rm --name score-m7-nix-arm64-runtime --label score-m7-platform.candidate=nix --platform linux/arm64 --network none --user 1000:1000 --read-only --tmpfs /tmp:rw,nosuid,size=512m --cap-drop ALL --security-opt no-new-privileges --mount type=bind,source=/tmp/score-m7-nix/release-arm64/native/nix/store,target=/nix/store,readonly --mount type=bind,source=/tmp/score-m7-nix/stage,target=/m7,readonly --entrypoint /bin/bash b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a /m7/run-arm64-checks.sh",
+    "check_script": "/tmp/score-m7-nix/stage/run-arm64-checks.sh",
+    "check_script_sha256": "2980efc15e9824c4e7b7cd9fda9cc4b258e92de5c18884350c8263780da6c1f2",
+    "raw_log": "/tmp/score-m7-nix/arm64-tool-checks.log",
+    "selected_tools": [
+      {
+        "name": "actionlint",
+        "version": "1.7.12",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/actionlint",
+        "resolved_store_path": "/nix/store/98iw3vvgkyqclzq9cz9gvwvz4a1x7wvl-actionlint-1.7.12/bin/actionlint",
+        "result": "passed"
+      },
+      {
+        "name": "apm",
+        "version": "0.35.0",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/apm",
+        "resolved_store_path": "/nix/store/3vwsvm67fkh52frlg5ssdvn7b833fs7n-apm-cli-0.35.0/bin/apm",
+        "result": "passed"
+      },
+      {
+        "name": "basedpyright",
+        "version": "1.39.8",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/basedpyright",
+        "resolved_store_path": "/nix/store/kbal9sxf6lprjgkx0xqk0q8hiwm9d817-basedpyright-1.39.8/bin/basedpyright",
+        "result": "passed"
+      },
+      {
+        "name": "buildifier",
+        "version": "10.2.0",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/buildifier",
+        "resolved_store_path": "/nix/store/93ik3ii5ism73fhrrzk729mdc2aya3d0-bazel-buildtools-10.2.0/bin/buildifier",
+        "result": "passed"
+      },
+      {
+        "name": "codespell",
+        "version": "2.4.3",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/codespell",
+        "resolved_store_path": "/nix/store/z9pmh0n2sz7nkqz2f7di3z09wy92mx0i-codespell-2.4.3/bin/codespell",
+        "result": "passed"
+      },
+      {
+        "name": "opencode",
+        "version": "2.2.3",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/opencode",
+        "resolved_store_path": "/nix/store/xi8ng6gys7zh0n1df9p51gnnpf5s54nb-opencode-2.2.3/bin/opencode",
+        "result": "passed"
+      },
+      {
+        "name": "pre-commit",
+        "version": "4.7.0",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/pre-commit",
+        "resolved_store_path": "/nix/store/58xgicxdapbnyv83xk1jsy67i0bgi6b9-pre-commit-4.7.0/bin/pre-commit",
+        "result": "passed"
+      },
+      {
+        "name": "pytest",
+        "version": "9.1.1",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/pytest",
+        "resolved_store_path": "/nix/store/pipmvz1pkb1gilazg5klrkyay85mmmxc-python3.14-pytest-9.1.1/bin/pytest",
+        "result": "passed"
+      },
+      {
+        "name": "ruff",
+        "version": "0.17.2",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/ruff",
+        "resolved_store_path": "/nix/store/jwn9g7ys1lda9822niirf4hxz24fvrb6-ruff-0.17.2/bin/ruff",
+        "result": "passed"
+      },
+      {
+        "name": "shellcheck",
+        "version": "0.11.0",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/shellcheck",
+        "resolved_store_path": "/nix/store/5q8w9c384fzl0fmk5gyrjbymh57msx76-shellcheck-0.11.0-bin/bin/shellcheck",
+        "result": "passed"
+      },
+      {
+        "name": "starpls",
+        "version": "0.1.22",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/starpls",
+        "resolved_store_path": "/nix/store/cq1h45rvdgcy3ng111rm46f9jw9lxsxj-starpls-0.1.22/bin/starpls",
+        "result": "passed"
+      },
+      {
+        "name": "uv",
+        "version": "0.13.5",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/uv",
+        "resolved_store_path": "/nix/store/zkapy00fbigg12wqjd33ics46snvmbbq-uv-0.13.5/bin/uv",
+        "result": "passed"
+      },
+      {
+        "name": "uvx",
+        "version": "0.13.5",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/uvx",
+        "resolved_store_path": "/nix/store/zkapy00fbigg12wqjd33ics46snvmbbq-uv-0.13.5/bin/uvx",
+        "result": "passed"
+      },
+      {
+        "name": "yamlfmt",
+        "version": "0.21.0",
+        "command_path": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin/yamlfmt",
+        "resolved_store_path": "/nix/store/wb1cid6x2nzmwannyy8fg822wkpj1g5h-yamlfmt-0.21.0/bin/yamlfmt",
+        "result": "passed"
+      }
+    ],
+    "python_cli": {
+      "pre_commit_validate_config": "passed offline",
+      "pytest": "1 passed; Python 3.14 on aarch64",
+      "basedpyright": "passed; 0 errors, 0 warnings, 0 notes"
+    },
+    "ruff_negative": {
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "diagnostic": "F401 `os` imported but unused"
+    },
+    "uvx_offline": {
+      "command": "uvx --offline --cache-dir /tmp/score-m7-uv-cache --with 'score-devcontainer-nix-candidate[ruff] @ file:///m7/wheelhouse/score_devcontainer_nix_candidate-0.0.0%2Bm6.nix-py3-none-any.whl' --from 'ruff @ file:///m7/wheelhouse/ruff-0.17.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl' ruff --version",
+      "result": "passed; ruff 0.17.2",
+      "wheel_sha256": {
+        "ruff-0.17.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl": "b7d0906677d89bbf3cf73cde64b5bbe2ab35df3ae43e49ee2627301e91265bac",
+        "score_devcontainer_nix_candidate-0.0.0+m6.nix-py3-none-any.whl": "eb5f63657cf15936ede2dda390e01389b79b3dbefe94a9ddcb14382b4445bbd0"
+      },
+      "index_or_network": "not used at runtime; files were staged before the offline container run"
+    },
+    "direct_strict": {
+      "container_strict_ruff": "passed; ruff 0.17.2",
+      "host_mode_strict_uv": "passed; uv 0.13.5 (aarch64-unknown-linux-gnu)",
+      "strict_missing_tool": "exit 127; no Bazel path available or invoked"
+    },
+    "bazelisk": {
+      "status": "unverified; not counted",
+      "attempt": "bazelisk --bazelisk-version",
+      "observation": "no output after 22 seconds in network-none container; process stopped",
+      "raw_note": "/tmp/score-m7-nix/bazelisk-attempt.md"
+    }
+  },
+  "macos_arm_review": {
+    "system": "aarch64-darwin",
+    "versions_and_profiles_match_m6": true,
+    "nixpkgs_platform_metadata_lists_aarch64_darwin": "14 of 15 selected tools",
+    "opencode": "custom derivation metadata has no platforms list; flake explicitly selects opencode-darwin-arm64.zip and its exact aarch64-darwin hash",
+    "execution": "not run",
+    "metadata_path": "/tmp/score-m7-nix/macos-arm-package-metadata.json"
+  },
+  "source_hashes_sha256": {
+    "tools/nix/flake.nix": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+    "tools/nix/flake.lock": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+    "tools/nix/opencode-hashes.json": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72",
+    "tools/internal/nix/prepare.py": "d314a723b4dab6a1a082051d3bd7c886e60dce53582539f7516cbd5bc122c90e",
+    "tools/internal/nix/test_prepare.py": "9c0081990028c1359aa60664a8be5e20aa4ed1a4d9b8bdd5c4c8e8ed911807a8"
+  },
+  "failed_or_limited_attempts": [
+    {
+      "attempt": "initial Actionlint fixture",
+      "result": "failed because staged workflow lacked on; fixture corrected; final suite passed",
+      "log": "/tmp/score-m7-nix/arm64-tool-checks-actionlint-fixture-failure.log"
+    },
+    {
+      "attempt": "initial Ruff negative check",
+      "result": "failed because Ruff default cache targeted read-only /; RUFF_CACHE_DIR set to writable tmpfs; final diagnostic passed",
+      "log": "/tmp/score-m7-nix/arm64-tool-checks-ruff-cache-failure.log"
+    },
+    {
+      "attempt": "Bazelisk self-version",
+      "result": "unverified under no-Bazel constraint; details in bazelisk-attempt.md"
+    }
+  ],
+  "source_regression": {
+    "change": "prepare.py detects producer architecture, requires explicit deferral for cross-target probes, records deferred status, and gates aarch64-on-x86 emulation behind an explicit option",
+    "unit_test_command": "python3 -m unittest discover -s tools/internal/nix -p 'test_*.py'",
+    "unit_tests": "7 passed",
+    "ruff_check": "passed for prepare.py and test_prepare.py",
+    "format_check": "passed for new test_prepare.py",
+    "py_compile": "passed",
+    "amd64_regression": "python3 tools/internal/nix/sync.py --check --release /tmp/score-m6-nix/release-amd64 --system x86_64-linux passed; Stale outputs empty",
+    "one_time": "cross-system release probe deferral and bounded QEMU profile assembly support",
+    "recurring": "maintain flake selections/lock, portable sync exports, OpenCode platform asset hashes, package identity/release version, Nix closure transfer/profile activation"
+  },
+  "limitations": [
+    "QEMU/binfmt execution only; no native ARM hardware claim.",
+    "No macOS ARM execution.",
+    "Bazelisk did not complete an offline self-version probe and remains unverified because Bazel invocation is excluded.",
+    "No full feature image build, image publication, winner/adoption decision, or tool pin changes."
+  ]
+}

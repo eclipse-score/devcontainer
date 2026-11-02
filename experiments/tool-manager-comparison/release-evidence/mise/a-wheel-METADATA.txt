@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: score-mise-m8-local
+Version: 0.8.0
+Summary: Pinned Python dependencies selected by the SCORE tool owners
+Requires-Python: >=3.11
+Provides-Extra: ruff
+Requires-Dist: ruff==0.11.13; extra == "ruff"
+Provides-Extra: basedpyright
+Requires-Dist: basedpyright==1.35.0; extra == "basedpyright"
+Provides-Extra: codespell
+Requires-Dist: codespell==2.4.1; extra == "codespell"
+Provides-Extra: pre-commit
+Requires-Dist: pre-commit==4.7.0; extra == "pre-commit"
+Provides-Extra: pytest
+Requires-Dist: pytest==9.0.2; extra == "pytest"

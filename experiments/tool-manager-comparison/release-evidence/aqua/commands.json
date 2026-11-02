@@ -1,0 +1,615 @@
+[
+  {
+    "label": "build-A",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/prepare_dependency_release.py",
+      "--output",
+      "/tmp/score-m8-aqua/handoff/A",
+      "--version",
+      "0.8.0",
+      "--package-name",
+      "score-aqua-m8-local",
+      "--uv",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/build-A.log"
+  },
+  {
+    "label": "native-A",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/devcontainer/provision_host_tools.py",
+      "--prefix",
+      "/tmp/score-m8-aqua/native-prefix",
+      "--profile",
+      "repository"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-A.log"
+  },
+  {
+    "label": "check-A",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/check_dependency_release.py",
+      "/tmp/score-m8-aqua/handoff/A",
+      "/tmp/score-m8-aqua/check-A",
+      "--owner-dir",
+      "/tmp/score-m8-aqua/owners-A",
+      "--uv",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--uvx",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/check-A.log"
+  },
+  {
+    "label": "native-A-ruff",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-A-ruff.log"
+  },
+  {
+    "label": "native-A-unrelated",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/unrelated-sentinel"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-A-unrelated.log"
+  },
+  {
+    "label": "stale-derived-rejected",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/sync_repository.py",
+      "--check"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/stale-derived-rejected.log"
+  },
+  {
+    "label": "refresh-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/refresh_owners.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/refresh-B.log"
+  },
+  {
+    "label": "check-derived-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/sync_repository.py",
+      "--check"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/check-derived-B.log"
+  },
+  {
+    "label": "check-readme-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/sync_readme.py",
+      "--check"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/check-readme-B.log"
+  },
+  {
+    "label": "build-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/prepare_dependency_release.py",
+      "--output",
+      "/tmp/score-m8-aqua/handoff/B",
+      "--version",
+      "0.8.1",
+      "--package-name",
+      "score-aqua-m8-local",
+      "--uv",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/build-B.log"
+  },
+  {
+    "label": "reject-A-against-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/check_dependency_release.py",
+      "/tmp/score-m8-aqua/handoff/A",
+      "/tmp/score-m8-aqua/reject-A",
+      "--uv",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--uvx",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/reject-A-against-B.log"
+  },
+  {
+    "label": "check-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/check_dependency_release.py",
+      "/tmp/score-m8-aqua/handoff/B",
+      "/tmp/score-m8-aqua/check-B",
+      "--uv",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--uvx",
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/check-B.log"
+  },
+  {
+    "label": "native-B",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/devcontainer/provision_host_tools.py",
+      "--prefix",
+      "/tmp/score-m8-aqua/native-prefix",
+      "--profile",
+      "repository"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B.log"
+  },
+  {
+    "label": "native-B-ruff",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B-ruff.log"
+  },
+  {
+    "label": "native-B-current",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/devcontainer/provision_host_tools.py",
+      "--prefix",
+      "/tmp/score-m8-aqua/native-prefix",
+      "--profile",
+      "repository"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B-current.log"
+  },
+  {
+    "label": "consumer-A-lock",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "lock",
+      "--python",
+      "/usr/bin/python3",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-A-lock.log"
+  },
+  {
+    "label": "consumer-A-sync",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "sync",
+      "--locked",
+      "--offline"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-A-sync.log"
+  },
+  {
+    "label": "consumer-A-version",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "--offline",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-A-version.log"
+  },
+  {
+    "label": "consumer-A-diagnostic",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "--offline",
+      "ruff",
+      "check",
+      "--isolated",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/consumer-A-diagnostic.log"
+  },
+  {
+    "label": "uvx-A-version",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx",
+      "--no-config",
+      "--offline",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels",
+      "--with",
+      "score-aqua-m8-local[ruff]==0.8.0",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/uvx-A-version.log"
+  },
+  {
+    "label": "uvx-A-diagnostic",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx",
+      "--no-config",
+      "--offline",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels",
+      "--with",
+      "score-aqua-m8-local[ruff]==0.8.0",
+      "ruff",
+      "check",
+      "--isolated",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/uvx-A-diagnostic.log"
+  },
+  {
+    "label": "consumer-B-lock",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "lock",
+      "--python",
+      "/usr/bin/python3",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-B-lock.log"
+  },
+  {
+    "label": "consumer-B-sync",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "sync",
+      "--locked",
+      "--offline"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-B-sync.log"
+  },
+  {
+    "label": "consumer-B-version",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "--offline",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-B-version.log"
+  },
+  {
+    "label": "consumer-B-diagnostic",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "--offline",
+      "ruff",
+      "check",
+      "--isolated",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/consumer-B-diagnostic.log"
+  },
+  {
+    "label": "uvx-B-version",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx",
+      "--no-config",
+      "--offline",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels",
+      "--with",
+      "score-aqua-m8-local[ruff]==0.8.1",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/uvx-B-version.log"
+  },
+  {
+    "label": "uvx-B-diagnostic",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx",
+      "--no-config",
+      "--offline",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels",
+      "--with",
+      "score-aqua-m8-local[ruff]==0.8.1",
+      "ruff",
+      "check",
+      "--isolated",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/uvx-B-diagnostic.log"
+  },
+  {
+    "label": "native-B-direct",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/ruff",
+      "check",
+      "--isolated",
+      "/tmp/score-m8-aqua/consumer/bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/native-B-direct.log"
+  },
+  {
+    "label": "native-B-strict-version",
+    "argv": [
+      "/tmp/score-m8-aqua/source/tools/run-tool",
+      "--strict",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B-strict-version.log"
+  },
+  {
+    "label": "native-B-strict-diagnostic",
+    "argv": [
+      "/tmp/score-m8-aqua/source/tools/run-tool",
+      "--strict",
+      "ruff",
+      "check",
+      "--isolated",
+      "/tmp/score-m8-aqua/consumer/bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/native-B-strict-diagnostic.log"
+  },
+  {
+    "label": "native-B-unrelated",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/unrelated-sentinel"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B-unrelated.log"
+  },
+  {
+    "label": "native-B-actionlint",
+    "argv": [
+      "/tmp/score-m8-aqua/native-prefix/bin/actionlint",
+      "-version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/native-B-actionlint.log"
+  },
+  {
+    "label": "bazel-B-version",
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-m5-aqua/bazel",
+      "--host_jvm_args=-Xmx512m",
+      "run",
+      "--repository_cache=/home/alex/.cache/bazel/_bazel_alex/cache/repos/v1",
+      "--symlink_prefix=/tmp/score-m8-aqua/bazel-",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/bazel-B-version.log"
+  },
+  {
+    "label": "bazel-B-diagnostic",
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "--output_base=/tmp/score-m5-aqua/bazel",
+      "--host_jvm_args=-Xmx512m",
+      "run",
+      "--repository_cache=/home/alex/.cache/bazel/_bazel_alex/cache/repos/v1",
+      "--symlink_prefix=/tmp/score-m8-aqua/bazel-",
+      "//tools:ruff",
+      "--",
+      "check",
+      "--isolated",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source/consumer fixture",
+    "exit": 1,
+    "expected": 1,
+    "log": "logs/bazel-B-diagnostic.log"
+  },
+  {
+    "label": "consumer-B-independent-final",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uv",
+      "--no-config",
+      "run",
+      "--offline",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/consumer-B-independent-final.log"
+  },
+  {
+    "label": "uvx-B-independent-final",
+    "argv": [
+      "/tmp/score-m6-aqua/prefix-exposure-fix/bin/uvx",
+      "--no-config",
+      "--offline",
+      "--find-links",
+      "/tmp/score-m8-aqua/handoff/wheels",
+      "--with",
+      "score-aqua-m8-local[ruff]==0.8.1",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-aqua/consumer",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/uvx-B-independent-final.log"
+  },
+  {
+    "label": "worktree-current-owners-check",
+    "argv": [
+      "python3",
+      "tools/internal/aqua/sync_repository.py",
+      "--check"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/worktree-current-owners-check.log"
+  },
+  {
+    "label": "worktree-current-readme-check",
+    "argv": [
+      "python3",
+      "tools/internal/sync_readme.py",
+      "--check"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/worktree-current-readme-check.log"
+  },
+  {
+    "label": "copied-final-owners-check",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/aqua/sync_repository.py",
+      "--check"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/copied-final-owners-check.log"
+  },
+  {
+    "label": "copied-final-readme-check",
+    "argv": [
+      "python3",
+      "/tmp/score-m8-aqua/source/tools/internal/sync_readme.py",
+      "--check"
+    ],
+    "cwd": "/tmp/score-m8-aqua/source",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/copied-final-readme-check.log"
+  },
+  {
+    "label": "whitespace-check",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "expected": 0,
+    "log": "logs/whitespace-check.log"
+  }
+]

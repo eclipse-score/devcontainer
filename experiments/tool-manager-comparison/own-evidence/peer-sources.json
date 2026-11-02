@@ -1,0 +1,28 @@
+{
+  "aqua": {
+    "read_only_source": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "sha256_at_archive": {
+      "tools/internal/aqua/python_package.py": "9bc752d6eb4d725e795789be4b492e9b058e4ebe05df0aba0c99ffb0a19b2154"
+    }
+  },
+  "main": {
+    "read_only_source": "/home/alex/git/etas-contrib/score_devcontainer",
+    "sha256_at_archive": {
+      "experiments/tool-manager-comparison/integration-gates/README.md": "ab468faa94ccc0bfca90cb07a72756ac0cf385372e52b42ed6b112560974a584",
+      "experiments/tool-manager-comparison/integration-gates/gate.py": "8c77108154a7db5b4d8d8318bcfa5806381e7792126b9d908d57e4e3a3561f54"
+    }
+  },
+  "mise": {
+    "read_only_source": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+    "sha256_at_archive": {
+      "tools/internal/mise/provision.py": "2ef61c222642aa2b20fc1a074a3eb232dcf8188b9e4ae70bb278a8fc69ba6978",
+      "tools/internal/mise/python_package.py": "1dc0ccb5321ac2d4836bfa2206fdef4e5cc56d1b723b360c133f33cea2ea29c2"
+    }
+  },
+  "nix": {
+    "read_only_source": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix",
+    "sha256_at_archive": {
+      "tools/internal/nix/package.py": "3d5f49923f013cf8a704349ec8afec6b01d3286cc5db4babc2facc33e2e1e6fc"
+    }
+  }
+}

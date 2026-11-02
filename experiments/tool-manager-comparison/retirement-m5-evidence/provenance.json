@@ -1,0 +1,46 @@
+{
+  "captured_utc": "2026-11-02T00:00:25.098002+00:00",
+  "base_head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+  "work_remains_local": true,
+  "candidates": {
+    "mise": {
+      "checkout": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise",
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "report_source": "experiments/tool-manager-mise/reference/README-m5.md",
+      "runner_sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31",
+      "installer_removed_definitions": [],
+      "report_sha256": "b55d27bb833da99d8e4c6238f54f312943e7a2a95ff9251cc40c80f6ac6c16ac"
+    },
+    "aqua": {
+      "checkout": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "report_source": "experiments/tool-manager-aqua/reference/README-m5.md",
+      "runner_sha256": "a2bc7647c08f74a002ba1f92dfd4a3954c0038d1ea739ec9f2070e4723b7de1f",
+      "installer_removed_definitions": [],
+      "report_sha256": "2c7a4ecada1f07198b17c3ddd28ace85680be9be2c3926ef3a2a86b9760fab5b"
+    },
+    "nix": {
+      "checkout": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix",
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "report_source": "experiments/tool-manager-nix/reference/README-m5.md",
+      "runner_sha256": "eef754867dc07214e822fddbd2964e76e2eb4a66bcd5151f8fac103f750a748d",
+      "installer_removed_definitions": [],
+      "report_sha256": "932461783b51809e6f98877a49d8b067e0df9f1fcae33cca53edd2a88591a476"
+    }
+  },
+  "runtime_scope": {
+    "mise": "Linux amd64 host; existing M5 provisioned install tree",
+    "aqua": "Linux amd64 host; final published M5 prefix",
+    "nix": "Linux amd64 Docker; network none, read-only root/store, normal host UID, fresh tmpfs; M5 exported closure"
+  },
+  "pending_gates": [
+    "Fresh complete M5 published images and feature smoke tests",
+    "Actual generic Node image post-create lifecycle",
+    "ARM Linux / ARM macOS execution",
+    "Production release identity/hosting and hosted update/release execution"
+  ],
+  "final_verified_utc": "2026-11-02T00:03:27.989123+00:00",
+  "filesystem_available_bytes": 2632413184,
+  "audit_script_sha256": "e6e43d018f36e5df25945d8ad51dd93f7900d0ae29f8b8923c7db6d6c3929105",
+  "runtime_script_sha256": "8ea9503ef90c2bd2f9509a22fa412390d8e699bd1789b339db74bca8fe18cc92"
+}

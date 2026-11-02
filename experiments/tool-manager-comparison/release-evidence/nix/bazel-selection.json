@@ -1,0 +1,9 @@
+{
+  "kind": "archive",
+  "file": "ruff-x86_64-unknown-linux-gnu/ruff",
+  "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-x86_64-unknown-linux-gnu.tar.gz",
+  "sha256": "b0ee141ada4749c7ee16ba21465b4ef035455b495aa3ab951bbcb9bde9f4d001",
+  "type": "tar.gz",
+  "os": "linux",
+  "cpu": "x86_64"
+}

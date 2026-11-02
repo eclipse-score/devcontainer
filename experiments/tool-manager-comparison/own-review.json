@@ -1,0 +1,38 @@
+{
+  "reviewed_at": "2026-11-02T13:48:28.909589+00:00",
+  "scope": "Focused parent code review plus independent unit/generated/evidence/prepared-runtime checks; not a repeated full-image build or exhaustive audit.",
+  "implementation_branch": "eval/tool-manager-own",
+  "source_manifest_sha256": "807c9efae03bce081c60aff438db0f40194079434b9b9f535799a4c79510679f",
+  "source_bound_evidence": {
+    "archive_files": 99,
+    "current_source_hashes": 48,
+    "verification": "passed"
+  },
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s tools/tests -v",
+    "passed": 45,
+    "log_sha256": "79afd39b41a17963846666b2211edb9bace7bcc09796e51e2ddf73f83e0ad5c1"
+  },
+  "generated_outputs": {
+    "command": "python3 tools/internal/sync_readme.py --check",
+    "status": "passed"
+  },
+  "prepared_runtime": {
+    "status": "passed",
+    "uid": 1000,
+    "network": "none",
+    "root_and_prefix": "read-only",
+    "direct_strict_pairs": 16,
+    "behavior_cases": 2,
+    "language_servers": 3,
+    "intercepted": false,
+    "record_sha256": "a674d0c6d884468e61ac4a908209005f6ad67032c83d8be0bea9465818948659"
+  },
+  "recommendation": "Consolidate own provisioning for the confirmed scope; not an adopted architecture.",
+  "remaining_limits": [
+    "Fresh full ARM64 image gate incomplete",
+    "No actual macOS or native ARM hardware validation",
+    "Public distribution and final upstream review not completed",
+    "Peer Codespell selection not part of the preserved own inventory"
+  ]
+}

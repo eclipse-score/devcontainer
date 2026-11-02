@@ -1,0 +1,111 @@
+{
+  "candidate": "nix",
+  "runner_sha256": "eef754867dc07214e822fddbd2964e76e2eb4a66bcd5151f8fac103f750a748d",
+  "prefix": "/nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin",
+  "prefix_variable": "SCORE_NIX_PROFILE_BIN",
+  "checks": [
+    {
+      "tool": "uv",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/nix/store/zkapy00fbigg12wqjd33ics46snvmbbq-uv-0.13.5/bin/uv",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uv 0.13.5 (aarch64-unknown-linux-gnu)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "uvx",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/nix/store/zkapy00fbigg12wqjd33ics46snvmbbq-uv-0.13.5/bin/uvx",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uvx 0.13.5 (aarch64-unknown-linux-gnu)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/nix/store/jwn9g7ys1lda9822niirf4hxz24fvrb6-ruff-0.17.2/bin/ruff",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "ruff 0.17.2\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "pre-commit",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/nix/store/58xgicxdapbnyv83xk1jsy67i0bgi6b9-pre-commit-4.7.0/bin/pre-commit",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "pre-commit 4.7.0\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "check",
+        "--select",
+        "F821",
+        "--output-format",
+        "concise",
+        "bad input.py"
+      ],
+      "resolved_executable": "/nix/store/jwn9g7ys1lda9822niirf4hxz24fvrb6-ruff-0.17.2/bin/ruff",
+      "direct_exit": 1,
+      "strict_exit": 1,
+      "stdout": "bad input.py:1:1: F821 Undefined name `missing_name`\nFound 1 error.\n",
+      "stderr": "",
+      "identical_results": true
+    }
+  ],
+  "scope": "Prepared command execution; no bootstrap or fresh-image claim",
+  "unexpected_path_calls": [],
+  "passed": true,
+  "milestone": "M7",
+  "architecture": "aarch64 under QEMU",
+  "container_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--platform",
+    "linux/arm64",
+    "--name",
+    "score-m7-nix-root-runtime",
+    "--label",
+    "score-m7-platform.candidate=nix",
+    "--network",
+    "none",
+    "--user",
+    "1000:1000",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,mode=1777",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--mount",
+    "type=bind,source=/tmp/score-m7-nix/release-arm64/native/nix/store,target=/nix/store,readonly",
+    "--mount",
+    "type=bind,source=/home/alex/git/etas-contrib/score_devcontainer-eval-nix/tools/run-tool,target=/candidate/tools/run-tool,readonly",
+    "--mount",
+    "type=bind,source=/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/retirement-runtime-check.py,target=/checker.py,readonly",
+    "--entrypoint",
+    "/bin/sh",
+    "score-tooling-reference:final-arm64",
+    "-c",
+    "/usr/bin/python3 /checker.py --candidate nix --repo /candidate --bin /nix/store/vaaacix8fd8dvka8hpr0c548j37n9ybd-score-tools-published/bin --prefix-env SCORE_NIX_PROFILE_BIN --output /tmp/runtime-result.json && cat /tmp/runtime-result.json"
+  ]
+}

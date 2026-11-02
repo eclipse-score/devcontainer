@@ -1,0 +1,18 @@
+{
+  "profile": "published",
+  "expected_uid": 1000,
+  "versions": {
+    "actionlint": "1.7.7",
+    "bazelisk": "1.27.0",
+    "buildifier": "8.2.1",
+    "ruff": "0.11.12",
+    "shellcheck": "0.10.0",
+    "uv": "0.13.6",
+    "uvx": "0.13.6",
+    "yamlfmt": "0.17.0",
+    "pre-commit": "4.7.0",
+    "pytest": "9.0.2",
+    "basedpyright": "1.35.0"
+  },
+  "bazel_version": "8.6.0"
+}

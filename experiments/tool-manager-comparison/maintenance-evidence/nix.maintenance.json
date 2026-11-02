@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "candidate": "nix",
+  "date": "2026-11-01",
+  "owner": {
+    "source": "experiments/tool-manager-nix/reference/nix/flake.nix",
+    "nixpkgs_revision": "1c89083e451e891152365b799595cf7790a43325",
+    "producer": "score-eval-nix-m3-agent"
+  },
+  "authored_policy": {
+    "tools": {
+      "starpls": {
+        "native_attribute": "pkgs.starpls",
+        "version": "0.1.22",
+        "profiles": ["published"],
+        "root_bazel_label": "//tools:starpls",
+        "root_environment": "bazel-feature",
+        "existing_root_lock_version": "0.1.22"
+      },
+      "codespell": {
+        "native_attribute": "pkgs.codespell",
+        "package_source": "pkgs/by-name/co/codespell/package.nix:44",
+        "version": "2.4.3",
+        "main_program": "codespell",
+        "python3Packages_alias_in_locked_input": false,
+        "profiles": ["published"],
+        "root_bazel_label": "//tools:codespell",
+        "root_environment": "s-core-local.python",
+        "facade_extra": "codespell"
+      }
+    },
+    "repository_profile_unchanged_from_m3": true,
+    "repository_profile_members": [
+      "actionlint",
+      "bazelisk",
+      "buildifier",
+      "ruff",
+      "shellcheck",
+      "uv",
+      "uvx",
+      "yamlfmt",
+      "pre-commit"
+    ],
+    "root_repository_selection_unchanged_from_m3": true
+  },
+  "maintenance_work": {
+    "authored_policy_edits": [
+      {
+        "path": "experiments/tool-manager-nix/reference/nix/flake.nix",
+        "purpose": "Select the existing locked native package attributes in published only.",
+        "next_similar_tool": "Normal authored package and profile decision."
+      },
+      {
+        "path": "tools/environments.json",
+        "purpose": "Add Codespell to s-core-local Python composition; leave repository membership unchanged.",
+        "next_similar_tool": "Normal environment membership edit for a Python CLI."
+      },
+      {
+        "path": "tools/score_tools/python_tools.bzl",
+        "purpose": "Declare Codespell distribution, entrypoint, and description; sync.py regenerates its version from Nix.",
+        "next_similar_tool": "Normal identity metadata edit; version is generated rather than separately selected."
+      },
+      {
+        "path": "tools/tests/test_catalog.py",
+        "purpose": "Cover current prepared skips and preserve the no-handoff Starpls native installer fallback.",
+        "next_similar_tool": "Normal focused regression for prepared and unprepared install routes."
+      }
+    ],
+    "permanent_adapter_edits": [
+      {
+        "path": "experiments/tool-manager-nix/reference/prepare.py",
+        "purpose": "Add Starpls to native export and Codespell to Python catalog, facade-extra, and handoff classes.",
+        "next_similar_tool": "Normal explicit class registration for each added native or Python CLI."
+      },
+      {
+        "path": "experiments/tool-manager-nix/reference/prepare.py",
+        "purpose": "Use starpls version because the real CLI does not implement the generic --version probe.",
+        "next_similar_tool": "One-time Starpls-specific CLI adapter."
+      },
+      {
+        "path": "experiments/tool-manager-nix/reference/prepare.py",
+        "purpose": "Retain an existing native artifact lock and hashes when the selected package version is unchanged.",
+        "next_similar_tool": "General exporter behavior; unchanged versions need no extra registry query or archive download."
+      }
+    ],
+    "generated_outputs": [
+      "Fresh immutable release metadata and profile bundles",
+      "Prepared-tools manifest and copied native store closure",
+      "Root native compatibility locks and Python catalog versions",
+      "Facade pyproject.toml and optional-dependency metadata",
+      "Root tools README inventory"
+    ]
+  },
+  "generated_release": {
+    "version": "0.6.0",
+    "target_platform": "linux/amd64",
+    "store_path_count": 105,
+    "published_member_count": 13,
+    "repository_member_count": 9,
+    "prepared_tools": {
+      "starpls": {
+        "kind": "native",
+        "version": "0.1.22",
+        "entrypoint": "starpls"
+      },
+      "codespell": {
+        "kind": "python",
+        "version": "2.4.3",
+        "entrypoint": "codespell"
+      }
+    },
+    "native_observed": {
+      "starpls": "starpls version: v0.1.22",
+      "codespell": "2.4.3"
+    },
+    "starpls_root_lock": {
+      "version": "0.1.22",
+      "platforms": ["linux/arm64", "linux/x86_64", "macos/arm64"],
+      "checksum_refresh_needed": false,
+      "current_drift_check_passed": true
+    }
+  },
+  "facade": {
+    "wheel": "score_nix_reference_tools-0.6.0-py3-none-any.whl",
+    "requires_dist": [
+      "ruff==0.17.2; extra == \"ruff\"",
+      "pre-commit==4.7.0; extra == \"pre-commit\"",
+      "pytest==9.1.1; extra == \"pytest\"",
+      "basedpyright==1.39.8; extra == \"basedpyright\"",
+      "codespell==2.4.3; extra == \"codespell\""
+    ],
+    "consumer_requirement": "score-nix-reference-tools[codespell]",
+    "consumer_added_separate_codespell_pin": false,
+    "uv_version": "0.11.2",
+    "uv_project_lock_sync_run": "passed",
+    "uv_lock_package_count": 3,
+    "uv_run_version": "2.4.3",
+    "uv_project_typo_exit": 65,
+    "uv_project_typo_output": "teh ==> the",
+    "uvx_from_facade_extra": "passed; Codespell 2.4.3",
+    "uvx_note": "uv reports the console script is supplied by the Codespell dependency, not by the empty facade package."
+  },
+  "execution": {
+    "root_bazel": {
+      "//tools:starpls": {
+        "status": 0,
+        "observed": "starpls version: v0.1.22"
+      },
+      "//tools:codespell": {
+        "status": 0,
+        "observed": "2.4.3"
+      },
+      "//tools:python_tool_runner_test": {
+        "status": 0,
+        "passed_tests": 1
+      }
+    },
+    "release_drift": {
+      "old_m3_release": "/tmp/score-m3-nix/release-gated",
+      "old_release_status": 1,
+      "old_release_rejected_as_stale": true,
+      "current_m4_release_status": 0
+    },
+    "prepared_handoff": {
+      "staged": true,
+      "manifest_member_count": 13,
+      "verified_prepared_count": 13,
+      "starpls_skipped_existing_native_install": true,
+      "codespell_skipped_existing_python_install": true,
+      "unmigrated_native_installs_remain": ["apm", "opencode"],
+      "apt_and_setup_membership_remains": true,
+      "runtime_image": "ghcr.io/eclipse-score/devcontainer:m3-nix-gate-amd64",
+      "runtime_image_role": "Disposable harness with current M4 source, manifest, and Nix store mounted; not M4 image proof."
+    },
+    "shared_onboarding_checker": {
+      "result": "passed",
+      "proof_file": "/tmp/score-m4-nix/onboarding-proof.json",
+      "uid": 1000,
+      "network": "none",
+      "starpls_lsp_initialize_shutdown": "passed",
+      "fresh_manifest_absolute_paths_used": true,
+      "codespell_clean_and_typo_checks": "passed",
+      "starpls_background_bazel_info": "Pinned Bazel 8.6.0 attempted; module registry DNS failed with networking disabled."
+    },
+    "source_checks": {
+      "catalog_tests": {
+        "status": 0,
+        "count": 26
+      },
+      "unprepared_starpls_fallback_regression": true,
+      "python_compile": 0,
+      "tool_readme_drift": 0,
+      "current_release_drift": 0,
+      "git_diff_check": 0
+    }
+  },
+  "network_conditions": {
+    "nix_producer": "Default Docker network; no proxy variables present; existing task-owned producer and store reused.",
+    "root_bazel_and_uv": "Host default network enabled; no proxy variables present.",
+    "prepared_skip_and_shared_checker": "Docker network disabled."
+  },
+  "limitations": [
+    "No fresh M4 production image was built. The M3 image was only a disposable harness with current M4 artifacts mounted.",
+    "ARM and macOS were not executed.",
+    "The offline LSP protocol exchange passed, but Bazel module registry access failed; project analysis is not asserted by the checker."
+  ],
+  "peer_cross_read": {
+    "mise_source": "experiments/tool-manager-mise/reference/mise.published.toml uses github:withered-magic/starpls 0.1.22 and pypi:codespell 2.4.1.",
+    "aqua_source": "experiments/tool-manager-aqua/reference/aqua.yaml and starpls-registry.yaml use a local registry entry to map Starpls release assets and Linux arm64 naming; README-m4 records snapshotting that policy with the release. reference/pyproject.toml selects Codespell 2.4.1.",
+    "mise_lock_boundary": "Shared coordination reports that a published lock mixing native and PyPI graphs requested a mise-installed Python interpreter; the repair direction is native-only lock selection with existing system Python and uv ownership preserved.",
+    "transferable_finding": "Native registry and asset adapters are manager-specific. Keep version matching within each candidate's native owner and generated compatibility routes."
+  }
+}

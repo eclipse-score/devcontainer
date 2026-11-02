@@ -1,0 +1,4 @@
+{
+  "format": "unified-diff",
+  "text": "--- A/tools/owners/aqua/aqua.yaml\n+++ B/tools/owners/aqua/aqua.yaml\n@@ -42,7 +42,7 @@\n     tags:\n       - published\n       - repository\n-  - name: astral-sh/ruff@0.11.12\n+  - name: astral-sh/ruff@0.14.6\n     tags:\n       - published\n       - repository\n"
+}

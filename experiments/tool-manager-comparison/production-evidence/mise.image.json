@@ -1,0 +1,8 @@
+{
+  "Id": "sha256:63d2cc6b87577fa1c61ce08d5c6d3703ceec20c9b0fdbdd20489a70507f14113",
+  "Created": "2026-11-01T19:08:58.513601688+01:00",
+  "Os": "linux",
+  "Architecture": "amd64",
+  "Size": 6860567830,
+  "tested_tag": "ghcr.io/eclipse-score/devcontainer:mise-m3-final-amd64"
+}

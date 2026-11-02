@@ -1,0 +1,21 @@
+{
+  "/usr/local/share/score-tools/score_tools/provision.py": "fefca491c13f11159be81ee3aca8e06eabe836f35b626c4b1a2d8b4088180fa4",
+  "/usr/local/share/score-tools/score_tools/catalog.py": "7cd516e98816b994f457aab830b4a1542ead296e8e94dc4720500a9a655b2e59",
+  "/usr/local/share/score-tools/internal/provision.py": "595b025f1cd73b4091d62be16a2f805df933d2800de827060daf933bb9f19afc",
+  "/usr/local/share/score-tools/internal/devcontainer/install.py": "3a17d2c807ddffd39d7e981076893d0b5aaaee54f31738f740cc008e8775bfce",
+  "/usr/local/share/score-tools/score_tools/python_tools.bzl": "e5fcaa2777fe59b1ca2495925b533fd92aaf32a152bd59fa7fe4a7bef3433d4a",
+  "/usr/local/share/score-tools/environments.json": "f0a712a09e477bfa861af87a82e2ee19419bfa08e69a1465f84447e17534a4be",
+  "/usr/local/share/score-tools/lockfiles/actionlint.lock.json": "7754312e62769e0dca0ab71f0d2f5ff9809aa5b70299bbeadc15782019cf8c07",
+  "/usr/local/share/score-tools/lockfiles/apm.lock.json": "182672df6e76cb6ff7455f62c0cd111d76d3c40b7cc0d97dd55649582fc1ad83",
+  "/usr/local/share/score-tools/lockfiles/bazelisk.lock.json": "94bdd51e0d3c1b7f5846519d334a49a6c794e75458cb1ff5568837abb6bf8363",
+  "/usr/local/share/score-tools/lockfiles/buildifier.lock.json": "8c5dad381fbccbe4fbdcf34dfcc0cb25e851614e88ffabfd568beff2b767ecbe",
+  "/usr/local/share/score-tools/lockfiles/opencode.lock.json": "7e8be2020c9eb7dc4634131491952b77ebda7d2821e7dac52e90b3240a079b1e",
+  "/usr/local/share/score-tools/lockfiles/ruff.lock.json": "9c5504c12c181986cf879100e33cdc7e910d56ab8f612b08b657ef3e70fa3a40",
+  "/usr/local/share/score-tools/lockfiles/shellcheck.lock.json": "7e6516d6b73479cdd80d74ae84df30fd80dba53ffd8d19424d029820bdf13a3c",
+  "/usr/local/share/score-tools/lockfiles/starpls.lock.json": "3758882b292fd2b20b8dff5911ed8e6234e348d2ab033aca74fe38cf36ad6f4d",
+  "/usr/local/share/score-tools/lockfiles/uv.lock.json": "9a37a3701a0376de82f20a930d8909d04fa83e8e48a0653a99037886e95f9ff1",
+  "/usr/local/share/score-tools/lockfiles/yamlfmt.lock.json": "2e36a0565e3ff45ceee23563a0bb0aa46b1a3fdee60770c6ff149305f0453987",
+  "/own-test-project/test.sh": "98d9ff0324116baa1d53cf0fd1f1259e59dad37fce93d92766621475cec4f4e9",
+  "/devcontainer/features/s-core-local/tests/test_default.sh": "708143a5952f5043c32d71e595efc46da6823d9ca4d022ba0fdaf2e6195930c7",
+  "/devcontainer/features/bazel/tests/test_default.sh": "b64265b1aa0c8a1fb6c481f4b1074f6590907e45d990abf9a6040cdcf1aeeffb"
+}

@@ -1,0 +1,14 @@
+{
+  "candidate": "own",
+  "gate": "fresh-published-arm64-build-and-feature-tests",
+  "status": "failed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+  "output": "type=cacheonly; no image loaded or launched",
+  "source_strategy": "task-local source snapshot",
+  "workspace_retained": false,
+  "log": "/tmp/score-own-copilot/integration/own-published-arm64-20261102T123033Z-e1f5140d/published-build.log",
+  "builder": "score-m6-gates-own-1480e2df",
+  "builder_removed": true,
+  "shared_gate_label": "fresh-published-amd64-build-and-feature-tests",
+  "platform_adapter": "Task adapter changes platform and labels only; same feature tests."
+}

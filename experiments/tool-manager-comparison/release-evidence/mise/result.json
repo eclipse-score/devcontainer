@@ -1,0 +1,565 @@
+{
+  "SPDX-License-Identifier": "Apache-2.0",
+  "authored_update": {
+    "actual_worktree_owner_and_compatibility_pins_unchanged": true,
+    "backend": "aqua:astral-sh/ruff",
+    "changed_a_b_files": [
+      "tools/README.md",
+      "tools/lockfiles/ruff.lock.json",
+      "tools/mise/mise.native.toml",
+      "tools/mise/mise.native.lock"
+    ],
+    "from": "0.11.13",
+    "owner": "tools/mise/mise.native.toml",
+    "prior_knowledge": "Target 0.14.6 was supplied by task from historical experiment knowledge; ordinary mise backend resolution used, no arbitrary discovery claim or production experimental-source dependency",
+    "scope": "isolated current maintained source copies only",
+    "to": "0.14.6",
+    "unrelated_pins_and_selections_unchanged": true
+  },
+  "bazel": {
+    "artifact": {
+      "cpu": "x86_64",
+      "file": "ruff-x86_64-unknown-linux-gnu/ruff",
+      "kind": "archive",
+      "os": "linux",
+      "sha256": "b0ee141ada4749c7ee16ba21465b4ef035455b495aa3ab951bbcb9bde9f4d001",
+      "type": "tar.gz",
+      "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-x86_64-unknown-linux-gnu.tar.gz"
+    },
+    "binary_path": "/tmp/score-m8-mise/bazel/external/rules_multitool++multitool+multitool.ruff.linux_x86_64/tools/ruff/linux_x86_64_archive/ruff-x86_64-unknown-linux-gnu/ruff",
+    "binary_sha256": "2c8c2a0b5963e1d530ce16852ac477bfd1f4f2075497d7d30728fccb562ec330",
+    "cwd_preserved": "/tmp/score-m8-mise/sources/b",
+    "diagnostic": "bad input.py:1:7: F821 Undefined name SCORE_M8_UNDEFINED_NAME",
+    "generated_artifact_matches_mise_lock": true,
+    "native_b_binary_identical": true,
+    "negative_exit": 1,
+    "public_target": "//tools:ruff",
+    "role": "explicit public compatibility check, not ordinary native/uv runtime dependency",
+    "version_result": "ruff 0.14.6"
+  },
+  "candidate": "mise",
+  "checks": {
+    "a_against_b": {
+      "exit": 1,
+      "result": "Local release is stale for extras; rebuild from current owners"
+    },
+    "bazel_affected_test": {
+      "exit": 0,
+      "result": "passed",
+      "target": "//tools:mise_python_package_test"
+    },
+    "diff_check": {
+      "exit": 0,
+      "result": "passed"
+    },
+    "final_current_and_snapshot_checks": {
+      "exit": 0,
+      "result": "passed"
+    },
+    "generated_drift": {
+      "cause": "A generated JSON temporarily supplied against current B owner+mise lock",
+      "exit": 1,
+      "repair": "normal refresh.sh restored byte-identical B output",
+      "result": "Generated drift: tools/lockfiles/ruff.lock.json"
+    },
+    "normal_refresh_and_check": {
+      "exit": 0,
+      "result": "owner locks, compatibility outputs and inventory current"
+    },
+    "owner_stale_after_repair": {
+      "exit": 1,
+      "optimized_python": true,
+      "result": "Stale mise artifact lock ... owner=0.14.6, lock=0.11.13; run tools/internal/mise/refresh.sh"
+    },
+    "owner_stale_before_repair": {
+      "exit": 1,
+      "result": "AssertionError; identified and repaired"
+    },
+    "python_unit_tests": {
+      "exit": 0,
+      "result": "4 passed"
+    },
+    "ruff_lint_format": {
+      "exit": 0,
+      "result": "passed"
+    }
+  },
+  "command_context": {
+    "bazel": "/tmp/score-m8-mise/sources/b",
+    "build_destinations": "already populated; reproduction must choose fresh empty output directories",
+    "consumer": "/tmp/score-m8-mise/consumer",
+    "environment": {
+      "UV_CACHE_DIR": "/tmp/score-m5-mise/uvx-cache",
+      "UV_PYTHON": "/usr/bin/python3",
+      "UV_PYTHON_PREFERENCE": "only-system"
+    },
+    "maintainer": "repository or corresponding sources/a and sources/b root"
+  },
+  "commands": {
+    "bazel_b_failure": "/tmp/score-m5-mise/host-bin/bazelisk --batch --output_base=/tmp/score-m8-mise/bazel run --repository_cache=/home/alex/.cache/bazel/_bazel_alex/cache/repos/v1 //tools:ruff -- check --output-format concise 'bad input.py'",
+    "bazel_b_version": "/tmp/score-m5-mise/host-bin/bazelisk --batch --output_base=/tmp/score-m8-mise/bazel run --repository_cache=/home/alex/.cache/bazel/_bazel_alex/cache/repos/v1 //tools:ruff -- --version",
+    "bazel_test": "/tmp/score-m5-mise/host-bin/bazelisk --batch --output_base=/tmp/score-m8-mise/bazel test --repository_cache=/home/alex/.cache/bazel/_bazel_alex/cache/repos/v1 //tools:mise_python_package_test --test_output=errors",
+    "build_a": "python3 /tmp/score-m8-mise/sources/a/tools/internal/mise/python_package.py build --output /tmp/score-m8-mise/handoff/a --version 0.8.0 --package-name score-mise-m8-local --uv /tmp/score-m5-mise/provision-bin/uv",
+    "build_b": "python3 /tmp/score-m8-mise/sources/b/tools/internal/mise/python_package.py build --output /tmp/score-m8-mise/handoff/b --version 0.8.1 --package-name score-mise-m8-local --uv /tmp/score-m5-mise/provision-bin/uv",
+    "check_a": "python3 /tmp/score-m8-mise/sources/a/tools/internal/mise/python_package.py check /tmp/score-m8-mise/handoff/a",
+    "check_b": "python3 /tmp/score-m8-mise/sources/b/tools/internal/mise/python_package.py check /tmp/score-m8-mise/handoff/b",
+    "consumer_failure": "/tmp/score-m5-mise/provision-bin/uv run --no-sync ruff check --output-format concise 'bad input.py'",
+    "consumer_lock": "/tmp/score-m5-mise/provision-bin/uv lock --find-links /tmp/score-m8-mise/handoff/wheels",
+    "consumer_sync": "/tmp/score-m5-mise/provision-bin/uv sync --locked --find-links /tmp/score-m8-mise/handoff/wheels",
+    "consumer_version": "/tmp/score-m5-mise/provision-bin/uv run --no-sync ruff --version",
+    "diff_check": "git diff --check",
+    "format": "/tmp/score-m5-mise/host-bin/ruff format --check tools/internal/mise/refresh.py tools/tests/test_mise_python_package.py",
+    "fresh_check": "python3 /tmp/score-m8-mise/sources/b/tools/internal/mise/refresh.py --check",
+    "inventory_check": "python3 /tmp/score-m8-mise/sources/b/tools/internal/sync_readme.py --check",
+    "lint": "/tmp/score-m5-mise/host-bin/ruff check tools/internal/mise/refresh.py tools/tests/test_mise_python_package.py",
+    "native_a": "python3 /tmp/score-m8-mise/sources/a/tools/internal/mise/provision.py repository --data-dir /tmp/score-m5-mise/provision-data --bin-dir /tmp/score-m8-mise/native/bin --mise /tmp/score-m3-mise/bootstrap/mise",
+    "native_b": "python3 /tmp/score-m8-mise/sources/b/tools/internal/mise/provision.py repository --data-dir /tmp/score-m5-mise/provision-data --bin-dir /tmp/score-m8-mise/native/bin --mise /tmp/score-m3-mise/bootstrap/mise",
+    "native_calls_a": "python3 /tmp/score-m8-mise/probes/native-check.py a 0.11.13",
+    "native_calls_b": "python3 /tmp/score-m8-mise/probes/native-check.py b 0.14.6",
+    "normal_refresh": "MISE_BINARY=/tmp/score-m3-mise/bootstrap/mise /tmp/score-m8-mise/sources/b/tools/internal/mise/refresh.sh",
+    "reject_a_against_b": "python3 /tmp/score-m8-mise/sources/b/tools/internal/mise/python_package.py check /tmp/score-m8-mise/handoff/a",
+    "stale_owner_check": "python3 -O /tmp/score-m8-mise/sources/b/tools/internal/mise/refresh.py --check",
+    "unit_test": "python3 -m unittest tools.tests.test_mise_python_package",
+    "uvx_a": "/tmp/score-m5-mise/provision-bin/uvx --find-links /tmp/score-m8-mise/handoff/wheels --from 'score-mise-m8-local[ruff]==0.8.0' ruff --version",
+    "uvx_b": "/tmp/score-m5-mise/provision-bin/uvx --find-links /tmp/score-m8-mise/handoff/wheels --from 'score-mise-m8-local[ruff]==0.8.1' ruff --version",
+    "uvx_failure_a": "/tmp/score-m5-mise/provision-bin/uvx --find-links /tmp/score-m8-mise/handoff/wheels --from 'score-mise-m8-local[ruff]==0.8.0' ruff check --output-format concise 'bad input.py'",
+    "uvx_failure_b": "/tmp/score-m5-mise/provision-bin/uvx --find-links /tmp/score-m8-mise/handoff/wheels --from 'score-mise-m8-local[ruff]==0.8.1' ruff check --output-format concise 'bad input.py'"
+  },
+  "constraints": {
+    "arm_or_macos_execution": false,
+    "cached_m5_m6_amd64_reused": true,
+    "commits_push_publication": false,
+    "external_failures_remaining": [],
+    "free_disk_observed": "about 11 GiB initially after root cleanup; about 9 GiB final; stayed above 4 GiB floor",
+    "full_image_build": false,
+    "global_installs_cleanup": false,
+    "m7_payload_dependency": false,
+    "network": "normal metadata/artifact/PyPI access for setup; final uv offline repeat uses cached metadata/wheels",
+    "platform": "Linux x86_64",
+    "public_identity_host_winner_selected": false,
+    "python": "3.12.3",
+    "task_disk": "about 319 MiB including bounded Bazel output; about 34 MiB new native Ruff in reused cache, plus incremental uv cache",
+    "user": "uid=1000 alex"
+  },
+  "consumer": {
+    "local_lock_hash_limit": "uv.lock local flat-index facade entries record wheel paths; checked release manifests separately bind wheel digests",
+    "lock_states": {
+      "a": {
+        "independent-mise-m8-consumer": "0.1.0",
+        "ruff": "0.11.13",
+        "score-mise-m8-local": "0.8.0"
+      },
+      "b": {
+        "independent-mise-m8-consumer": "0.1.0",
+        "ruff": "0.14.6",
+        "score-mise-m8-local": "0.8.1"
+      }
+    },
+    "negative_behavior": "uv run and uvx A/B all returned expected F821/exit 1 for bad input.py",
+    "offline_b_repeat": "lock/sync/run/uvx passed with UV_OFFLINE=1 and manager/Bazel poison PATH, no marker; host networking was not isolated by a namespace",
+    "ordinary_uvx_versions": [
+      "ruff 0.11.13",
+      "ruff 0.14.6"
+    ],
+    "producer_source_or_manager_needed": false,
+    "project_authorship": "only facade requirement ==0.8.0 -> ==0.8.1; no copied Ruff pin",
+    "requires_dist_evidence": [
+      "evidence/a-wheel-METADATA.txt",
+      "evidence/b-wheel-METADATA.txt"
+    ],
+    "same_project_and_venv": "/tmp/score-m8-mise/consumer",
+    "uv_run_versions": [
+      "ruff 0.11.13",
+      "ruff 0.14.6"
+    ],
+    "uvx_advisory": "warning that Ruff is supplied by selected dependency extra; expected execution succeeded",
+    "wrapper_used": false
+  },
+  "date": "2026-11-02",
+  "documentation": {
+    "deleted_files": [],
+    "generic_production_orchestrator_added": false,
+    "historical_reports_preserved": true,
+    "maintained_guide": "tools/internal/mise/README.md",
+    "removed_instructions": [
+      "superseded Git-selected score-tool consumer examples",
+      "duplicate fixed-version dependency-wheel build snippets"
+    ],
+    "retained_helpers_reason": "bootstrap, refresh.sh/refresh.py, package build/check and provision each have distinct demonstrated roles; root score-tool packaging and public targets remain compatibility surfaces",
+    "updated_overviews": [
+      "tools/README.md",
+      "tools/internal/README.md"
+    ]
+  },
+  "evidence_and_log_index": {
+    "evidence/a-wheel-METADATA.txt": {
+      "bytes": 548,
+      "sha256": "d3037079cdfe5c760d2f156fe43159b48d605dd380cf4bd6b14d590ef7802d5c"
+    },
+    "evidence/authored-owner.diff": {
+      "bytes": 386,
+      "sha256": "667f537d410f10515ecbe28facfe7d6f8bf82bc9aad357986f02d556687b1365"
+    },
+    "evidence/b-generated-ruff.lock.json": {
+      "bytes": 1330,
+      "sha256": "d9b30b1bfbf7231cb89ae12845315441c72723f00bf99f15b622f3630c9e159f"
+    },
+    "evidence/b-wheel-METADATA.txt": {
+      "bytes": 547,
+      "sha256": "e0f0a06a1b2dfeb7f789c77e856319ac5951f505e069e7d7f176834692abea43"
+    },
+    "evidence/consumer-a-failure.txt": {
+      "bytes": 79,
+      "sha256": "a40db4348977e08f2e12d1dc0d5cd478fbc6a201950cf5ed8a9d2728b356cad8"
+    },
+    "evidence/consumer-a-version.txt": {
+      "bytes": 13,
+      "sha256": "0636ef7c434fe45ee99a7c48f523011703793a43b7a8d16fcf7aaa305ebc66a0"
+    },
+    "evidence/consumer-a.toml": {
+      "bytes": 145,
+      "sha256": "f5cadfa1fb986597b0d281b66e7f50b53e133caffdeb53cc26101ca85a28996a"
+    },
+    "evidence/consumer-b-failure.txt": {
+      "bytes": 79,
+      "sha256": "a40db4348977e08f2e12d1dc0d5cd478fbc6a201950cf5ed8a9d2728b356cad8"
+    },
+    "evidence/consumer-b-version.txt": {
+      "bytes": 12,
+      "sha256": "af4714edd3317991dce1ad1c70925c70f88e667e0b376e2fe48cbb3d942f57d1"
+    },
+    "evidence/consumer-b.toml": {
+      "bytes": 145,
+      "sha256": "d92d642fbb5e157e532f7530c52df8f282df759c9094c2327f410a7ea2f6df1a"
+    },
+    "evidence/generated.diff": {
+      "bytes": 6188,
+      "sha256": "bdf87094759bff907312ccbcded17e2aeda9014da6d52f5efdbd0a3c7cd760ab"
+    },
+    "evidence/maintained-docs.diff": {
+      "bytes": 18514,
+      "sha256": "4b452ea74f48aa4c33fbffddbc443ae47266699147939e58b0e86466a389df1e"
+    },
+    "evidence/native-a-calls.json": {
+      "bytes": 1894,
+      "sha256": "7e54526d9070e70eaa58e5f508a13990f78f10f2811cf5defceada022ace4d6c"
+    },
+    "evidence/native-a.json": {
+      "bytes": 2039,
+      "sha256": "330761dfdce611a36545c0d407def1741f7559437f5dd4d872d1aa9bf427f3be"
+    },
+    "evidence/native-b-calls.json": {
+      "bytes": 1893,
+      "sha256": "4b8585f80b67d67995e5ed29ea57c0508b69052f7b461ca413ecf75ba1af6fbd"
+    },
+    "evidence/native-b.json": {
+      "bytes": 2038,
+      "sha256": "c7ddb95db6a67a5e9fb3cc17f76fd0a4bb4c887e99c0faad338d525396f3d6ac"
+    },
+    "evidence/one-time-repair.diff": {
+      "bytes": 2741,
+      "sha256": "28bc167132b4b835f2ae325a9c1f03ac64b50c05a5184e93da22835f685f522f"
+    },
+    "evidence/source-start.json": {
+      "bytes": 6177,
+      "sha256": "18f995bbfabcb9b735f136bd6a7b3f10b8ba7318c335afc4c728843831c8cd2c"
+    },
+    "evidence/uv-a.lock": {
+      "bytes": 6430,
+      "sha256": "2a577524df6620b1952f3c3a6d45a0d2bd00527bef86f2ff8668adafea960b74"
+    },
+    "evidence/uv-b.lock": {
+      "bytes": 6724,
+      "sha256": "4665864a3476fa36338f89833cc1c3a494a2fbc14bea033efb8472d69a405688"
+    },
+    "evidence/uvx-a-failure.txt": {
+      "bytes": 255,
+      "sha256": "8c40d3a5f4f30a51a56f93505f5fffba0e67d2b5ee1a8bf8d9bc9a24ff055536"
+    },
+    "evidence/uvx-b-failure.txt": {
+      "bytes": 255,
+      "sha256": "8c40d3a5f4f30a51a56f93505f5fffba0e67d2b5ee1a8bf8d9bc9a24ff055536"
+    },
+    "evidence/workflow-audit.json": {
+      "bytes": 1231,
+      "sha256": "2ed45c0c36626efde7817376fe3f719719b7883a2cc70de59cd457373542d392"
+    },
+    "logs/a-check.log": {
+      "bytes": 50,
+      "sha256": "a868fd9bf35862e717d6a0785a149f14a85298f16ed1ccfb9c837c76d5547510"
+    },
+    "logs/b-final-check.log": {
+      "bytes": 50,
+      "sha256": "a868fd9bf35862e717d6a0785a149f14a85298f16ed1ccfb9c837c76d5547510"
+    },
+    "logs/b-generated-drift.log": {
+      "bytes": 48,
+      "sha256": "59aad063107c4ad7293d31d1b5b96cc40d7a70e5bcff988534a858c1b8f50ee8"
+    },
+    "logs/b-refresh-after-drift.log": {
+      "bytes": 1136,
+      "sha256": "20c3280cd5c8de228179390504baa4185e343b78f88d0a938dd3448c81a78a4f"
+    },
+    "logs/b-refresh.log": {
+      "bytes": 1562,
+      "sha256": "487b32d9f369e19ae69edcc41f79e82068a2dcbb187bc6f5282b7db2b4be4550"
+    },
+    "logs/b-stale-after-repair.log": {
+      "bytes": 113,
+      "sha256": "ac796bc02372b401425631792e51e9300e7e5c090b3c7460122538387e8218f6"
+    },
+    "logs/b-stale-before-refresh.log": {
+      "bytes": 621,
+      "sha256": "1ab728aab6f0a48af9141f72de101886c7f865a08cf05c1e4961b9e1e010f986"
+    },
+    "logs/bazel-b-failure.log": {
+      "bytes": 952,
+      "sha256": "b3da1a0696015aee99ce53d365959e65d9e11bc6b88ca533e9c11bb92969cc65"
+    },
+    "logs/bazel-b-version.log": {
+      "bytes": 919,
+      "sha256": "f57178a7a13e21649fdbf8e0df0dae2b1ce050586f122f3f1a04231d1cf3227d"
+    },
+    "logs/bazel-targeted-test.log": {
+      "bytes": 1304,
+      "sha256": "7ce55ef046e05f76d4a800e82503db689433f0d2d2a607ee26f559c17ce8a3a6"
+    },
+    "logs/build-a.log": {
+      "bytes": 1828,
+      "sha256": "60e2a374347d1283ef176ae8ef838a15edcee6c7e77ce132090153618f15ab3c"
+    },
+    "logs/build-b.log": {
+      "bytes": 1828,
+      "sha256": "e6d0196771049883675cd80f39ea1ea2d852cdce9f4340733908a4a00307cbd3"
+    },
+    "logs/check-a-against-b.log": {
+      "bytes": 63,
+      "sha256": "8203fb67f04f0c89e636e75c2f874ae7ad97f4de4011a841a9f5c3d6b73e2562"
+    },
+    "logs/check-a.log": {
+      "bytes": 48,
+      "sha256": "3c83af12e654d6604eabc874d9403860e3f92c64b5902fff1471f290f635803f"
+    },
+    "logs/check-b.log": {
+      "bytes": 48,
+      "sha256": "3c83af12e654d6604eabc874d9403860e3f92c64b5902fff1471f290f635803f"
+    },
+    "logs/consumer-a.log": {
+      "bytes": 1098,
+      "sha256": "a6fbfa4a42c06b51a2c558cabaeafc6556d87a4685fa9085b6a9f67b800b9814"
+    },
+    "logs/consumer-b-offline.log": {
+      "bytes": 286,
+      "sha256": "6e1540e08cb6993b2bb858b9cdc70502548cb0df121c095ec8761ded63457ed8"
+    },
+    "logs/consumer-b.log": {
+      "bytes": 1108,
+      "sha256": "731afca1656bfd38861eb65ddfcfdef5e6895127c295a33cc20f7a11b7e31409"
+    },
+    "logs/final-current-checks.log": {
+      "bytes": 197,
+      "sha256": "d9be24862ea5e6f0e6ac605b1986eafe2f9dad80d1531c0f051c9dc5d0b4d958"
+    },
+    "logs/final-snapshot-checks.log": {
+      "bytes": 196,
+      "sha256": "84332e754caef89e9715516cec01d6f49025703491579568852ef86f2d655efa"
+    },
+    "logs/native-provision-a.log": {
+      "bytes": 1873,
+      "sha256": "51ab7a8ec0ae4a2c45aa4a3fcd5a1afdd6cc7bec4622c8e52557242addd854c2"
+    },
+    "logs/native-provision-b.log": {
+      "bytes": 1889,
+      "sha256": "11af9c56ee575facf15697284e5ab69989300f447347beb4720891364e26db6b"
+    },
+    "logs/targeted-tests.log": {
+      "bytes": 102,
+      "sha256": "5a672673ef2de07ab1fdd551ab9a9837b79b2a5237939baba5768302c6c165ec"
+    }
+  },
+  "handoff": {
+    "final": "/tmp/score-m8-mise/final.md",
+    "final_sha256": "12a74877a2fc6bd109923a0be6b7737c7942052b58e67abaa750d22281a07b8a",
+    "progress": "/tmp/score-m8-mise/progress.md",
+    "readme": "experiments/tool-manager-mise/reference/README-m8.md"
+  },
+  "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+  "ledger": {
+    "one_time": "optimization-safe stale validation, targeted regression and supported-doc consolidation",
+    "per_platform": "verify/supply backend/bootstrap artifact metadata/layout and execute fresh output; no platform data changed in M8",
+    "per_release": "explicit identity/version, ordinary wheel build/check, source binding, digest and handoff",
+    "per_user": "facade requirement plus uv lock/sync, or reprovision existing native environment/prefix",
+    "per_version": "single owner edit, normal lock/export/inventory refresh, unrelated-pin review and affected command execution"
+  },
+  "milestone": "M8",
+  "native": {
+    "a_inventory": "evidence/native-a.json",
+    "argv_cwd_evidence": [
+      "evidence/native-a-calls.json",
+      "evidence/native-b-calls.json"
+    ],
+    "b_inventory": "evidence/native-b.json",
+    "changed": "only Ruff target/version; 8 other selected command targets/hashes plus user-note unchanged",
+    "direct_strict": "same 5 cases per release matched output/status: uv/uvx/Ruff/pre-commit versions and Ruff F821 with spaced filename",
+    "environment": "repository",
+    "fallback_markers": "absent for mise, bazel and bazelisk",
+    "install_b": "only new Ruff installed; unchanged installations reused",
+    "manager_data": "/tmp/score-m5-mise/provision-data",
+    "same_user_owned_prefix": "/tmp/score-m8-mise/native/bin"
+  },
+  "releases": {
+    "a": {
+      "check_result": "passed",
+      "manifest_path": "/tmp/score-m8-mise/handoff/a/release.json",
+      "manifest_sha256": "8aeaa30ff8b3aa56c99f6779d2679922483a13d3c386d0fc76b283dc51da0928",
+      "owner_sha256": {
+        "mise.native.toml": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558",
+        "mise.python.toml": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f"
+      },
+      "package_name": "score-mise-m8-local",
+      "release_version": "0.8.0",
+      "requires_dist": [
+        "ruff==0.11.13; extra == \"ruff\"",
+        "basedpyright==1.35.0; extra == \"basedpyright\"",
+        "codespell==2.4.1; extra == \"codespell\"",
+        "pre-commit==4.7.0; extra == \"pre-commit\"",
+        "pytest==9.0.2; extra == \"pytest\""
+      ],
+      "ruff_version": "0.11.13",
+      "selected_tool_versions": {
+        "basedpyright": "1.35.0",
+        "codespell": "2.4.1",
+        "pre-commit": "4.7.0",
+        "pytest": "9.0.2",
+        "ruff": "0.11.13"
+      },
+      "wheel_path": "/tmp/score-m8-mise/handoff/a/dist/score_mise_m8_local-0.8.0-py3-none-any.whl",
+      "wheel_sha256": "8f1329084e0558a4817fba6857f1fa06e17efda6d7284840cc74a4b0c787a491"
+    },
+    "b": {
+      "check_result": "passed",
+      "manifest_path": "/tmp/score-m8-mise/handoff/b/release.json",
+      "manifest_sha256": "1c8de5e89d7b843888e434e2e0be6ffc18d6d8e27d537abe5363db3fb98fb3c2",
+      "owner_sha256": {
+        "mise.native.toml": "6cbaf5d988130d27ac6aee73454e0e69f4628b72ef4ffd9462244d774944c3e6",
+        "mise.python.toml": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f"
+      },
+      "package_name": "score-mise-m8-local",
+      "release_version": "0.8.1",
+      "requires_dist": [
+        "ruff==0.14.6; extra == \"ruff\"",
+        "basedpyright==1.35.0; extra == \"basedpyright\"",
+        "codespell==2.4.1; extra == \"codespell\"",
+        "pre-commit==4.7.0; extra == \"pre-commit\"",
+        "pytest==9.0.2; extra == \"pytest\""
+      ],
+      "ruff_version": "0.14.6",
+      "selected_tool_versions": {
+        "basedpyright": "1.35.0",
+        "codespell": "2.4.1",
+        "pre-commit": "4.7.0",
+        "pytest": "9.0.2",
+        "ruff": "0.14.6"
+      },
+      "wheel_path": "/tmp/score-m8-mise/handoff/b/dist/score_mise_m8_local-0.8.1-py3-none-any.whl",
+      "wheel_sha256": "bfbffe7f199610a6f71f07c18733a8ea9cff7e23b41cca3f4a817a5462e7e4e1"
+    }
+  },
+  "repair": {
+    "behavior": "Replace version-equality assert with explicit stale-lock rejection active under python -O",
+    "diff": "evidence/one-time-repair.diff",
+    "file": "tools/internal/mise/refresh.py",
+    "regression": "normal and optimized subprocess execution of mismatched owner/lock",
+    "tests": "four affected Python unit tests and affected Bazel target passed"
+  },
+  "source_copies": {
+    "contents": "Only needed maintained tools and root/config metadata; no experiments, runtime closures or whole worktree copies",
+    "directories": [
+      "/tmp/score-m8-mise/sources/a",
+      "/tmp/score-m8-mise/sources/b"
+    ],
+    "initial_bytes_each": 402598,
+    "initial_file_count_each": 59,
+    "source_hash_manifest": "/tmp/score-m8-mise/evidence/source-start.json"
+  },
+  "source_sha256_and_modes": {
+    "experiments/tool-manager-mise/reference/README-m8.md": {
+      "mode": "0o644",
+      "sha256": "3133adf54aa5506742b97d5db069ecb733049e7bd1f3d8b473d235d216237009"
+    },
+    "tools/README.md": {
+      "mode": "0o644",
+      "sha256": "8e8d1674a682300ab2d675dc14b5a76e1b2171634412761f7728bdffbab73150"
+    },
+    "tools/environments.json": {
+      "mode": "0o644",
+      "sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586"
+    },
+    "tools/internal/README.md": {
+      "mode": "0o644",
+      "sha256": "0a1f252adf4c9f5a49779f7bd1e243f62d220a491a94ec732a12b5131abe187c"
+    },
+    "tools/internal/mise/README.md": {
+      "mode": "0o644",
+      "sha256": "1946f4d862c52ee6f39d5f6f8e898e6d735ced3fc90a21f839d4f3d74408a10e"
+    },
+    "tools/internal/mise/bootstrap.sh": {
+      "mode": "0o755",
+      "sha256": "1c4ec69e27eb6ac8230370aefdc17ca7ef2b23f32014ba4e4194e6c087a5c8ae"
+    },
+    "tools/internal/mise/provision.py": {
+      "mode": "0o755",
+      "sha256": "2ef61c222642aa2b20fc1a074a3eb232dcf8188b9e4ae70bb278a8fc69ba6978"
+    },
+    "tools/internal/mise/python_package.py": {
+      "mode": "0o755",
+      "sha256": "1dc0ccb5321ac2d4836bfa2206fdef4e5cc56d1b723b360c133f33cea2ea29c2"
+    },
+    "tools/internal/mise/refresh.py": {
+      "mode": "0o755",
+      "sha256": "23cc6554b65ecdc7ac33a9e56004f6362338231730af07a869367d250a3e0918"
+    },
+    "tools/internal/mise/refresh.sh": {
+      "mode": "0o755",
+      "sha256": "6898e1972c1e2b68e791dc6da1b2169a30c723274024e19fd7da4bfd69366c99"
+    },
+    "tools/lockfiles/ruff.lock.json": {
+      "mode": "0o644",
+      "sha256": "66d3185318f0211e9f1a0e4ac29ff5f1305413e6122e1d9929c2c77fb4543a50"
+    },
+    "tools/mise/mise.native.lock": {
+      "mode": "0o644",
+      "sha256": "d9e203cf1cb4199ea57f20c4792215ffbca7d6bf2df26fe361d1251e8b8ebc12"
+    },
+    "tools/mise/mise.native.toml": {
+      "mode": "0o644",
+      "sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558"
+    },
+    "tools/mise/mise.published.lock": {
+      "mode": "0o644",
+      "sha256": "a31d79e87c9842253af9963466e6fc176266fa908e6910a2007444af9d534e0a"
+    },
+    "tools/mise/mise.published.toml": {
+      "mode": "0o644",
+      "sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe"
+    },
+    "tools/mise/mise.python.toml": {
+      "mode": "0o644",
+      "sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f"
+    },
+    "tools/run-tool": {
+      "mode": "0o755",
+      "sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31"
+    },
+    "tools/score_tools/python_tools.bzl": {
+      "mode": "0o644",
+      "sha256": "b6bc3c418be7b8c8b20f2b2f8ab35358660b129ed14705ef6bffb9073e9c54d9"
+    },
+    "tools/tests/test_mise_python_package.py": {
+      "mode": "0o644",
+      "sha256": "5b13eece9319e5b9fde6b0779f2771dd5869d5f3af6fdc99223282b5c846ae8d"
+    }
+  },
+  "status": "stable source; requested local release/update acceptance completed; no adoption claim",
+  "worktree": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise"
+}

@@ -1,0 +1,338 @@
+{
+  "tools/BUILD.bazel": {
+    "sha256": "858c1e0c93063b6b38566aacd9fc92595ad053d2f0efa65ad3fd846751b6abdf",
+    "mode": "0o644"
+  },
+  "tools/README.md": {
+    "sha256": "351f884b092f8074460e23b66b6a1fcf10e27f4f39184996eef63e6834e97bcb",
+    "mode": "0o644"
+  },
+  "tools/environments.json": {
+    "sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586",
+    "mode": "0o644"
+  },
+  "tools/internal/README.md": {
+    "sha256": "7a9bc4b25bc56ab6cc642afd074990af2fd9cab2f31e910c50c9a0253d8203e8",
+    "mode": "0o644"
+  },
+  "tools/internal/aqua/export_native.py": {
+    "sha256": "a62d72c65c8c9170731417d4f8cc61da42e58c5b69bb93da171c5296caf70dfc",
+    "mode": "0o755"
+  },
+  "tools/internal/aqua/refresh_owners.py": {
+    "sha256": "de7bb28b90fcc03d6c2a37a9d273ce6c2172f3f28c11dd1ec7060594323e9875",
+    "mode": "0o644"
+  },
+  "tools/internal/aqua/sync_repository.py": {
+    "sha256": "6cc105761fee0602106a04e3947c6658ac9d4d7fde0f0ff8a0dd86ff396a219d",
+    "mode": "0o755"
+  },
+  "tools/internal/devcontainer/bootstrap_aqua.py": {
+    "sha256": "746e7edb610ac38e8d5f7d76b56453ffff4f550917c1fbf701b7b529d592608b",
+    "mode": "0o644"
+  },
+  "tools/internal/devcontainer/install.py": {
+    "sha256": "34f8fc2188f96c0b6bb644f6dd6bcd64f8e9a5dde14fe91cf65df62f30eb5c22",
+    "mode": "0o755"
+  },
+  "tools/internal/devcontainer/load_feature_versions.sh": {
+    "sha256": "6a430a6e07808c0a0f087ea42be14bf236cd2886712eed454805cb8ec74b1c6e",
+    "mode": "0o755"
+  },
+  "tools/internal/devcontainer/provision_host_tools.py": {
+    "sha256": "0825e75fc1337b03f9b7f3b08626ca07dbca725ea2c3ce695eff3b3164ad6cf7",
+    "mode": "0o644"
+  },
+  "tools/internal/devcontainer/provision_image_tools.sh": {
+    "sha256": "61b0e5c0cacd33e56bd8b20c37ca37035e0b80facdab229e79f8ffa293f5aa48",
+    "mode": "0o644"
+  },
+  "tools/internal/run_python_tool.sh": {
+    "sha256": "e4c9a9a4832f056d3c77a7f7ad34d8dfc04044146a910c3490b5d8652c3c24c4",
+    "mode": "0o755"
+  },
+  "tools/internal/sync_readme.py": {
+    "sha256": "10fdfb1ffc35e9ba2de007da9f45be17a574747ba2bd8ad74573bc8616f79527",
+    "mode": "0o755"
+  },
+  "tools/internal/tool-delivery.svg": {
+    "sha256": "b2d0b21b91da2e3410ce342a17936cea83feff0f909349805ce7c5d7b5e4e6ac",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/README.md": {
+    "sha256": "2d510c9f4358611dc00e4972557cda8ad581e487214fd337bc40ace7bb83606f",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/actionlint.lock.json": {
+    "sha256": "e31b503e066c5a5fe52ef75a2a766aa4c1a7f5479995ec17c4191b46fe674452",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/apm.lock.json": {
+    "sha256": "6f3b407220f0c7a8cdd53cba8ccc2d56bcb612c5c4b8f6d261a1e6e5bc5d0f0b",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/bazelisk.lock.json": {
+    "sha256": "0af53526a80cb7b4de9dd039a6cfcce1b6a9998ef0bead90629e2dbab5ea77cf",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/buildifier.lock.json": {
+    "sha256": "02b9dd29787d2bb239cc49abf5173ca4e443a6173f2fbcd41175f191096127d6",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/opencode.lock.json": {
+    "sha256": "4d180a43486063a9c76b694c4f060f655c0e1ab03f4bd88639ea3faab0dc4198",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/python_tools.bzl": {
+    "sha256": "269bd4a5a08af6ce8007ca171c0cd3a7be3c1620451a4a8b661a574d9d1218d9",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/ruff.lock.json": {
+    "sha256": "4acb68da2cc29c9857b3b4adcd9149ab1812e1cc72ffd2e3a5d79fe545ae6637",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/shellcheck.lock.json": {
+    "sha256": "d5dd396df34b0eecb0c326ca25d94b2b73586f39b58656a6bf412c975f549a25",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/starpls.lock.json": {
+    "sha256": "3974c43b251af85656b69c901ef32368d4e35fb5a137ab71098333c338923175",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/uv.lock.json": {
+    "sha256": "a664a5b1994eb67e9b60189bdc4259315ecd58c83761795d103ca210e793279e",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/yamlfmt.lock.json": {
+    "sha256": "7a777954f631dc2dea303d5182dd9538a4bb0a17364a56c98642e79352ec4e16",
+    "mode": "0o644"
+  },
+  "tools/multitool.bzl": {
+    "sha256": "64aff47e2cbcb4aec7acda06043480b53054d1103ed1a30ef5766946c1ad6381",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/apm-registry.yaml": {
+    "sha256": "a6bcd068a656d767b820f34dce8f5546b846653cb022f33f574cdf60aa386edf",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/aqua-bootstrap.toml": {
+    "sha256": "63511195141b8009723ff9f39347256e901e5456cdf9455faec1df96a631e141",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/aqua-checksums.json": {
+    "sha256": "3258d3cd42196ca4d1b351aeb3d70aac09484c5d4a560a45d78cd4b07459d879",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/aqua-policy.yaml": {
+    "sha256": "c14e9bd0cafdb5059414b9c944187d2d01fae72f7e35e3c43aa5ab42d9ce39b3",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/aqua.yaml": {
+    "sha256": "cd756e09f924a041dbdef91a568c06abc810eb24836570ce6adbddc31c901c50",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/pyproject.toml": {
+    "sha256": "6facf1c06ed53b0493b253a1b8fb4c6b2eaed52781f8a21da05ae67db5633a80",
+    "mode": "0o644"
+  },
+  "tools/owners/aqua/starpls-registry.yaml": {
+    "sha256": "8e024ef21bf4d95b6ed83f5ff388f9d4ec6188ed5840cae33082e6e388d681ab",
+    "mode": "0o644"
+  },
+  "tools/providers.json": {
+    "sha256": "a2298a9ce83b1b6af16ed80408daa906dcbcfa63dcd052b33a032731b2b40eb4",
+    "mode": "0o644"
+  },
+  "tools/python_tool.bzl": {
+    "sha256": "b162b085f0f45f40fa575e4fa35a78467ca4d02d1f24a991a80540d01c9c7a22",
+    "mode": "0o644"
+  },
+  "tools/run-tool": {
+    "sha256": "a2bc7647c08f74a002ba1f92dfd4a3954c0038d1ea739ec9f2070e4723b7de1f",
+    "mode": "0o755"
+  },
+  "tools/score_tools/__init__.py": {
+    "sha256": "f38b241f96dc6130b76c545c1238eeae213c6791970ae14b2727e30121d5c909",
+    "mode": "0o644"
+  },
+  "tools/score_tools/catalog.py": {
+    "sha256": "a971723133fe1079119a1c2aef6b4e71c8f13817c011eeb19cdef97d16122819",
+    "mode": "0o644"
+  },
+  "tools/score_tools/cli.py": {
+    "sha256": "375ba39767188c1ebff3894adbd58b0d6b7b2fd9cfb795566c335925c20281f6",
+    "mode": "0o644"
+  },
+  "tools/score_tools/python_tools.bzl": {
+    "sha256": "ec6b8087c6be7c4a6e1e53ebfe07b482a43dfcf51b15ab4999bde5b9b0fe7c17",
+    "mode": "0o644"
+  },
+  "tools/tests/git_delivery_smoke.sh": {
+    "sha256": "a05d82bd0c620db029a2cbc663cc75bb10eae815b6ad657a5b82cd85b67afe7f",
+    "mode": "0o755"
+  },
+  "tools/tests/python_tool_runner_test.sh": {
+    "sha256": "e052c3a6bfa53681e24081525482e80ed5a1d3d5a9d8049f48e64d508554eb1f",
+    "mode": "0o755"
+  },
+  "tools/tests/run_tool_test.sh": {
+    "sha256": "368362f34c8fd912ad91bc365cb1c608a525f1922216ae18052faf98f349c2ca",
+    "mode": "0o755"
+  },
+  "tools/tests/test_catalog.py": {
+    "sha256": "63594742125bb3ec45de01e846f2d956b5c5b0dbc4cd28fcaedcf16da8402765",
+    "mode": "0o644"
+  },
+  "tools/tests/test_refresh_owners.py": {
+    "sha256": "f8e2a17d79f963725f7bba29d9d375d3716c656aa46a3d04585951efd060d14b",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer-lock.json": {
+    "sha256": "a0825c2555adbdb0040f6d2593d3613db62ac96d34457ad25b6310b4f6cb24b7",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer.json": {
+    "sha256": "7a612ddbc0988ec4f24dc2ff30eccfad050ccb9bcb569216091337cb348d0dfd",
+    "mode": "0o644"
+  },
+  ".devcontainer/post_create_command.sh": {
+    "sha256": "91ecf1d53cdcfb24ac72d76ad1f7afc8f061c701ea31f148c018ab5f439c0fb2",
+    "mode": "0o755"
+  },
+  "scripts/build.sh": {
+    "sha256": "e6cc67c78122b04b00140578c96f9cbdbde01a3d0c46c368acf1dce66e484459",
+    "mode": "0o755"
+  },
+  "scripts/create_builder.sh": {
+    "sha256": "aca5feeb2dc7962916a33acea1ecd6635744b95d87faa64a4111bee1f29f7a48",
+    "mode": "0o755"
+  },
+  "scripts/functions.sh": {
+    "sha256": "fa398931d571bd81b3a53331f5075677cdddb79542fe13fff1e607d9a11bf5c2",
+    "mode": "0o755"
+  },
+  "scripts/install_dive.sh": {
+    "sha256": "0db809a6a384df5f661fcf366ac1baa16f5e6c6753b6841ce856a441570e54ec",
+    "mode": "0o755"
+  },
+  "scripts/merge.sh": {
+    "sha256": "4b6e1412adecd509fabba188bf8a5fc90726d2d3b88017965cd914f97abb8bcf",
+    "mode": "0o755"
+  },
+  "scripts/publish.sh": {
+    "sha256": "65cbb5e1157fdfe641dc6f30a5fe952cfcc45c0a71568e2da5ae3e65e8c9802e",
+    "mode": "0o755"
+  },
+  "scripts/run_reuse_annotate.sh": {
+    "sha256": "756b9b07894d393155a797dc0d236ee72b06e111cdf4dfee38004f1f67c1c7ab",
+    "mode": "0o755"
+  },
+  "scripts/test.sh": {
+    "sha256": "c33206d4eb958a5a4a88284e4e0b64ad842b802df035cdf260cb6b2a149466b6",
+    "mode": "0o755"
+  },
+  "scripts/test_consumer.sh": {
+    "sha256": "f8f7ee88d98bee47077720f803bc6f2a708b486d0ab233d0b86ac21969815831",
+    "mode": "0o755"
+  },
+  ".github/CODEOWNERS": {
+    "sha256": "4385c5d89bbcec1c6ccb6875f0bcc18aca58041a3e3ac0d9b42d81b8a5e8408e",
+    "mode": "0o644"
+  },
+  ".github/actionlint.yaml": {
+    "sha256": "5006607930525eccf10bab101461d8e378b2f58f26685a7d6edb9bf91f537821",
+    "mode": "0o644"
+  },
+  ".github/dependabot.yml": {
+    "sha256": "89e1aa3efb2309f89e792073bc8f3163ebdf3dc1cfbf2f462d53909f4e20b700",
+    "mode": "0o644"
+  },
+  ".github/renovate.json5": {
+    "sha256": "8b8c71a73a7e79ee727c57cce8a1e27285102048368375b31519cd4e3dc213af",
+    "mode": "0o644"
+  },
+  ".github/workflows/ci.yaml": {
+    "sha256": "bef84b6a6f0a4cc31ed45e6fd7d28aafd029deadf311cfb392c68f1f7d16f3ba",
+    "mode": "0o644"
+  },
+  ".github/workflows/daily.yml": {
+    "sha256": "98495c0413eb2c76ba9904355771381170edb10e8a89a3f11e012278017cb89a",
+    "mode": "0o644"
+  },
+  ".github/workflows/pr-title-semantic.yaml": {
+    "sha256": "2ac9588db05a14031c35d10ca0dd980e2824c9841eaa8a09ae308772919c0b78",
+    "mode": "0o644"
+  },
+  ".github/workflows/release-and-publish.yaml": {
+    "sha256": "cfcff1da41e838ad622fcd5d8dee2845c1bacffd1503cbf89099e2b0a3d0d500",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/Dockerfile": {
+    "sha256": "30df84e66b99890095c5b5f863384d9dfdce6b86190caedfccd377c0f73bde66",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/devcontainer-feature.json": {
+    "sha256": "3e4f6ee39a84adf0944d4950658debcacbdde104247b17c0b9c81dcbbcd21e0c",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh": {
+    "sha256": "bc6ec52032bb632f14a6ba66de577c9bb3d51a089a39fbe119ec977a1ee4da88",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install_matching_bazel_version.sh": {
+    "sha256": "30018b8fb128a796b83ce2e6b70d821b32bee6fdc73007091a6194653a254aca",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/on_create_command.sh": {
+    "sha256": "68a5477313e9277e89b372dc96670ef856e08cfcad01fa75fcabecadd8fa4657",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh": {
+    "sha256": "b64265b1aa0c8a1fb6c481f4b1074f6590907e45d990abf9a6040cdcf1aeeffb",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer-lock.json": {
+    "sha256": "ae003f481b73b0cea004dbc859535828d6c6245d8e17a183e0aab16b0b17d8e2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer.json": {
+    "sha256": "2cf16cc496b614e3551bb55274faaeaf664c211efd91a13f95389da53a797e90",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/devcontainer-feature.json": {
+    "sha256": "4275c889f653d56b27d14d9e803038344befb1822833e29ef99e6cece4ff09c2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/enable_pre_commit_hooks.sh": {
+    "sha256": "ab8decbb1823a06bf459bfa3417bf32d8298ab7c4454ee933178ebfab7da4118",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/fix_config_volume_ownership.sh": {
+    "sha256": "ccb3a93bc87fe88e081db6e09b5169e0d0433442473e7c9644255d425b33a14a",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh": {
+    "sha256": "620e6f9be152f4b4d4718c3e6a396e7b45006b0ff906f666dbd955d540365e9e",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/on_create_command.sh": {
+    "sha256": "9dccd307fed62a745ade92a2c217fd3a5089eb22546eec6a32749757d051d127",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/setup_command_history.sh": {
+    "sha256": "5fe3dea9b1b629d0c83b29140175ea9b48b2fa6f13d3e2d835a4049ea819a720",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh": {
+    "sha256": "708143a5952f5043c32d71e595efc46da6823d9ca4d022ba0fdaf2e6195930c7",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/unset-proxy.sh": {
+    "sha256": "2c78bd509cc91950b140d4162462dc35df53949092d36ce93fa9d00430c4f805",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/with-proxy-vars.Dockerfile": {
+    "sha256": "205cb400424fdd3769141d26a3120614a5b36160b7ff9a02611fb72de6ee9a01",
+    "mode": "0o644"
+  }
+}

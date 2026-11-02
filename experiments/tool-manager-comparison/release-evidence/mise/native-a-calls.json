@@ -1,0 +1,88 @@
+[
+  {
+    "direct": [
+      "/tmp/score-m8-mise/native/bin/uv",
+      "--version"
+    ],
+    "strict": [
+      "/tmp/score-m8-mise/sources/a/tools/run-tool",
+      "--strict",
+      "uv",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-mise/native/work",
+    "exit": 0,
+    "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+    "stderr": ""
+  },
+  {
+    "direct": [
+      "/tmp/score-m8-mise/native/bin/uvx",
+      "--version"
+    ],
+    "strict": [
+      "/tmp/score-m8-mise/sources/a/tools/run-tool",
+      "--strict",
+      "uvx",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-mise/native/work",
+    "exit": 0,
+    "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n",
+    "stderr": ""
+  },
+  {
+    "direct": [
+      "/tmp/score-m8-mise/native/bin/ruff",
+      "--version"
+    ],
+    "strict": [
+      "/tmp/score-m8-mise/sources/a/tools/run-tool",
+      "--strict",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-mise/native/work",
+    "exit": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": ""
+  },
+  {
+    "direct": [
+      "/tmp/score-m8-mise/native/bin/pre-commit",
+      "--version"
+    ],
+    "strict": [
+      "/tmp/score-m8-mise/sources/a/tools/run-tool",
+      "--strict",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-mise/native/work",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "direct": [
+      "/tmp/score-m8-mise/native/bin/ruff",
+      "check",
+      "--output-format",
+      "concise",
+      "bad input.py"
+    ],
+    "strict": [
+      "/tmp/score-m8-mise/sources/a/tools/run-tool",
+      "--strict",
+      "ruff",
+      "check",
+      "--output-format",
+      "concise",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-mise/native/work",
+    "exit": 1,
+    "stdout": "bad input.py:1:7: F821 Undefined name `SCORE_M8_UNDEFINED_NAME`\nFound 1 error.\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "score-own-release-local"
+version = "0.8.1"
+description = "Release-selected SCORE Python tool dependencies"
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+"ruff" = ["ruff==0.14.6"]
+"basedpyright" = ["basedpyright==1.35.0"]
+"pre-commit" = ["pre-commit==4.7.0"]
+"pytest" = ["pytest==9.0.2"]
+"all" = ["basedpyright==1.35.0", "pre-commit==4.7.0", "pytest==9.0.2", "ruff==0.14.6"]
+
+[tool.setuptools]
+packages = []

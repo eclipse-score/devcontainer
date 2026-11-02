@@ -1,0 +1,52 @@
+{
+  "candidate": "mise",
+  "scope": "Bazelisk ARM executable reaches fallback guard; no self-version or Bazel-engine execution claim",
+  "passed": true,
+  "architecture": "aarch64",
+  "elf_machine": 183,
+  "uid": 1000,
+  "command": [
+    "/tmp/score-m7-mise/runtime/bin/bazelisk",
+    "--version"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "/tmp/m7-bazelisk-guard-xyt49b4b",
+    "BAZELISK_HOME": "/tmp/m7-bazelisk-guard-xyt49b4b/cache",
+    "USE_BAZEL_FALLBACK_VERSION": "error:score-m7-no-engine"
+  },
+  "resolved_executable": "/tmp/score-m7-mise/runtime/data/installs/aqua-bazelbuild-bazelisk/1.27.0/bazelisk",
+  "sha256": "bb608519a440d45d10304eb684a73a2b6bb7699c5b0e5434361661b25f113a5d",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "2026/11/02 08:22:59 could not get Bazel version: not allowed to use fallback version \"score-m7-no-engine\"\n",
+  "bazel_engine_files": [],
+  "container_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--platform",
+    "linux/arm64",
+    "--name",
+    "score-m7-mise-root-guard",
+    "--label",
+    "score-m7-platform.candidate=mise",
+    "--network",
+    "none",
+    "--user",
+    "1000:1000",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,mode=1777",
+    "--mount",
+    "type=bind,source=/tmp/score-m7-mise/runtime,target=/tmp/score-m7-mise/runtime,readonly",
+    "--mount",
+    "type=bind,source=/tmp/score-m7-platform-20261102/bazelisk-guard.py,target=/guard.py,readonly",
+    "--entrypoint",
+    "/usr/bin/python3",
+    "score-tooling-reference:final-arm64",
+    "/guard.py",
+    "mise",
+    "/tmp/score-m7-mise/runtime/bin/bazelisk"
+  ]
+}

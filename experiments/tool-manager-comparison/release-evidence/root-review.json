@@ -1,0 +1,97 @@
+{
+  "captured_utc": "2026-11-02T10:24:31.420109+00:00",
+  "scope": "Independent source-delta and artifact review; no full-image or whole-migration claim",
+  "candidates": {
+    "mise": {
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "changed_start_inventory_files": [
+        {
+          "path": "tools/README.md",
+          "before_sha256": "33623fbdafe1262fe1b173683d957e12100de36d02b452d404e4c6b00696f8f4",
+          "after_sha256": "8e8d1674a682300ab2d675dc14b5a76e1b2171634412761f7728bdffbab73150"
+        },
+        {
+          "path": "tools/internal/README.md",
+          "before_sha256": "981bec172dec52217f65b87f54a42bd51a86c51b3a007a9faf8e7eb56414ff64",
+          "after_sha256": "0a1f252adf4c9f5a49779f7bd1e243f62d220a491a94ec732a12b5131abe187c"
+        },
+        {
+          "path": "tools/internal/mise/README.md",
+          "before_sha256": "81662dbf294779ada0360bdcb2628dc055440a4205a4cf2a11d9fc387fad30aa",
+          "after_sha256": "1946f4d862c52ee6f39d5f6f8e898e6d735ced3fc90a21f839d4f3d74408a10e"
+        },
+        {
+          "path": "tools/internal/mise/refresh.py",
+          "before_sha256": "7d02d13e98e7c54fe233cbc003b540e57ad761f721e63cedb2056e8312a1d4a3",
+          "after_sha256": "23cc6554b65ecdc7ac33a9e56004f6362338231730af07a869367d250a3e0918"
+        },
+        {
+          "path": "tools/tests/test_mise_python_package.py",
+          "before_sha256": "4b9ae004dd5c656dad431d2f54911f0ca7aab7d0e90101e7286ad82419f3022c",
+          "after_sha256": "5b13eece9319e5b9fde6b0779f2771dd5869d5f3af6fdc99223282b5c846ae8d"
+        }
+      ],
+      "deleted_start_inventory_files": [],
+      "mode_changes": [],
+      "accepted_owner_and_compatibility_pins_unchanged": true,
+      "diff_check": "passed",
+      "worker_result_path": "/tmp/score-m8-mise/result.json",
+      "worker_result_sha256": "a1883bd362451d4829254ca1cca13f388fe0b5435a6819e15ef2a0934d763925"
+    },
+    "aqua": {
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "changed_start_inventory_files": [
+        {
+          "path": "tools/internal/README.md",
+          "before_sha256": "5e3865908c8af055227652fb57d92ff3ffafa300ee597264e6b5de90336afc7e",
+          "after_sha256": "f44b6f42093eb033068847f9dc6365ef483d0ca05dc1d7c78b92c99293e122c4"
+        }
+      ],
+      "deleted_start_inventory_files": [],
+      "mode_changes": [],
+      "accepted_owner_and_compatibility_pins_unchanged": true,
+      "diff_check": "passed",
+      "worker_result_path": "/tmp/score-m8-aqua/result.json",
+      "worker_result_sha256": "5b0c6e980790bcf6f67422b03ca9af2b49ac0cf353d1834ee2f73bf04b4682a7"
+    },
+    "nix": {
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "changed_start_inventory_files": [
+        {
+          "path": "tools/internal/README.md",
+          "before_sha256": "eafe79955975a902f077795e2b55198adb3fd5f29c68a38a6c5e3a5b7d02474d",
+          "after_sha256": "f7f4fb59cd64e79d73dc2de082e7d64b2bcbbd214e2d779a794d8b4d62b0f744"
+        },
+        {
+          "path": "tools/internal/nix/prepare.py",
+          "before_sha256": "d314a723b4dab6a1a082051d3bd7c886e60dce53582539f7516cbd5bc122c90e",
+          "after_sha256": "f710bb18d60b58e00b838755c4a490edc9d05863ed06c1bc8a8be28c9413afd4"
+        },
+        {
+          "path": "tools/internal/nix/test_prepare.py",
+          "before_sha256": "9c0081990028c1359aa60664a8be5e20aa4ed1a4d9b8bdd5c4c8e8ed911807a8",
+          "after_sha256": "0a2f3010a490494788558ab4762ad6e383ee76429321aeaf85cc46cd1ff39585"
+        }
+      ],
+      "deleted_start_inventory_files": [
+        "tools/internal/nix/Dockerfile"
+      ],
+      "mode_changes": [],
+      "accepted_owner_and_compatibility_pins_unchanged": true,
+      "diff_check": "passed",
+      "worker_result_path": "/tmp/score-m8-nix/result.json",
+      "worker_result_sha256": "849b4f1d22c0fca26667b2c9c0abc492223258e0b4e990c5803c16abe6338295"
+    }
+  },
+  "independent_unit_checks": {
+    "mise": "4 passed; normal/-O stale-lock regression",
+    "nix": "9 passed"
+  },
+  "artifact_review": "/tmp/score-m8-release-20261102/artifact-review.json",
+  "comparison_limits": [
+    "Nix full prepare emits native closure as well as dependency metadata: separate producer work from the common Python wheel output and consumer requirements",
+    "Hardlink reuse is optional local/native release storage optimization, not adoption prerequisite or inherent Nix deficiency",
+    "Historical Ruff0.14.6 Nixpkgs input supplied: arbitrary requested-version search not demonstrated",
+    "M8 amd64 only; M6/M7 remain tied to recorded hashes"
+  ]
+}

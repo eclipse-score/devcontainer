@@ -1,0 +1,45 @@
+{"argv": ["actionlint", "-version"], "exit": 0, "stdout": "1.7.12\ninstalled by building from source\nbuilt with go1.26.10 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "actionlint", "-version"], "exit": 0, "stdout": "1.7.12\ninstalled by building from source\nbuilt with go1.26.10 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "actionlint", "-version"], "exit": 0, "stdout": "1.7.12\ninstalled by building from source\nbuilt with go1.26.10 compiler for linux/amd64\n", "stderr": ""}
+{"argv": ["basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.39.8\nbased on pyright 1.1.410\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.39.8\nbased on pyright 1.1.410\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "basedpyright", "--version"], "exit": 0, "stdout": "basedpyright 1.39.8\nbased on pyright 1.1.410\n", "stderr": ""}
+{"argv": ["bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.29.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": "Starting local Bazel server (8.6.0) and connecting to it...\n"}
+{"argv": ["/usr/local/share/score-tools/run-tool", "bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.29.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "bazelisk", "version"], "exit": 0, "stdout": "Bazelisk version: v1.29.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n", "stderr": ""}
+{"argv": ["buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 10.2.0 \nbuildifier scm revision: v10.2.0 \n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 10.2.0 \nbuildifier scm revision: v10.2.0 \n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "buildifier", "-version"], "exit": 0, "stdout": "buildifier version: 10.2.0 \nbuildifier scm revision: v10.2.0 \n", "stderr": ""}
+{"argv": ["pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "pre-commit", "--version"], "exit": 0, "stdout": "pre-commit 4.7.0\n", "stderr": ""}
+{"argv": ["pytest", "--version"], "exit": 0, "stdout": "pytest 9.1.1\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "pytest", "--version"], "exit": 0, "stdout": "pytest 9.1.1\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "pytest", "--version"], "exit": 0, "stdout": "pytest 9.1.1\n", "stderr": ""}
+{"argv": ["ruff", "--version"], "exit": 0, "stdout": "ruff 0.17.2\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "ruff", "--version"], "exit": 0, "stdout": "ruff 0.17.2\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "ruff", "--version"], "exit": 0, "stdout": "ruff 0.17.2\n", "stderr": ""}
+{"argv": ["shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.11.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.11.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "shellcheck", "--version"], "exit": 0, "stdout": "ShellCheck - shell script analysis tool\nversion: 0.11.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n", "stderr": ""}
+{"argv": ["uv", "--version"], "exit": 0, "stdout": "uv 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "uv", "--version"], "exit": 0, "stdout": "uv 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "uv", "--version"], "exit": 0, "stdout": "uv 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "uvx", "--version"], "exit": 0, "stdout": "uvx 0.13.5 (x86_64-unknown-linux-gnu)\n", "stderr": ""}
+{"argv": ["yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.21.0 (21ca532)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.21.0 (21ca532)\n", "stderr": ""}
+{"argv": ["/usr/local/share/score-tools/run-tool", "--strict", "yamlfmt", "-version"], "exit": 0, "stdout": "yamlfmt 0.21.0 (21ca532)\n", "stderr": ""}
+{"argv": ["git", "init", "-q"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["ruff", "check", "--isolated", "fixture with space.py"], "exit": 1, "stdout": "F401 [*] `os` imported but unused\n --> fixture with space.py:1:8\n  |\n1 | import os\n  |        ^^\nhelp: Remove unused import: `os`\n  |\n  - import os\n  |\n\nFound 1 error.\n[*] 1 fixable with `--fix`.\n", "stderr": ""}
+{"argv": ["shellcheck", "fixture with space.sh"], "exit": 1, "stdout": "\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean:\necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n", "stderr": ""}
+{"argv": ["actionlint", "/tmp/score-repository-runtime-xhqs8dib/invalid-workflow.yaml"], "exit": 1, "stdout": "invalid-workflow.yaml:6:5: unexpected key \"invalid-key\" for \"job\" section. expected one of \"concurrency\", \"container\", \"continue-on-error\", \"defaults\", \"env\", \"environment\", \"if\", \"name\", \"needs\", \"outputs\", \"permissions\", \"runs-on\", \"secrets\", \"services\", \"snapshot\", \"steps\", \"strategy\", \"timeout-minutes\", \"uses\", \"with\" [syntax-check]\n  |\n6 |     invalid-key: nope\n  |     ^~~~~~~~~~~~\n", "stderr": ""}
+{"argv": ["yamlfmt", "/tmp/score-repository-runtime-xhqs8dib/format.yaml"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["buildifier", "/tmp/score-repository-runtime-xhqs8dib/BUILD.bazel"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["buildifier", "-mode=check", "/tmp/score-repository-runtime-xhqs8dib/BUILD.bazel"], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["git", "add", "."], "exit": 0, "stdout": "", "stderr": ""}
+{"argv": ["pre-commit", "run", "--all-files", "--verbose"], "exit": 0, "stdout": "Consumer cwd and arguments...............................................Passed\n- hook id: cwd-and-args\n- duration: 0s\n", "stderr": ""}
+{"argv": ["pytest", "-q", "test_selected.py"], "exit": 0, "stdout": ".                                                                        [100%]\n1 passed in 0.00s\n", "stderr": ""}
+{"argv": ["basedpyright", "--pythonpath", "/usr/bin/python3", "type_error.py"], "exit": 1, "stdout": "/tmp/score-repository-runtime-xhqs8dib/type_error.py\n  /tmp/score-repository-runtime-xhqs8dib/type_error.py:1:14 - error: Type \"Literal['wrong']\" is not assignable to declared type \"int\"\n  \u00a0\u00a0\"Literal['wrong']\" is not assignable to \"int\" (reportAssignmentType)\n1 error, 0 warnings, 0 notes\n", "stderr": ""}
+{"profile": "published", "result": "passed", "versions": {"actionlint": "1.7.12", "bazelisk": "1.29.0", "buildifier": "10.2.0", "ruff": "0.17.2", "shellcheck": "0.11.0", "uv": "0.13.5", "uvx": "0.13.5", "yamlfmt": "0.21.0", "pre-commit": "4.7.0", "pytest": "9.1.1", "basedpyright": "1.39.8"}, "uid": 1000, "commands": 44}

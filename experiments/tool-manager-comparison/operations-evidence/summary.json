@@ -1,0 +1,54 @@
+{
+  "scope": "Linux amd64; starpls 0.1.22; task-owned installations",
+  "mise": {
+    "golden_sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab",
+    "corrupt_version_passes": true,
+    "ordinary_install_exit": 0,
+    "ordinary_install_restored": false,
+    "force_repair_exit": 1,
+    "force_repair_restored": false,
+    "recover_exit": 1,
+    "recover_restored": false,
+    "empty_selection_has_starpls_path": false,
+    "old_export_remains": true
+  },
+  "aqua": {
+    "golden_sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab",
+    "corrupt_version_passes": true,
+    "ordinary_install_exit": 0,
+    "ordinary_install_restored": false,
+    "recover_exit": 124,
+    "recover_restored": false,
+    "empty_selection_which_exit": 1,
+    "old_export_remains": true
+  },
+  "baseline": {
+    "golden_sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab",
+    "corrupt_version_passes": true,
+    "ordinary_install_exit": 1,
+    "ordinary_install_restored": false,
+    "recover_exit": 1,
+    "recover_restored": false,
+    "explicit_mirror_repair": true,
+    "empty_selection_exit": 0,
+    "old_export_remains": true
+  },
+  "mise-revalidated": {
+    "golden_sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab",
+    "corrupt_version_passes": true,
+    "ordinary_install_exit": 0,
+    "ordinary_install_restored": false,
+    "force_repair_exit": 0,
+    "force_repair_restored": true,
+    "recover_exit": 0,
+    "recover_restored": true
+  },
+  "nix": {
+    "golden_sha256": "73bea44571c9ac9701a35cc19bdc35892017c82b82ac3bdaa4529bfe49368d84",
+    "explicit_cache_import": true,
+    "corrupt_version_passes": true,
+    "verification_detected": true,
+    "repair_restored": true,
+    "removed_from_profile": true
+  }
+}

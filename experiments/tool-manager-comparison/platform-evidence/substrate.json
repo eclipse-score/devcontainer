@@ -1,0 +1,28 @@
+{
+  "captured_utc": "2026-11-02T01:41:48.722860+00:00",
+  "scope": "Shared cached ARM OS substrate only; no candidate result",
+  "image": "sha256:b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a",
+  "host_architecture": "x86_64",
+  "emulator_registration": "enabled\ninterpreter /usr/bin/qemu-aarch64\nflags: POCF\noffset 0\nmagic 7f454c460201010000000000000000000200b700\nmask ffffffffffffff00fffffffffffffffffeffffff\n",
+  "probe": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--platform",
+      "linux/arm64",
+      "--network",
+      "none",
+      "--user",
+      "1000:1000",
+      "--entrypoint",
+      "/bin/sh",
+      "score-tooling-reference:final-arm64",
+      "-c",
+      "uname -m; id; getent passwd 1000; /usr/bin/python3 -c \"import platform; print(platform.machine())\""
+    ],
+    "exit_code": 0,
+    "stdout": "aarch64\nuid=1000(vscode) gid=1000(vscode) groups=1000(vscode)\nvscode:x:1000:1000::/home/vscode:/bin/bash\naarch64\n",
+    "stderr": ""
+  }
+}

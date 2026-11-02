@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: score-own-release-local
+Version: 0.8.1
+Summary: Release-selected SCORE Python tool dependencies
+Requires-Python: >=3.11
+Provides-Extra: ruff
+Requires-Dist: ruff==0.14.6; extra == "ruff"
+Provides-Extra: basedpyright
+Requires-Dist: basedpyright==1.35.0; extra == "basedpyright"
+Provides-Extra: pre-commit
+Requires-Dist: pre-commit==4.7.0; extra == "pre-commit"
+Provides-Extra: pytest
+Requires-Dist: pytest==9.0.2; extra == "pytest"
+Provides-Extra: all
+Requires-Dist: basedpyright==1.35.0; extra == "all"
+Requires-Dist: pre-commit==4.7.0; extra == "all"
+Requires-Dist: pytest==9.0.2; extra == "all"
+Requires-Dist: ruff==0.14.6; extra == "all"

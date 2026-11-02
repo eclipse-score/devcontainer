@@ -1,0 +1,603 @@
+{
+  "candidate": "aqua",
+  "uid": 1000,
+  "scope": "Prepared Linux amd64 native/Python entrypoints; no cold-install or all-tool claim",
+  "environment": {
+    "HOME": "/tmp/probe-home",
+    "PATH": "/usr/bin:/bin"
+  },
+  "mounts": [
+    "overlay / overlay ro,relatime,lowerdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1962/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1953/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/833/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/832/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/320/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1963/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1963/work 0 0",
+    "/dev/sdd /opt/score-tools ext4 ro,relatime,discard,errors=remount-ro,data=ordered 0 0"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/opt/score-tools/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/score-tools/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "strace -- version 6.8\nCopyright (c) 1991-2024 The strace developers <https://strace.io>.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\nOptional features enabled: stack-trace=libunwind stack-demangle m32-mpers mx32-mpers\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/native-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/python/bin/python",
+        "/opt/score-tools/python/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/python/bin/python",
+        "/opt/score-tools/python/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    }
+  ],
+  "traces": {
+    "native-version": {
+      "argv": [
+        "/opt/score-tools/bin/starpls",
+        "version"
+      ],
+      "total_trace_lines": 9,
+      "exec_events": [
+        "13    execve(\"/opt/score-tools/bin/starpls\", [\"/opt/score-tools/bin/starpls\", \"version\"], 0x7fffd5e25098 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [],
+      "manager_exec_events": []
+    },
+    "python-version": {
+      "argv": [
+        "/opt/score-tools/bin/codespell",
+        "--version"
+      ],
+      "total_trace_lines": 351,
+      "exec_events": [
+        "17    execve(\"/opt/score-tools/bin/codespell\", [\"/opt/score-tools/bin/codespell\", \"--version\"], 0x7ffd99dcc368 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "17    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-version": {
+      "argv": [
+        "/opt/score-tools/python/bin/python",
+        "/opt/score-tools/python/bin/codespell",
+        "--version"
+      ],
+      "total_trace_lines": 349,
+      "exec_events": [
+        "21    execve(\"/opt/score-tools/python/bin/python\", [\"/opt/score-tools/python/bin/python\", \"/opt/score-tools/python/bin/codespell\", \"--version\"], 0x7ffea4d2fc30 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "21    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-typo": {
+      "argv": [
+        "/opt/score-tools/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 360,
+      "exec_events": [
+        "25    execve(\"/opt/score-tools/bin/codespell\", [\"/opt/score-tools/bin/codespell\", \"/work/input/typo.txt\"], 0x7fffb66d1198 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "25    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-typo": {
+      "argv": [
+        "/opt/score-tools/python/bin/python",
+        "/opt/score-tools/python/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 358,
+      "exec_events": [
+        "29    execve(\"/opt/score-tools/python/bin/python\", [\"/opt/score-tools/python/bin/python\", \"/opt/score-tools/python/bin/codespell\", \"/work/input/typo.txt\"], 0x7ffcca3f0d80 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "29    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/python/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    }
+  },
+  "timings": {
+    "native": {
+      "samples_ms": {
+        "exposed": [
+          0.67241,
+          0.664342,
+          0.687138,
+          0.743337,
+          0.644884,
+          0.67528,
+          0.668817,
+          0.662959,
+          0.644851,
+          0.690547,
+          0.741859,
+          0.751429,
+          0.661211,
+          0.631017,
+          0.79507,
+          0.640338,
+          0.614041,
+          0.666962,
+          0.670155,
+          0.645921,
+          0.628698,
+          0.713792,
+          0.690314,
+          0.702159,
+          0.666845,
+          0.660633,
+          0.715404,
+          0.64525,
+          0.63759,
+          0.606659,
+          0.619282,
+          0.640487,
+          0.666627,
+          0.603716,
+          0.664433,
+          0.63668,
+          0.649356,
+          0.640922,
+          0.68845,
+          0.668712
+        ],
+        "underlying": [
+          0.767244,
+          0.660388,
+          0.682988,
+          0.645468,
+          0.673961,
+          0.673154,
+          1.001295,
+          0.634133,
+          0.646729,
+          0.647418,
+          0.64618,
+          0.718365,
+          0.659663,
+          0.704788,
+          0.702664,
+          0.686704,
+          0.622187,
+          0.690135,
+          0.635204,
+          0.607753,
+          0.645928,
+          0.659646,
+          0.773137,
+          0.742882,
+          0.669922,
+          0.63802,
+          0.640741,
+          0.62354,
+          0.673285,
+          0.740372,
+          0.697795,
+          0.615657,
+          0.609121,
+          0.651546,
+          0.765302,
+          0.799991,
+          0.73181,
+          0.683668,
+          0.683087,
+          0.611378
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 0.6643875,
+          "min_ms": 0.603716,
+          "p10_ms": 0.619282,
+          "p90_ms": 0.715404,
+          "max_ms": 0.79507
+        },
+        "underlying": {
+          "median_ms": 0.671538,
+          "min_ms": 0.607753,
+          "p10_ms": 0.615657,
+          "p90_ms": 0.765302,
+          "max_ms": 1.001295
+        }
+      },
+      "paired_delta_median_ms": -0.00016500000000002624,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    },
+    "python": {
+      "samples_ms": {
+        "exposed": [
+          28.333932,
+          28.116595,
+          27.895111,
+          28.148006,
+          28.520606,
+          28.005343,
+          29.196221,
+          28.174263,
+          29.100386,
+          29.76223,
+          28.866684,
+          28.692707,
+          28.395328,
+          27.602133,
+          30.10942,
+          28.217345,
+          27.472151,
+          27.559382,
+          27.989724,
+          28.609343,
+          28.733899,
+          28.859182,
+          32.461825,
+          30.889442,
+          30.078923,
+          32.133229,
+          29.375779,
+          29.67864,
+          30.649916,
+          29.419519,
+          28.801253,
+          30.442886,
+          32.375986,
+          32.766999,
+          29.730026,
+          29.648623,
+          30.122892,
+          29.448117,
+          29.881995,
+          28.125383
+        ],
+        "underlying": [
+          27.808456,
+          28.926003,
+          28.003345,
+          27.914059,
+          27.656709,
+          29.268811,
+          30.020172,
+          28.214247,
+          29.287206,
+          30.700434,
+          29.62231,
+          28.246101,
+          28.953332,
+          27.447917,
+          28.359436,
+          33.354591,
+          27.689387,
+          30.383911,
+          28.780645,
+          27.964807,
+          29.459542,
+          31.345767,
+          30.116936,
+          36.836857,
+          41.976962,
+          30.965316,
+          28.695567,
+          29.779854,
+          30.402772,
+          29.586686,
+          29.479062,
+          33.659858,
+          32.159173,
+          31.440737,
+          29.130218,
+          29.787674,
+          30.389271,
+          29.111495,
+          28.788269,
+          28.912662
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 28.983535,
+          "min_ms": 27.472151,
+          "p10_ms": 27.895111,
+          "p90_ms": 30.889442,
+          "max_ms": 32.766999
+        },
+        "underlying": {
+          "median_ms": 29.373374,
+          "min_ms": 27.447917,
+          "p10_ms": 27.808456,
+          "p90_ms": 32.159173,
+          "max_ms": 41.976962
+        }
+      },
+      "paired_delta_median_ms": -0.15310899999999883,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    }
+  },
+  "signals": [
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:55Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:55Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:55Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:55Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/python/bin/python",
+          "/opt/score-tools/python/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/python/bin/python",
+          "/opt/score-tools/python/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "versions": {
+    "starpls": "starpls version: v0.1.22",
+    "codespell": "2.4.1",
+    "strace": "strace -- version 6.8"
+  },
+  "entrypoints": {
+    "native_exposed": "/opt/score-tools/bin/starpls",
+    "native_resolved": "/opt/score-tools/bin/starpls",
+    "python_exposed": "/opt/score-tools/bin/codespell",
+    "python_resolved": "/opt/score-tools/python/bin/codespell",
+    "python_source": "#!/opt/score-tools/python/bin/python\n# -*- coding: utf-8 -*-\nimport sys\nfrom codespell_lib import _script_main\nif __name__ == \"__main__\":\n    if sys.argv[0].endswith(\"-script.pyw\"):\n        sys.argv[0] = sys.argv[0][:-11]\n    elif sys.argv[0].endswith(\".exe\"):\n        sys.argv[0] = sys.argv[0][:-4]\n    sys.exit(_script_main())\n",
+    "python_reference": [
+      "/opt/score-tools/python/bin/python",
+      "/opt/score-tools/python/bin/codespell"
+    ],
+    "reference_environment_overrides": {}
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "candidate": "aqua",
+  "milestone": "M8",
+  "status": "passed",
+  "package": "score-aqua-m8-local",
+  "releases": {
+    "A": {
+      "schema_version": 1,
+      "version": "0.8.0",
+      "package": "score-aqua-m8-local",
+      "owner_digest": "5c735127f1e58cda237e8c6d9b046355223e088113701c896abb8d70885c0de3",
+      "selection": {
+        "repository": {
+          "actionlint": "1.7.7",
+          "bazelisk": "1.27.0",
+          "buildifier": "8.2.1",
+          "pre-commit": "4.7.0",
+          "ruff": "0.11.12",
+          "shellcheck": "0.10.0",
+          "uv": "0.13.6",
+          "uvx": "0.13.6",
+          "yamlfmt": "0.17.0"
+        },
+        "published": {
+          "actionlint": "1.7.7",
+          "apm": "0.35.0",
+          "basedpyright": "1.35.0",
+          "bazelisk": "1.27.0",
+          "buildifier": "8.2.1",
+          "codespell": "2.4.1",
+          "opencode": "2.2.3",
+          "pre-commit": "4.7.0",
+          "pytest": "9.0.2",
+          "ruff": "0.11.12",
+          "shellcheck": "0.10.0",
+          "starpls": "0.1.22",
+          "uv": "0.13.6",
+          "uvx": "0.13.6",
+          "yamlfmt": "0.17.0"
+        }
+      },
+      "wheel": {
+        "filename": "score_aqua_m8_local-0.8.0-py3-none-any.whl",
+        "sha256": "5fb94ac928e3253dc3d76fd537f5c341fb3b941ac50a09478850deced57543f1"
+      }
+    },
+    "B": {
+      "schema_version": 1,
+      "version": "0.8.1",
+      "package": "score-aqua-m8-local",
+      "owner_digest": "7d95dfc5f2caf3898b44fbcd13443b2e5da726fbb16b0fe966f40584c9e20023",
+      "selection": {
+        "repository": {
+          "actionlint": "1.7.7",
+          "bazelisk": "1.27.0",
+          "buildifier": "8.2.1",
+          "pre-commit": "4.7.0",
+          "ruff": "0.14.6",
+          "shellcheck": "0.10.0",
+          "uv": "0.13.6",
+          "uvx": "0.13.6",
+          "yamlfmt": "0.17.0"
+        },
+        "published": {
+          "actionlint": "1.7.7",
+          "apm": "0.35.0",
+          "basedpyright": "1.35.0",
+          "bazelisk": "1.27.0",
+          "buildifier": "8.2.1",
+          "codespell": "2.4.1",
+          "opencode": "2.2.3",
+          "pre-commit": "4.7.0",
+          "pytest": "9.0.2",
+          "ruff": "0.14.6",
+          "shellcheck": "0.10.0",
+          "starpls": "0.1.22",
+          "uv": "0.13.6",
+          "uvx": "0.13.6",
+          "yamlfmt": "0.17.0"
+        }
+      },
+      "wheel": {
+        "filename": "score_aqua_m8_local-0.8.1-py3-none-any.whl",
+        "sha256": "dc3203a6557b0db411bb6aab5204b9993f898d4a4a929a073ca8437c560f7012"
+      }
+    }
+  },
+  "native_prefix": "/tmp/score-m8-aqua/native-prefix",
+  "consumer": "/tmp/score-m8-aqua/consumer",
+  "source": "/tmp/score-m8-aqua/source",
+  "owner_snapshots": {
+    "A": "/tmp/score-m8-aqua/owners-A",
+    "B": "/tmp/score-m8-aqua/owners-B"
+  },
+  "current_worktree_owners_unchanged": true,
+  "production_code_changes": [],
+  "maintained_document_changes": [
+    "tools/internal/aqua/README.md",
+    "tools/internal/README.md"
+  ],
+  "checks": {
+    "stale_derived_rejected": true,
+    "normal_refresh_clean": true,
+    "both_release_checks": true,
+    "stale_A_against_B_rejected": true,
+    "same_uv_consumer_A_to_B": true,
+    "ordinary_uvx_A_and_B": true,
+    "expected_F401_exit_1": true,
+    "same_native_prefix_A_to_B": true,
+    "unrelated_sentinel_and_recorded_unchanged_commands_preserved": true,
+    "no_prepared_manager_or_bazel_interception": true,
+    "public_bazel_B_version_and_cwd_argv_nonzero": true
+  },
+  "environment": {
+    "uid": 1000,
+    "gid": 1000,
+    "machine": "x86_64",
+    "system": "Linux",
+    "producer_python": "3.12.3",
+    "consumer_venv_python": "3.14.3 (uv chose an existing compatible interpreter; lock resolution requested /usr/bin/python3 3.12.3)",
+    "uv": "0.13.6",
+    "aqua": "2.65.2",
+    "bazel": "8.6.0",
+    "emulation": false,
+    "containers": false,
+    "network": "network allowed for owner refresh/build/lock/native prepare; consumer sync/run/uvx additionally passed --offline; not a network-isolated host"
+  },
+  "caches": {
+    "aqua": "/tmp/score-m5-aqua/aqua-root-host",
+    "uv": "/tmp/score-m5-aqua/uv-cache-host",
+    "bazel_output_base": "/tmp/score-m5-aqua/bazel"
+  },
+  "artifact_selection": {
+    "version": "0.14.6",
+    "description": "Check and format Python code",
+    "binaries": [
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-x86_64-unknown-linux-musl.tar.gz",
+        "sha256": "7ef1743875c7c469cc1c4bb6da6a9bbff3f3a7b89a75632d6cd2944ede470a5e",
+        "os": "linux",
+        "cpu": "x86_64",
+        "file": "ruff-x86_64-unknown-linux-musl/ruff",
+        "type": "tar.gz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-aarch64-unknown-linux-musl.tar.gz",
+        "sha256": "4d3c113e59c5fbc31f1def566cebf28732bb45ff6b83df8e142bc1c055b3afa3",
+        "os": "linux",
+        "cpu": "arm64",
+        "file": "ruff-aarch64-unknown-linux-musl/ruff",
+        "type": "tar.gz"
+      },
+      {
+        "kind": "archive",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-aarch64-apple-darwin.tar.gz",
+        "sha256": "b2ace677f51d0f2b91ca27d312ac8b069658502049015f4891c16f8864136282",
+        "os": "macos",
+        "cpu": "arm64",
+        "file": "ruff-aarch64-apple-darwin/ruff",
+        "type": "tar.gz"
+      }
+    ]
+  },
+  "evidence": {
+    "commands": "evidence/commands.json",
+    "source_hashes": "evidence/source-hashes.json",
+    "authored_diff": "evidence/authored.diff",
+    "generated_diff": "evidence/generated.diff",
+    "consumer_diff": "evidence/consumer.diff",
+    "locks": [
+      "evidence/uv-A.lock",
+      "evidence/uv-B.lock"
+    ],
+    "wheel_metadata": [
+      "evidence/METADATA-A.txt",
+      "evidence/METADATA-B.txt"
+    ],
+    "native_fingerprints": [
+      "evidence/native-A.json",
+      "evidence/native-B.json"
+    ]
+  },
+  "api_limits": [
+    "sync --check rejects missing checksum data with a traceback rather than a concise drift report",
+    "refresh rechecks bootstrap/checksum inputs for all selected packages; cache/network work remains",
+    "release checker requires a fresh evidence consumer and tests repository extra; same-consumer update uses ordinary uv directly",
+    "native refresh recopies selected commands and force-installs Python tools using caches; unchanged binary hashes are preserved, not claimed install-free",
+    "setuptools>=77 build isolation is not a locked build toolchain; recorded wheel hashes bind this build",
+    "Python transitive environments resolve through uv; consumer uv.lock captures its own resolution"
+  ],
+  "historical_knowledge": "Ruff 0.14.6 target supplied by the contract based on prior historical Nix evidence; no discovery claim and no Nix/experiment input used by this candidate",
+  "removed_paths": [],
+  "retained_helpers_reason": "refresh, sync, prepare, check and provision each exercise distinct necessary boundaries; old internal release command snippet consolidated into maintained aqua/README.md link",
+  "remaining_scope": [
+    "ARM/macOS/hosted publication outside M8",
+    "public package identity/hosting remains undecided"
+  ],
+  "resource": {
+    "task_directory": "194 MiB before final small reports",
+    "global_free": "9.2 GiB at final check",
+    "large_images_or_closure_copies": false
+  }
+}

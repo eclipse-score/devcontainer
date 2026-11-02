@@ -1,0 +1,260 @@
+{
+  "scope": "Linux amd64; starpls 0.1.22; task-owned installations",
+  "outcomes": {
+    "golden_sha256": "73bea44571c9ac9701a35cc19bdc35892017c82b82ac3bdaa4529bfe49368d84",
+    "explicit_cache_import": true,
+    "corrupt_version_passes": true,
+    "verification_detected": true,
+    "repair_restored": true,
+    "removed_from_profile": true
+  },
+  "commands": [
+    {
+      "label": "nix.network",
+      "network_none": false,
+      "argv": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.HostConfig.NetworkMode}}",
+        "score-operations-nix"
+      ],
+      "exit": 0,
+      "stdout": "none\n",
+      "stderr": ""
+    },
+    {
+      "label": "nix.package-absent",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "test",
+        "!",
+        "-e",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "nix.offline-import",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "copy",
+        "--offline",
+        "--no-check-sigs",
+        "--from",
+        "file:///probe/cache",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "copying 7 paths...\ncopying path '/nix/store/bx7jdvkba26sy20ryr4l617qqmzj9hff-libunistring-1.4.2' from 'file:///probe/cache'...\ncopying path '/nix/store/pkkjnyk4z46n18fkyqwlg24p272apb69-xgcc-16.2.0-libgcc' from 'file:///probe/cache'...\ncopying path '/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc' from 'file:///probe/cache'...\ncopying path '/nix/store/00fs4zz9c0jjcvs62wg39b91dydz7zqb-libidn2-2.3.8' from 'file:///probe/cache'...\ncopying path '/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57' from 'file:///probe/cache'...\ncopying path '/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib' from 'file:///probe/cache'...\ncopying path '/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22' from 'file:///probe/cache'...\n"
+    },
+    {
+      "label": "nix.golden-hash",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "sha256sum",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls"
+      ],
+      "exit": 0,
+      "stdout": "73bea44571c9ac9701a35cc19bdc35892017c82b82ac3bdaa4529bfe49368d84  /nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls\n",
+      "stderr": ""
+    },
+    {
+      "label": "nix.corrupt",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "sh",
+        "-c",
+        "chmod u+w \"$1\"; printf \"\\nSCORE disposable corruption fixture\\n\" >> \"$1\"",
+        "sh",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "nix.corrupt-version",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "label": "nix.verify-corrupt",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "store",
+        "verify",
+        "--no-trust",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "warning: you don't have Internet access; disabling some network-dependent features\nchecking '/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22'...\npath '/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22' was modified! expected hash 'sha256:19x5srh8nsjdigc0i4jv1yr7pi2qlwf1rqncwrxryah17aff7bpx', got 'sha256:0v4p1j2m3za2db7f0hvb838cmls7hhklb8hcii24mjd99yapcz4j'\n"
+    },
+    {
+      "label": "nix.repair-from-file-cache",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "store",
+        "repair",
+        "--option",
+        "substitute",
+        "true",
+        "--option",
+        "substituters",
+        "file:///probe/cache",
+        "--option",
+        "require-sigs",
+        "false",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "warning: you don't have Internet access; disabling some network-dependent features\ncopying path '/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22' from 'file:///probe/cache'...\n"
+    },
+    {
+      "label": "nix.repaired-hash",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "sha256sum",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls"
+      ],
+      "exit": 0,
+      "stdout": "73bea44571c9ac9701a35cc19bdc35892017c82b82ac3bdaa4529bfe49368d84  /nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls\n",
+      "stderr": ""
+    },
+    {
+      "label": "nix.verify-repaired",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "store",
+        "verify",
+        "--no-trust",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "warning: you don't have Internet access; disabling some network-dependent features\nchecking '/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22'...\n"
+    },
+    {
+      "label": "nix.profile-install",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "profile",
+        "install",
+        "--offline",
+        "--profile",
+        "/probe/profile",
+        "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "warning: 'install' is a deprecated alias for 'add'\n"
+    },
+    {
+      "label": "nix.selected-before",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "/probe/profile/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "label": "nix.profile-remove",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "nix",
+        "--extra-experimental-features",
+        "nix-command flakes",
+        "profile",
+        "remove",
+        "--offline",
+        "--profile",
+        "/probe/profile",
+        "--all"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "removing 'starpls'\nremoved 1 packages, kept 0 packages\n"
+    },
+    {
+      "label": "nix.selected-after-absent",
+      "network_none": true,
+      "argv": [
+        "docker",
+        "exec",
+        "score-operations-nix",
+        "test",
+        "!",
+        "-e",
+        "/probe/profile/bin/starpls"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

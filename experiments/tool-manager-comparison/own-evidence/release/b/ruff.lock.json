@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
+  "ruff": {
+    "version": "0.14.6",
+    "description": "Check and format Python code",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-apple-darwin/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-aarch64-apple-darwin.tar.gz",
+        "sha256": "b2ace677f51d0f2b91ca27d312ac8b069658502049015f4891c16f8864136282",
+        "type": "tar.gz",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-x86_64-unknown-linux-gnu/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-x86_64-unknown-linux-gnu.tar.gz",
+        "sha256": "b0ee141ada4749c7ee16ba21465b4ef035455b495aa3ab951bbcb9bde9f4d001",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-unknown-linux-gnu/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.14.6/ruff-aarch64-unknown-linux-gnu.tar.gz",
+        "sha256": "bf3d592d5f879f072520afaa9c4a76a3ad0f6cf4b7bf7e27fb5d0e728e863f14",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}

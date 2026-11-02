@@ -1,0 +1,107 @@
+{
+  "scope": "Common warm invocation overhead; not a tool-manager ranking",
+  "tool": "starpls 0.1.22, version subcommand",
+  "conditions": "Host Linux amd64, existing warm Bazel server/cache, 2 warmups per route, 20 interleaved samples per route; concurrent investigation jobs may run; no network isolation or cold-install claim",
+  "commands": {
+    "direct": [
+      "/tmp/score-retirement-baseline/bin/starpls",
+      "version"
+    ],
+    "thin_shell": [
+      "/tmp/score-retirement-baseline/forward-starpls",
+      "version"
+    ],
+    "bazel": [
+      "/home/alex/.local/bin/bazelisk",
+      "run",
+      "//tools:starpls",
+      "--",
+      "version"
+    ]
+  },
+  "samples_ms": {
+    "direct": [
+      1.140895,
+      0.995544,
+      1.022444,
+      1.083072,
+      0.987828,
+      1.012238,
+      0.973594,
+      1.014384,
+      1.010218,
+      0.990991,
+      1.090543,
+      1.004597,
+      1.095188,
+      1.012158,
+      1.46261,
+      0.986057,
+      1.085084,
+      1.069339,
+      0.998851,
+      1.062826
+    ],
+    "thin_shell": [
+      1.383218,
+      1.118279,
+      1.229879,
+      1.214899,
+      1.368944,
+      1.389981,
+      1.247873,
+      1.217274,
+      1.242265,
+      1.373333,
+      1.185058,
+      1.38886,
+      1.141058,
+      1.272297,
+      1.362259,
+      1.193299,
+      1.193262,
+      1.238008,
+      1.174624,
+      1.348152
+    ],
+    "bazel": [
+      90.774257,
+      88.661906,
+      94.624354,
+      95.493161,
+      96.997615,
+      90.16312,
+      95.752295,
+      92.012382,
+      97.00183,
+      90.82837,
+      93.203506,
+      90.49534,
+      92.400418,
+      140.909471,
+      104.451821,
+      91.082811,
+      91.598997,
+      89.486054,
+      90.655278,
+      86.21128
+    ]
+  },
+  "summary_ms": {
+    "direct": {
+      "median": 1.013,
+      "min": 0.974,
+      "max": 1.463
+    },
+    "thin_shell": {
+      "median": 1.24,
+      "min": 1.118,
+      "max": 1.39
+    },
+    "bazel": {
+      "median": 91.806,
+      "min": 86.211,
+      "max": 140.909
+    }
+  }
+}

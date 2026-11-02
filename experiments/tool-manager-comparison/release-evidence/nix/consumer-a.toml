@@ -1,0 +1,7 @@
+[project]
+name = "score-m8-independent-consumer"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "score-devcontainer-nix-candidate[ruff]==0.8.0",
+]

@@ -1,0 +1,12 @@
+{
+  "candidate": "nix",
+  "gate": "fresh-published-amd64-build-and-feature-tests",
+  "status": "passed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix",
+  "output": "type=cacheonly; no image loaded or launched",
+  "source_strategy": "Nix build.sh stages one task context from stable source",
+  "workspace_retained": false,
+  "log": "/tmp/score-m6-gates/nix-published-20261102T004735Z-5b347540/published-build.log",
+  "builder": "score-m6-gates-nix-0ab07cfe",
+  "builder_removed": true
+}

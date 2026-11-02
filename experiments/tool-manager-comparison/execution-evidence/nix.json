@@ -1,0 +1,598 @@
+{
+  "candidate": "nix",
+  "uid": 1000,
+  "scope": "Prepared Linux amd64 native/Python entrypoints; no cold-install or all-tool claim",
+  "environment": {
+    "HOME": "/tmp/probe-home",
+    "PATH": "/usr/bin:/bin"
+  },
+  "mounts": [
+    "overlay / overlay ro,relatime,lowerdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1964/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1953/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/833/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/832/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/320/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1965/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1965/work 0 0",
+    "/dev/sdd /nix/store ext4 ro,relatime,discard,errors=remount-ro,data=ordered 0 0"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "strace -- version 6.8\nCopyright (c) 1991-2024 The strace developers <https://strace.io>.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\nOptional features enabled: stack-trace=libunwind stack-demangle m32-mpers mx32-mpers\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/native-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+        "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+        "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    }
+  ],
+  "traces": {
+    "native-version": {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+        "version"
+      ],
+      "total_trace_lines": 18,
+      "exec_events": [
+        "13    execve(\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls\", [\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls\", \"version\"], 0x7ffe147c8148 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [],
+      "manager_exec_events": []
+    },
+    "python-version": {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "--version"
+      ],
+      "total_trace_lines": 596,
+      "exec_events": [
+        "17    execve(\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", [\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", \"--version\"], 0x7ffde69ec8b8 /* 4 vars */) = 0",
+        "17    execve(\"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\", [\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", \"--version\"], 0x5944816ee560 /* 7 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [
+        "17    socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3",
+        "17    connect(3, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)",
+        "17    socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3",
+        "17    connect(3, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)"
+      ],
+      "file_mutation_attempts": [
+        "17    openat(AT_FDCWD, \"/dev/tty\", O_RDWR|O_NONBLOCK) = -1 ENXIO (No such device or address)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-version": {
+      "argv": [
+        "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+        "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+        "--version"
+      ],
+      "total_trace_lines": 565,
+      "exec_events": [
+        "21    execve(\"/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14\", [\"/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14\", \"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\", \"--version\"], 0x7ffe6596c550 /* 5 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [],
+      "manager_exec_events": []
+    },
+    "python-typo": {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 605,
+      "exec_events": [
+        "25    execve(\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", [\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", \"/work/input/typo.txt\"], 0x7ffd639b7098 /* 4 vars */) = 0",
+        "25    execve(\"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\", [\"/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell\", \"/work/input/typo.txt\"], 0x5c26394ee5e0 /* 7 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [
+        "25    socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3",
+        "25    connect(3, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)",
+        "25    socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3",
+        "25    connect(3, {sa_family=AF_UNIX, sun_path=\"/var/run/nscd/socket\"}, 110) = -1 ENOENT (No such file or directory)"
+      ],
+      "file_mutation_attempts": [
+        "25    openat(AT_FDCWD, \"/dev/tty\", O_RDWR|O_NONBLOCK) = -1 ENXIO (No such device or address)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-typo": {
+      "argv": [
+        "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+        "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 574,
+      "exec_events": [
+        "29    execve(\"/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14\", [\"/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14\", \"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\", \"/work/input/typo.txt\"], 0x7ffc847414c0 /* 5 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [],
+      "manager_exec_events": []
+    }
+  },
+  "timings": {
+    "native": {
+      "samples_ms": {
+        "exposed": [
+          0.707373,
+          0.694642,
+          0.748544,
+          0.726693,
+          0.736494,
+          0.927914,
+          0.715707,
+          0.78576,
+          0.723505,
+          0.720179,
+          0.938222,
+          0.857591,
+          0.738097,
+          0.710963,
+          0.700499,
+          0.657537,
+          0.732066,
+          0.722021,
+          0.867426,
+          0.702505,
+          0.650563,
+          0.666231,
+          0.65674,
+          0.703377,
+          0.715747,
+          0.702411,
+          0.707656,
+          0.736012,
+          0.705938,
+          0.716556,
+          0.729215,
+          0.750395,
+          0.744806,
+          0.74157,
+          0.783488,
+          0.789414,
+          0.916231,
+          0.757349,
+          0.677453,
+          0.664238
+        ],
+        "underlying": [
+          0.770459,
+          0.664766,
+          0.650023,
+          0.697731,
+          0.768836,
+          0.693899,
+          0.743945,
+          0.801888,
+          0.755832,
+          0.718681,
+          0.721431,
+          0.872172,
+          0.769675,
+          0.685794,
+          0.726591,
+          0.68664,
+          0.696064,
+          0.712765,
+          0.692925,
+          0.677603,
+          0.637771,
+          0.763891,
+          0.67904,
+          0.741664,
+          0.781921,
+          0.654249,
+          0.673766,
+          0.642617,
+          0.673748,
+          0.707489,
+          0.809234,
+          0.686117,
+          0.840662,
+          0.782618,
+          0.896463,
+          0.744533,
+          0.909638,
+          0.746113,
+          0.675415,
+          0.816449
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 0.722763,
+          "min_ms": 0.650563,
+          "p10_ms": 0.664238,
+          "p90_ms": 0.857591,
+          "max_ms": 0.938222
+        },
+        "underlying": {
+          "median_ms": 0.720056,
+          "min_ms": 0.637771,
+          "p10_ms": 0.654249,
+          "p90_ms": 0.816449,
+          "max_ms": 0.909638
+        }
+      },
+      "paired_delta_median_ms": 0.004315500000000028,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    },
+    "python": {
+      "samples_ms": {
+        "exposed": [
+          44.464402,
+          43.228445,
+          44.198887,
+          44.140892,
+          41.70666,
+          43.205437,
+          40.981923,
+          41.321952,
+          41.72797,
+          43.40282,
+          43.183343,
+          41.52682,
+          41.606309,
+          46.078619,
+          42.679934,
+          44.972879,
+          51.027126,
+          43.258615,
+          41.185335,
+          40.657666,
+          46.484158,
+          46.227522,
+          42.98669,
+          41.089187,
+          42.792342,
+          42.124588,
+          41.007997,
+          42.412898,
+          43.588855,
+          45.113446,
+          42.134919,
+          41.912516,
+          47.855758,
+          43.627417,
+          42.345893,
+          43.213509,
+          41.110003,
+          42.547736,
+          42.176152,
+          42.792805
+        ],
+        "underlying": [
+          41.688036,
+          40.870032,
+          41.382433,
+          42.432519,
+          44.53247,
+          42.090696,
+          41.374765,
+          39.69861,
+          40.753181,
+          40.936975,
+          39.308131,
+          40.510561,
+          41.896611,
+          41.383236,
+          41.83218,
+          41.070614,
+          40.475898,
+          41.045418,
+          42.079681,
+          42.580547,
+          40.120579,
+          40.51846,
+          40.249468,
+          38.655124,
+          40.315417,
+          41.284075,
+          40.188958,
+          42.289689,
+          41.421558,
+          42.395328,
+          40.827721,
+          39.389743,
+          44.409292,
+          42.891906,
+          41.117764,
+          41.250777,
+          44.679377,
+          38.883803,
+          43.699071,
+          43.672484
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 42.7925735,
+          "min_ms": 40.657666,
+          "p10_ms": 41.089187,
+          "p90_ms": 46.078619,
+          "max_ms": 51.027126
+        },
+        "underlying": {
+          "median_ms": 41.267426,
+          "min_ms": 38.655124,
+          "p10_ms": 39.389743,
+          "p90_ms": 43.672484,
+          "max_ms": 44.679377
+        }
+      },
+      "paired_delta_median_ms": 1.8355525000000021,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    }
+  },
+  "signals": [
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:16:00Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:16:00Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:16:00Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:16:00Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+          "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+          "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "versions": {
+    "starpls": "starpls version: v0.1.22",
+    "codespell": "2.4.3",
+    "strace": "strace -- version 6.8"
+  },
+  "entrypoints": {
+    "native_exposed": "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+    "native_resolved": "/nix/store/4piyxr19n8s6dck66xbjirfn7f9w3722-starpls-0.1.22/bin/starpls",
+    "python_exposed": "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+    "python_resolved": "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/codespell",
+    "python_source": "#! /nix/store/nnm9gdr70ihc6zc9298mzz8jpcgaciql-bash-5.3p20/bin/bash -e\nPATH=${PATH:+':'$PATH':'}\nPATH=${PATH/':''/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin'':'/':'}\nPATH='/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin'$PATH\nPATH=${PATH#':'}\nPATH=${PATH%':'}\nexport PATH\nPATH=${PATH:+':'$PATH':'}\nPATH=${PATH/':''/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin'':'/':'}\nPATH='/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin'$PATH\nPATH=${PATH#':'}\nPATH=${PATH%':'}\nexport PATH\nexport PYTHONNOUSERSITE='true'\nexec -a \"$0\" \"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\"  \"$@\" \n",
+    "python_reference": [
+      "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+      "/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped"
+    ],
+    "reference_environment_overrides": {
+      "PATH": "/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin:/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin:/usr/bin:/bin",
+      "PYTHONNOUSERSITE": "true"
+    }
+  }
+}

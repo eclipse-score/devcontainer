@@ -1,0 +1,8 @@
+{
+  "Id": "sha256:7b077c201df9cf2dc9d3e9e58f794243b6805925b7ebb74aa10c685fcf3689e9",
+  "Created": "2026-11-01T18:35:56.988890533+01:00",
+  "Os": "linux",
+  "Architecture": "amd64",
+  "Size": 6866471866,
+  "tested_tag": "score-aqua-m3:local-amd64"
+}

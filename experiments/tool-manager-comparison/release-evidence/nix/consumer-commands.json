@@ -1,0 +1,284 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/tmp/score-m8-nix/source-a/tools/internal/nix/package.py",
+      "check",
+      "/tmp/score-m8-nix/release-a"
+    ],
+    "cwd": "/tmp/score-m8-nix",
+    "exit": 0,
+    "stdout": "Valid package binding: score-devcontainer-nix-candidate 0.8.0 (5 extras; Nix release 0.8.0)\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "build",
+      "--wheel",
+      "--no-sources",
+      "--out-dir",
+      "/tmp/score-m8-nix/handoff",
+      "/tmp/score-m8-nix/release-a"
+    ],
+    "cwd": "/tmp/score-m8-nix",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_devcontainer_nix_candidate.egg-info\nwriting score_devcontainer_nix_candidate.egg-info/PKG-INFO\nwriting dependency_links to score_devcontainer_nix_candidate.egg-info/dependency_links.txt\nwriting requirements to score_devcontainer_nix_candidate.egg-info/requires.txt\nwriting top-level names to score_devcontainer_nix_candidate.egg-info/top_level.txt\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nreading manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_devcontainer_nix_candidate.egg-info/PKG-INFO\nwriting dependency_links to score_devcontainer_nix_candidate.egg-info/dependency_links.txt\nwriting requirements to score_devcontainer_nix_candidate.egg-info/requires.txt\nwriting top-level names to score_devcontainer_nix_candidate.egg-info/top_level.txt\nreading manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nCopying score_devcontainer_nix_candidate.egg-info to build/bdist.linux-x86_64/wheel/./score_devcontainer_nix_candidate-0.8.0-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_devcontainer_nix_candidate-0.8.0.dist-info/WHEEL\ncreating '/tmp/score-m8-nix/handoff/.tmp-cz1amvk4/score_devcontainer_nix_candidate-0.8.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_devcontainer_nix_candidate-0.8.0.dist-info/METADATA'\nadding 'score_devcontainer_nix_candidate-0.8.0.dist-info/WHEEL'\nadding 'score_devcontainer_nix_candidate-0.8.0.dist-info/top_level.txt'\nadding 'score_devcontainer_nix_candidate-0.8.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built handoff/score_devcontainer_nix_candidate-0.8.0-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "python3",
+      "/tmp/score-m8-nix/source-b/tools/internal/nix/package.py",
+      "check",
+      "/tmp/score-m8-nix/release-b"
+    ],
+    "cwd": "/tmp/score-m8-nix",
+    "exit": 0,
+    "stdout": "Valid package binding: score-devcontainer-nix-candidate 0.8.1 (5 extras; Nix release 0.8.1)\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "build",
+      "--wheel",
+      "--no-sources",
+      "--out-dir",
+      "/tmp/score-m8-nix/handoff",
+      "/tmp/score-m8-nix/release-b"
+    ],
+    "cwd": "/tmp/score-m8-nix",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_devcontainer_nix_candidate.egg-info\nwriting score_devcontainer_nix_candidate.egg-info/PKG-INFO\nwriting dependency_links to score_devcontainer_nix_candidate.egg-info/dependency_links.txt\nwriting requirements to score_devcontainer_nix_candidate.egg-info/requires.txt\nwriting top-level names to score_devcontainer_nix_candidate.egg-info/top_level.txt\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nreading manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_devcontainer_nix_candidate.egg-info/PKG-INFO\nwriting dependency_links to score_devcontainer_nix_candidate.egg-info/dependency_links.txt\nwriting requirements to score_devcontainer_nix_candidate.egg-info/requires.txt\nwriting top-level names to score_devcontainer_nix_candidate.egg-info/top_level.txt\nreading manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nwriting manifest file 'score_devcontainer_nix_candidate.egg-info/SOURCES.txt'\nCopying score_devcontainer_nix_candidate.egg-info to build/bdist.linux-x86_64/wheel/./score_devcontainer_nix_candidate-0.8.1-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_devcontainer_nix_candidate-0.8.1.dist-info/WHEEL\ncreating '/tmp/score-m8-nix/handoff/.tmp-qnw1yro3/score_devcontainer_nix_candidate-0.8.1-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_devcontainer_nix_candidate-0.8.1.dist-info/METADATA'\nadding 'score_devcontainer_nix_candidate-0.8.1.dist-info/WHEEL'\nadding 'score_devcontainer_nix_candidate-0.8.1.dist-info/top_level.txt'\nadding 'score_devcontainer_nix_candidate-0.8.1.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built handoff/score_devcontainer_nix_candidate-0.8.1-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "init",
+      "--bare",
+      "--no-workspace",
+      "--name",
+      "score-m8-independent-consumer",
+      "--python",
+      "/usr/bin/python3"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Initialized project `score-m8-independent-consumer`\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "add",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "score-devcontainer-nix-candidate[ruff]==0.8.0"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.14.3\nCreating virtual environment at: .venv\nResolved 3 packages in 365ms\nDownloading ruff (10.0MiB)\n Downloaded ruff\nPrepared 2 packages in 369ms\nInstalled 2 packages in 1ms\n + ruff==0.17.2\n + score-devcontainer-nix-candidate==0.8.0\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "lock",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 0.80ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "sync",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 0.74ms\nChecked 2 packages in 0.03ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.17.2\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "check",
+      "--no-cache",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 1,
+    "stdout": "F401 [*] `os` imported but unused\n --> bad input.py:1:8\n  |\n1 | import os\n  |        ^^\nhelp: Remove unused import: `os`\n  |\n  - import os\n  |\n\nFound 1 error.\n[*] 1 fixable with `--fix`.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uvx",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "--with",
+      "score-devcontainer-nix-candidate[ruff]==0.8.0",
+      "--from",
+      "ruff",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.17.2\n",
+    "stderr": "Installed 2 packages in 2ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uvx",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "--with",
+      "score-devcontainer-nix-candidate[ruff]==0.8.0",
+      "--from",
+      "ruff",
+      "ruff",
+      "check",
+      "--no-cache",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 1,
+    "stdout": "F401 [*] `os` imported but unused\n --> bad input.py:1:8\n  |\n1 | import os\n  |        ^^\nhelp: Remove unused import: `os`\n  |\n  - import os\n  |\n\nFound 1 error.\n[*] 1 fixable with `--fix`.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "add",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "score-devcontainer-nix-candidate[ruff]==0.8.1"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 96ms\nDownloading ruff (13.3MiB)\n Downloaded ruff\nPrepared 2 packages in 681ms\nUninstalled 2 packages in 0.50ms\nInstalled 2 packages in 0.98ms\n - ruff==0.17.2\n + ruff==0.14.6\n - score-devcontainer-nix-candidate==0.8.0\n + score-devcontainer-nix-candidate==0.8.1\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "lock",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 0.70ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "sync",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 0.76ms\nChecked 2 packages in 0.03ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "check",
+      "--no-cache",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 1,
+    "stdout": "F401 [*] `os` imported but unused\n --> bad input.py:1:8\n  |\n1 | import os\n  |        ^^\n  |\nhelp: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uvx",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "--with",
+      "score-devcontainer-nix-candidate[ruff]==0.8.1",
+      "--from",
+      "ruff",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": "Installed 2 packages in 2ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-m5-mise/host-bin/uvx",
+      "--find-links",
+      "/tmp/score-m8-nix/handoff",
+      "--with",
+      "score-devcontainer-nix-candidate[ruff]==0.8.1",
+      "--from",
+      "ruff",
+      "ruff",
+      "check",
+      "--no-cache",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-nix/consumer",
+    "exit": 1,
+    "stdout": "F401 [*] `os` imported but unused\n --> bad input.py:1:8\n  |\n1 | import os\n  |        ^^\n  |\nhelp: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "scenario": "Controlled ShellCheck version edit with mocked upstream digests; no network or root source mutation",
+  "old": "0.10.0",
+  "requested": "0.11.0",
+  "version": "0.11.0",
+  "binaries": [
+    {
+      "kind": "archive",
+      "file": "shellcheck-v0.10.0/shellcheck",
+      "url": "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.darwin.aarch64.tar.xz",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "tar.xz",
+      "os": "macos",
+      "cpu": "arm64"
+    },
+    {
+      "kind": "archive",
+      "file": "shellcheck-v0.10.0/shellcheck",
+      "url": "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "tar.xz",
+      "os": "linux",
+      "cpu": "x86_64"
+    },
+    {
+      "kind": "archive",
+      "file": "shellcheck-v0.10.0/shellcheck",
+      "url": "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.aarch64.tar.xz",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "type": "tar.xz",
+      "os": "linux",
+      "cpu": "arm64"
+    }
+  ],
+  "finding": "URLs and hashes refreshed; version-bearing archive member path retains old version"
+}

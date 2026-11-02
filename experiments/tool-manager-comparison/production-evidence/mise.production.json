@@ -1,0 +1,93 @@
+{
+  "candidate": "mise",
+  "production_runtime_prefix": "/opt/score-tools/prepared-runtime/data",
+  "producer": {
+    "image": "score-mise-m3:local-amd64",
+    "container_target": "linux/amd64",
+    "release": "/tmp/score-m3-mise/prepared-context-stable.release",
+    "context": "/tmp/score-m3-mise/prepared-context-stable",
+    "context_bytes": 380956417,
+    "prepared_commands": 11,
+    "manifest_sha256": "594c6abdb38890e519589aec5a359e82229114f1d510b5d287cf84ec1c6d45fa"
+  },
+  "build": {
+    "entrypoint": "scripts/build.sh --amd64 mise-m3-final",
+    "buildkit_record": "ofzl39kmg46965n93rmvhnbi2",
+    "status": "Completed",
+    "started_utc": "2026-11-01T18:03:06Z",
+    "finished_utc": "2026-11-01T18:10:16Z",
+    "duration": "7m 9s",
+    "target": "dev_containers_target_stage",
+    "platform": "linux/amd64",
+    "root_context_transfer": "36.32kB",
+    "prepared_runtime_named_context_transfer": "383.80MB",
+    "command": "PATH=/tmp/score-m3-common/devcontainer/node_modules/.bin:$PATH BUILDX_BUILDER=default SCORE_MISE_PREPARED_CONTEXT=/tmp/score-m3-mise/prepared-context-stable scripts/build.sh --amd64 mise-m3-final"
+  },
+  "image": {
+    "standard_tag": "ghcr.io/eclipse-score/devcontainer:mise-m3-final-amd64",
+    "local_alias": "score-mise-m3:local-amd64",
+    "id": "sha256:63d2cc6b87577fa1c61ce08d5c6d3703ceec20c9b0fdbdd20489a70507f14113",
+    "amd64_manifest": "sha256:e15aa93f87e0782fd3aac964fce9147a572c6802f1aa31cb600f44da85cc3589",
+    "config": "sha256:e800c49541bf5759dfd52735cb28d78b8a909d096b61cabf7d2e5affd5f5797c",
+    "size_bytes": 6860567830,
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "acceptance": {
+    "production_test_project": {
+      "status": "passed",
+      "exit_code": 0,
+      "user": "vscode",
+      "shell": "login bash",
+      "network": "online as existing test expects",
+      "evidence": "production-tests.log"
+    },
+    "prepared_handoff_regression": {
+      "status": "passed",
+      "exit_code": 0,
+      "target": "//tools:prepared_runtime_test",
+      "forced_execution": true,
+      "evidence": "bazel-focused-test.log"
+    },
+    "context_build_gates": {
+      "status": "passed",
+      "cases": [
+        "missing context",
+        "stale metadata",
+        "wrong requested platform",
+        "unsupported scripts/build.sh --arm64",
+        "unsupported producer arm64"
+      ],
+      "evidence": "build-gate-checks.log"
+    },
+    "pre_stable_prefix_offline_smoke": {
+      "status": "passed",
+      "applies_to_final_image": false,
+      "evidence": "offline-check-pre-stable-prefix.log"
+    },
+    "shared_final_offline_acceptance": {
+      "status": "passed",
+      "exit_code": 0,
+      "image": "score-mise-m3:local-amd64",
+      "script": "experiments/tool-manager-comparison/repository-runtime-check.py",
+      "commands": 44,
+      "expected_uid": 1000,
+      "network": "none",
+      "mounts": "acceptance script and expected-data only; no runtime/producer/cache mounts",
+      "evidence": "experiments/tool-manager-comparison/production-evidence/mise.command.json"
+    },
+    "default_producer_validation": {
+      "status": "passed",
+      "producer_image": "buildpack-deps:noble-curl",
+      "platform": "linux/amd64",
+      "prepared_tools": 11,
+      "python_venv_base_links": "all three resolve to /usr/bin/python3",
+      "evidence": "mise.default-producer.json"
+    }
+  },
+  "limits": [
+    "The prepared producer supports linux/amd64 only; scripts/build.sh rejects --arm64 before Docker.",
+    "The final production test suite ran online for its existing downloads; the shared acceptance verifies focused runtime behavior offline.",
+    "No push, publication, or commit was performed."
+  ]
+}

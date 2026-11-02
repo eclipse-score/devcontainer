@@ -1,0 +1,304 @@
+{
+  "artifact_mirror_or_override": false,
+  "artifact_retry_messages": [],
+  "assertions": [
+    "\ud83e\uddea Testing validate clangd is working and has the correct version",
+    "\ud83e\uddea Testing validate clang-format is working and has the correct version",
+    "\ud83e\uddea Testing validate clang-tidy is working and has the correct version",
+    "\ud83e\uddea Testing validate clang is working and has the correct version",
+    "\ud83e\uddea Testing validate the system CA bundle is present and parsable",
+    "\ud83e\uddea Testing validate the compromised emSign ECC Root CA - G3 is not in the system CA bundle",
+    "\ud83e\uddea Testing validate the Java keystore is present and parsable",
+    "\ud83e\uddea Testing validate the compromised emSign ECC Root CA - G3 is not in the Java keystore",
+    "\ud83e\uddea Testing verify selected s-core-local tools and packages",
+    "\ud83e\uddea Testing validate Graphviz can execute",
+    "\ud83e\uddea Testing validate Git compatibility",
+    "\ud83e\uddea Testing validate Git LFS compatibility",
+    "\ud83e\uddea Testing validate GitHub CLI compatibility",
+    "\ud83e\uddea Testing validate Java executes",
+    "\ud83e\uddea Testing validate JAVA_HOME",
+    "\ud83e\uddea Testing validate Black executes",
+    "\ud83e\uddea Testing validate pycairo builds from source",
+    "\ud83e\uddea Testing validate CodeQL version",
+    "\ud83e\uddea Testing validate CODEQL_HOME",
+    "\ud83e\uddea Testing validate CodeQL codeql/misra-cpp-coding-standards pack",
+    "\ud83e\uddea Testing validate CodeQL codeql/misra-c-coding-standards pack",
+    "\ud83e\uddea Testing validate CodeQL codeql/cert-cpp-coding-standards pack",
+    "\ud83e\uddea Testing validate CodeQL codeql/cert-c-coding-standards pack",
+    "\ud83e\uddea Testing verify selected Bazel tooling",
+    "\ud83e\uddea Testing validate preinstalled Bazel",
+    "\ud83e\uddea Testing validate compilation database helper",
+    "\ud83e\uddea Testing validate environment variable CODEQL_HOME is not empty",
+    "\ud83e\uddea Testing validate environment variable DEBUGINFOD_URLS is not empty",
+    "\ud83e\uddea Testing validate environment variable HOME is not empty",
+    "\ud83e\uddea Testing validate environment variable JAVA_HOME is not empty",
+    "\ud83e\uddea Testing validate environment variable OTEL_EXPORTER_OTLP_TRACES_ENDPOINT is not empty",
+    "\ud83e\uddea Testing validate environment variable OTEL_EXPORTER_OTLP_TRACES_PROTOCOL is not empty",
+    "\ud83e\uddea Testing validate environment variable OTEL_TRACES_EXPORTER is not empty",
+    "\ud83e\uddea Testing validate environment variable PATH is not empty",
+    "\ud83e\uddea Testing validate environment variable PWD is not empty",
+    "\ud83e\uddea Testing validate environment variable SHLVL is not empty",
+    "\ud83e\uddea Testing validate environment variable TRACEPARENT is not empty",
+    "\ud83e\uddea Testing validate environment variable _DEV_CONTAINERS_BASE_IMAGE is not empty",
+    "\ud83e\uddea Testing validate environment variable _DEV_CONTAINERS_IMAGE_USER is not empty",
+    "\ud83e\uddea Testing validate environment variable basedpyright_description is not empty",
+    "\ud83e\uddea Testing validate environment variable basedpyright_entrypoint is not empty",
+    "\ud83e\uddea Testing validate environment variable basedpyright_package is not empty",
+    "\ud83e\uddea Testing validate environment variable basedpyright_version is not empty",
+    "\ud83e\uddea Testing validate environment variable bazel_compile_commands_amd64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable bazel_compile_commands_arm64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable bazel_compile_commands_version is not empty",
+    "\ud83e\uddea Testing validate environment variable bazel_version is not empty",
+    "\ud83e\uddea Testing validate environment variable codeql_amd64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable codeql_arm64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable codeql_coding_standards_version is not empty",
+    "\ud83e\uddea Testing validate environment variable codeql_version is not empty",
+    "\ud83e\uddea Testing validate environment variable dive_amd64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable dive_arm64_sha256 is not empty",
+    "\ud83e\uddea Testing validate environment variable dive_version is not empty",
+    "\ud83e\uddea Testing validate environment variable gdb_version is not empty",
+    "\ud83e\uddea Testing validate environment variable gh_compatibility_version is not empty",
+    "\ud83e\uddea Testing validate environment variable git_compatibility_version is not empty",
+    "\ud83e\uddea Testing validate environment variable git_lfs_compatibility_version is not empty",
+    "\ud83e\uddea Testing validate environment variable graphviz_version is not empty",
+    "\ud83e\uddea Testing validate environment variable lcov_version is not empty",
+    "\ud83e\uddea Testing validate environment variable libcairo2_dev_version is not empty",
+    "\ud83e\uddea Testing validate environment variable llvm_compatibility_version is not empty",
+    "\ud83e\uddea Testing validate environment variable openjdk_21_version is not empty",
+    "\ud83e\uddea Testing validate environment variable pkg_config_version is not empty",
+    "\ud83e\uddea Testing validate environment variable pre_commit_description is not empty",
+    "\ud83e\uddea Testing validate environment variable pre_commit_entrypoint is not empty",
+    "\ud83e\uddea Testing validate environment variable pre_commit_package is not empty",
+    "\ud83e\uddea Testing validate environment variable pre_commit_version is not empty",
+    "\ud83e\uddea Testing validate environment variable protobuf_compiler_version is not empty",
+    "\ud83e\uddea Testing validate environment variable pycairo_smoke_version is not empty",
+    "\ud83e\uddea Testing validate environment variable pytest_description is not empty",
+    "\ud83e\uddea Testing validate environment variable pytest_entrypoint is not empty",
+    "\ud83e\uddea Testing validate environment variable pytest_package is not empty",
+    "\ud83e\uddea Testing validate environment variable pytest_version is not empty",
+    "\ud83e\uddea Testing validate environment variable python_version is not empty",
+    "\ud83e\uddea Testing validate environment variable qemu_system_version is not empty",
+    "\ud83e\uddea Testing validate environment variable ripgrep_version is not empty",
+    "\ud83e\uddea Testing validate environment variable sshpass_version is not empty",
+    "\ud83e\uddea Testing validate environment variable valgrind_version is not empty"
+  ],
+  "builder_removed": true,
+  "checks_passed": 79,
+  "failure_boundary": null,
+  "local_log_sha256": "8f5dd9e79b07797aef7d122725db28659fa33eb9536e6411c443c5ed84c198a0",
+  "original_artifact_urls": true,
+  "provider_boundary": "Fresh no-cache build from stock base, external features and local features; cacheonly output.",
+  "rendered_dockerfile_sha256": "307efeb5019414a05eba2f3eba9004847f7b53588d53ce3bf04ede3b50b29653",
+  "runtime": "vscode login shell with passwd HOME inside freshly built image",
+  "selected_observations": [
+    {
+      "observed": {
+        "actionlint": {
+          "command": "/usr/local/bin/actionlint",
+          "reported": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64"
+        },
+        "apm": {
+          "command": "/usr/local/bin/apm",
+          "reported": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)"
+        },
+        "bandit": {
+          "policy": "distribution",
+          "resolved": "1.6.2-3"
+        },
+        "basedpyright": {
+          "command": "/usr/local/bin/basedpyright",
+          "reported": "basedpyright 1.35.0\nbased on pyright 1.1.407"
+        },
+        "black": {
+          "policy": "distribution",
+          "resolved": "24.2.0-1ubuntu1"
+        },
+        "ca-certificates-java": {
+          "policy": "distribution",
+          "resolved": "20240118"
+        },
+        "flake8": {
+          "policy": "distribution",
+          "resolved": "7.0.0-1"
+        },
+        "gdb": {
+          "policy": "prefix",
+          "resolved": "15.0.50.20240403-0ubuntu1"
+        },
+        "gh": {
+          "policy": "distribution",
+          "resolved": "2.45.0-1ubuntu0.3"
+        },
+        "git": {
+          "policy": "distribution",
+          "resolved": "1:2.43.0-1ubuntu7.4"
+        },
+        "git-lfs": {
+          "policy": "distribution",
+          "resolved": "3.4.1-1ubuntu0.4"
+        },
+        "graphviz": {
+          "policy": "prefix",
+          "resolved": "2.42.2-9ubuntu0.1"
+        },
+        "lcov": {
+          "policy": "prefix",
+          "resolved": "2.0-4ubuntu2"
+        },
+        "libcairo2-dev": {
+          "policy": "prefix",
+          "resolved": "1.18.0-3build1"
+        },
+        "man-db": {
+          "policy": "distribution",
+          "resolved": "2.12.0-4build2"
+        },
+        "manpages": {
+          "policy": "distribution",
+          "resolved": "6.7-2"
+        },
+        "manpages-dev": {
+          "policy": "distribution",
+          "resolved": "6.7-2"
+        },
+        "manpages-posix": {
+          "policy": "distribution",
+          "resolved": "2017a-2"
+        },
+        "manpages-posix-dev": {
+          "policy": "distribution",
+          "resolved": "2017a-2"
+        },
+        "mypy": {
+          "policy": "distribution",
+          "resolved": "1.9.0-4ubuntu1"
+        },
+        "opencode": {
+          "command": "/usr/local/bin/opencode",
+          "reported": "opencode v2.2.3"
+        },
+        "openjdk-21-jdk-headless": {
+          "policy": "prefix",
+          "resolved": "21.0.12.1+1-1~24.04.4"
+        },
+        "pipenv": {
+          "policy": "distribution",
+          "resolved": "2023.12.1+ds-1"
+        },
+        "pkg-config": {
+          "policy": "prefix",
+          "resolved": "1.8.1-2build1"
+        },
+        "pre-commit": {
+          "command": "/usr/local/bin/pre-commit",
+          "reported": "pre-commit 4.7.0"
+        },
+        "protobuf-compiler": {
+          "policy": "prefix",
+          "resolved": "3.21.12-8.2ubuntu0.4"
+        },
+        "pycodestyle": {
+          "policy": "distribution",
+          "resolved": "2.11.1-1"
+        },
+        "pydocstyle": {
+          "policy": "distribution",
+          "resolved": "6.3.0-1.1"
+        },
+        "pylint": {
+          "policy": "distribution",
+          "resolved": "3.0.3-2"
+        },
+        "pytest": {
+          "command": "/usr/local/bin/pytest",
+          "reported": "pytest 9.0.2"
+        },
+        "python3-autopep8": {
+          "policy": "distribution",
+          "resolved": "2.0.4-2"
+        },
+        "python3-pip": {
+          "policy": "distribution",
+          "resolved": "24.0+dfsg-1ubuntu1.3"
+        },
+        "python3-venv": {
+          "policy": "distribution",
+          "resolved": "3.12.3-0ubuntu2.1"
+        },
+        "python3-yapf": {
+          "policy": "distribution",
+          "resolved": "0.33.0-1"
+        },
+        "python3.12": {
+          "policy": "package-name",
+          "resolved": "3.12.3-1ubuntu0.17"
+        },
+        "qemu-system-arm": {
+          "policy": "prefix",
+          "resolved": "1:8.2.2+ds-0ubuntu1.18"
+        },
+        "qemu-system-x86": {
+          "policy": "prefix",
+          "resolved": "1:8.2.2+ds-0ubuntu1.18"
+        },
+        "ripgrep": {
+          "policy": "prefix",
+          "resolved": "14.1.0-1"
+        },
+        "ruff": {
+          "command": "/usr/local/bin/ruff",
+          "reported": "ruff 0.11.13"
+        },
+        "shellcheck": {
+          "command": "/usr/local/bin/shellcheck",
+          "reported": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net"
+        },
+        "sshpass": {
+          "policy": "prefix",
+          "resolved": "1.09-1"
+        },
+        "uv": {
+          "command": "/usr/local/bin/uv",
+          "reported": "uv 0.13.6 (x86_64-unknown-linux-gnu)"
+        },
+        "uvx": {
+          "command": "/usr/local/bin/uvx",
+          "reported": "uvx 0.13.6 (x86_64-unknown-linux-gnu)"
+        },
+        "valgrind": {
+          "policy": "prefix",
+          "resolved": "1:3.22.0-0ubuntu3"
+        },
+        "virtualenv": {
+          "policy": "distribution",
+          "resolved": "20.25.0+ds-2"
+        },
+        "yamlfmt": {
+          "command": "/usr/local/bin/yamlfmt",
+          "reported": "yamlfmt 0.17.0 (45e5cb5)"
+        }
+      },
+      "selection": "s-core-local"
+    },
+    {
+      "observed": {
+        "bazelisk": {
+          "command": "/usr/local/bin/bazelisk",
+          "reported": "Bazelisk version: v1.27.0\nWARNING: Invoking Bazel in batch mode since it is not invoked from within a workspace (below a directory having a MODULE.bazel file).\nOpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720"
+        },
+        "buildifier": {
+          "command": "/usr/local/bin/buildifier",
+          "reported": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353"
+        },
+        "starpls": {
+          "command": "/usr/local/bin/starpls",
+          "reported": "starpls version: v0.1.22"
+        }
+      },
+      "selection": "bazel-feature"
+    }
+  ],
+  "source_hashes": "source-hashes.json",
+  "status": "passed",
+  "suite": "unchanged test-project/test.sh and both feature test_default.sh files"
+}

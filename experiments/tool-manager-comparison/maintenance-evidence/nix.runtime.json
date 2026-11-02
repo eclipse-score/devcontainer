@@ -1,0 +1,88 @@
+{
+  "versions": {
+    "starpls": "0.1.22",
+    "codespell": "2.4.3"
+  },
+  "uid": 1000,
+  "commands": [
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "/tmp/score-onboarding-6p43p0uw/clean.txt"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/nix/store/r9r6kjv9srj21g1ji1bhn4qazf9dyxfp-score-tools-published/bin/codespell",
+        "/tmp/score-onboarding-6p43p0uw/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/tmp/score-onboarding-6p43p0uw/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    }
+  ],
+  "starpls_lsp": {
+    "version": "0.1.22",
+    "scope": "initialize/shutdown protocol; no project-analysis assertion",
+    "initialize": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "capabilities": {
+          "completionProvider": {
+            "triggerCharacters": [
+              ".",
+              "\"",
+              "'",
+              "/",
+              ":",
+              "@"
+            ]
+          },
+          "declarationProvider": true,
+          "definitionProvider": true,
+          "documentSymbolProvider": true,
+          "hoverProvider": true,
+          "referencesProvider": true,
+          "signatureHelpProvider": {
+            "triggerCharacters": [
+              "(",
+              ",",
+              ")"
+            ]
+          },
+          "textDocumentSync": 2
+        }
+      }
+    },
+    "shutdown": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "result": null
+    },
+    "exit": 0
+  },
+  "starpls_stderr": "[2026-11-01T19:48:48Z INFO  starpls::commands::server] starpls, v0.1.22\n[2026-11-01T19:48:48Z DEBUG starpls::event_loop] initializing state and starting event loop\n[2026-11-01T19:48:48Z DEBUG starpls::server] fetching Bazel configuration using Bazel executable at \"bazel\"\n[2026-11-01T19:48:49Z ERROR starpls::server] failed to initialize Bazel context: failed to run `bazel info`: failed to run Bazel command with exit status exit status: 2, stderr=\"OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.\\nERROR: Error accessing registry https://bcr.bazel.build/: Failed to fetch registry file https://bcr.bazel.build/modules/platforms/0.0.7/MODULE.bazel: Unknown host: bcr.bazel.build\\n\"\n[2026-11-01T19:48:49Z INFO  starpls::commands::server] connection closed, exiting\n",
+  "result": "passed"
+}

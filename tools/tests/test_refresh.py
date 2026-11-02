@@ -57,6 +57,44 @@ class RefreshTest(unittest.TestCase):
             )
             self.assertEqual(binary["sha256"], "new")
 
+    def test_version_edit_updates_versioned_archive_member_and_directory(self):
+        """The installer must extract from the new release, not its old layout."""
+        for archive_field, old_path in (
+            ("file", "tool-v1.0.0/tool"),
+            ("dir", "tool-1.0.0/"),
+        ):
+            with (
+                self.subTest(archive_field=archive_field),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                path = Path(directory) / "tool.lock.json"
+                path.write_text(
+                    json.dumps(
+                        {
+                            "tool": {
+                                "version": "2.0.0",
+                                "binaries": [
+                                    {
+                                        "url": "https://github.com/example/tool/releases/download/v1.0.0/tool-1.0.0.tar.gz",
+                                        "sha256": "old",
+                                        archive_field: old_path,
+                                    }
+                                ],
+                            }
+                        }
+                    )
+                )
+                with patch.object(
+                    refresh,
+                    "_release_digests",
+                    return_value={"tool-2.0.0.tar.gz": "sha256:new"},
+                ):
+                    refresh.refresh_lockfile(path)
+                binary = json.loads(path.read_text())["tool"]["binaries"][0]
+                self.assertEqual(
+                    binary[archive_field], old_path.replace("1.0.0", "2.0.0")
+                )
+
     def test_sibling_command_version_is_derived_from_release_owner(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "tool.lock.json"

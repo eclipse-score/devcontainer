@@ -1,0 +1,388 @@
+{
+  "repo": "score_devcontainer-eval-nix (before M5)",
+  "installer_present": true,
+  "installer_sha256": "c3d7c99364825db2975fbf206300ab45ef720f0f71623116cb339175aee140a9",
+  "installer_executable": true,
+  "old_module_reference_candidates": [
+    {
+      "path": "tools/BUILD.bazel",
+      "line": 64,
+      "text": "\"internal/devcontainer/install.py\","
+    },
+    {
+      "path": "tools/internal/devcontainer/load_feature_versions.sh",
+      "line": 20,
+      "text": "score_feature_metadata=\"$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)\""
+    },
+    {
+      "path": "tools/tests/python_tool_runner_test.sh",
+      "line": 20,
+      "text": "installer=\"${runfiles_root}/tools/internal/devcontainer/install.py\""
+    },
+    {
+      "path": "tools/tests/test_catalog.py",
+      "line": 162,
+      "text": "path = Path(__file__).resolve().parents[1] / \"internal/devcontainer/install.py\""
+    },
+    {
+      "path": ".devcontainer/post_create_command.sh",
+      "line": 23,
+      "text": "sudo \"${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py\" environment repository"
+    },
+    {
+      "path": "scripts/install_dive.sh",
+      "line": 25,
+      "text": "score_dive_metadata=\"$(python3 \"${SCRIPT_DIR}/../tools/internal/devcontainer/install.py\" shell-metadata)\""
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 36,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py install-prepared"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 44,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase build"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 47,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 49,
+      "text": "if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 67,
+      "text": "if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel_compile_commands; then"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+      "line": 85,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase cleanup"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh",
+      "line": 18,
+      "text": "installer=/usr/local/share/score-tools/internal/devcontainer/install.py"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 39,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py install-prepared"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 51,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local --phase build"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 55,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 57,
+      "text": "if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local openjdk_21; then"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 68,
+      "text": "if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql; then"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 96,
+      "text": "if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql_coding_standards; then"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 97,
+      "text": "codeql_packs=\"$(/usr/local/share/score-tools/internal/devcontainer/install.py items codeql_coding_standards packs)\""
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+      "line": 144,
+      "text": "/usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local --phase cleanup"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh",
+      "line": 18,
+      "text": "installer=/usr/local/share/score-tools/internal/devcontainer/install.py"
+    }
+  ],
+  "installer_functions": [
+    "_build_parser",
+    "_cmd_environment",
+    "_cmd_install",
+    "_cmd_install_prepared",
+    "_cmd_install_python",
+    "_cmd_items",
+    "_cmd_selected",
+    "_cmd_shell_metadata",
+    "_cmd_verify_environment",
+    "_cmd_version",
+    "_detect_cpu",
+    "_detect_os",
+    "_detect_target_platform",
+    "_extract_dir",
+    "_extract_member",
+    "_find_lockfile",
+    "_load_tool",
+    "_lockfile_path",
+    "_place_binary",
+    "_prepared_tools",
+    "_resolve_lockfile",
+    "_select_binary",
+    "_validate_selected_prepared",
+    "main"
+  ],
+  "installer_subcommands": [
+    "environment",
+    "install",
+    "install-prepared",
+    "install-python",
+    "items",
+    "selected",
+    "shell-metadata",
+    "verify-environment",
+    "version"
+  ],
+  "legacy_definitions": [
+    "_cmd_install",
+    "_cmd_install_python",
+    "_extract_dir",
+    "_extract_member",
+    "_place_binary"
+  ],
+  "legacy_name_references_in_installer": [
+    "_cmd_install",
+    "_cmd_install_python",
+    "_extract_dir",
+    "_extract_member",
+    "_place_binary"
+  ],
+  "legacy_call_or_test_candidates": [
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 21,
+      "text": "install.py install shellcheck yamlfmt"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 22,
+      "text": "install.py install-python pre-commit"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 313,
+      "text": "def _cmd_install_python(args: argparse.Namespace) -> int:"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 411,
+      "text": "def _cmd_install(args: argparse.Namespace) -> int:"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 504,
+      "text": "_cmd_install(native)"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 512,
+      "text": "_cmd_install_python(python)"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 731,
+      "text": "install_parser.set_defaults(func=_cmd_install)"
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 734,
+      "text": "\"install-python\","
+    },
+    {
+      "path": "tools/internal/devcontainer/install.py",
+      "line": 755,
+      "text": "install_python_parser.set_defaults(func=_cmd_install_python)"
+    },
+    {
+      "path": "tools/tests/python_tool_runner_test.sh",
+      "line": 79,
+      "text": "\"${installer}\" install-python pre-commit \\"
+    },
+    {
+      "path": "tools/tests/python_tool_runner_test.sh",
+      "line": 93,
+      "text": "if OUTPUT_FILE=\"${output}\" \"${installer}\" install-python \\"
+    },
+    {
+      "path": "tools/tests/test_catalog.py",
+      "line": 267,
+      "text": "patch.object(self.installer, \"_cmd_install\") as install_native,"
+    },
+    {
+      "path": "tools/tests/test_catalog.py",
+      "line": 268,
+      "text": "patch.object(self.installer, \"_cmd_install_python\") as install_python,"
+    },
+    {
+      "path": "tools/tests/test_catalog.py",
+      "line": 330,
+      "text": "patch.object(self.installer, \"_cmd_install\") as install_native,"
+    },
+    {
+      "path": "tools/tests/test_catalog.py",
+      "line": 331,
+      "text": "patch.object(self.installer, \"_cmd_install_python\") as install_python,"
+    }
+  ],
+  "update_configuration_candidates": [
+    {
+      "path": ".github/renovate.json5",
+      "line": 38,
+      "text": "\"postUpgradeTasks\": {"
+    },
+    {
+      "path": ".github/renovate.json5",
+      "line": 40,
+      "text": "\"tools/internal/refresh_lockfile_digests.py\","
+    },
+    {
+      "path": ".github/renovate.json5",
+      "line": 41,
+      "text": "\"tools/internal/sync_readme.py\""
+    },
+    {
+      "path": ".github/workflows/ci.yaml",
+      "line": 85,
+      "text": "python3 tools/internal/sync_readme.py --check"
+    },
+    {
+      "path": ".github/workflows/daily.yml",
+      "line": 57,
+      "text": "RENOVATE_ALLOWED_COMMANDS: '[\"^tools/internal/refresh_lockfile_digests\\\\.py$\", \"^tools/internal/sync_readme\\\\.py$\"]'"
+    }
+  ],
+  "production_experiment_reference_candidates": [
+    {
+      "path": "tools/score_tools/python_tools.bzl",
+      "line": 17,
+      "text": "# Generated from experiments/tool-manager-nix/reference/nix/flake.nix; regenerate with sync.py."
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 46,
+      "text": "python3 experiments/tool-manager-nix/reference/prepare.py \"\\$OUT\" --release-version 0.5.0"
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 53,
+      "text": "echo \"Run experiments/tool-manager-nix/reference/prepare.py with a fresh output directory, then set SCORE_NIX_PREPARED_RELEASE.\" >&2"
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 60,
+      "text": "echo \"Prepare a fresh release with experiments/tool-manager-nix/reference/prepare.py.\" >&2"
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 88,
+      "text": "if ! python3 \"${REPO_ROOT}/experiments/tool-manager-nix/reference/sync.py\" \\"
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 91,
+      "text": "echo \"Prepare a fresh immutable release with experiments/tool-manager-nix/reference/prepare.py, set SCORE_NIX_PREPARED_RELEASE to it, then rerun scripts/build.sh.\" >&2"
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 122,
+      "text": "\"${BUILD_CONTEXT}/experiments/tool-manager-nix/reference/out/m3-production\""
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 128,
+      "text": "\"${BUILD_CONTEXT}/experiments/tool-manager-nix/reference/out/m3-production/\""
+    },
+    {
+      "path": "scripts/build.sh",
+      "line": 130,
+      "text": "\"${BUILD_CONTEXT}/experiments/tool-manager-nix/reference/out/m3-production/\""
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/Dockerfile",
+      "line": 36,
+      "text": "COPY experiments/tool-manager-nix/reference/out/m3-production/native/nix/store/ /nix/store/"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/Dockerfile",
+      "line": 37,
+      "text": "COPY experiments/tool-manager-nix/reference/out/m3-production/prepared-tools.json /usr/local/share/score-tools/prepared-tools.json"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/with-proxy-vars.Dockerfile",
+      "line": 53,
+      "text": "COPY experiments/tool-manager-nix/reference/out/m3-production/native/nix/store/ /nix/store/"
+    },
+    {
+      "path": "src/s-core-devcontainer/.devcontainer/with-proxy-vars.Dockerfile",
+      "line": 54,
+      "text": "COPY experiments/tool-manager-nix/reference/out/m3-production/prepared-tools.json /usr/local/share/score-tools/prepared-tools.json"
+    }
+  ],
+  "environments": {
+    "s-core-local": {
+      "native": [
+        "shellcheck",
+        "ruff",
+        "actionlint",
+        "yamlfmt",
+        "uv",
+        "uvx",
+        "apm",
+        "opencode"
+      ],
+      "python": [
+        "pre-commit",
+        "basedpyright",
+        "pytest",
+        "codespell"
+      ]
+    },
+    "bazel-feature": {
+      "native": [
+        "bazelisk",
+        "buildifier",
+        "starpls"
+      ],
+      "python": []
+    },
+    "repository": {
+      "native": [
+        "actionlint",
+        "bazelisk",
+        "buildifier",
+        "ruff",
+        "shellcheck",
+        "uv",
+        "uvx",
+        "yamlfmt"
+      ],
+      "python": [
+        "pre-commit"
+      ]
+    }
+  },
+  "boundaries": [
+    "Historical experiment/evidence references excluded from production caller search",
+    "Remaining source/test candidates need review: a negative API test is not a live installer caller",
+    "No claim that static absence demonstrates successful feature/host/image provisioning"
+  ]
+}

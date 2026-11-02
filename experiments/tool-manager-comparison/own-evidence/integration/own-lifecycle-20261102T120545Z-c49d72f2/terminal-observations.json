@@ -1,0 +1,17 @@
+[
+  "interactive-shell user=node home=/home/node cwd=/workspaces/workspace-score-m6-own-own-lifecycle-20261102T120545Z-c49d72f2",
+  "tool=uv path=/usr/local/bin/uv resolved=/usr/local/share/uv/score-packages/packages/artifact-ab2a9fae0c00e907e2a316c90cc8cee488b18997c0cb580a5ea3df1537ad9256/uv owner=root:root",
+  "uv 0.13.6 (x86_64-unknown-linux-gnu)",
+  "tool=uvx path=/usr/local/bin/uvx resolved=/usr/local/share/uv/score-packages/packages/artifact-ab2a9fae0c00e907e2a316c90cc8cee488b18997c0cb580a5ea3df1537ad9256/uvx owner=root:root",
+  "uvx 0.13.6 (x86_64-unknown-linux-gnu)",
+  "tool=ruff path=/usr/local/bin/ruff resolved=/usr/local/share/uv/score-packages/packages/artifact-2d9c276a8578a85d26759229a50193af7dfc7d91df891ecb30c05df88f1eb02a/ruff owner=root:root",
+  "ruff 0.11.13",
+  "tool=pre-commit path=/usr/local/bin/pre-commit resolved=/usr/local/share/uv/score-packages/packages/pre-commit-6277204ee29770398842f1ecca18b2378286952a2e1024cd1277c3c7adab60d6/tools/pre-commit/bin/pre-commit owner=root:root",
+  "pre-commit 4.7.0",
+  "pre-commit-hook=/workspaces/workspace-score-m6-own-own-lifecycle-20261102T120545Z-c49d72f2/.git/hooks/pre-commit owner=node:node",
+  "dind-server=29.9.2",
+  "Name:          multiarch",
+  "Driver:        docker-container",
+  "Name:                  multiarch0",
+  "Status:                running"
+]

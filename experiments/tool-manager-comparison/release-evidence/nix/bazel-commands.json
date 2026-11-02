@@ -1,0 +1,38 @@
+[
+  {
+    "argv": [
+      "/home/alex/.cache/bazelisk/downloads/bazelbuild/bazel-8.6.0-linux-x86_64/bin/bazel",
+      "--ignore_all_rc_files",
+      "--output_base=/tmp/score-m8-nix/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--repository_cache=/tmp/score-m5-nix/bazel-repository-cache",
+      "--repo_env=UV_PYTHON_DOWNLOADS=never",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-m8-nix/source-b/tools",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": "Starting local Bazel server (8.6.0) and connecting to it...\nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nLoading: 0 packages loaded\n    currently loading: tools\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\n\nAnalyzing: target //tools:ruff (83 packages loaded, 574 targets configured)\n\nINFO: Analyzed target //tools:ruff (84 packages loaded, 579 targets configured).\nINFO: Found 1 target...\n[6 / 6] no actions running\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 6.029s, Critical Path: 0.02s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.cache/bazelisk/downloads/bazelbuild/bazel-8.6.0-linux-x86_64/bin/bazel",
+      "--ignore_all_rc_files",
+      "--output_base=/tmp/score-m8-nix/bazel-output",
+      "run",
+      "//tools:ruff",
+      "--repository_cache=/tmp/score-m5-nix/bazel-repository-cache",
+      "--repo_env=UV_PYTHON_DOWNLOADS=never",
+      "--",
+      "check",
+      "--no-cache",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-m8-nix/source-b/tools",
+    "exit": 1,
+    "stdout": "F401 [*] `os` imported but unused\n --> bad input.py:1:8\n  |\n1 | import os\n  |        ^^\n  |\nhelp: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (32 packages loaded, 158 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.300s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  }
+]

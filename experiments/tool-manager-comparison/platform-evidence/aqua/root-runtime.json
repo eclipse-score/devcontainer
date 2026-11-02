@@ -1,0 +1,111 @@
+{
+  "candidate": "aqua",
+  "runner_sha256": "a2bc7647c08f74a002ba1f92dfd4a3954c0038d1ea739ec9f2070e4723b7de1f",
+  "prefix": "/opt/score-tools/bin",
+  "prefix_variable": "SCORE_TOOLS_BIN",
+  "checks": [
+    {
+      "tool": "uv",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/opt/score-tools/bin/uv",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uv 0.13.6 (aarch64-unknown-linux-musl)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "uvx",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/opt/score-tools/bin/uvx",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "uvx 0.13.6 (aarch64-unknown-linux-musl)\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/opt/score-tools/bin/ruff",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "ruff 0.11.12\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "pre-commit",
+      "args": [
+        "--version"
+      ],
+      "resolved_executable": "/opt/score-tools/uv/tools/pre-commit/bin/pre-commit",
+      "direct_exit": 0,
+      "strict_exit": 0,
+      "stdout": "pre-commit 4.7.0\n",
+      "stderr": "",
+      "identical_results": true
+    },
+    {
+      "tool": "ruff",
+      "args": [
+        "check",
+        "--select",
+        "F821",
+        "--output-format",
+        "concise",
+        "bad input.py"
+      ],
+      "resolved_executable": "/opt/score-tools/bin/ruff",
+      "direct_exit": 1,
+      "strict_exit": 1,
+      "stdout": "bad input.py:1:1: F821 Undefined name `missing_name`\nFound 1 error.\n",
+      "stderr": "",
+      "identical_results": true
+    }
+  ],
+  "scope": "Prepared command execution; no bootstrap or fresh-image claim",
+  "unexpected_path_calls": [],
+  "passed": true,
+  "milestone": "M7",
+  "architecture": "aarch64 under QEMU",
+  "container_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--platform",
+    "linux/arm64",
+    "--name",
+    "score-m7-aqua-root-runtime",
+    "--label",
+    "score-m7-platform.candidate=aqua",
+    "--network",
+    "none",
+    "--user",
+    "1000:1000",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,mode=1777",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--mount",
+    "type=bind,source=/tmp/score-m7-aqua/prefix-arm64-published,target=/opt/score-tools,readonly",
+    "--mount",
+    "type=bind,source=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/tools/run-tool,target=/candidate/tools/run-tool,readonly",
+    "--mount",
+    "type=bind,source=/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/retirement-runtime-check.py,target=/checker.py,readonly",
+    "--entrypoint",
+    "/bin/sh",
+    "score-tooling-reference:final-arm64",
+    "-c",
+    "/usr/bin/python3 /checker.py --candidate aqua --repo /candidate --bin /opt/score-tools/bin --prefix-env SCORE_TOOLS_BIN --output /tmp/runtime-result.json && cat /tmp/runtime-result.json"
+  ]
+}

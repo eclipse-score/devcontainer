@@ -1,0 +1,41 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/tmp/score-m8-nix/source-a/tools/internal/nix/sync.py",
+      "--check",
+      "--release",
+      "/tmp/score-m8-nix/release-a",
+      "--system",
+      "x86_64-linux"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "argv": [
+      "python3",
+      "/tmp/score-m8-nix/source-b/tools/internal/nix/sync.py",
+      "--check",
+      "--release",
+      "/tmp/score-m8-nix/release-b",
+      "--system",
+      "x86_64-linux"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "argv": [
+      "python3",
+      "/tmp/score-m8-nix/source-b/tools/internal/nix/sync.py",
+      "--check",
+      "--release",
+      "/tmp/score-m8-nix/release-a",
+      "--system",
+      "x86_64-linux"
+    ],
+    "exit": 1,
+    "expected": 1
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "image": "score-execution-audit:20261102",
+  "image_id": "sha256:efee32d02a8807af1b6556532b123749dd9bcb4a9a045e73c977db6acc978dc6",
+  "host_architecture": "x86_64",
+  "samples_per_route": 40,
+  "root_and_payloads_readonly": true,
+  "network": "none",
+  "uid": 1000,
+  "payloads": {
+    "mise": {
+      "source": "/tmp/score-m4-mise/prepared-context-m4/opt/score-tools",
+      "mount": "/opt/score-tools",
+      "expected_versions": {
+        "starpls": "0.1.22",
+        "codespell": "2.4.1"
+      }
+    },
+    "aqua": {
+      "source": "/tmp/score-m4-aqua/prepared-published-owner-final",
+      "mount": "/opt/score-tools",
+      "expected_versions": {
+        "starpls": "0.1.22",
+        "codespell": "2.4.1"
+      }
+    },
+    "nix": {
+      "source": "/tmp/score-m4-nix/production-context/experiments/tool-manager-nix/reference/out/m3-production/native/nix/store",
+      "mount": "/nix/store",
+      "expected_versions": {
+        "starpls": "0.1.22",
+        "codespell": "2.4.3"
+      }
+    }
+  }
+}

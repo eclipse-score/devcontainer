@@ -1,0 +1,8 @@
+{
+  "ruff": "/tmp/score-own-copilot/release-final-evidence/native/data/packages/artifact-dbb120e762e5a36ac95fd2f46ce976dceb40e820492a97b792e61542b50bf9ed/ruff",
+  "buildifier": {
+    "target": "/tmp/score-own-copilot/release-final-evidence/native/data/packages/artifact-0c39bbdf86f266b43d9206407ee9115387f6ccb2126b26fb3247921f6004b296/buildifier",
+    "sha256": "6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a"
+  },
+  "user_sentinel": "unrelated-user-file\n"
+}

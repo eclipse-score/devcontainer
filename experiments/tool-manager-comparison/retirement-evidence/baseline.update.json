@@ -1,0 +1,42 @@
+{
+  "requested": "0.11.0",
+  "changes": [
+    "shellcheck/file",
+    "shellcheck/shellcheck-v0.11.0.darwin.aarch64.tar.xz",
+    "shellcheck/file",
+    "shellcheck/shellcheck-v0.11.0.linux.x86_64.tar.xz",
+    "shellcheck/file",
+    "shellcheck/shellcheck-v0.11.0.linux.aarch64.tar.xz"
+  ],
+  "transport": "Actual upstream GitHub release metadata through gh api; no synthetic hashes; production root pin unchanged",
+  "observed_commands": [
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/update/bin/shellcheck",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ShellCheck - shell script analysis tool\nversion: 0.11.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-retirement-baseline/update/bin/shellcheck",
+        "/tmp/score-retirement-baseline/fixtures/bad.sh"
+      ],
+      "exit": 1,
+      "stdout": "\nIn /tmp/score-retirement-baseline/fixtures/bad.sh line 2:\necho $value\n     ^----^ SC2154 (warning): value is referenced but not assigned.\n     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean:\necho \"$value\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2154 -- value is referenced but not assig...\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+      "stderr": ""
+    }
+  ],
+  "provisioning_command": [
+    "python3",
+    "tools/internal/devcontainer/install.py",
+    "install",
+    "shellcheck",
+    "--lockfile",
+    "/tmp/score-retirement-baseline/update/shellcheck",
+    "--destination",
+    "/tmp/score-retirement-baseline/update/bin"
+  ]
+}

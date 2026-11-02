@@ -1,0 +1,674 @@
+{
+  "captured_utc": "2026-11-02T01:35:48+00:00",
+  "scope": "M6 comparison document, current source/runtime audits, worker and coordinator summaries, maintained-source inventory, and actual root integration result JSONs; no full logs, runtime payloads, or build contexts",
+  "records": [
+    {
+      "artifact": "../../../docs/tooling-integration-milestone.md",
+      "sources": [
+        {
+          "path": "/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/integration-evidence/../../../docs/tooling-integration-milestone.md",
+          "bytes": 12240,
+          "sha256": "445d8535d2b9588dd5a5f8473c0745c0e2d197d8409d00c270a28bba96a9fccf"
+        }
+      ],
+      "archived_bytes": 12240,
+      "archived_sha256": "445d8535d2b9588dd5a5f8473c0745c0e2d197d8409d00c270a28bba96a9fccf",
+      "archive_transform": "comparison document with SPDX header; recorded in place"
+    },
+    {
+      "artifact": "README.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-docs/evidence-README.source.md",
+          "bytes": 5062,
+          "sha256": "da1dc231586efaada26fd1da6b6f2d91351f9d504f7066f7e0b55a4e9905eba7"
+        }
+      ],
+      "archived_bytes": 5218,
+      "archived_sha256": "d2ff70424224ca6913ce4e056e15d24b00af6cffd85390fb101f0e206aff41cb",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured; clarify retained APT/npm provider execution after final review"
+    },
+    {
+      "artifact": "aqua-bootstrap-review.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.review.last.md",
+          "bytes": 1032,
+          "sha256": "2c7854672262075b73c8460d80a93b02cf0e8e3c16b0b0c27a2c01bc446185a1"
+        }
+      ],
+      "archived_bytes": 1147,
+      "archived_sha256": "ee95acb75f7acb1daa4510b9451a9adc2342a8a46f0522c227a688a6c8d1d7db",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-exec-mode-fix-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.exec-fix.last.md",
+          "bytes": 732,
+          "sha256": "b847723c5004339bceb6a15252dd112374de9b3799069f4f3c064e0252665e99"
+        }
+      ],
+      "archived_bytes": 847,
+      "archived_sha256": "d1e2834f85ae867a776e6bbc5fa46489c2dab306ec6f487d0f77bc104867bd4e",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-exposure-fix-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.exposure-fix.last.md",
+          "bytes": 1832,
+          "sha256": "a57956f006c78dcec8acf1344569705e75a0c466808e82ba54325655a61da41b"
+        }
+      ],
+      "archived_bytes": 1947,
+      "archived_sha256": "f4ecec6917c4c364ce37d5b05746dff13031f40304f8db74be5e111cd3c63cc3",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-lifecycle-fix-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.lifecycle-fix.last.md",
+          "bytes": 948,
+          "sha256": "f2178f86718bc5dd89b21667595744709f3dece605aa457e4ed0791dae11b54f"
+        }
+      ],
+      "archived_bytes": 1063,
+      "archived_sha256": "079525591f4857f2f6129b75c72e2a746ba60822f68272a5196b465dc51548e1",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-mode-cleanup-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.mode-cleanup.last.md",
+          "bytes": 525,
+          "sha256": "b8409d3c05d38b47178b67bb799396709f4490261045edb9aa4ee1935d70bb4b"
+        }
+      ],
+      "archived_bytes": 640,
+      "archived_sha256": "3c95dd39b2b2f8a6db37141b48c1ce3896089aa800793c6558f67c5661fb9e07",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-native-same-prefix-retirement.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.real-retirement.last.md",
+          "bytes": 1081,
+          "sha256": "c79f7c7cf974ea9d6fdb26b7c58528656afa1947a0346ae9df5d0a73c524540f"
+        }
+      ],
+      "archived_bytes": 1196,
+      "archived_sha256": "d05dce5eae316376b20931a57315f4fb0ceb5b7830535ef519189f0b5428b962",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua-node-lifecycle.final-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/aqua-lifecycle-20261102T010117Z-c25e6b4c/result.json",
+          "bytes": 425,
+          "sha256": "b02f027b3b9913780ba84cd848654816854d4882fa70fa22cf7c6b2c4910d665"
+        }
+      ],
+      "archived_bytes": 425,
+      "archived_sha256": "b02f027b3b9913780ba84cd848654816854d4882fa70fa22cf7c6b2c4910d665",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua-node-lifecycle.final-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua-node-lifecycle.initial-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/aqua-lifecycle-20261102T002904Z-c919007a/result.json",
+          "bytes": 440,
+          "sha256": "b83381e5e53db01588e44e7a67ff1fb4fcb243a50448038f54dd5d3ce82414b4"
+        }
+      ],
+      "archived_bytes": 440,
+      "archived_sha256": "b83381e5e53db01588e44e7a67ff1fb4fcb243a50448038f54dd5d3ce82414b4",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua-node-lifecycle.initial-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua-published-amd64.executable-mode-failure.result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/aqua-published-20261102T010154Z-dd6b10a9/result.json",
+          "bytes": 485,
+          "sha256": "3db0af43d32f8c8d1a83dfc55762660d854b581146543b4fc6db565462599d48"
+        }
+      ],
+      "archived_bytes": 485,
+      "archived_sha256": "3db0af43d32f8c8d1a83dfc55762660d854b581146543b4fc6db565462599d48",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua-published-amd64.executable-mode-failure.result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua-published-amd64.final-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/aqua-published-20261102T012420Z-ee53ca4a/result.json",
+          "bytes": 485,
+          "sha256": "caffe9022b942fa9cdf890847f690c1b439d29b995c23150eb6acfc969d14538"
+        }
+      ],
+      "archived_bytes": 485,
+      "archived_sha256": "caffe9022b942fa9cdf890847f690c1b439d29b995c23150eb6acfc969d14538",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua-published-amd64.final-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua-published-amd64.gh-exposure-failure.result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/aqua-published-20261102T010832Z-d02d2d5e/result.json",
+          "bytes": 485,
+          "sha256": "034c5f05d3fae1202177e53a3ea40b27412297b0f0a33548f968cd7e9997fcf6"
+        }
+      ],
+      "archived_bytes": 485,
+      "archived_sha256": "034c5f05d3fae1202177e53a3ea40b27412297b0f0a33548f968cd7e9997fcf6",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua-published-amd64.gh-exposure-failure.result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua-worker-report.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-aqua/final.md",
+          "bytes": 14386,
+          "sha256": "a280596f75531f20fd5a95d52767b646aeea771b18720aa1b7b08f2fdd4fd753"
+        }
+      ],
+      "archived_bytes": 14500,
+      "archived_sha256": "09f80548c92150e93766a3b5c775c5b352eaddae1babe54bbe026c5b0f24ab90",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "aqua.runtime.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.runtime.json",
+          "bytes": 2063,
+          "sha256": "3b445b60901fdff3748d7dbf45b72415309b276c7892dab711e9c65c2132d0df"
+        }
+      ],
+      "archived_bytes": 2063,
+      "archived_sha256": "3b445b60901fdff3748d7dbf45b72415309b276c7892dab711e9c65c2132d0df",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua.runtime.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "aqua.source-audit.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/aqua.audit.json",
+          "bytes": 6707,
+          "sha256": "cae47141076eb3dc68f75694393143f87bf04ccb511d09de82f50097bb841883"
+        }
+      ],
+      "archived_bytes": 6707,
+      "archived_sha256": "cae47141076eb3dc68f75694393143f87bf04ccb511d09de82f50097bb841883",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "aqua.source-audit.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "integration-gates-aqua-exposure-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/gates.aqua-exposure.last.md",
+          "bytes": 754,
+          "sha256": "7814aa07d1170b5ee96b3063911494d9de16e28a76506d9b190686fe99fa7c54"
+        }
+      ],
+      "archived_bytes": 869,
+      "archived_sha256": "abc11c42d1d75dfbe82073d2d11cfaaefab7b458f01b5d6ffa01f7ebae9a9313",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "integration-gates-final.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-docs/integration-gates-final.source.md",
+          "bytes": 3913,
+          "sha256": "668c987cd8579593c73dfe60a51838abe985b629c1d0d704c7d82102a8414370"
+        }
+      ],
+      "archived_bytes": 4027,
+      "archived_sha256": "910d8831811188ff41116fdad021440e54ffaf002e0c83370d8063f358a25b2b",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "maintained-source-before-exposure-fix.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/maintained-source-before-exposure-fix.json",
+          "bytes": 37869,
+          "sha256": "90db57c2fe2794c2c38c6a3294ea48d00e167edd1c5bff04d3be57ab0a4b5b3a"
+        }
+      ],
+      "archived_bytes": 37869,
+      "archived_sha256": "90db57c2fe2794c2c38c6a3294ea48d00e167edd1c5bff04d3be57ab0a4b5b3a",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "maintained-source-before-exposure-fix.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "maintained-source-sha256.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/maintained-source-sha256.json",
+          "bytes": 37755,
+          "sha256": "36ae535620b8418ac107b95952502828494a50b4fff589f01c300cb0c4aab5ee"
+        }
+      ],
+      "archived_bytes": 37755,
+      "archived_sha256": "36ae535620b8418ac107b95952502828494a50b4fff589f01c300cb0c4aab5ee",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "maintained-source-sha256.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-lifecycle-fix-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/mise.lifecycle-fix.last.md",
+          "bytes": 2106,
+          "sha256": "ee7135d26dcb36cb8c82bd682947d675759036c88b5ca9c94302e72b65381c63"
+        }
+      ],
+      "archived_bytes": 2221,
+      "archived_sha256": "e34f52f4b7977aa4218073856028e4af7e5853051e5aa82a4ff71227db22682f",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "mise-mode-cleanup-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/mise.mode-cleanup.last.md",
+          "bytes": 709,
+          "sha256": "d7de619f0aa17150aa49e1084b55748dd3a682facc532318645f12ee188a8605"
+        }
+      ],
+      "archived_bytes": 824,
+      "archived_sha256": "ebfc5191cf8356ef5dd6f5653de9c46228772f0964ed7c47c8f7dfde8857ecf8",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "mise-node-lifecycle.final-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/mise-lifecycle-20261102T005342Z-e45f699b/result.json",
+          "bytes": 425,
+          "sha256": "e8c49f8eff54ca0fc1e4c39d5fc3f81bc3739b264ad74b7209ab70cf7f062d37"
+        }
+      ],
+      "archived_bytes": 425,
+      "archived_sha256": "e8c49f8eff54ca0fc1e4c39d5fc3f81bc3739b264ad74b7209ab70cf7f062d37",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise-node-lifecycle.final-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-node-lifecycle.initial-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/mise-lifecycle-20261102T002835Z-dc12f30c/result.json",
+          "bytes": 440,
+          "sha256": "84442dc9ca1f365af7fa7c29ca38c2a6cbd361a04bf3f098c3744810820dea61"
+        }
+      ],
+      "archived_bytes": 440,
+      "archived_sha256": "84442dc9ca1f365af7fa7c29ca38c2a6cbd361a04bf3f098c3744810820dea61",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise-node-lifecycle.initial-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-node-lifecycle.interrupted-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/mise-lifecycle-20261102T004310Z-c24791df/result.json",
+          "bytes": 536,
+          "sha256": "94d7cb81432f5029f64ee4b33bdadc5100b6a96714bf898b7c25d2dc4e879c7a"
+        }
+      ],
+      "archived_bytes": 536,
+      "archived_sha256": "94d7cb81432f5029f64ee4b33bdadc5100b6a96714bf898b7c25d2dc4e879c7a",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise-node-lifecycle.interrupted-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-published-amd64.final-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/mise-published-20261102T005520Z-30bf9722/result.json",
+          "bytes": 485,
+          "sha256": "23398f93d112bf21578ef0cf3b0576b47ddbfd12a45b8627b3ecc035b5d4bff7"
+        }
+      ],
+      "archived_bytes": 485,
+      "archived_sha256": "23398f93d112bf21578ef0cf3b0576b47ddbfd12a45b8627b3ecc035b5d4bff7",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise-published-amd64.final-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-published-amd64.harness-tag-failure.result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/mise-published-20261102T005423Z-57287e9b/result.json",
+          "bytes": 485,
+          "sha256": "936f30f1729b2147e6e3e31ff3a114211cd2c1501aad8491be58bf12adbf00cf"
+        }
+      ],
+      "archived_bytes": 485,
+      "archived_sha256": "936f30f1729b2147e6e3e31ff3a114211cd2c1501aad8491be58bf12adbf00cf",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise-published-amd64.harness-tag-failure.result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise-worker-report.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-mise/final.md",
+          "bytes": 7281,
+          "sha256": "3b4be01ab760c27f08bf2923f699dcdb09fbad91ab198bff8fc398628cde4136"
+        }
+      ],
+      "archived_bytes": 7391,
+      "archived_sha256": "ac9055525ebdeb6428ae0df22a55c9f821515ecda1330a4331ab116d4d6e7416",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "mise.runtime.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/mise.runtime.json",
+          "bytes": 2264,
+          "sha256": "1c291025d5b51f40ec190a9e926addd5f3bed13e791a1933421ea51ccaae66e0"
+        }
+      ],
+      "archived_bytes": 2264,
+      "archived_sha256": "1c291025d5b51f40ec190a9e926addd5f3bed13e791a1933421ea51ccaae66e0",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise.runtime.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "mise.source-audit.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/mise.audit.json",
+          "bytes": 6574,
+          "sha256": "2a094ec1e80c264b761374a130ce1c6113e474790f7b52a4e24d9ba220265bb3"
+        }
+      ],
+      "archived_bytes": 6574,
+      "archived_sha256": "2a094ec1e80c264b761374a130ce1c6113e474790f7b52a4e24d9ba220265bb3",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "mise.source-audit.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "nix-node-lifecycle.result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/nix-lifecycle-20261102T002708Z-91ab1c48/result.json",
+          "bytes": 421,
+          "sha256": "8bb40f9c9834942fda62f79ba54b606a8e550c5246e355993e4b1a1b9cf03587"
+        }
+      ],
+      "archived_bytes": 421,
+      "archived_sha256": "8bb40f9c9834942fda62f79ba54b606a8e550c5246e355993e4b1a1b9cf03587",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "nix-node-lifecycle.result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "nix-published-amd64.final-result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/nix-published-20261102T004735Z-5b347540/result.json",
+          "bytes": 510,
+          "sha256": "dd83eea0b38e4738ca3c62e37f2d80c89fa064ca9119bd6c53f074229a0755d5"
+        }
+      ],
+      "archived_bytes": 510,
+      "archived_sha256": "dd83eea0b38e4738ca3c62e37f2d80c89fa064ca9119bd6c53f074229a0755d5",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "nix-published-amd64.final-result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "nix-published-amd64.harness-shell-failure.result.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-gates/nix-published-20261102T003637Z-424570d4/result.json",
+          "bytes": 510,
+          "sha256": "26435df9c7626e5012770599a04f1d952741c30d01905353f0a744cf994312ba"
+        }
+      ],
+      "archived_bytes": 510,
+      "archived_sha256": "26435df9c7626e5012770599a04f1d952741c30d01905353f0a744cf994312ba",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "nix-published-amd64.harness-shell-failure.result.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "nix-release-coordinator.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/nix.release.last.md",
+          "bytes": 1056,
+          "sha256": "cbbe5e7a0e946c0c6cf694b056946ef08afd47d94042ed36df272372596f124a"
+        }
+      ],
+      "archived_bytes": 1171,
+      "archived_sha256": "866642fffadbb828fbf5f18bf453fd2e6c2c4cb77ca4aec2ec05de2c1f00d7f1",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "nix-ruff-consumer.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/nix.ruff-consumer.last.md",
+          "bytes": 748,
+          "sha256": "3ff6a216b9294843a5d023c0dc109362cf86f9e76e6aab8cec62b4a668f551ac"
+        }
+      ],
+      "archived_bytes": 863,
+      "archived_sha256": "f16656b54c18427d8a4b335fc8fc7e6a20792f5018e19cfaa001112edc68ce80",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "nix-worker-report.md",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-nix/final.md",
+          "bytes": 4093,
+          "sha256": "a7613d977dcee028237e1b774d3f7914d87076ea887a8277569f72ae03748cc8"
+        }
+      ],
+      "archived_bytes": 4207,
+      "archived_sha256": "4554cf51ea0b84cc631803fa1dd3b5f1a49b8fa3762199edc0921755005e42dd",
+      "archive_transform": "SPDX header prepended when absent; trailing whitespace normalized; final newline ensured"
+    },
+    {
+      "artifact": "nix.runtime.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/nix.runtime.json",
+          "bytes": 2158,
+          "sha256": "4d7ad3c5d81329932c0b758f1e878c12b06b3bd5b4bd5de10f633a45ec643203"
+        }
+      ],
+      "archived_bytes": 2158,
+      "archived_sha256": "4d7ad3c5d81329932c0b758f1e878c12b06b3bd5b4bd5de10f633a45ec643203",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "nix.runtime.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "nix.source-audit.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/nix.audit.json",
+          "bytes": 7080,
+          "sha256": "e22d8be3573e195d002add49ac8c69d1e11d314575f1deb2aa18fbab18c986a5"
+        }
+      ],
+      "archived_bytes": 7080,
+      "archived_sha256": "e22d8be3573e195d002add49ac8c69d1e11d314575f1deb2aa18fbab18c986a5",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "nix.source-audit.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    },
+    {
+      "artifact": "provenance.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for provenance JSON"
+    },
+    {
+      "artifact": "runtime-context.json",
+      "sources": [
+        {
+          "path": "/tmp/score-m6-integration-20261102/runtime-context.json",
+          "bytes": 1001,
+          "sha256": "3637e2633bbcf0656f6448420799cdc5229d7efbb89a2a48ef34861bbe199751"
+        }
+      ],
+      "archived_bytes": 1001,
+      "archived_sha256": "3637e2633bbcf0656f6448420799cdc5229d7efbb89a2a48ef34861bbe199751",
+      "archive_transform": "byte-for-byte copy"
+    },
+    {
+      "artifact": "runtime-context.json.license",
+      "sources": [],
+      "archived_bytes": 104,
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "archive_transform": "standard REUSE SPDX sidecar generated for JSON artifact"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "candidate": "own",
+  "gate": "fresh-published-amd64-build-and-feature-tests",
+  "status": "passed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+  "output": "type=cacheonly; no image loaded or launched",
+  "source_strategy": "task-local source snapshot",
+  "workspace_retained": false,
+  "log": "/tmp/score-own-copilot/integration/own-published-20261102T122320Z-55a4764a/published-build.log",
+  "builder": "score-m6-gates-own-525aaf8e",
+  "builder_removed": true
+}

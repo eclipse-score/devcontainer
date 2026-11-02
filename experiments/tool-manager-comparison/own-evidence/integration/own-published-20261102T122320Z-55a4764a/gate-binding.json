@@ -1,0 +1,9 @@
+{
+  "platform": "linux/amd64",
+  "adapter_sha256": "9b39f28ee60fd6f4fba30f7cbd8028cc796596e9be5bd070f9f145a4da331349",
+  "harness_sha256": "8c77108154a7db5b4d8d8318bcfa5806381e7792126b9d908d57e4e3a3561f54",
+  "captured": "during build, before any adapter changes",
+  "artifact_overrides": false,
+  "feature_suite": "unchanged source suite appended to rendered Dockerfile",
+  "output": "type=cacheonly; no image loaded, launched or published"
+}

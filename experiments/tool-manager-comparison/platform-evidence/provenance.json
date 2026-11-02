@@ -1,0 +1,284 @@
+{
+  "artifacts": [
+    {
+      "archived_sha256": "1cece51da03043c8b4a7cf1031d82a33b734780a4f677918f489e24ed8e65e9d",
+      "bytes": 3114,
+      "path": "README.md",
+      "source": "authored comparison evidence",
+      "transformation": "authored with SPDX header"
+    },
+    {
+      "archived_sha256": "83c7902058954bace595b6ec3ba5a6ffa5ed38bf2251faedd5bfc8d563fadf2e",
+      "bytes": 8791,
+      "path": "aqua/README-m7.md",
+      "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/README-m7.md",
+      "source_sha256": "83c7902058954bace595b6ec3ba5a6ffa5ed38bf2251faedd5bfc8d563fadf2e",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "7ab0697b372937f73668cdd54d5acf95da6cd4ce1de08a79a4a5f36b52b369cc",
+      "bytes": 1546,
+      "path": "aqua/bazelisk-guard.json",
+      "source": "/tmp/score-m7-platform-20261102/aqua.bazelisk-guard.json",
+      "source_sha256": "7ab0697b372937f73668cdd54d5acf95da6cd4ce1de08a79a4a5f36b52b369cc",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "aqua/bazelisk-guard.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "69850e0fb8816b603152fadd8699cf8f9d24155f015feeb4eca641ef0cc85f56",
+      "bytes": 3707,
+      "path": "aqua/final.md",
+      "source": "/tmp/score-m7-aqua/final.md",
+      "source_sha256": "d0e3cde8fa3f6f1850922fe44c1801db24f4cd6b84ecfd5709545b41e9ce856f",
+      "transformation": "SPDX header prepended; content otherwise copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "661c1a4d881ad1d6f4c29bf8c975e225b2f2f03fe95e144aba39346b1c6ea1b3",
+      "bytes": 17926,
+      "path": "aqua/result.json",
+      "source": "/tmp/score-m7-aqua/result.json",
+      "source_sha256": "661c1a4d881ad1d6f4c29bf8c975e225b2f2f03fe95e144aba39346b1c6ea1b3",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "aqua/result.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "9e7934c28c9f215e8541b6ae0b1c83f24560ec65cd0d1fa15d1f049c64cb51c7",
+      "bytes": 3121,
+      "path": "aqua/root-runtime.json",
+      "source": "/tmp/score-m7-platform-20261102/aqua.root-runtime.json",
+      "source_sha256": "9e7934c28c9f215e8541b6ae0b1c83f24560ec65cd0d1fa15d1f049c64cb51c7",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "aqua/root-runtime.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "b02bb626d99946a253280d7752b01af36c483cdf7e76bb61952583632fc6f6ab",
+      "bytes": 11284,
+      "path": "mise/README-m7.md",
+      "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/README-m7.md",
+      "source_sha256": "b02bb626d99946a253280d7752b01af36c483cdf7e76bb61952583632fc6f6ab",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "20bd9ebece7243755d1cae980142147b8a412b23c5a03d90834b5164aa1a4004",
+      "bytes": 1613,
+      "path": "mise/bazelisk-guard.json",
+      "source": "/tmp/score-m7-platform-20261102/mise.bazelisk-guard.json",
+      "source_sha256": "20bd9ebece7243755d1cae980142147b8a412b23c5a03d90834b5164aa1a4004",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "mise/bazelisk-guard.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "fbffb91ebf5739471cf583010bca5c768aa6b1f19cac4624bfa1740348f24347",
+      "bytes": 5516,
+      "path": "mise/final.md",
+      "source": "/tmp/score-m7-mise/final.md",
+      "source_sha256": "0f7a4836f58a0950fb31b18c9124142da28d00cf8dd9d476b952a33643301999",
+      "transformation": "SPDX header prepended; content otherwise copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "9b8fc975bf3e2d4588479fc7c10e33acd040659f04424004ba671088a8d6ed12",
+      "bytes": 23732,
+      "path": "mise/result.json",
+      "source": "/tmp/score-m7-mise/result.json",
+      "source_sha256": "9b8fc975bf3e2d4588479fc7c10e33acd040659f04424004ba671088a8d6ed12",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "mise/result.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "059fd3fa2b9f3754c6cc048307a8d8bb6f0d815d195bdd888085d733d3b87e21",
+      "bytes": 3455,
+      "path": "mise/root-runtime.json",
+      "source": "/tmp/score-m7-platform-20261102/mise.root-runtime.json",
+      "source_sha256": "059fd3fa2b9f3754c6cc048307a8d8bb6f0d815d195bdd888085d733d3b87e21",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "mise/root-runtime.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "a2f886e180a9ec1950ea945aa874852ee86017b3150744cd0830af55b299d16f",
+      "bytes": 9639,
+      "path": "nix/README-m7.md",
+      "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-nix/experiments/tool-manager-nix/reference/README-m7.md",
+      "source_sha256": "a2f886e180a9ec1950ea945aa874852ee86017b3150744cd0830af55b299d16f",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "fb1669a3a78a9ac7347b56be9d166f3e42fb012f5f5a0aaa13c953c7a130ffa7",
+      "bytes": 1684,
+      "path": "nix/bazelisk-guard.json",
+      "source": "/tmp/score-m7-platform-20261102/nix.bazelisk-guard.json",
+      "source_sha256": "fb1669a3a78a9ac7347b56be9d166f3e42fb012f5f5a0aaa13c953c7a130ffa7",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "nix/bazelisk-guard.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "e3ab78c208ea0cfe94e6f0f0abad6fd58c2bae0b97b486aa51d21885db96d0e1",
+      "bytes": 5229,
+      "path": "nix/final.md",
+      "source": "/tmp/score-m7-nix/final.md",
+      "source_sha256": "fcf5823afe2e43d518289be190ab74ef81cec19a1e41f64b1a74ada302bc5bc6",
+      "transformation": "SPDX header prepended; content otherwise copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "ba1ec846c104eca489329540c824b912f5d407bf3ef621002597e7b949dd7aa4",
+      "bytes": 12656,
+      "path": "nix/macos-arm-package-metadata.json",
+      "source": "/tmp/score-m7-nix/macos-arm-package-metadata.json",
+      "source_sha256": "ba1ec846c104eca489329540c824b912f5d407bf3ef621002597e7b949dd7aa4",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "nix/macos-arm-package-metadata.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "1cbfbd7a7e8f6a7fc77e0fa659a39df23193f97c36437e959a5238e60ed0ac47",
+      "bytes": 13348,
+      "path": "nix/result.json",
+      "source": "/tmp/score-m7-nix/result.json",
+      "source_sha256": "1cbfbd7a7e8f6a7fc77e0fa659a39df23193f97c36437e959a5238e60ed0ac47",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "nix/result.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "e058f83eb0db2d067336559f452d8833e900fe8b42b9960713691d8b0b3b537a",
+      "bytes": 3400,
+      "path": "nix/root-runtime.json",
+      "source": "/tmp/score-m7-platform-20261102/nix.root-runtime.json",
+      "source_sha256": "e058f83eb0db2d067336559f452d8833e900fe8b42b9960713691d8b0b3b537a",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "nix/root-runtime.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "provenance.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "692c5fbc936dc942d81dbd9f863ab2c2e693e2965fe36fe57e69d8f704fb3ecd",
+      "bytes": 3030,
+      "path": "root-review.json",
+      "source": "/tmp/score-m7-platform-20261102/root-review.json",
+      "source_sha256": "692c5fbc936dc942d81dbd9f863ab2c2e693e2965fe36fe57e69d8f704fb3ecd",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "root-review.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "c08cdbd288fdd2c19302f20aef0eb9daeb75fdff64e45813138cd9760cd3c661",
+      "bytes": 36775,
+      "path": "source-before.json",
+      "source": "/tmp/score-m7-platform-20261102/source-before.json",
+      "source_sha256": "c08cdbd288fdd2c19302f20aef0eb9daeb75fdff64e45813138cd9760cd3c661",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "source-before.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    },
+    {
+      "archived_sha256": "811378c1b5907f88b045ace76cbba9f81c9c6498272528eff991eab4535c99fd",
+      "bytes": 2594,
+      "path": "source-change-summary.md",
+      "source": "authored comparison evidence",
+      "transformation": "authored with SPDX header"
+    },
+    {
+      "archived_sha256": "1527437eded31557ad7ec91c49b8ab62a1e160263dbd1c5582dc951a9bd1ebcf",
+      "bytes": 1011,
+      "path": "substrate.json",
+      "source": "/tmp/score-m7-platform-20261102/substrate.json",
+      "source_sha256": "1527437eded31557ad7ec91c49b8ab62a1e160263dbd1c5582dc951a9bd1ebcf",
+      "transformation": "copied byte-for-byte"
+    },
+    {
+      "archived_sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+      "bytes": 104,
+      "path": "substrate.json.license",
+      "source": "authored SPDX sidecar",
+      "transformation": "SPDX-FileCopyrightText and SPDX-License-Identifier sidecar"
+    }
+  ],
+  "captured_date": "2026-11-02",
+  "license": "Apache-2.0",
+  "milestone": "M7",
+  "reproduction_inputs": [
+    {
+      "bytes": 1351,
+      "source": "/tmp/score-m7-platform-20261102/bazelisk-guard.py",
+      "source_sha256": "10d9d5b5c3d56fa74cc2c5a424ab5091b2224623d2789077ec554e90e4c6b63c"
+    },
+    {
+      "bytes": 5303,
+      "source": "/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/retirement-runtime-check.py",
+      "source_sha256": "8ea9503ef90c2bd2f9509a22fa412390d8e699bd1789b339db74bca8fe18cc92"
+    }
+  ],
+  "reviewed_utc": "2026-11-02T08:30:00.806440+00:00"
+}

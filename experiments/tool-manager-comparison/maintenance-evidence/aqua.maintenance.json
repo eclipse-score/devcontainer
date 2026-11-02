@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "candidate": "aqua",
+  "date": "2026-11-01",
+  "owner": {
+    "native_source": "experiments/tool-manager-aqua/reference/aqua.yaml",
+    "python_source": "experiments/tool-manager-aqua/reference/pyproject.toml",
+    "tools": {
+      "starpls": {
+        "version": "0.1.22",
+        "selection": [
+          "published"
+        ],
+        "registry": "score-local",
+        "root_lock_version": "0.1.22",
+        "root_bazel_label": "//tools:starpls"
+      },
+      "codespell": {
+        "version": "2.4.1",
+        "python_group": "published",
+        "root_composition": "s-core-local.python",
+        "root_bazel_label": "//tools:codespell",
+        "facade_extra": "codespell"
+      }
+    },
+    "repository_selection_unchanged_from_m3": true,
+    "policy_contains_duplicate_tool_version": false
+  },
+  "native_lookup": {
+    "command": [
+      "aqua",
+      "-c",
+      "experiments/tool-manager-aqua/reference/aqua.yaml",
+      "generate",
+      "standard,withered-magic/starpls@v0.1.22"
+    ],
+    "registry_pin": "v4.579.0",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "\u001b[2mNov  1 20:51:33.359\u001b[0m \u001b[91mERR\u001b[0m aqua failed \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0mstandard,withered-magic/starpls@v0.1.22 \u001b[2merror=\u001b[0m\"unknown package\"",
+    "finding": "unknown package"
+  },
+  "maintenance_work": {
+    "authored_policy_edits": [
+      {
+        "path": "experiments/tool-manager-aqua/reference/aqua.yaml",
+        "purpose": "Select starpls 0.1.22 for published only.",
+        "next_similar_tool": "Normal owner version/profile decision; refresh generated checksums after changes."
+      },
+      {
+        "path": "experiments/tool-manager-aqua/reference/starpls-registry.yaml",
+        "purpose": "Describe starpls raw GitHub release assets because the pinned standard registry has no package entry.",
+        "next_similar_tool": "Specific to this missing registry package and its asset naming; a different package/layout needs its own reviewed recipe."
+      },
+      {
+        "path": "experiments/tool-manager-aqua/reference/aqua-policy.yaml",
+        "purpose": "Allow the pinned standard registry and local score-local/starpls package identity without a duplicate starpls version constraint.",
+        "next_similar_tool": "Normal scoped security policy when a local registry is required; current version remains owned only by aqua.yaml."
+      },
+      {
+        "path": "experiments/tool-manager-aqua/reference/pyproject.toml",
+        "purpose": "Add codespell 2.4.1 to the published dependency group, not repository.",
+        "next_similar_tool": "Normal direct Python requirement/profile decision."
+      },
+      {
+        "path": "tools/environments.json",
+        "purpose": "Add codespell to s-core-local Python composition; preserve repository and existing provider membership.",
+        "next_similar_tool": "Normal explicit feature composition edit."
+      },
+      {
+        "path": "tools/score_tools/python_tools.bzl",
+        "purpose": "Add codespell distribution, entrypoint, and description identity fields without an authored version.",
+        "next_similar_tool": "Normal Python command identity metadata; generated version comes from the Python owner."
+      }
+    ],
+    "permanent_adapter_changes": [
+      {
+        "path": "experiments/tool-manager-aqua/reference/prepare.py",
+        "purpose": "Snapshot the local registry and policy alongside aqua.yaml; use the copied policy to prepare immutable outputs.",
+        "classification": "Producer integration for local-registry inputs; additional registry files must be added to the snapshot inputs."
+      },
+      {
+        "path": "experiments/tool-manager-aqua/reference/export_native.py",
+        "purpose": "Map raw starpls asset filenames and platform architecture names to existing root lock entries using aqua-generated hashes.",
+        "classification": "One-time adapter for the current starpls release layout; future layout changes may need an explicit mapping."
+      },
+      {
+        "path": "experiments/tool-manager-aqua/reference/check.py",
+        "purpose": "Compare local registry and policy snapshots as well as native/Python owners before accepting a release.",
+        "classification": "Owner-drift guard for the new owner inputs."
+      },
+      {
+        "path": "tools/tests/test_catalog.py",
+        "purpose": "Regress published-only membership and verified skip behavior while keeping APT and unmigrated providers selected.",
+        "classification": "Focused coverage for the new selection and handoff boundary."
+      }
+    ],
+    "normal_generated_operations": [
+      "aqua checksum refresh",
+      "native lock export",
+      "Python catalog version generation",
+      "facade extra metadata and wheel build",
+      "root tool README synchronization",
+      "fresh runtime and production handoff preparation"
+    ],
+    "generated_outputs": [
+      "experiments/tool-manager-aqua/reference/aqua-checksums.json",
+      "tools/lockfiles/starpls.lock.json",
+      "tools/score_tools/python_tools.bzl",
+      "tools/environments.json",
+      "experiments/tool-manager-aqua/reference/generated-package.toml",
+      "tools/README.md",
+      "release selection/runtimes/wheel",
+      "prepared manifest"
+    ]
+  },
+  "generated_release": {
+    "version": "0.3.2",
+    "path": "/tmp/score-m4-aqua/release-0.3.2-owner-final",
+    "target_platform": "linux/amd64",
+    "staged_handoff": "/tmp/score-m4-aqua/prepared-published-owner-final",
+    "published_versions": {
+      "starpls": "0.1.22",
+      "codespell": "2.4.1"
+    },
+    "repository_selection_matches_m3": true,
+    "manifest_command_count": 13,
+    "starpls_and_codespell_owner_entries": {
+      "starpls": {
+        "owner": "native",
+        "version": "0.1.22",
+        "entrypoint": "starpls",
+        "path": "bin/starpls",
+        "sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab"
+      },
+      "codespell": {
+        "owner": "python",
+        "version": "2.4.1",
+        "entrypoint": "codespell",
+        "path": "bin/codespell",
+        "sha256": "9cf94bed31bf46d250c06e9e1e6264cecdcfaa0d34b6138d33bb30db440b06e2"
+      }
+    },
+    "feature_memberships": {
+      "s-core-local": {
+        "prepared_native": [
+          "shellcheck",
+          "ruff",
+          "actionlint",
+          "yamlfmt",
+          "uv",
+          "uvx"
+        ],
+        "prepared_python": [
+          "pre-commit",
+          "basedpyright",
+          "pytest",
+          "codespell"
+        ]
+      },
+      "bazel-feature": {
+        "prepared_native": [
+          "bazelisk",
+          "buildifier",
+          "starpls"
+        ],
+        "prepared_python": []
+      }
+    }
+  },
+  "native_compatibility": {
+    "starpls_root_lock_version": "0.1.22",
+    "root_lock_assets_match_aqua_checksums": true,
+    "starpls_asset_checksum_count": 3,
+    "codespell_root_catalog_version": "2.4.1",
+    "python_bazel_label_is_generated_from_catalog": true,
+    "root_labels_executed": [
+      "//tools:starpls",
+      "//tools:codespell"
+    ],
+    "checksum_mapping_evidence": "starpls-lock-checksums.json"
+  },
+  "facade": {
+    "wheel": "score_aqua_reference-0.3.2-py3-none-any.whl",
+    "requires_dist_codespell": [
+      "Requires-Dist: codespell==2.4.1; extra == \"published\"",
+      "Requires-Dist: codespell==2.4.1; extra == \"codespell\""
+    ],
+    "consumer_requirement": "score-aqua-reference[codespell] @ file:///tmp/score-m4-aqua/release-0.3.2-owner-final/dist/score_aqua_reference-0.3.2-py3-none-any.whl",
+    "consumer_authored_separate_codespell_pin": false,
+    "uv_project_lock_sync_run": "passed",
+    "uvx_codespell_extra": "passed",
+    "consumer_lock_codespell_version": "2.4.1",
+    "typo_diagnostic": "teh ==> the",
+    "consumer_execution_evidence": "uv-consumer.json"
+  },
+  "execution": {
+    "native_copy": {
+      "result": "passed",
+      "fresh_output": "/tmp/score-m4-aqua/native-published-owner-final/bin",
+      "starpls_version": "0.1.22",
+      "codespell_version_from_prepared_release": "2.4.1"
+    },
+    "shared_runtime_checks": [
+      {
+        "route": "native starpls + prepared codespell",
+        "result": "passed",
+        "uid": 0,
+        "network": "none",
+        "lsp_initialize_shutdown": "passed",
+        "codespell_clean_and_typo": "passed",
+        "background_bazel_info": "failed BCR DNS lookup while offline"
+      },
+      {
+        "route": "staged prepared starpls + codespell",
+        "result": "passed",
+        "uid": 0,
+        "network": "none",
+        "lsp_initialize_shutdown": "passed",
+        "codespell_clean_and_typo": "passed",
+        "background_bazel_info": "failed BCR DNS lookup while offline"
+      }
+    ],
+    "root_bazel": {
+      "//tools:starpls": {
+        "command": [
+          "bazelisk",
+          "--output_base=/tmp/score-m4-aqua/root-bazel",
+          "run",
+          "--lockfile_mode=update",
+          "//tools:starpls",
+          "--",
+          "version"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "output_lines": [
+          "starpls version: v0.1.22",
+          "INFO: Build completed successfully, 1 total action"
+        ]
+      },
+      "//tools:codespell": {
+        "command": [
+          "bazelisk",
+          "--output_base=/tmp/score-m4-aqua/root-bazel",
+          "run",
+          "--lockfile_mode=update",
+          "//tools:codespell",
+          "--",
+          "/tmp/score-m4-aqua/bazel-typo.txt"
+        ],
+        "exit_code": 65,
+        "expected_exit_code": 65,
+        "output_lines": [
+          "/tmp/score-m4-aqua/bazel-typo.txt:1: teh ==> the",
+          "INFO: Build completed successfully, 1 total action"
+        ]
+      }
+    },
+    "prepared_feature_installer": {
+      "s-core-local": {
+        "prepared_skip_tools": [
+          "shellcheck",
+          "ruff",
+          "actionlint",
+          "yamlfmt",
+          "uv",
+          "uvx",
+          "pre-commit",
+          "basedpyright",
+          "pytest",
+          "codespell"
+        ],
+        "remaining_native_installer_tools": [
+          "apm",
+          "opencode"
+        ],
+        "remaining_python_installer_tools": [],
+        "selected_apt": [
+          "graphviz",
+          "protobuf_compiler",
+          "qemu_system",
+          "sshpass",
+          "gdb",
+          "git",
+          "git_lfs",
+          "gh",
+          "openjdk_21",
+          "valgrind",
+          "ripgrep",
+          "lcov",
+          "pkg_config",
+          "libcairo2_dev",
+          "python",
+          "python3-pip",
+          "python3-venv",
+          "flake8",
+          "python3-autopep8",
+          "black",
+          "python3-yapf",
+          "mypy",
+          "pydocstyle",
+          "pycodestyle",
+          "bandit",
+          "pipenv",
+          "virtualenv",
+          "pylint",
+          "ca-certificates-java",
+          "man-db",
+          "manpages",
+          "manpages-dev",
+          "manpages-posix",
+          "manpages-posix-dev"
+        ],
+        "apt_install_batches": 2,
+        "apt_commands_mocked": true
+      },
+      "bazel-feature": {
+        "prepared_skip_tools": [
+          "bazelisk",
+          "buildifier",
+          "starpls"
+        ],
+        "remaining_native_installer_tools": [],
+        "remaining_python_installer_tools": [],
+        "selected_apt": [],
+        "apt_install_batches": 0,
+        "apt_commands_mocked": true
+      }
+    },
+    "release_drift": {
+      "old_m3_release": "/tmp/score-m3-aqua/release-0.3.1",
+      "exit_code": 1,
+      "rejected": true,
+      "reason": "AssertionError: Stale release owner snapshot: aqua.yaml",
+      "fresh_release_drift_check": "passed"
+    },
+    "source_checks": {
+      "sync_repository_check": "passed",
+      "tool_readme_drift": "passed",
+      "tool_catalog_tests": 24,
+      "ruff_check_format": "passed",
+      "yamlfmt": "passed",
+      "python_compile": "passed",
+      "buildifier": "passed",
+      "git_diff_check": "passed"
+    }
+  },
+  "network_conditions": {
+    "aqua_preparation": "Network available; reused pinned aqua 2.65.2, native tool cache, and existing Linux amd64 producer image.",
+    "root_bazel": "Default network available; reused task-local Bazelisk/Bazel 8.6.0 cache.",
+    "uv_consumers": "Default network available; used the prepared native uv 0.13.6, local facade wheel, and task-local uv cache. No offline claim.",
+    "runtime_behavior": "Both shared checker invocations used Docker --network none and the existing read-only Bazelisk/Bazel 8.6.0 cache."
+  },
+  "limitations": [
+    "The shared protocol and typo checks passed, but starpls background bazel info could not resolve bcr.bazel.build with networking disabled; project analysis/indexing is not asserted.",
+    "The existing M3 Ubuntu producer image hosted fresh M4 runtime files; no new production DevContainer image or production-user test was run.",
+    "Linux amd64 was executed. Linux arm64 and macOS arm64 checksums were generated but not executed.",
+    "No publication or update automation was attempted."
+  ],
+  "peer_cross_read": {
+    "mise_current_source": "reference/mise.published.toml uses github:withered-magic/starpls 0.1.22 and pypi:codespell 2.4.1 in published-only selection.",
+    "nix_current_source": "reference/nix/flake.nix uses locked pkgs.starpls 0.1.22 and pkgs.codespell 2.4.3; its M4 ledger reports no python3Packages.codespell alias.",
+    "transferable_finding": "Native source resolution and adapter burden differ by manager. Aqua needed a local raw-release mapping because its pinned registry lacks starpls; Nix selects its locked package and codespell version follows each native owner rather than being normalized across managers."
+  },
+  "evidence_files": [
+    "native-standard-lookup.json",
+    "stale-m3-release-rejection.json",
+    "selection.json",
+    "prepared-manifest.json",
+    "expected-versions.json",
+    "proof-native.json",
+    "proof-prepared.json",
+    "root-bazel.json",
+    "feature-installer.json",
+    "consumer-pyproject.toml",
+    "consumer-uv.lock",
+    "wheel-Requires-Dist.txt",
+    "maintenance.json",
+    "uv-consumer.json",
+    "starpls-lock-checksums.json"
+  ]
+}

@@ -1,0 +1,554 @@
+{
+  "candidate": "aqua",
+  "milestone": "M7",
+  "status": "passed_with_documented_limits",
+  "substrate": {
+    "image": "score-tooling-reference:final-arm64",
+    "image_id": "sha256:b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a",
+    "os": "Ubuntu 24.04.5 LTS",
+    "container_arch": "aarch64 / linux-arm64",
+    "host_arch": "x86_64",
+    "emulation": "QEMU user emulation; docker top showed qemu-aarch64 executing the ARM64 Python process",
+    "python": "3.12.3",
+    "use": "OS/runtime substrate only; candidate commands resolved to fresh /opt/score-tools prefix"
+  },
+  "provisioning": {
+    "command_file": "/tmp/score-m7-aqua/commands.sh",
+    "container": "score-m7-aqua-published-arm64-provision-retry",
+    "label": "score-m7-platform.candidate=aqua",
+    "user": "1000:1000 (non-root)",
+    "network": "bridge; needed for Aqua release/registry and PyPI downloads",
+    "maintained_entrypoints": [
+      "tools/internal/devcontainer/bootstrap_aqua.py",
+      "tools/internal/devcontainer/provision_host_tools.py"
+    ],
+    "profile": "published",
+    "aqua_bootstrap_version": "2.65.2",
+    "aqua_bootstrap_linux_arm64_sha256": "7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81",
+    "owner_digest": "bbb68b4da49c1efa3498faca5272412bb90a0b557636e2c6fa48972e726fa38c",
+    "requirements": [
+      "pre-commit==4.7.0",
+      "pytest==9.0.2",
+      "basedpyright==1.35.0",
+      "codespell==2.4.1"
+    ],
+    "native_versions": {
+      "actionlint": "v1.7.7",
+      "bazelisk": "v1.27.0",
+      "buildifier": "v8.2.1",
+      "ruff": "0.11.12",
+      "shellcheck": "v0.10.0",
+      "uv": "0.13.6",
+      "yamlfmt": "v0.17.0",
+      "starpls": "v0.1.22",
+      "apm": "v0.35.0",
+      "opencode": "v2.2.3"
+    },
+    "selected_command_set": [
+      "actionlint",
+      "apm",
+      "basedpyright",
+      "basedpyright-langserver",
+      "bazelisk",
+      "buildifier",
+      "codespell",
+      "opencode",
+      "pre-commit",
+      "py.test",
+      "pytest",
+      "ruff",
+      "shellcheck",
+      "starpls",
+      "uv",
+      "uvx",
+      "yamlfmt"
+    ],
+    "actual_command_set": [
+      "actionlint",
+      "apm",
+      "basedpyright",
+      "basedpyright-langserver",
+      "bazelisk",
+      "buildifier",
+      "codespell",
+      "opencode",
+      "pre-commit",
+      "py.test",
+      "pytest",
+      "ruff",
+      "shellcheck",
+      "starpls",
+      "uv",
+      "uvx",
+      "yamlfmt"
+    ],
+    "unexpected_gh_exposed": false,
+    "provision_log": "/tmp/score-m7-aqua/logs/arm64-provision-retry.log"
+  },
+  "runtime": {
+    "command_file": "/tmp/score-m7-aqua/commands.sh",
+    "container": "score-m7-aqua-published-arm64-runtime-final2",
+    "label": "score-m7-platform.candidate=aqua",
+    "user_uid_gid": "1000:1000",
+    "network": "none",
+    "uv_offline": true,
+    "python_downloads": "never",
+    "prefix_mount": "read-only at /opt/score-tools",
+    "cache_mount": "/cache/uv, candidate M7 cache; runtime uvx may write local cache, no network",
+    "result_record": {
+      "uid": 1000,
+      "machine": "aarch64",
+      "python": "3.12.3",
+      "network_policy": "docker --network none; UV_OFFLINE=1; PIP_NO_INDEX=1",
+      "prefix": "/opt/score-tools",
+      "expected_commands": [
+        "actionlint",
+        "apm",
+        "basedpyright",
+        "basedpyright-langserver",
+        "bazelisk",
+        "buildifier",
+        "codespell",
+        "opencode",
+        "pre-commit",
+        "py.test",
+        "pytest",
+        "ruff",
+        "shellcheck",
+        "starpls",
+        "uv",
+        "uvx",
+        "yamlfmt"
+      ],
+      "commands": {
+        "actionlint": {
+          "argv": [
+            "actionlint",
+            "-version"
+          ],
+          "exit_code": 0,
+          "output": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/arm64",
+          "path": "/opt/score-tools/bin/actionlint",
+          "realpath": "/opt/score-tools/bin/actionlint",
+          "expected_version": "1.7.7"
+        },
+        "apm": {
+          "argv": [
+            "apm",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)",
+          "path": "/opt/score-tools/bin/apm",
+          "realpath": "/opt/score-tools/lib/apm/apm",
+          "expected_version": "0.35.0"
+        },
+        "basedpyright": {
+          "argv": [
+            "basedpyright",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "basedpyright 1.35.0\nbased on pyright 1.1.407",
+          "path": "/opt/score-tools/bin/basedpyright",
+          "realpath": "/opt/score-tools/uv/tools/basedpyright/bin/basedpyright",
+          "expected_version": "1.35.0"
+        },
+        "buildifier": {
+          "argv": [
+            "buildifier",
+            "-version"
+          ],
+          "exit_code": 0,
+          "output": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353",
+          "path": "/opt/score-tools/bin/buildifier",
+          "realpath": "/opt/score-tools/bin/buildifier",
+          "expected_version": "8.2.1"
+        },
+        "codespell": {
+          "argv": [
+            "codespell",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "2.4.1",
+          "path": "/opt/score-tools/bin/codespell",
+          "realpath": "/opt/score-tools/uv/tools/codespell/bin/codespell",
+          "expected_version": "2.4.1"
+        },
+        "opencode": {
+          "argv": [
+            "opencode",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "opencode v2.2.3",
+          "path": "/opt/score-tools/bin/opencode",
+          "realpath": "/opt/score-tools/bin/opencode",
+          "expected_version": "2.2.3"
+        },
+        "pre-commit": {
+          "argv": [
+            "pre-commit",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "pre-commit 4.7.0",
+          "path": "/opt/score-tools/bin/pre-commit",
+          "realpath": "/opt/score-tools/uv/tools/pre-commit/bin/pre-commit",
+          "expected_version": "4.7.0"
+        },
+        "py.test": {
+          "argv": [
+            "py.test",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "pytest 9.0.2",
+          "path": "/opt/score-tools/bin/py.test",
+          "realpath": "/opt/score-tools/uv/tools/pytest/bin/py.test",
+          "expected_version": "9.0.2"
+        },
+        "pytest": {
+          "argv": [
+            "pytest",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "pytest 9.0.2",
+          "path": "/opt/score-tools/bin/pytest",
+          "realpath": "/opt/score-tools/uv/tools/pytest/bin/pytest",
+          "expected_version": "9.0.2"
+        },
+        "ruff": {
+          "argv": [
+            "ruff",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "ruff 0.11.12",
+          "path": "/opt/score-tools/bin/ruff",
+          "realpath": "/opt/score-tools/bin/ruff",
+          "expected_version": "0.11.12"
+        },
+        "shellcheck": {
+          "argv": [
+            "shellcheck",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net",
+          "path": "/opt/score-tools/bin/shellcheck",
+          "realpath": "/opt/score-tools/bin/shellcheck",
+          "expected_version": "0.10.0"
+        },
+        "starpls": {
+          "argv": [
+            "starpls",
+            "version"
+          ],
+          "exit_code": 0,
+          "output": "starpls version: v0.1.22",
+          "path": "/opt/score-tools/bin/starpls",
+          "realpath": "/opt/score-tools/bin/starpls",
+          "expected_version": "0.1.22"
+        },
+        "uv": {
+          "argv": [
+            "uv",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "uv 0.13.6 (aarch64-unknown-linux-musl)",
+          "path": "/opt/score-tools/bin/uv",
+          "realpath": "/opt/score-tools/bin/uv",
+          "expected_version": "0.13.6"
+        },
+        "uvx": {
+          "argv": [
+            "uvx",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "uvx 0.13.6 (aarch64-unknown-linux-musl)",
+          "path": "/opt/score-tools/bin/uvx",
+          "realpath": "/opt/score-tools/bin/uvx",
+          "expected_version": "0.13.6"
+        },
+        "yamlfmt": {
+          "argv": [
+            "yamlfmt",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "yamlfmt 0.17.0 (45e5cb5)",
+          "path": "/opt/score-tools/bin/yamlfmt",
+          "realpath": "/opt/score-tools/bin/yamlfmt",
+          "expected_version": "0.17.0"
+        }
+      },
+      "not_executed": {
+        "bazelisk": {
+          "path": "/opt/score-tools/bin/bazelisk",
+          "version_from_owner": "1.27.0",
+          "reason": "Bazelisk dispatches --version/--help to Bazel; M7 forbids a Bazel invocation."
+        }
+      },
+      "functional_checks": {
+        "basedpyright": {
+          "argv": [
+            "/opt/score-tools/bin/basedpyright",
+            "--pythonversion",
+            "3.12",
+            "/tmp/m7-checks/typed.py"
+          ],
+          "exit_code": 0,
+          "output": "0 errors, 0 warnings, 0 notes",
+          "path": "/opt/score-tools/bin/basedpyright"
+        },
+        "pytest": {
+          "argv": [
+            "/opt/score-tools/bin/pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider",
+            "/tmp/m7-checks/test_m7.py"
+          ],
+          "exit_code": 0,
+          "output": ".                                                                        [100%]\n1 passed in 0.05s",
+          "path": "/opt/score-tools/bin/pytest"
+        },
+        "py.test": {
+          "argv": [
+            "/opt/score-tools/bin/py.test",
+            "-q",
+            "-p",
+            "no:cacheprovider",
+            "/tmp/m7-checks/test_m7.py"
+          ],
+          "exit_code": 0,
+          "output": ".                                                                        [100%]\n1 passed in 0.03s",
+          "path": "/opt/score-tools/bin/py.test"
+        },
+        "uvx_offline_pytest": {
+          "argv": [
+            "/opt/score-tools/bin/uvx",
+            "--offline",
+            "--from",
+            "pytest==9.0.2",
+            "pytest",
+            "-q",
+            "-p",
+            "no:cacheprovider",
+            "/tmp/m7-checks/test_m7.py"
+          ],
+          "exit_code": 0,
+          "output": ".                                                                        [100%]\n1 passed in 0.03s",
+          "path": "/opt/score-tools/bin/uvx"
+        },
+        "codespell": {
+          "argv": [
+            "/opt/score-tools/bin/codespell",
+            "/tmp/m7-checks/spelling.txt"
+          ],
+          "exit_code": 0,
+          "output": "",
+          "path": "/opt/score-tools/bin/codespell"
+        },
+        "ruff_negative": {
+          "argv": [
+            "/opt/score-tools/bin/ruff",
+            "check",
+            "--output-format",
+            "concise",
+            "/tmp/m7-checks/ruff_bad.py"
+          ],
+          "exit_code": 1,
+          "output": "ruff_bad.py:1:8: F401 [*] `os` imported but unused\nFound 1 error.\n[*] 1 fixable with the `--fix` option.",
+          "path": "/opt/score-tools/bin/ruff",
+          "expected_exit_code": 1,
+          "expected_diagnostic": "F401"
+        },
+        "run_tool_direct": {
+          "argv": [
+            "/m7-source/tools/run-tool",
+            "ruff",
+            "--version"
+          ],
+          "exit_code": 0,
+          "output": "ruff 0.11.12",
+          "path": "/opt/score-tools/bin/ruff"
+        },
+        "run_tool_strict": {
+          "argv": [
+            "/m7-source/tools/run-tool",
+            "--strict",
+            "actionlint",
+            "-version"
+          ],
+          "exit_code": 0,
+          "output": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/arm64",
+          "path": "/opt/score-tools/bin/actionlint"
+        },
+        "basedpyright_langserver": {
+          "path": "/opt/score-tools/bin/basedpyright-langserver",
+          "realpath": "/opt/score-tools/uv/tools/basedpyright/bin/basedpyright-langserver",
+          "initialize_server_info": {
+            "name": "basedpyright",
+            "version": "1.35.0"
+          },
+          "capabilities_returned": true,
+          "shutdown_exit_code": 0,
+          "stderr": ""
+        }
+      },
+      "errors": [],
+      "actual_commands": [
+        "actionlint",
+        "apm",
+        "basedpyright",
+        "basedpyright-langserver",
+        "bazelisk",
+        "buildifier",
+        "codespell",
+        "opencode",
+        "pre-commit",
+        "py.test",
+        "pytest",
+        "ruff",
+        "shellcheck",
+        "starpls",
+        "uv",
+        "uvx",
+        "yamlfmt"
+      ],
+      "interception_markers": {
+        "aqua_invoked": false,
+        "bazel_invoked": false
+      }
+    },
+    "log": "/tmp/score-m7-aqua/logs/arm64-runtime-final2.log"
+  },
+  "source_hashes": {
+    "tools/internal/devcontainer/bootstrap_aqua.py": {
+      "sha256": "746e7edb610ac38e8d5f7d76b56453ffff4f550917c1fbf701b7b529d592608b",
+      "bytes": 3445
+    },
+    "tools/internal/devcontainer/provision_host_tools.py": {
+      "sha256": "134df2aba3dd29cf2a01aeb5aa33dcfe021cad9e8c7fbc0b8ea1bac9b2435c21",
+      "bytes": 19657
+    },
+    "tools/score_tools/python_tools.bzl": {
+      "sha256": "9dd5836aecf58af443be92cf64eb3c5a945797eac27f2062d08c0b302864170a",
+      "bytes": 1572
+    },
+    "tools/run-tool": {
+      "sha256": "a2bc7647c08f74a002ba1f92dfd4a3954c0038d1ea739ec9f2070e4723b7de1f",
+      "bytes": 3208
+    },
+    "tools/owners/aqua/aqua.yaml": {
+      "sha256": "cd756e09f924a041dbdef91a568c06abc810eb24836570ce6adbddc31c901c50",
+      "bytes": 1895
+    },
+    "tools/owners/aqua/aqua-bootstrap.toml": {
+      "sha256": "63511195141b8009723ff9f39347256e901e5456cdf9455faec1df96a631e141",
+      "bytes": 756
+    },
+    "tools/owners/aqua/aqua-policy.yaml": {
+      "sha256": "c14e9bd0cafdb5059414b9c944187d2d01fae72f7e35e3c43aa5ab42d9ce39b3",
+      "bytes": 454
+    },
+    "tools/owners/aqua/aqua-checksums.json": {
+      "sha256": "3258d3cd42196ca4d1b351aeb3d70aac09484c5d4a560a45d78cd4b07459d879",
+      "bytes": 8887
+    },
+    "tools/owners/aqua/apm-registry.yaml": {
+      "sha256": "a6bcd068a656d767b820f34dce8f5546b846653cb022f33f574cdf60aa386edf",
+      "bytes": 597
+    },
+    "tools/owners/aqua/starpls-registry.yaml": {
+      "sha256": "8e024ef21bf4d95b6ed83f5ff388f9d4ec6188ed5840cae33082e6e388d681ab",
+      "bytes": 508
+    },
+    "tools/owners/aqua/pyproject.toml": {
+      "sha256": "6facf1c06ed53b0493b253a1b8fb4c6b2eaed52781f8a21da05ae67db5633a80",
+      "bytes": 269
+    }
+  },
+  "macos_arm64_config_review": {
+    "executed": false,
+    "aqua_global_supported_envs": [
+      "linux/amd64",
+      "linux/arm64",
+      "darwin/amd64",
+      "darwin/arm64"
+    ],
+    "native_published_artifact_checksums_present": {
+      "actionlint": true,
+      "bazelisk": true,
+      "buildifier": true,
+      "ruff": true,
+      "shellcheck": true,
+      "uv": true,
+      "yamlfmt": true,
+      "starpls": true,
+      "apm": true,
+      "opencode": true
+    },
+    "aqua_bootstrap_darwin_arm64": {
+      "name": "aqua_darwin_arm64.tar.gz",
+      "sha256": "74096ac247be24ec3340e134b9ecdae37465009d7bd1acca934a14a5beeb3314"
+    },
+    "starpls_registry_supported_envs": [
+      "linux/amd64",
+      "linux/arm64",
+      "darwin/arm64"
+    ],
+    "apm_registry_supported_envs": [
+      "linux/amd64",
+      "linux/arm64",
+      "darwin/amd64",
+      "darwin/arm64"
+    ],
+    "python_dependencies": "Pinned in pyproject.toml without an explicit per-OS allowlist; no macOS ARM resolution or execution claimed."
+  },
+  "resource_use": {
+    "prefix_du": "676 MiB",
+    "aqua_uv_cache_du": "750 MiB",
+    "m7_total_du": "1.4 GiB",
+    "free_space_start": "13 GiB",
+    "free_space_after": "7.1 GiB",
+    "full_image_build": false,
+    "image_pull": false,
+    "global_prune": false
+  },
+  "limitations": [
+    "Bazelisk 1.27.0 is selected and present at /opt/score-tools/bin/bazelisk but was not executed: --version and --help dispatch to Bazel, forbidden by the M7 no-Bazel runtime constraint. Both attempts were stopped before a Bazel engine ran; see failed-attempt logs.",
+    "macOS ARM and native ARM hardware were not executed; Linux ARM64 ran under QEMU.",
+    "The real Aqua cp emitted transitive gh in its staging directory; M6 selected-output filtering kept it out of the fresh prefix. No published/Aqua/APM image was built."
+  ],
+  "failed_attempts": [
+    {
+      "log": "/tmp/score-m7-aqua/logs/arm64-provision.log",
+      "result": "bootstrap mount permission error before network/provisioning; corrected by mounting a writable bootstrap directory"
+    },
+    {
+      "log": "/tmp/score-m7-aqua/logs/arm64-runtime-attempt1.log",
+      "result": "stopped own container at Bazelisk --version; exit 137; not a pass"
+    },
+    {
+      "log": "/tmp/score-m7-aqua/logs/arm64-runtime-attempt2.log",
+      "result": "stopped own container at Bazelisk --help; exit 137; not a pass"
+    },
+    {
+      "log": "/tmp/score-m7-aqua/logs/arm64-runtime-final.log",
+      "result": "runtime harness used unsupported pytest cache flag and omitted language-server --stdio; exit 1; corrected final run passed"
+    }
+  ],
+  "final_artifact_paths": {
+    "prefix": "/tmp/score-m7-aqua/prefix-arm64-published",
+    "runtime_json": "/tmp/score-m7-aqua/results/runtime-smoke.json",
+    "raw_logs": "/tmp/score-m7-aqua/logs",
+    "progress": "/tmp/score-m7-aqua/progress.md"
+  }
+}

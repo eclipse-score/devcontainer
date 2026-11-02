@@ -1,0 +1,20 @@
+[
+  {
+    "release": "a",
+    "objects": 183,
+    "closure_sha256": "2a57c3388cef71e5241a1fc3c580c5cb20b454bbce640cb1934c2f5869fa7796",
+    "bundles": {
+      "published": "/nix/store/lmyiv2bydv1zr9x0wf1kky7sz44m9l5s-score-tools-published",
+      "repository": "/nix/store/9h03gxnw4r3dxify1a043220qmf1ds9x-score-tools-repository"
+    }
+  },
+  {
+    "release": "b",
+    "objects": 191,
+    "closure_sha256": "fd6da4d1950780bc8e7de491527be255356f4740766345200375c5cbef6dff3c",
+    "bundles": {
+      "published": "/nix/store/dli3v2lhymp7dc8ksb6zx93w8qvvqvm4-score-tools-published",
+      "repository": "/nix/store/qpdl6d748ifn6rahwcia5lmyjwhdpjm1-score-tools-repository"
+    }
+  }
+]

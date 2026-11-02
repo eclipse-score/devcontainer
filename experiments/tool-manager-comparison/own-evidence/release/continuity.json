@@ -1,0 +1,37 @@
+{
+  "changed_owner_files": [
+    "lockfiles/ruff.lock.json"
+  ],
+  "consumer_diff": "Only facade dependency changes ==0.8.0 to ==0.8.1; no consumer Ruff pin.",
+  "owner_sha256": {
+    "a": {
+      "environments.json": "f0a712a09e477bfa861af87a82e2ee19419bfa08e69a1465f84447e17534a4be",
+      "lockfiles/actionlint.lock.json": "7754312e62769e0dca0ab71f0d2f5ff9809aa5b70299bbeadc15782019cf8c07",
+      "lockfiles/apm.lock.json": "182672df6e76cb6ff7455f62c0cd111d76d3c40b7cc0d97dd55649582fc1ad83",
+      "lockfiles/bazelisk.lock.json": "94bdd51e0d3c1b7f5846519d334a49a6c794e75458cb1ff5568837abb6bf8363",
+      "lockfiles/buildifier.lock.json": "8c5dad381fbccbe4fbdcf34dfcc0cb25e851614e88ffabfd568beff2b767ecbe",
+      "lockfiles/opencode.lock.json": "7e8be2020c9eb7dc4634131491952b77ebda7d2821e7dac52e90b3240a079b1e",
+      "lockfiles/ruff.lock.json": "9c5504c12c181986cf879100e33cdc7e910d56ab8f612b08b657ef3e70fa3a40",
+      "lockfiles/shellcheck.lock.json": "7e6516d6b73479cdd80d74ae84df30fd80dba53ffd8d19424d029820bdf13a3c",
+      "lockfiles/starpls.lock.json": "3758882b292fd2b20b8dff5911ed8e6234e348d2ab033aca74fe38cf36ad6f4d",
+      "lockfiles/uv.lock.json": "9a37a3701a0376de82f20a930d8909d04fa83e8e48a0653a99037886e95f9ff1",
+      "lockfiles/yamlfmt.lock.json": "2e36a0565e3ff45ceee23563a0bb0aa46b1a3fdee60770c6ff149305f0453987",
+      "score_tools/python_tools.bzl": "e5fcaa2777fe59b1ca2495925b533fd92aaf32a152bd59fa7fe4a7bef3433d4a"
+    },
+    "b": {
+      "environments.json": "f0a712a09e477bfa861af87a82e2ee19419bfa08e69a1465f84447e17534a4be",
+      "lockfiles/actionlint.lock.json": "7754312e62769e0dca0ab71f0d2f5ff9809aa5b70299bbeadc15782019cf8c07",
+      "lockfiles/apm.lock.json": "182672df6e76cb6ff7455f62c0cd111d76d3c40b7cc0d97dd55649582fc1ad83",
+      "lockfiles/bazelisk.lock.json": "94bdd51e0d3c1b7f5846519d334a49a6c794e75458cb1ff5568837abb6bf8363",
+      "lockfiles/buildifier.lock.json": "8c5dad381fbccbe4fbdcf34dfcc0cb25e851614e88ffabfd568beff2b767ecbe",
+      "lockfiles/opencode.lock.json": "7e8be2020c9eb7dc4634131491952b77ebda7d2821e7dac52e90b3240a079b1e",
+      "lockfiles/ruff.lock.json": "5a3390d81b640b250c787b302d139059804e7adfb1151a02bc81fe80ea9ebd25",
+      "lockfiles/shellcheck.lock.json": "7e6516d6b73479cdd80d74ae84df30fd80dba53ffd8d19424d029820bdf13a3c",
+      "lockfiles/starpls.lock.json": "3758882b292fd2b20b8dff5911ed8e6234e348d2ab033aca74fe38cf36ad6f4d",
+      "lockfiles/uv.lock.json": "9a37a3701a0376de82f20a930d8909d04fa83e8e48a0653a99037886e95f9ff1",
+      "lockfiles/yamlfmt.lock.json": "2e36a0565e3ff45ceee23563a0bb0aa46b1a3fdee60770c6ff149305f0453987",
+      "score_tools/python_tools.bzl": "e5fcaa2777fe59b1ca2495925b533fd92aaf32a152bd59fa7fe4a7bef3433d4a"
+    }
+  },
+  "production_ruff_matches_a": true
+}

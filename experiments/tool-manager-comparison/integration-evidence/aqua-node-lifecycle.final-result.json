@@ -1,0 +1,10 @@
+{
+  "candidate": "aqua",
+  "gate": "root-generic-node-lifecycle",
+  "status": "passed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+  "workspace_retained": false,
+  "interactive_terminal_check": "passed",
+  "volume_journal": "/tmp/score-m6-gates/aqua-lifecycle-20261102T010117Z-c25e6b4c/volume-journal.json",
+  "log": "/tmp/score-m6-gates/aqua-lifecycle-20261102T010117Z-c25e6b4c/lifecycle.log"
+}

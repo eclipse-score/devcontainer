@@ -1,0 +1,334 @@
+{
+  "tools/BUILD.bazel": {
+    "sha256": "70865a00abb342512097a8c51505a2798d0719676b3ee00cf3c170426665349b",
+    "mode": "0o644"
+  },
+  "tools/README.md": {
+    "sha256": "e21021a348eac93fa4248a3961ff6e737f94d7f3962a18a55f96cf217d440987",
+    "mode": "0o644"
+  },
+  "tools/environments.json": {
+    "sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586",
+    "mode": "0o644"
+  },
+  "tools/internal/README.md": {
+    "sha256": "42b3f75ad392aecb12b3193d8cc05cdce9140f9e4055cc97ec78f77153b07589",
+    "mode": "0o644"
+  },
+  "tools/internal/devcontainer/install.py": {
+    "sha256": "004e8bd5c0e466753d44f8950de7f247b37ff15875a0c366178312421a595393",
+    "mode": "0o755"
+  },
+  "tools/internal/devcontainer/load_feature_versions.sh": {
+    "sha256": "6a430a6e07808c0a0f087ea42be14bf236cd2886712eed454805cb8ec74b1c6e",
+    "mode": "0o755"
+  },
+  "tools/internal/mise/README.md": {
+    "sha256": "c00fb9c914e7a735f7ff2e3381f7b1f06f4cbd18801269d4c20153edbcf5c114",
+    "mode": "0o644"
+  },
+  "tools/internal/mise/bootstrap.sh": {
+    "sha256": "1c4ec69e27eb6ac8230370aefdc17ca7ef2b23f32014ba4e4194e6c087a5c8ae",
+    "mode": "0o755"
+  },
+  "tools/internal/mise/provision.py": {
+    "sha256": "3474704a5f98083eb71c1e1800b066fdb017e6d7fdae13d0661b7e8b1f6a4dea",
+    "mode": "0o755"
+  },
+  "tools/internal/mise/refresh.py": {
+    "sha256": "631b7e5d7153c5544307d5e475b98e54e7512cd24baba122ac3b00a93cb9ab33",
+    "mode": "0o644"
+  },
+  "tools/internal/mise/refresh.sh": {
+    "sha256": "6898e1972c1e2b68e791dc6da1b2169a30c723274024e19fd7da4bfd69366c99",
+    "mode": "0o755"
+  },
+  "tools/internal/run_python_tool.sh": {
+    "sha256": "e4c9a9a4832f056d3c77a7f7ad34d8dfc04044146a910c3490b5d8652c3c24c4",
+    "mode": "0o755"
+  },
+  "tools/internal/sync_readme.py": {
+    "sha256": "f8768079f12250788e58f8db134249150aab503c902476d33f378d4e149a46fe",
+    "mode": "0o755"
+  },
+  "tools/internal/tool-delivery.svg": {
+    "sha256": "355ca6292d9feeaa48e8882b8acc131a1e61a109fb31e0f2c5eba0ff911eb32e",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/actionlint.lock.json": {
+    "sha256": "f6b6f5f64b94f2739e24774fdc9e5c10e864251793d1306af9c0cd078d49c4ee",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/apm.lock.json": {
+    "sha256": "da8fe03f10c98fb8751fd77f043b9cd795eaefb462d112c0777667a3dba88c83",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/bazelisk.lock.json": {
+    "sha256": "22e20c34ef471d8cdd507f01a96ea51e879e1febec52b7a842a16add4dd10a3d",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/buildifier.lock.json": {
+    "sha256": "d9ec4fe2557cc324da33c4d3d1b2333311a065696243ad70e1db34d45c2b9aab",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/opencode.lock.json": {
+    "sha256": "775a4dfeede65c88f782f9aac1212ad3e55ec32a29d10b7a83b006ce12a99366",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/python_tools.bzl": {
+    "sha256": "269bd4a5a08af6ce8007ca171c0cd3a7be3c1620451a4a8b661a574d9d1218d9",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/ruff.lock.json": {
+    "sha256": "66d3185318f0211e9f1a0e4ac29ff5f1305413e6122e1d9929c2c77fb4543a50",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/shellcheck.lock.json": {
+    "sha256": "b10aa53bbb92fbd5ef47f85a40833c43961b6283bb2bc1fb9f10e369139166a4",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/starpls.lock.json": {
+    "sha256": "f3ebb7159568624d2bbb75428f917b4f54b9a8280de78bbe4161c34a3a178b32",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/uv.lock.json": {
+    "sha256": "62db6c35ffac3cb0cd84bc5410351e7c863a975460e7edfac6bafd8ff12734ee",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/yamlfmt.lock.json": {
+    "sha256": "2dcff5a43cdd94ea0510dffed0b4d8079e7fab3c2aad51103cc2f1b188237c41",
+    "mode": "0o644"
+  },
+  "tools/mise/README.md": {
+    "sha256": "2dee48748284a8fc9c89b03b70191abea9c363cebb78d0aa16e271eeaa233665",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.native.lock": {
+    "sha256": "d9e203cf1cb4199ea57f20c4792215ffbca7d6bf2df26fe361d1251e8b8ebc12",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.native.lock.license": {
+    "sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.native.toml": {
+    "sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.published.lock": {
+    "sha256": "a31d79e87c9842253af9963466e6fc176266fa908e6910a2007444af9d534e0a",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.published.lock.license": {
+    "sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.published.toml": {
+    "sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe",
+    "mode": "0o644"
+  },
+  "tools/mise/mise.python.toml": {
+    "sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f",
+    "mode": "0o644"
+  },
+  "tools/multitool.bzl": {
+    "sha256": "64aff47e2cbcb4aec7acda06043480b53054d1103ed1a30ef5766946c1ad6381",
+    "mode": "0o644"
+  },
+  "tools/providers.json": {
+    "sha256": "a2298a9ce83b1b6af16ed80408daa906dcbcfa63dcd052b33a032731b2b40eb4",
+    "mode": "0o644"
+  },
+  "tools/python_tool.bzl": {
+    "sha256": "b162b085f0f45f40fa575e4fa35a78467ca4d02d1f24a991a80540d01c9c7a22",
+    "mode": "0o644"
+  },
+  "tools/run-tool": {
+    "sha256": "c1712af1005c7cdaab4fae6d785d9ba2abdbd0fb3b349ef3c00ee7af2874dc31",
+    "mode": "0o755"
+  },
+  "tools/score_tools/__init__.py": {
+    "sha256": "f38b241f96dc6130b76c545c1238eeae213c6791970ae14b2727e30121d5c909",
+    "mode": "0o644"
+  },
+  "tools/score_tools/catalog.py": {
+    "sha256": "a9779fb46b052278494ab4c8ee972f621eed66ee6b8cec1872643cdd554213d2",
+    "mode": "0o644"
+  },
+  "tools/score_tools/cli.py": {
+    "sha256": "375ba39767188c1ebff3894adbd58b0d6b7b2fd9cfb795566c335925c20281f6",
+    "mode": "0o644"
+  },
+  "tools/score_tools/python_tools.bzl": {
+    "sha256": "b6bc3c418be7b8c8b20f2b2f8ab35358660b129ed14705ef6bffb9073e9c54d9",
+    "mode": "0o644"
+  },
+  "tools/tests/git_delivery_smoke.sh": {
+    "sha256": "a05d82bd0c620db029a2cbc663cc75bb10eae815b6ad657a5b82cd85b67afe7f",
+    "mode": "0o755"
+  },
+  "tools/tests/python_tool_runner_test.sh": {
+    "sha256": "ad85ff76315b1d8a3d704cfcb3f5b28e650269d02470eab8405399e8b8e6ad94",
+    "mode": "0o755"
+  },
+  "tools/tests/run_tool_test.sh": {
+    "sha256": "559f327b237c65ac87722a093ff1d164490da5607e69c1601c21f89756b3e372",
+    "mode": "0o755"
+  },
+  "tools/tests/test_catalog.py": {
+    "sha256": "d050cc9955d6f956e8840b3c4b312f2dce0c01d8e360db412124f8204d0370f9",
+    "mode": "0o644"
+  },
+  "tools/tests/test_mise_provision.py": {
+    "sha256": "6488b2622004b380d55ec41586df2608cbde67feb1055a19bb4711d46ba8f998",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer-lock.json": {
+    "sha256": "a0825c2555adbdb0040f6d2593d3613db62ac96d34457ad25b6310b4f6cb24b7",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer.json": {
+    "sha256": "63d1fccedbd583d6d487e518f09cf57cd16979ee502f2d27e623f70e0bc60209",
+    "mode": "0o644"
+  },
+  ".devcontainer/post_create_command.sh": {
+    "sha256": "0f23e8ee7a971563c903640baed05391fc44bda1c67d8e5bbec334822dfba162",
+    "mode": "0o755"
+  },
+  "scripts/build.sh": {
+    "sha256": "e6cc67c78122b04b00140578c96f9cbdbde01a3d0c46c368acf1dce66e484459",
+    "mode": "0o755"
+  },
+  "scripts/create_builder.sh": {
+    "sha256": "aca5feeb2dc7962916a33acea1ecd6635744b95d87faa64a4111bee1f29f7a48",
+    "mode": "0o755"
+  },
+  "scripts/functions.sh": {
+    "sha256": "fa398931d571bd81b3a53331f5075677cdddb79542fe13fff1e607d9a11bf5c2",
+    "mode": "0o755"
+  },
+  "scripts/install_dive.sh": {
+    "sha256": "0db809a6a384df5f661fcf366ac1baa16f5e6c6753b6841ce856a441570e54ec",
+    "mode": "0o755"
+  },
+  "scripts/merge.sh": {
+    "sha256": "4b6e1412adecd509fabba188bf8a5fc90726d2d3b88017965cd914f97abb8bcf",
+    "mode": "0o755"
+  },
+  "scripts/publish.sh": {
+    "sha256": "65cbb5e1157fdfe641dc6f30a5fe952cfcc45c0a71568e2da5ae3e65e8c9802e",
+    "mode": "0o755"
+  },
+  "scripts/run_reuse_annotate.sh": {
+    "sha256": "756b9b07894d393155a797dc0d236ee72b06e111cdf4dfee38004f1f67c1c7ab",
+    "mode": "0o755"
+  },
+  "scripts/test.sh": {
+    "sha256": "c33206d4eb958a5a4a88284e4e0b64ad842b802df035cdf260cb6b2a149466b6",
+    "mode": "0o755"
+  },
+  "scripts/test_consumer.sh": {
+    "sha256": "f8f7ee88d98bee47077720f803bc6f2a708b486d0ab233d0b86ac21969815831",
+    "mode": "0o755"
+  },
+  ".github/CODEOWNERS": {
+    "sha256": "4385c5d89bbcec1c6ccb6875f0bcc18aca58041a3e3ac0d9b42d81b8a5e8408e",
+    "mode": "0o644"
+  },
+  ".github/actionlint.yaml": {
+    "sha256": "5006607930525eccf10bab101461d8e378b2f58f26685a7d6edb9bf91f537821",
+    "mode": "0o644"
+  },
+  ".github/dependabot.yml": {
+    "sha256": "89e1aa3efb2309f89e792073bc8f3163ebdf3dc1cfbf2f462d53909f4e20b700",
+    "mode": "0o644"
+  },
+  ".github/renovate.json5": {
+    "sha256": "51cb2db9c8eb9a9420e4611c27f56982d4ae4b85b75f23e516f7dfc3d409d887",
+    "mode": "0o644"
+  },
+  ".github/workflows/ci.yaml": {
+    "sha256": "bef84b6a6f0a4cc31ed45e6fd7d28aafd029deadf311cfb392c68f1f7d16f3ba",
+    "mode": "0o644"
+  },
+  ".github/workflows/daily.yml": {
+    "sha256": "cfb6b79ce980ecf3842eacff5327ba632601bba2c0a377fdfd815107119d8993",
+    "mode": "0o644"
+  },
+  ".github/workflows/pr-title-semantic.yaml": {
+    "sha256": "2ac9588db05a14031c35d10ca0dd980e2824c9841eaa8a09ae308772919c0b78",
+    "mode": "0o644"
+  },
+  ".github/workflows/release-and-publish.yaml": {
+    "sha256": "cfcff1da41e838ad622fcd5d8dee2845c1bacffd1503cbf89099e2b0a3d0d500",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/Dockerfile": {
+    "sha256": "755c2a69b645e1192ebd7b438978e156c12717a65c4956c9601f7926dda0d19b",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/devcontainer-feature.json": {
+    "sha256": "3e4f6ee39a84adf0944d4950658debcacbdde104247b17c0b9c81dcbbcd21e0c",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh": {
+    "sha256": "4723d4500410d6686197db93df09fde9538bfe83af9cd2b8a4bfa81ddcf292f6",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install_matching_bazel_version.sh": {
+    "sha256": "30018b8fb128a796b83ce2e6b70d821b32bee6fdc73007091a6194653a254aca",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/on_create_command.sh": {
+    "sha256": "68a5477313e9277e89b372dc96670ef856e08cfcad01fa75fcabecadd8fa4657",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh": {
+    "sha256": "b64265b1aa0c8a1fb6c481f4b1074f6590907e45d990abf9a6040cdcf1aeeffb",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer-lock.json": {
+    "sha256": "ae003f481b73b0cea004dbc859535828d6c6245d8e17a183e0aab16b0b17d8e2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer.json": {
+    "sha256": "bf831920c9ff8fc89bf59752e8af4e5b7160671c958cbf9afc077e75f104cf31",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/devcontainer-feature.json": {
+    "sha256": "4275c889f653d56b27d14d9e803038344befb1822833e29ef99e6cece4ff09c2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/enable_pre_commit_hooks.sh": {
+    "sha256": "ab8decbb1823a06bf459bfa3417bf32d8298ab7c4454ee933178ebfab7da4118",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/fix_config_volume_ownership.sh": {
+    "sha256": "ccb3a93bc87fe88e081db6e09b5169e0d0433442473e7c9644255d425b33a14a",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh": {
+    "sha256": "2fc22ec936413d95dcae195f9b4fea1220cdbeca3bc2c502e30bb2aeef8f42c0",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/on_create_command.sh": {
+    "sha256": "9dccd307fed62a745ade92a2c217fd3a5089eb22546eec6a32749757d051d127",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/setup_command_history.sh": {
+    "sha256": "5fe3dea9b1b629d0c83b29140175ea9b48b2fa6f13d3e2d835a4049ea819a720",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh": {
+    "sha256": "708143a5952f5043c32d71e595efc46da6823d9ca4d022ba0fdaf2e6195930c7",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/unset-proxy.sh": {
+    "sha256": "2c78bd509cc91950b140d4162462dc35df53949092d36ce93fa9d00430c4f805",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/with-proxy-vars.Dockerfile": {
+    "sha256": "9c96c1b06671d72e2f4c642a323f9d6c45f22268abf5452ec023bcb780bcccf7",
+    "mode": "0o644"
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "tools/BUILD.bazel": {
+    "sha256": "6799de681b93413779b93cf9c6a7935ae13f3adb882ff4fc8e9190b322826f70",
+    "mode": "0o644"
+  },
+  "tools/README.md": {
+    "sha256": "3033d0688a0a35eeeb1cdeae76ff1bf847e3cf7b87ec2c25b1416baec9267f5d",
+    "mode": "0o644"
+  },
+  "tools/environments.json": {
+    "sha256": "a06ada2beb3ecce93ee67226cc6f23eb34a128a175831567795eb0e38803f586",
+    "mode": "0o644"
+  },
+  "tools/internal/README.md": {
+    "sha256": "7a2060ee40621f27e54741bd780f42a002d14b4b903180857149005201133a5d",
+    "mode": "0o644"
+  },
+  "tools/internal/devcontainer/install.py": {
+    "sha256": "95908b6ab5e3f8a54d18041fdc39fd83d4b65fc89cbc3abb31d9135141258f5c",
+    "mode": "0o755"
+  },
+  "tools/internal/devcontainer/load_feature_versions.sh": {
+    "sha256": "6a430a6e07808c0a0f087ea42be14bf236cd2886712eed454805cb8ec74b1c6e",
+    "mode": "0o755"
+  },
+  "tools/internal/nix/Dockerfile": {
+    "sha256": "5771e517a605af7d474fc7dabc3472823ed23f12d73fc61925625ac10e50003b",
+    "mode": "0o644"
+  },
+  "tools/internal/nix/prepare.py": {
+    "sha256": "3c28c068c8d8f44762f267fcd97c65250847afe7d5ea0de1343184017465c3cf",
+    "mode": "0o755"
+  },
+  "tools/internal/nix/sync.py": {
+    "sha256": "88936ae6f836b7161add188528c0f7caaafafc4e7d3ecd1462097b9ecb933d13",
+    "mode": "0o755"
+  },
+  "tools/internal/refresh_lockfile_digests.py": {
+    "sha256": "e92781c676fbce614d62b51c9f3ccfbaaa68f467cff57e65abef2ca3249b04a2",
+    "mode": "0o755"
+  },
+  "tools/internal/run_python_tool.sh": {
+    "sha256": "e4c9a9a4832f056d3c77a7f7ad34d8dfc04044146a910c3490b5d8652c3c24c4",
+    "mode": "0o755"
+  },
+  "tools/internal/sync_readme.py": {
+    "sha256": "f8768079f12250788e58f8db134249150aab503c902476d33f378d4e149a46fe",
+    "mode": "0o755"
+  },
+  "tools/internal/tool-delivery.svg": {
+    "sha256": "355ca6292d9feeaa48e8882b8acc131a1e61a109fb31e0f2c5eba0ff911eb32e",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/GENERATED.md": {
+    "sha256": "3ae4e44d6481448f8c2531b1fb6043387a810e028b198c37ad19cb12718503c9",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/actionlint.lock.json": {
+    "sha256": "17eb934ae2befb821c0c239cc5071a83dd726f1fade5bde6cf7f67c88ea062e6",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/apm.lock.json": {
+    "sha256": "182672df6e76cb6ff7455f62c0cd111d76d3c40b7cc0d97dd55649582fc1ad83",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/bazelisk.lock.json": {
+    "sha256": "7378db2a2668af81e27d391e32d5cc3f72ff7652c8c3550f5810cfbb0154c326",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/buildifier.lock.json": {
+    "sha256": "f55d9939743864cea81fd93d1158ea5dd2144413088e88320339348679433126",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/opencode.lock.json": {
+    "sha256": "c208de7667da5b2a007f990efe178359c6c138ce5efe674dc0d35a9bed58c4e3",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/python_tools.bzl": {
+    "sha256": "269bd4a5a08af6ce8007ca171c0cd3a7be3c1620451a4a8b661a574d9d1218d9",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/ruff.lock.json": {
+    "sha256": "3e585e7d84493de21bb1b679a7e5b3cda3b14a475cfeb59da9c0b4480c953eb6",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/shellcheck.lock.json": {
+    "sha256": "720375067db48f202489174d14a3447c31d8b1f1b0cc1e4579cc75a33d824aeb",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/starpls.lock.json": {
+    "sha256": "3758882b292fd2b20b8dff5911ed8e6234e348d2ab033aca74fe38cf36ad6f4d",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/uv.lock.json": {
+    "sha256": "e406fac076a6213e277d94d208af1bc6dc3ce24690db5b62aa23a26505ae083a",
+    "mode": "0o644"
+  },
+  "tools/lockfiles/yamlfmt.lock.json": {
+    "sha256": "9e51c66edf5b736a86388a167ec07c07ce2d5c13dd83809620a0b3713124c574",
+    "mode": "0o644"
+  },
+  "tools/multitool.bzl": {
+    "sha256": "64aff47e2cbcb4aec7acda06043480b53054d1103ed1a30ef5766946c1ad6381",
+    "mode": "0o644"
+  },
+  "tools/nix/flake.lock": {
+    "sha256": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+    "mode": "0o644"
+  },
+  "tools/nix/flake.lock.license": {
+    "sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+    "mode": "0o644"
+  },
+  "tools/nix/flake.nix": {
+    "sha256": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+    "mode": "0o644"
+  },
+  "tools/nix/install-host.sh": {
+    "sha256": "d7d2764b30c86c66e36451ec8c2f2042232168955378cda1fd7c8ab08222af4a",
+    "mode": "0o755"
+  },
+  "tools/nix/opencode-hashes.json": {
+    "sha256": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72",
+    "mode": "0o644"
+  },
+  "tools/nix/opencode-hashes.json.license": {
+    "sha256": "13c1ca0243d529545d35f23f0fe7baa3c947c9afb5fcfdc8fbcb750e73d318e7",
+    "mode": "0o644"
+  },
+  "tools/providers.json": {
+    "sha256": "a2298a9ce83b1b6af16ed80408daa906dcbcfa63dcd052b33a032731b2b40eb4",
+    "mode": "0o644"
+  },
+  "tools/python_tool.bzl": {
+    "sha256": "b162b085f0f45f40fa575e4fa35a78467ca4d02d1f24a991a80540d01c9c7a22",
+    "mode": "0o644"
+  },
+  "tools/run-tool": {
+    "sha256": "eef754867dc07214e822fddbd2964e76e2eb4a66bcd5151f8fac103f750a748d",
+    "mode": "0o755"
+  },
+  "tools/score_tools/__init__.py": {
+    "sha256": "f38b241f96dc6130b76c545c1238eeae213c6791970ae14b2727e30121d5c909",
+    "mode": "0o644"
+  },
+  "tools/score_tools/catalog.py": {
+    "sha256": "b1dc97d0144dfa74f43b26bf3a035481fd49841d77409bc24b373f59ffe62457",
+    "mode": "0o644"
+  },
+  "tools/score_tools/cli.py": {
+    "sha256": "375ba39767188c1ebff3894adbd58b0d6b7b2fd9cfb795566c335925c20281f6",
+    "mode": "0o644"
+  },
+  "tools/score_tools/python_tools.bzl": {
+    "sha256": "0ed5c520a3f95740afc843f4ff66618f9e856068bce6e7c3181e37b66445d02b",
+    "mode": "0o644"
+  },
+  "tools/tests/git_delivery_smoke.sh": {
+    "sha256": "a05d82bd0c620db029a2cbc663cc75bb10eae815b6ad657a5b82cd85b67afe7f",
+    "mode": "0o755"
+  },
+  "tools/tests/python_tool_runner_test.sh": {
+    "sha256": "364c7d882547fe4f98a8e435edf91ad5480059279bcb8cb0e4af8720e85be04b",
+    "mode": "0o755"
+  },
+  "tools/tests/run_tool_test.sh": {
+    "sha256": "2166f6d144f60672e9623bd0c6ad0d929c7fe12371230475fc8e29cf585aa279",
+    "mode": "0o755"
+  },
+  "tools/tests/test_catalog.py": {
+    "sha256": "ded9660d1531c89a8630567a90c7f4c2c14d7bebf59a9ba327ffad3234de7c6e",
+    "mode": "0o644"
+  },
+  "tools/tests/test_refresh.py": {
+    "sha256": "cafb8efe8de70cd7c9e8c5710d529f25394d304abd0d3661e356d5b7123a6188",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer-lock.json": {
+    "sha256": "a0825c2555adbdb0040f6d2593d3613db62ac96d34457ad25b6310b4f6cb24b7",
+    "mode": "0o644"
+  },
+  ".devcontainer/devcontainer.json": {
+    "sha256": "63d1fccedbd583d6d487e518f09cf57cd16979ee502f2d27e623f70e0bc60209",
+    "mode": "0o644"
+  },
+  ".devcontainer/post_create_command.sh": {
+    "sha256": "264e12280a240cd60ed9d74094987c796623ec7571914f240cfc059e96ab3d94",
+    "mode": "0o755"
+  },
+  "scripts/build.sh": {
+    "sha256": "33f5f9fac9644a4db72d169909d717aa4db52d8c21819a91c2bafcb1868e77ea",
+    "mode": "0o755"
+  },
+  "scripts/create_builder.sh": {
+    "sha256": "aca5feeb2dc7962916a33acea1ecd6635744b95d87faa64a4111bee1f29f7a48",
+    "mode": "0o755"
+  },
+  "scripts/functions.sh": {
+    "sha256": "fa398931d571bd81b3a53331f5075677cdddb79542fe13fff1e607d9a11bf5c2",
+    "mode": "0o755"
+  },
+  "scripts/install_dive.sh": {
+    "sha256": "0db809a6a384df5f661fcf366ac1baa16f5e6c6753b6841ce856a441570e54ec",
+    "mode": "0o755"
+  },
+  "scripts/merge.sh": {
+    "sha256": "4b6e1412adecd509fabba188bf8a5fc90726d2d3b88017965cd914f97abb8bcf",
+    "mode": "0o755"
+  },
+  "scripts/publish.sh": {
+    "sha256": "e0600889ea28b9110942efa7c9ec3ed23dfa362959260d1518e01116dd35f01f",
+    "mode": "0o755"
+  },
+  "scripts/run_reuse_annotate.sh": {
+    "sha256": "756b9b07894d393155a797dc0d236ee72b06e111cdf4dfee38004f1f67c1c7ab",
+    "mode": "0o755"
+  },
+  "scripts/test.sh": {
+    "sha256": "d2e88dcc5cfb5b38b4c8e0889f6598c92438b9274beb5e21336d889ee242d0d8",
+    "mode": "0o755"
+  },
+  "scripts/test_consumer.sh": {
+    "sha256": "f8f7ee88d98bee47077720f803bc6f2a708b486d0ab233d0b86ac21969815831",
+    "mode": "0o755"
+  },
+  ".github/CODEOWNERS": {
+    "sha256": "4385c5d89bbcec1c6ccb6875f0bcc18aca58041a3e3ac0d9b42d81b8a5e8408e",
+    "mode": "0o644"
+  },
+  ".github/actionlint.yaml": {
+    "sha256": "5006607930525eccf10bab101461d8e378b2f58f26685a7d6edb9bf91f537821",
+    "mode": "0o644"
+  },
+  ".github/dependabot.yml": {
+    "sha256": "89e1aa3efb2309f89e792073bc8f3163ebdf3dc1cfbf2f462d53909f4e20b700",
+    "mode": "0o644"
+  },
+  ".github/renovate-entrypoint.sh": {
+    "sha256": "10676431f90fffad411af295b0bf01ed0093f5108674c6537a3ebb8efdf2966f",
+    "mode": "0o755"
+  },
+  ".github/renovate.json5": {
+    "sha256": "bad55a812163c58003109515c8abb28afd00eb5845c59c740a2576ef2f544064",
+    "mode": "0o644"
+  },
+  ".github/workflows/ci.yaml": {
+    "sha256": "080b81e9a47b8028908959a98195817a02393db087482eeff9c7cab125a4df41",
+    "mode": "0o644"
+  },
+  ".github/workflows/daily.yml": {
+    "sha256": "366fb1b07e86c65aac59f5133bf60ae02c3b61c58d834008ed11e90baeebc2cd",
+    "mode": "0o644"
+  },
+  ".github/workflows/pr-title-semantic.yaml": {
+    "sha256": "2ac9588db05a14031c35d10ca0dd980e2824c9841eaa8a09ae308772919c0b78",
+    "mode": "0o644"
+  },
+  ".github/workflows/release-and-publish.yaml": {
+    "sha256": "0746a0b0cb8e3acb186b5b4f7d13365715e04251f0ce7e0c9e4f94a4f03bf6b0",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/Dockerfile": {
+    "sha256": "b71f9786eb06c78b2dec717b917c2e0a98d5ba6480d17f54444b66d80872ec78",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/devcontainer-feature.json": {
+    "sha256": "3e4f6ee39a84adf0944d4950658debcacbdde104247b17c0b9c81dcbbcd21e0c",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh": {
+    "sha256": "68f438d496473902aef6b627b27fcb70eb802d78f2b3dac7ee5bbae7986acf19",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install_matching_bazel_version.sh": {
+    "sha256": "30018b8fb128a796b83ce2e6b70d821b32bee6fdc73007091a6194653a254aca",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/on_create_command.sh": {
+    "sha256": "68a5477313e9277e89b372dc96670ef856e08cfcad01fa75fcabecadd8fa4657",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh": {
+    "sha256": "b64265b1aa0c8a1fb6c481f4b1074f6590907e45d990abf9a6040cdcf1aeeffb",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer-lock.json": {
+    "sha256": "ae003f481b73b0cea004dbc859535828d6c6245d8e17a183e0aab16b0b17d8e2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/devcontainer.json": {
+    "sha256": "bf831920c9ff8fc89bf59752e8af4e5b7160671c958cbf9afc077e75f104cf31",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/devcontainer-feature.json": {
+    "sha256": "4275c889f653d56b27d14d9e803038344befb1822833e29ef99e6cece4ff09c2",
+    "mode": "0o644"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/enable_pre_commit_hooks.sh": {
+    "sha256": "ab8decbb1823a06bf459bfa3417bf32d8298ab7c4454ee933178ebfab7da4118",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/fix_config_volume_ownership.sh": {
+    "sha256": "ccb3a93bc87fe88e081db6e09b5169e0d0433442473e7c9644255d425b33a14a",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh": {
+    "sha256": "3a3bfcd829577f99b847b640037b894ab9af75f77b7308178d625ad30e170cc1",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/on_create_command.sh": {
+    "sha256": "9dccd307fed62a745ade92a2c217fd3a5089eb22546eec6a32749757d051d127",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/setup_command_history.sh": {
+    "sha256": "5fe3dea9b1b629d0c83b29140175ea9b48b2fa6f13d3e2d835a4049ea819a720",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh": {
+    "sha256": "708143a5952f5043c32d71e595efc46da6823d9ca4d022ba0fdaf2e6195930c7",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/unset-proxy.sh": {
+    "sha256": "2c78bd509cc91950b140d4162462dc35df53949092d36ce93fa9d00430c4f805",
+    "mode": "0o755"
+  },
+  "src/s-core-devcontainer/.devcontainer/with-proxy-vars.Dockerfile": {
+    "sha256": "5df2eaf0577d4588a1223f9a97ea2ba384bedf0996609e853649114138a0f55b",
+    "mode": "0o644"
+  }
+}

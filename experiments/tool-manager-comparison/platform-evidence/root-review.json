@@ -1,0 +1,66 @@
+{
+  "captured_utc": "2026-11-02T08:30:00.806440+00:00",
+  "scope": "Independent root review after all three M7 worker completions; common ARM guard and five prepared direct/strict checks per candidate",
+  "source_changes": {
+    "mise": {
+      "changed_existing_inventory_files": [],
+      "missing_files": [],
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "diff_check": 0
+    },
+    "aqua": {
+      "changed_existing_inventory_files": [],
+      "missing_files": [],
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "diff_check": 0
+    },
+    "nix": {
+      "changed_existing_inventory_files": [
+        {
+          "path": "tools/internal/README.md",
+          "before_sha256": "ec22c222a5a07c4beb5afc776b1917a6a672b5c63d4eee68de3e477ec8ae1a66",
+          "after_sha256": "eafe79955975a902f077795e2b55198adb3fd5f29c68a38a6c5e3a5b7d02474d"
+        },
+        {
+          "path": "tools/internal/nix/prepare.py",
+          "before_sha256": "8d830fb3bdd2f970c452b49fb5dddec055d4e1831404a9070e2639086cd452d5",
+          "after_sha256": "d314a723b4dab6a1a082051d3bd7c886e60dce53582539f7516cbd5bc122c90e"
+        }
+      ],
+      "missing_files": [],
+      "head": "2e337e41fba86ea7a94ee3d5e58cf3c4f7d93561",
+      "diff_check": 0,
+      "added_regression_test": {
+        "path": "tools/internal/nix/test_prepare.py",
+        "sha256": "9c0081990028c1359aa60664a8be5e20aa4ed1a4d9b8bdd5c4c8e8ed911807a8"
+      }
+    }
+  },
+  "runtime_checks": {
+    "mise": {
+      "bazelisk_guard_artifact": "/tmp/score-m7-platform-20261102/mise.bazelisk-guard.json",
+      "bazelisk_guard_passed": true,
+      "guard_scope": "actual ARM ELF183 as uid1000, no network, expected refusal before fallback/engine; no self-version or engine result",
+      "common_direct_strict_artifact": "/tmp/score-m7-platform-20261102/mise.root-runtime.json",
+      "common_direct_strict_checks": 5,
+      "passed": true
+    },
+    "aqua": {
+      "bazelisk_guard_artifact": "/tmp/score-m7-platform-20261102/aqua.bazelisk-guard.json",
+      "bazelisk_guard_passed": true,
+      "guard_scope": "actual ARM ELF183 as uid1000, no network, expected refusal before fallback/engine; no self-version or engine result",
+      "common_direct_strict_artifact": "/tmp/score-m7-platform-20261102/aqua.root-runtime.json",
+      "common_direct_strict_checks": 5,
+      "passed": true
+    },
+    "nix": {
+      "bazelisk_guard_artifact": "/tmp/score-m7-platform-20261102/nix.bazelisk-guard.json",
+      "bazelisk_guard_passed": true,
+      "guard_scope": "actual ARM ELF183 as uid1000, no network, expected refusal before fallback/engine; no self-version or engine result",
+      "common_direct_strict_artifact": "/tmp/score-m7-platform-20261102/nix.root-runtime.json",
+      "common_direct_strict_checks": 5,
+      "passed": true
+    }
+  },
+  "documentation_correction": "Mise README-m7.md DOES contain the APM row (0.35.0), source and archive SHA b02bb626d99946a253280d7752b01af36c483cdf7e76bb61952583632fc6f6ab; remove false discrepancy claim."
+}

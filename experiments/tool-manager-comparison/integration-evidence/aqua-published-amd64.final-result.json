@@ -1,0 +1,12 @@
+{
+  "candidate": "aqua",
+  "gate": "fresh-published-amd64-build-and-feature-tests",
+  "status": "passed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+  "output": "type=cacheonly; no image loaded or launched",
+  "source_strategy": "task-local source snapshot",
+  "workspace_retained": false,
+  "log": "/tmp/score-m6-gates/aqua-published-20261102T012420Z-ee53ca4a/published-build.log",
+  "builder": "score-m6-gates-aqua-303d8064",
+  "builder_removed": true
+}

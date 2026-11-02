@@ -1,0 +1,35 @@
+{
+  "target_platform": "linux/amd64",
+  "producer_base_image": {
+    "name": "score-aqua-m3-base:local-amd64",
+    "inspected_platform": "linux/amd64"
+  },
+  "prepared_stage": {
+    "manifest_platform": "linux/amd64",
+    "verified_commands": 11,
+    "verified_feature_memberships": 2
+  },
+  "standard_build_gates": {
+    "scripts/build.sh --amd64 with missing stage": {
+      "result": "rejected before Docker",
+      "exit_code": 1,
+      "log": "/tmp/score-m3-aqua/build-missing.log"
+    },
+    "scripts/build.sh --arm64 with amd64 stage": {
+      "result": "rejected as unsupported before Docker",
+      "exit_code": 1,
+      "log": "/tmp/score-m3-aqua/build-arm64.log"
+    },
+    "manifest marked linux/arm64 for linux/amd64 request": {
+      "result": "rejected as stale platform",
+      "exit_code": 1,
+      "log": "/tmp/score-m3-aqua/check-wrong-platform.log"
+    }
+  },
+  "focused_checks": {
+    "ruff": "passed",
+    "ruff_format": "passed",
+    "shellcheck_scripts_build": "passed",
+    "python_compile": "passed"
+  }
+}

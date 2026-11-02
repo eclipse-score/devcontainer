@@ -1,0 +1,45 @@
+{
+  "scope": "Parent independent OpenCode binary-package repair using candidate task copy and its locked Nixpkgs; existing M4 owners unchanged",
+  "selected": "2.2.3",
+  "available_in_locked_pkgs": "2.2.1",
+  "native_route": "Custom stdenvNoCC binary derivation with fetchurl, autoPatchelfHook, runtime library inputs, makeWrapper and dontStrip=true",
+  "repair": "The binary embeds its application payload; preserve it as the existing Nixpkgs recipe does. Trial recipe without dontStrip built but failed actual CLI execution. Adding dontStrip=true produced a working version/help command.",
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-eval-nix-m3-agent",
+        "/nix/store/ygc7sjyfxrcjhiyq8rl7qwjdq7malxkp-opencode-2.2.3/bin/opencode",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "opencode v2.2.3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "docker",
+        "exec",
+        "score-eval-nix-m3-agent",
+        "/nix/store/ygc7sjyfxrcjhiyq8rl7qwjdq7malxkp-opencode-2.2.3/bin/opencode",
+        "--help"
+      ],
+      "exit": 0,
+      "stdout": "DESCRIPTION\n  OpenCode command line interface\n\nUSAGE\n  opencode <subcommand> [flags] [<directory>]\n\nARGUMENTS\n  directory string    Directory to start OpenCode in (optional)\n\nFLAGS\n  --standalone            Run with a private server instead of the background service\n  --server string         Connect to a server URL instead of the background service\n  --auto                  Auto-approve permissions that are not explicitly denied\n  --continue, -c          Continue the last session\n  --session, -s string    Session ID to continue, or to create if it does not exist\n  --prompt string         Prompt to use\n\nGLOBAL FLAGS\n  --help, -h                                                          Show help information\n  --version, -v                                                       Show version information\n  --wizard                                                            Start wizard mode for a command\n  --completions <bash|zsh|fish|powershell|sh|pwsh>                    Print shell completion script (choices: bash, zsh, fish, powershell, sh, pwsh)\n  --log-level <all|trace|debug|info|warn|warning|error|fatal|none>    Sets the minimum log level (choices: all, trace, debug, info, warn, warning, error, fatal, none)\n  --print-logs                                                        Print logs to stderr (server logs require --standalone)\n\nSUBCOMMANDS\n  upgrade, update    Upgrade OpenCode to the latest or a specific version\n  uninstall          Uninstall OpenCode, keeping session data, configuration, and state\n  acp                Start an Agent Client Protocol server\n  api                Make a request to the running server\n  debug              Debugging and troubleshooting tools\n  auth               manage integrations and credentials\n  mcp                Manage MCP (Model Context Protocol) servers\n  plugin             Manage plugins\n  models             List all available models\n  stats              Show shareable usage statistics\n  mini               Start the minimal interactive interface\n  run                Run OpenCode with a message\n  session            Manage sessions\n  service            Manage the background server\n  reload             Reload configuration\n  pair               Print one-time links to connect a browser or app\n  serve              Start the v2 API and web server\n",
+      "stderr": ""
+    }
+  ],
+  "limits": [
+    "Linux amd64 only",
+    "No full runtime closure transfer or source build asserted",
+    "No interactive/model-provider workflow test",
+    "No production owner or package adoption"
+  ],
+  "build_log": [
+    "this derivation will be built:",
+    "  /nix/store/m61qa7i22mmqfai0l85wk42d7xdkpx42-opencode-2.2.3.drv",
+    "building '/nix/store/m61qa7i22mmqfai0l85wk42d7xdkpx42-opencode-2.2.3.drv'...",
+    "/nix/store/ygc7sjyfxrcjhiyq8rl7qwjdq7malxkp-opencode-2.2.3"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "candidates": {
+    "aqua": [
+      {
+        "baseline_sha256": "cd756e09f924a041dbdef91a568c06abc810eb24836570ce6adbddc31c901c50",
+        "baseline_source": "source-before.json",
+        "current_sha256": "cd756e09f924a041dbdef91a568c06abc810eb24836570ce6adbddc31c901c50",
+        "path": "tools/owners/aqua/aqua.yaml"
+      },
+      {
+        "baseline_sha256": "6facf1c06ed53b0493b253a1b8fb4c6b2eaed52781f8a21da05ae67db5633a80",
+        "baseline_source": "source-before.json",
+        "current_sha256": "6facf1c06ed53b0493b253a1b8fb4c6b2eaed52781f8a21da05ae67db5633a80",
+        "path": "tools/owners/aqua/pyproject.toml"
+      }
+    ],
+    "mise": [
+      {
+        "baseline_sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558",
+        "baseline_source": "source-before.json",
+        "current_sha256": "ed0166c65f60cb628c9df071fae0f8e7c7e7d863c8136b65b65f3dc3a9442558",
+        "path": "tools/mise/mise.native.toml"
+      },
+      {
+        "baseline_sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe",
+        "baseline_source": "source-before.json",
+        "current_sha256": "d407216a6bd77862205e13cbabb78566dbc7d37bb6fba1b0ee9360c7ba2487fe",
+        "path": "tools/mise/mise.published.toml"
+      },
+      {
+        "baseline_sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f",
+        "baseline_source": "source-before.json",
+        "current_sha256": "49106d46d5bb3a3a379732bae2df65b15e933df517d98c6b128920e35d3c854f",
+        "path": "tools/mise/mise.python.toml"
+      }
+    ],
+    "nix": [
+      {
+        "baseline_sha256": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+        "baseline_source": "accepted M7 Nix result source_hashes_sha256 (M8 start inventory omitted .nix)",
+        "current_sha256": "e09a583b41f9ec56869661c80b1d5f8ca8c7c9e462530fe6bcccc2d81f6daabb",
+        "path": "tools/nix/flake.nix"
+      },
+      {
+        "baseline_sha256": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+        "baseline_source": "source-before.json",
+        "current_sha256": "8d29cda5426f0b81dce7f0dab87d59498d0bb4648e6ab80e611fa3525b66f7a7",
+        "path": "tools/nix/flake.lock"
+      },
+      {
+        "baseline_sha256": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72",
+        "baseline_source": "source-before.json",
+        "current_sha256": "1579116c74c43f875e369852593d97ef96caa174d6ee5e19183e28bc2f88cb72",
+        "path": "tools/nix/opencode-hashes.json"
+      }
+    ]
+  },
+  "scope": "Accepted candidate owner content remains unchanged; release B edits live only in isolated maintained-source copies.",
+  "supplemental_m7_source": {
+    "path": "/home/alex/git/etas-contrib/score_devcontainer/experiments/tool-manager-comparison/platform-evidence/nix/result.json",
+    "sha256": "1cbfbd7a7e8f6a7fc77e0fa659a39df23193f97c36437e959a5238e60ed0ac47"
+  }
+}

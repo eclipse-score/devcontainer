@@ -1,0 +1,65 @@
+{
+  "scope": "Representative generated Python entrypoint source audit; actual M4 behavior already executed; not full dynamic process tracing or all-tool overhead measurement",
+  "candidates": {
+    "aqua": {
+      "path": "/tmp/score-m4-aqua/prepared-published-owner-final/python/bin/codespell",
+      "entrypoint": [
+        "#!/opt/score-tools/python/bin/python",
+        "# -*- coding: utf-8 -*-",
+        "import sys",
+        "from codespell_lib import _script_main",
+        "if __name__ == \"__main__\":",
+        "    if sys.argv[0].endswith(\"-script.pyw\"):",
+        "        sys.argv[0] = sys.argv[0][:-11]",
+        "    elif sys.argv[0].endswith(\".exe\"):",
+        "        sys.argv[0] = sys.argv[0][:-4]",
+        "    sys.exit(_script_main())"
+      ]
+    },
+    "mise": {
+      "path": "/tmp/score-m4-mise/prepared-context-m4/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+      "entrypoint": [
+        "#!/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+        "# -*- coding: utf-8 -*-",
+        "import sys",
+        "from codespell_lib import _script_main",
+        "if __name__ == \"__main__\":",
+        "    if sys.argv[0].endswith(\"-script.pyw\"):",
+        "        sys.argv[0] = sys.argv[0][:-11]",
+        "    elif sys.argv[0].endswith(\".exe\"):",
+        "        sys.argv[0] = sys.argv[0][:-4]",
+        "    sys.exit(_script_main())"
+      ]
+    },
+    "nix": {
+      "path": "/tmp/score-m4-nix/production-context/experiments/tool-manager-nix/reference/out/m3-production/native/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/codespell",
+      "entrypoint": [
+        "#! /nix/store/nnm9gdr70ihc6zc9298mzz8jpcgaciql-bash-5.3p20/bin/bash -e",
+        "PATH=${PATH:+':'$PATH':'}",
+        "PATH=${PATH/':''/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin'':'/':'}",
+        "PATH='/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin'$PATH",
+        "PATH=${PATH#':'}",
+        "PATH=${PATH%':'}",
+        "export PATH",
+        "PATH=${PATH:+':'$PATH':'}",
+        "PATH=${PATH/':''/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin'':'/':'}",
+        "PATH='/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin'$PATH",
+        "PATH=${PATH#':'}",
+        "PATH=${PATH%':'}",
+        "export PATH",
+        "export PYTHONNOUSERSITE='true'",
+        "exec -a \"$0\" \"/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/.codespell-wrapped\"  \"$@\" "
+      ],
+      "wrapped_entrypoint": [
+        "#!/nix/store/xahxrjs30p3mw0a42bqg9ikgkikskw8m-python3-3.14.8/bin/python3.14",
+        "# -*- coding: utf-8 -*-",
+        "import sys;import site;import functools;sys.argv[0] = '/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/bin/codespell';functools.reduce(lambda k, p: site.addsitedir(p, k), ['/nix/store/bwlpsn110b6k74yqy5jx6l76hmri701y-codespell-2.4.3/lib/python3.14/site-packages'], site._init_pathinfo());",
+        "import re",
+        "import sys",
+        "from codespell_lib import _script_main",
+        "if __name__ == \"__main__\":",
+        "    sys.argv[0] = re.sub(r\"(-script\\.pyw|\\.exe)?$\", \"\", sys.argv[0])"
+      ]
+    }
+  }
+}

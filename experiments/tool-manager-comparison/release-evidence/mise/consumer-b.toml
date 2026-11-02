@@ -1,0 +1,5 @@
+[project]
+name = "independent-mise-m8-consumer"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["score-mise-m8-local[ruff]==0.8.1"]

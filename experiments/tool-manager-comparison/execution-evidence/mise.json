@@ -1,0 +1,603 @@
+{
+  "candidate": "mise",
+  "uid": 1000,
+  "scope": "Prepared Linux amd64 native/Python entrypoints; no cold-install or all-tool claim",
+  "environment": {
+    "HOME": "/tmp/probe-home",
+    "PATH": "/usr/bin:/bin"
+  },
+  "mounts": [
+    "overlay / overlay ro,relatime,lowerdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1960/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1953/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/833/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/832/fs:/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/320/fs,upperdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1961/fs,workdir=/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/1961/work 0 0",
+    "/dev/sdd /opt/score-tools ext4 ro,relatime,discard,errors=remount-ro,data=ordered 0 0"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "strace -- version 6.8\nCopyright (c) 1991-2024 The strace developers <https://strace.io>.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\nOptional features enabled: stack-trace=libunwind stack-demangle m32-mpers mx32-mpers\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/native-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+        "version"
+      ],
+      "exit": 0,
+      "stdout": "starpls version: v0.1.22\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-version.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "2.4.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "512",
+        "-o",
+        "/work/python-reference-typo.trace",
+        "-e",
+        "trace=%process,%network,%file",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "exit": 65,
+      "stdout": "/work/input/typo.txt:1: teh ==> the\n",
+      "stderr": ""
+    }
+  ],
+  "traces": {
+    "native-version": {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+        "version"
+      ],
+      "total_trace_lines": 9,
+      "exec_events": [
+        "13    execve(\"/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls\", [\"/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls\", \"version\"], 0x7ffd54c50a28 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [],
+      "manager_exec_events": []
+    },
+    "python-version": {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "--version"
+      ],
+      "total_trace_lines": 349,
+      "exec_events": [
+        "17    execve(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell\", [\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell\", \"--version\"], 0x7ffcef2e4f88 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "17    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "17    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-version": {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+        "--version"
+      ],
+      "total_trace_lines": 349,
+      "exec_events": [
+        "21    execve(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python\", [\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python\", \"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell\", \"--version\"], 0x7ffdb61265b0 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "21    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "21    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-typo": {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 358,
+      "exec_events": [
+        "25    execve(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell\", [\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell\", \"/work/input/typo.txt\"], 0x7ffebb8fda28 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "25    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "25    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    },
+    "python-reference-typo": {
+      "argv": [
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+        "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+        "/work/input/typo.txt"
+      ],
+      "total_trace_lines": 358,
+      "exec_events": [
+        "29    execve(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python\", [\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python\", \"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell\", \"/work/input/typo.txt\"], 0x7ffc530c6bd0 /* 4 vars */) = 0"
+      ],
+      "nonthread_process_creation": [],
+      "network_events": [],
+      "file_mutation_attempts": [
+        "29    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)",
+        "29    mkdir(\"/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/lib/python3.12/site-packages/codespell_lib/__pycache__\", 0777) = -1 EROFS (Read-only file system)"
+      ],
+      "manager_exec_events": []
+    }
+  },
+  "timings": {
+    "native": {
+      "samples_ms": {
+        "exposed": [
+          0.640936,
+          0.606898,
+          0.684269,
+          0.671788,
+          0.703541,
+          0.675834,
+          0.880354,
+          0.737363,
+          0.632346,
+          0.637003,
+          0.624212,
+          0.61573,
+          0.73988,
+          0.745371,
+          0.633948,
+          0.613929,
+          0.60264,
+          0.607999,
+          0.702383,
+          0.718158,
+          0.635312,
+          0.6303,
+          0.62637,
+          0.598381,
+          0.599346,
+          0.589825,
+          0.599264,
+          0.616383,
+          0.670406,
+          0.616868,
+          0.653713,
+          0.653563,
+          0.662489,
+          0.647936,
+          0.721041,
+          0.671062,
+          0.647786,
+          0.633187,
+          0.608549,
+          0.59647
+        ],
+        "underlying": [
+          0.634239,
+          0.678538,
+          0.618983,
+          0.664572,
+          0.664862,
+          0.645612,
+          0.953595,
+          0.687025,
+          0.65125,
+          0.631303,
+          0.683642,
+          0.604232,
+          0.809026,
+          0.637177,
+          0.648828,
+          0.605692,
+          0.658668,
+          0.708295,
+          0.723843,
+          0.641972,
+          0.627515,
+          0.63773,
+          0.668136,
+          0.605518,
+          0.604235,
+          0.642693,
+          0.604002,
+          0.607094,
+          0.587669,
+          0.605054,
+          0.708026,
+          0.728911,
+          0.69152,
+          0.683687,
+          0.657336,
+          0.626795,
+          0.635859,
+          0.636362,
+          0.631334,
+          0.60754
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 0.6361574999999999,
+          "min_ms": 0.589825,
+          "p10_ms": 0.599264,
+          "p90_ms": 0.721041,
+          "max_ms": 0.880354
+        },
+        "underlying": {
+          "median_ms": 0.6423325,
+          "min_ms": 0.587669,
+          "p10_ms": 0.604235,
+          "p90_ms": 0.708295,
+          "max_ms": 0.953595
+        }
+      },
+      "paired_delta_median_ms": -0.004813499999999971,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    },
+    "python": {
+      "samples_ms": {
+        "exposed": [
+          29.248761,
+          27.538624,
+          28.955161,
+          27.991922,
+          27.63757,
+          26.802398,
+          27.485876,
+          27.266481,
+          37.805041,
+          29.154107,
+          30.288854,
+          28.411581,
+          28.823158,
+          28.215788,
+          28.94768,
+          29.301416,
+          28.64615,
+          28.600309,
+          29.992801,
+          28.968531,
+          27.93438,
+          28.789071,
+          29.160671,
+          29.17339,
+          27.596939,
+          27.435831,
+          27.421207,
+          27.780558,
+          29.093483,
+          29.257496,
+          27.257673,
+          27.061553,
+          27.347699,
+          27.230848,
+          27.88798,
+          28.003426,
+          27.655808,
+          28.482789,
+          27.650476,
+          30.381028
+        ],
+        "underlying": [
+          28.994296,
+          27.286933,
+          27.439944,
+          29.681813,
+          28.224082,
+          27.511094,
+          28.028918,
+          26.747301,
+          28.194552,
+          28.617456,
+          28.925595,
+          28.09526,
+          28.60267,
+          28.214744,
+          27.737792,
+          28.550252,
+          29.301394,
+          29.089887,
+          29.053489,
+          28.240128,
+          27.381692,
+          28.148769,
+          27.022619,
+          27.954945,
+          27.048881,
+          27.959492,
+          27.399238,
+          26.901042,
+          27.811601,
+          27.220661,
+          28.684092,
+          27.183694,
+          27.309892,
+          27.430738,
+          27.09289,
+          27.541616,
+          27.5647,
+          28.107214,
+          27.583597,
+          28.485327
+        ]
+      },
+      "summary": {
+        "exposed": {
+          "median_ms": 28.3136845,
+          "min_ms": 26.802398,
+          "p10_ms": 27.257673,
+          "p90_ms": 29.301416,
+          "max_ms": 37.805041
+        },
+        "underlying": {
+          "median_ms": 27.9572185,
+          "min_ms": 26.747301,
+          "p10_ms": 27.048881,
+          "p90_ms": 28.994296,
+          "max_ms": 29.681813
+        }
+      },
+      "paired_delta_median_ms": 0.4186925000000006,
+      "warmups_per_route": 3,
+      "interleaved": true,
+      "traced": false
+    }
+  },
+  "signals": [
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:51Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+          "server"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:51Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "native",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:51Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+          "server"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "futex_do_wait",
+          "futex_do_wait",
+          "anon_pipe_read"
+        ],
+        "exit": -2,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": "[2026-11-01T23:15:51Z INFO  starpls::commands::server] starpls, v0.1.22\n"
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGTERM",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": -15,
+        "orphaned_process_group": false,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "tool": "python",
+      "exposed": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      },
+      "underlying": {
+        "argv": [
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+          "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+          "-"
+        ],
+        "signal": "SIGINT",
+        "ready_wchan": [
+          "anon_pipe_read"
+        ],
+        "exit": 130,
+        "orphaned_process_group": false,
+        "stdout": "\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "versions": {
+    "starpls": "starpls version: v0.1.22",
+    "codespell": "2.4.1",
+    "strace": "strace -- version 6.8"
+  },
+  "entrypoints": {
+    "native_exposed": "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+    "native_resolved": "/opt/score-tools/prepared-runtime/data/installs/github-withered-magic-starpls/0.1.22/starpls",
+    "python_exposed": "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/bin/codespell",
+    "python_resolved": "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell",
+    "python_source": "#!/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python\n# -*- coding: utf-8 -*-\nimport sys\nfrom codespell_lib import _script_main\nif __name__ == \"__main__\":\n    if sys.argv[0].endswith(\"-script.pyw\"):\n        sys.argv[0] = sys.argv[0][:-11]\n    elif sys.argv[0].endswith(\".exe\"):\n        sys.argv[0] = sys.argv[0][:-4]\n    sys.exit(_script_main())\n",
+    "python_reference": [
+      "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/python",
+      "/opt/score-tools/prepared-runtime/data/installs/pypi-codespell/2.4.1/codespell/bin/codespell"
+    ],
+    "reference_environment_overrides": {}
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "result": "passed",
+  "scope": "Existing-catalog Ruff facade and ordinary consumer; not a fourth migration",
+  "network": "Host network allowed; existing uv cache may be reused; no timing claim",
+  "requirements": {
+    "pre-commit": "pre-commit==4.7.0",
+    "basedpyright": "basedpyright==1.35.0",
+    "pytest": "pytest==9.0.2",
+    "ruff": "ruff==0.11.13"
+  },
+  "requires_dist": [
+    "Requires-Dist: basedpyright==1.35.0; extra == \"basedpyright\"",
+    "Requires-Dist: pre-commit==4.7.0; extra == \"pre-commit\"",
+    "Requires-Dist: pytest==9.0.2; extra == \"pytest\"",
+    "Requires-Dist: ruff==0.11.13; extra == \"ruff\""
+  ],
+  "consumer_supplies_separate_ruff_pin": false,
+  "package_contains_runner": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "build",
+        "--wheel",
+        "/tmp/score-effort-baseline/probe/package",
+        "--out-dir",
+        "/tmp/score-effort-baseline/probe/dist"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Building wheel...\nrunning egg_info\ncreating score_managerless_probe.egg-info\nwriting score_managerless_probe.egg-info/PKG-INFO\nwriting dependency_links to score_managerless_probe.egg-info/dependency_links.txt\nwriting requirements to score_managerless_probe.egg-info/requires.txt\nwriting top-level names to score_managerless_probe.egg-info/top_level.txt\nwriting manifest file 'score_managerless_probe.egg-info/SOURCES.txt'\nreading manifest file 'score_managerless_probe.egg-info/SOURCES.txt'\nwriting manifest file 'score_managerless_probe.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_managerless_probe.egg-info/PKG-INFO\nwriting dependency_links to score_managerless_probe.egg-info/dependency_links.txt\nwriting requirements to score_managerless_probe.egg-info/requires.txt\nwriting top-level names to score_managerless_probe.egg-info/top_level.txt\nreading manifest file 'score_managerless_probe.egg-info/SOURCES.txt'\nwriting manifest file 'score_managerless_probe.egg-info/SOURCES.txt'\nCopying score_managerless_probe.egg-info to build/bdist.linux-x86_64/wheel/./score_managerless_probe-0.1.0-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_managerless_probe-0.1.0.dist-info/WHEEL\ncreating '/tmp/score-effort-baseline/probe/dist/.tmp-2c3vz_9u/score_managerless_probe-0.1.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_managerless_probe-0.1.0.dist-info/METADATA'\nadding 'score_managerless_probe-0.1.0.dist-info/WHEEL'\nadding 'score_managerless_probe-0.1.0.dist-info/top_level.txt'\nadding 'score_managerless_probe-0.1.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built dist/score_managerless_probe-0.1.0-py3-none-any.whl\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "lock",
+        "--python",
+        "/usr/bin/python3"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nResolved 3 packages in 177ms\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "sync",
+        "--locked"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Using CPython 3.14.3\nCreating virtual environment at: .venv\nResolved 3 packages in 0.85ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 446ms\nInstalled 2 packages in 3ms\n + ruff==0.11.13\n + score-managerless-probe==0.1.0 (from file:///tmp/score-effort-baseline/probe/dist/score_managerless_probe-0.1.0-py3-none-any.whl)\n"
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "run",
+        "--locked",
+        "ruff",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/alex/.local/bin/uv",
+        "tool",
+        "run",
+        "--with",
+        "score-managerless-probe[ruff] @ file:///tmp/score-effort-baseline/probe/dist/score_managerless_probe-0.1.0-py3-none-any.whl",
+        "ruff",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": "Installed 2 packages in 4ms\n"
+    },
+    {
+      "argv": [
+        "/tmp/score-effort-baseline/probe/consumer/.venv/bin/ruff",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "ruff 0.11.13\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/tmp/score-effort-baseline/probe/consumer/.venv/bin/ruff",
+        "check",
+        "--isolated",
+        "--no-cache",
+        "--select",
+        "F821",
+        "/tmp/score-effort-baseline/probe/consumer/undefined.py"
+      ],
+      "exit": 1,
+      "stdout": "consumer/undefined.py:1:7: F821 Undefined name `undefined_name`\n  |\n1 | print(undefined_name)\n  |       ^^^^^^^^^^^^^^ F821\n  |\n\nFound 1 error.\n",
+      "stderr": ""
+    }
+  ],
+  "limits": [
+    "Only Ruff extra executed; other extras inspected as metadata only",
+    "No native-host provisioning, all-platform, release-publication or image proof",
+    "No startup measurement or network isolation performed"
+  ]
+}

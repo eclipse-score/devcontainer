@@ -1,0 +1,8 @@
+{
+  "source": "https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/op/opencode/package.nix",
+  "blob_sha": "e4aa363c7f8a9597421ba8ce361625a1026beffa",
+  "version_literals": [
+    "2.2.1"
+  ],
+  "scope": "Default branch metadata only; no locked new input or build proof"
+}

@@ -1,0 +1,8 @@
+{
+  "Id": "sha256:cbb7d6e72680f393f1b1d92076a3413f410cfcde153eeccddf819867c7694fec",
+  "Created": "2026-11-01T18:56:02.984472297+01:00",
+  "Os": "linux",
+  "Architecture": "amd64",
+  "Size": 7308450863,
+  "tested_tag": "ghcr.io/eclipse-score/devcontainer:m3-nix-gate-amd64"
+}

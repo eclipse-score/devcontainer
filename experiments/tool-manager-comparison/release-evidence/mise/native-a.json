@@ -1,0 +1,42 @@
+{
+  "user-note": {
+    "target": "/tmp/score-m8-mise/native/bin/user-note",
+    "sha256": "e9c9434124c2a4036e2227383e7c65aece6aac2fb3b5f0941ff4c063f43a0a3d"
+  },
+  "shellcheck": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-koalaman-shellcheck/0.10.0/shellcheck-v0.10.0/shellcheck",
+    "sha256": "f35ae15a4677945428bdfe61ccc297490d89dd1e544cc06317102637638c6deb"
+  },
+  "uvx": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uvx",
+    "sha256": "2f286670c2c09915c57555ddd95931ae0ab3feeaa09dfc73e21de9e8789306d5"
+  },
+  "buildifier": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-bazelbuild-buildtools-buildifier/8.2.1/buildifier",
+    "sha256": "6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a"
+  },
+  "actionlint": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-rhysd-actionlint/1.7.7/actionlint",
+    "sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+  },
+  "bazelisk": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-bazelbuild-bazelisk/1.27.0/bazelisk",
+    "sha256": "e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76"
+  },
+  "ruff": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-astral-sh-ruff/0.11.13/ruff-x86_64-unknown-linux-gnu/ruff",
+    "sha256": "934898b2a680435c864137ae7b6e6b32a055b69f2bc92440c417c60786a1e883"
+  },
+  "uv": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/uv/0.13.6/uv-x86_64-unknown-linux-gnu/uv",
+    "sha256": "23803452c0fbe125033054cd9ff245f1d649fb65b4b73f68429f4abda432436d"
+  },
+  "pre-commit": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/pypi-pre-commit/4.7.0/pre-commit/bin/pre-commit",
+    "sha256": "892cebf6c5e42848515a23d52e3a5fd70e7e24b11fb9f56309af7c942345560f"
+  },
+  "yamlfmt": {
+    "target": "/tmp/score-m5-mise/provision-data/installs/aqua-google-yamlfmt/0.17.0/yamlfmt",
+    "sha256": "c2f4acd79553ecd757197ebc7a06cc33ef9aa6d43c38f27bede1c25ca1bdfed2"
+  }
+}

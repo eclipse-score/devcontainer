@@ -1,0 +1,293 @@
+{
+  "investigation_date": "2026-11-01",
+  "scope": "Public etas-contrib Aqua evaluation only; probes, candidate configs, prefixes, and downloaded artifacts are task-owned under /tmp/score-retirement-aqua.",
+  "repository_mutations": [],
+  "manager": {
+    "name": "aqua",
+    "version": "2.65.2",
+    "binary": "/tmp/score-aqua-eval/bootstrap/aqua",
+    "registry_ref": "aquaproj/aqua-registry v4.579.0",
+    "candidate_config_source": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/aqua.yaml",
+    "candidate_config_copy": "/tmp/score-retirement-aqua/candidate-native/aqua-upstream.yaml",
+    "network_used": [
+      "GitHub",
+      "opencode.ai"
+    ]
+  },
+  "probes": [
+    {
+      "tool": "opencode",
+      "required_version": "2.2.3",
+      "route": "pinned standard Aqua registry package anomalyco/opencode",
+      "commands": [
+        {
+          "argv": [
+            "aqua",
+            "generate",
+            "anomalyco/opencode@v2.2.3"
+          ],
+          "exit": 0,
+          "result": "Generated exact 2.2.3 package entry."
+        },
+        {
+          "argv": [
+            "aqua",
+            "update-checksum",
+            "--config",
+            "/tmp/score-retirement-aqua/candidate-native/aqua-opencode.yaml"
+          ],
+          "exit": 0,
+          "result": "Checksum recorded in task-local aqua-checksums.json."
+        },
+        {
+          "argv": [
+            "aqua",
+            "cp",
+            "--tags",
+            "retirement-probe",
+            "-o",
+            "/tmp/score-retirement-aqua/prefix-opencode/bin"
+          ],
+          "exit": 0,
+          "result": "Copied direct executable."
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-opencode/bin/opencode",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "opencode v2.2.3"
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-opencode/bin/opencode",
+            "--help"
+          ],
+          "exit": 0,
+          "result": "Help rendered."
+        }
+      ],
+      "archive": {
+        "url": "https://opencode.ai/files/bin/2.2.3/opencode-linux-x64.tar.gz",
+        "sha256": "ef3aeeaf5522b10d69a3da7bbd6e6d8d259f845833d96b8310767d3407b18a35",
+        "catalog_lock_url": "https://github.com/anomalyco/opencode/releases/download/v2.2.3/opencode-linux-x64.tar.gz",
+        "catalog_lock_sha256_matches": true,
+        "prepared_file_bytes": 252459184
+      },
+      "runtime": "Direct ELF command; system C runtime only. No Aqua proxy, Aqua manager, uv, or resolver in the invocation path. Linux amd64 execution only."
+    },
+    {
+      "tool": "apm",
+      "required_version": "0.35.0",
+      "route": "task-local Aqua registry recipe generated from the upstream GitHub release layout",
+      "commands": [
+        {
+          "argv": [
+            "aqua",
+            "generate",
+            "microsoft/apm@v0.35.0"
+          ],
+          "exit": 1,
+          "stderr_summary": "unknown package in pinned standard registry"
+        },
+        {
+          "argv": [
+            "aqua",
+            "generate-registry",
+            "--cmd",
+            "apm",
+            "microsoft/apm@v0.35.0"
+          ],
+          "exit": 0,
+          "result": "Generated GitHub release recipe template; task-local recipe sets src to apm-<os>-<arch>/apm and supports Linux amd64/arm64 and Darwin amd64/arm64."
+        },
+        {
+          "argv": [
+            "curl",
+            "-L",
+            "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
+            "-o",
+            "/tmp/score-retirement-aqua/apm-linux-x86_64.tar.gz"
+          ],
+          "exit": 0,
+          "result": "Network download completed."
+        },
+        {
+          "argv": [
+            "sha256sum",
+            "/tmp/score-retirement-aqua/apm-linux-x86_64.tar.gz"
+          ],
+          "exit": 0,
+          "stdout": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
+          "catalog_lock_sha256_matches": true
+        },
+        {
+          "argv": [
+            "aqua",
+            "update-checksum",
+            "--config",
+            "/tmp/score-retirement-aqua/candidate-native/aqua-apm-local.yaml"
+          ],
+          "exit": 0,
+          "result": "Checksum recorded in task-local aqua-checksums.json."
+        },
+        {
+          "argv": [
+            "aqua",
+            "install",
+            "--tags",
+            "retirement-probe"
+          ],
+          "exit": 0,
+          "result": "Installed full archive tree under task-owned Aqua root."
+        },
+        {
+          "argv": [
+            "aqua",
+            "cp",
+            "--tags",
+            "retirement-probe",
+            "-o",
+            "/tmp/score-retirement-aqua/prefix-apm-copied/bin"
+          ],
+          "exit": 0,
+          "result": "Copied only the apm executable."
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-apm-copied/bin/apm",
+            "--version"
+          ],
+          "exit": 255,
+          "stderr_summary": "PyInstaller could not load adjacent _internal/libpython3.12.so.1.0 after binary-only copy."
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-apm-direct/bin/apm",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout_summary": "Agent Package Manager (APM) CLI version 0.35.0"
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-apm-direct/bin/apm",
+            "--help"
+          ],
+          "exit": 0,
+          "result": "Help rendered."
+        },
+        {
+          "argv": [
+            "/tmp/score-retirement-aqua/prefix-apm-direct/bin/apm",
+            "init",
+            "--discover",
+            "--format",
+            "json"
+          ],
+          "cwd": "/tmp/score-retirement-aqua/apm-init-probe",
+          "path": "/usr/bin:/bin",
+          "exit": 0,
+          "stdout_summary": "applied:false; empty findings and additions."
+        }
+      ],
+      "archive": {
+        "url": "https://github.com/microsoft/apm/releases/download/v0.35.0/apm-linux-x86_64.tar.gz",
+        "sha256": "5aa23ce61eebae9411668f507772cdb5d87252c760078dc59b5acdc5188d785b",
+        "catalog_lock_sha256_matches": true,
+        "compressed_bytes": 14965295,
+        "required_tree": [
+          "apm",
+          "_internal/libpython3.12.so.1.0",
+          "Python 3.12 standard library/extensions",
+          "bundled Python packages",
+          "templates"
+        ]
+      },
+      "runtime": "Use the raw executable at aqua which apm within its retained package tree (or copy the complete tree and preserve relative layout). Aqua's default bin/apm is a symlink to aqua-proxy; without Aqua on PATH it fails with 'aqua isn't found'. The successful meaningful command used system Git on PATH, no Aqua, uv, or resolver.",
+      "maintenance": "Pinned standard registry lacks microsoft/apm. A local recipe and policy allow entry are needed until upstream coverage exists; keep release asset naming, amd64-to-x86_64 replacement, src layout, checksum sidecar, and platform support under review."
+    }
+  ],
+  "caller_audit": {
+    "feature_installers": [
+      "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh -> install.py environment s-core-local",
+      "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh -> install.py environment bazel-feature"
+    ],
+    "root_setup": ".devcontainer/post_create_command.sh -> install.py environment repository without prepared manifest",
+    "public_host_compatibility": [
+      "tools/BUILD.bazel aliases //tools:apm and //tools:opencode",
+      "tools/run-tool strict host uses Bazel; container invocation execs PATH command"
+    ],
+    "installer_subcommands": "install/install-python are private tools/internal implementation commands with no external call sites found and no public Bazel target; environment/selection/metadata subcommands remain used by feature lifecycle code."
+  },
+  "retirement_boundary": {
+    "delete_after_all_callers_migrate": [
+      "native _cmd_install downloader/checksum/extract path and install subcommand",
+      "native selection fallback in _cmd_environment",
+      "prepared-manifest verification/skip/fallback code and tests after direct lifecycle replaces the handoff"
+    ],
+    "delete_if_python_callers_move_to_uv": [
+      "_cmd_install_python and install-python subcommand"
+    ],
+    "keep": [
+      "environment selection and APT/npm setup",
+      "feature-specific Java/CodeQL/Bazel setup",
+      "catalog/environment ownership",
+      "public Bazel labels, exported lockfiles, run-tool argument/cwd/exit contract"
+    ],
+    "move_or_preserve": [
+      "artifact URL/hash/platform/member metadata moves through the existing Aqua-to-Bazel exporter; public portable lockfiles remain for strict host delivery",
+      "Renovate version ownership must move to Aqua and daily job allowlist/bootstrap must change before refresh_lockfile_digests.py can be deleted"
+    ],
+    "optional_experiment": [
+      "producer handoff, staging, manifest, Docker COPY/context and stale-input checks; direct lifecycle does not need them"
+    ]
+  },
+  "peer_cross_read": [
+    {
+      "variant": "mise",
+      "report": "/home/alex/git/etas-contrib/score_devcontainer-eval-mise/experiments/tool-manager-mise/reference/README-retirement.md",
+      "finding": "Reports exact APM 0.35.0 through github:microsoft/apm and OpenCode 2.2.3 through aqua:anomalyco/opencode, four-platform lock entries matching existing catalog, and Linux x86_64 downloads/execution. It explicitly says the M4 handoff and legacy callers still prevent retirement."
+    },
+    {
+      "variant": "Nix",
+      "evidence": [
+        "/tmp/score-retirement-nix/progress.md",
+        "/tmp/score-retirement-nix/apm-cli-package.nix",
+        "/tmp/score-retirement-common/nix-preserve-payload/flake.nix",
+        "/tmp/score-retirement-common/nix-preserve-payload.log"
+      ],
+      "finding": "Peer progress reports locked nixpkgs apm-cli 0.35.0 installed and exercised, with a large closure and omitted optional llm-github-models. Locked pkgs.opencode is 2.2.1, not the required 2.2.3. A task-local fetchurl/extract derivation for the existing 2.2.3 release archive/hash with dontStrip=true built and its --version and --help exited 0. This is a bounded exact-version fallback, not the locked upstream package route or all-platform execution; not independently re-run in this Aqua task."
+    }
+  ],
+  "validation_limits": {
+    "tested_platform": "Linux amd64 only for Aqua preparation/execution.",
+    "not_run": [
+      "repository unit tests",
+      "Bazel tests",
+      "full image build",
+      "Docker mutation",
+      "cross-platform preparation/execution",
+      "APM credentials/provider/network workflows"
+    ],
+    "no_commit_push_publish": true,
+    "no_m1_m4_artifact_mutation": true,
+    "existing_m4_results_are_not_retirement_evidence": true
+  },
+  "source_references": [
+    "tools/internal/devcontainer/install.py",
+    "tools/environments.json",
+    "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh",
+    "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh",
+    ".devcontainer/post_create_command.sh",
+    ".github/renovate.json5",
+    ".github/workflows/daily.yml",
+    "tools/BUILD.bazel",
+    "tools/run-tool",
+    "experiments/tool-manager-aqua/reference/export_native.py",
+    "experiments/tool-manager-aqua/reference/sync_repository.py",
+    "docs/tooling-effort-conclusion.md in sibling managerless baseline checkout",
+    "docs/tooling-execution-paths.md in sibling managerless baseline checkout"
+  ]
+}

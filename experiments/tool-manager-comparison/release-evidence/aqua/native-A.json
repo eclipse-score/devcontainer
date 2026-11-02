@@ -1,0 +1,22 @@
+{
+  "ruff": {
+    "sha256": "b95e6560e91875236071fca25fd086b4bb36f327255056b276590f3bf682f1ed",
+    "realpath": "/tmp/score-m8-aqua/native-prefix/bin/ruff"
+  },
+  "actionlint": {
+    "sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "realpath": "/tmp/score-m8-aqua/native-prefix/bin/actionlint"
+  },
+  "uv": {
+    "sha256": "f56ca7e29e708e20ed6b96f9a8cb89ac45129239c6166481cc3ae3cbab286a0f",
+    "realpath": "/tmp/score-m8-aqua/native-prefix/bin/uv"
+  },
+  "pre-commit": {
+    "sha256": "678585a0e764aa3c9683299501f702f84884c6afe6fac3305fbd082cff228612",
+    "realpath": "/tmp/score-m8-aqua/native-prefix/uv/tools/pre-commit/bin/pre-commit"
+  },
+  "unrelated-sentinel": {
+    "sha256": "b94963d63e6a01a67118e45c939e9e55836663275bc901a23610743872875e7b",
+    "realpath": "/tmp/score-m8-aqua/native-prefix/bin/unrelated-sentinel"
+  }
+}
