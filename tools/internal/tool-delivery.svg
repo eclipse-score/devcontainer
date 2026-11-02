@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="320" viewBox="0 0 920 320" role="img" aria-labelledby="title desc">
   <title id="title">Pinned command-line tool delivery</title>
-  <desc id="desc">A shared catalog feeds DevContainer installers and Bazel targets. Native tools use release lockfiles, while Python tools use uv for persistent container installation and uvx for on-demand Bazel execution.</desc>
+  <desc id="desc">Aqua and Python dependency groups own selected versions. Build-time provisioning leaves direct commands in images and host prefixes, while generated portable metadata preserves the existing Bazel targets.</desc>
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#51606f"/>
@@ -56,23 +56,23 @@ SPDX-License-Identifier: Apache-2.0
   <rect width="920" height="320" fill="#ffffff"/>
 
   <rect class="box source" x="285" y="36" width="350" height="88"/>
-  <text class="title" x="460" y="66" text-anchor="middle">Shared tool catalog</text>
-  <text class="body" x="460" y="94" text-anchor="middle">native lockfiles: artifacts and checksums</text>
-  <text class="body" x="460" y="115" text-anchor="middle">Python catalog: packages and entrypoints</text>
+  <text class="title" x="460" y="66" text-anchor="middle">Tool version owners</text>
+  <text class="body" x="460" y="94" text-anchor="middle">Aqua native releases + checksums</text>
+  <text class="body" x="460" y="115" text-anchor="middle">Python dependency groups</text>
 
   <rect class="box path-a" x="70" y="206" width="300" height="78"/>
-  <text class="title" x="220" y="239" text-anchor="middle">DevContainer</text>
-  <text class="body" x="220" y="263" text-anchor="middle">native downloads + persistent</text>
-  <text class="body" x="220" y="281" text-anchor="middle">Python installation with uv</text>
+  <text class="title" x="220" y="239" text-anchor="middle">Image + host prefix</text>
+  <text class="body" x="220" y="263" text-anchor="middle">provision once with Aqua + uv</text>
+  <text class="body" x="220" y="281" text-anchor="middle">run direct pinned executables</text>
 
   <rect class="box path-b" x="550" y="206" width="300" height="78"/>
   <text class="title" x="700" y="239" text-anchor="middle">Bazel</text>
-  <text class="body" x="700" y="263" text-anchor="middle">native targets + on-demand</text>
-  <text class="body" x="700" y="281" text-anchor="middle">Python execution with uvx</text>
+  <text class="body" x="700" y="263" text-anchor="middle">portable artifact compatibility</text>
+  <text class="body" x="700" y="281" text-anchor="middle">existing native + Python labels</text>
 
   <path class="arrow" d="M385,124 C320,150 265,174 230,206"/>
   <path class="arrow" d="M535,124 C600,150 655,174 690,206"/>
 
-  <text class="label" x="255" y="165" text-anchor="middle">installer reads catalog</text>
-  <text class="label" x="665" y="165" text-anchor="middle">rules load catalog</text>
+  <text class="label" x="255" y="165" text-anchor="middle">install once, then execute directly</text>
+  <text class="label" x="665" y="165" text-anchor="middle">exporter supplies lock metadata</text>
 </svg>

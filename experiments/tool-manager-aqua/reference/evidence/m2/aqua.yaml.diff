@@ -1,0 +1,11 @@
+--- 0.3.0/aqua.yaml
++++ 0.3.1/aqua.yaml
+@@ -35,7 +35,7 @@
+   tags:
+   - published
+   - repository
+-- name: astral-sh/ruff@0.11.13
++- name: astral-sh/ruff@0.11.12
+   tags:
+   - published
+   - repository

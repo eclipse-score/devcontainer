@@ -225,14 +225,29 @@ def apt_requirements(environment, *, recommends=None):
 
 def all_definitions(*, repository_metadata=True):
     """Unify inventory views while retaining provider-owned formats."""
-    import re
+    import fnmatch
 
     root = LOCKFILE_ROOT.parents[1]
-    managers = (
-        read_jsonc(root / ".github/renovate.json5")["customManagers"]
-        if repository_metadata
-        else []
+    renovate = (
+        read_jsonc(root / ".github/renovate.json5") if repository_metadata else {}
     )
+    enabled_managers = set(renovate.get("enabledManagers", []))
+    presets = renovate.get("extends", [])
+    ignored_paths = renovate.get("ignorePaths", [])
+
+    def managed_by_owner(owner_path):
+        if owner_path == "tools/owners/aqua/aqua.yaml":
+            return "custom.regex" in enabled_managers and any(
+                preset.startswith("github>aquaproj/aqua-renovate-config:file#")
+                and "tools/owners/aqua/aqua" in preset
+                for preset in presets
+            )
+        if owner_path == "tools/owners/aqua/pyproject.toml":
+            return "pep621" in enabled_managers and not any(
+                fnmatch.fnmatchcase(owner_path, pattern) for pattern in ignored_paths
+            )
+        return False
+
     result = {}
     for name, filename, definition in _iter_catalog():
         if name in result:
@@ -247,12 +262,8 @@ def all_definitions(*, repository_metadata=True):
             ),
             "delivery": "container, Bazel",
             "update": (
-                "Renovate + digest refresh"
-                if any(
-                    re.search(pattern, "tools/lockfiles/" + filename)
-                    for manager in managers
-                    for pattern in manager.get("fileMatch", [])
-                )
+                "Renovate + Aqua checksum/export"
+                if managed_by_owner("tools/owners/aqua/aqua.yaml")
                 else "manual release + artifact digest review"
             ),
         }
@@ -266,7 +277,11 @@ def all_definitions(*, repository_metadata=True):
             "source": "tools/score_tools/python_tools.bzl",
             "platforms": ["uv-supported platforms"],
             "delivery": "container, Bazel, uv",
-            "update": "manual Python release review",
+            "update": (
+                "Renovate + Python compatibility export"
+                if managed_by_owner("tools/owners/aqua/pyproject.toml")
+                else "manual Python release review"
+            ),
         }
     for name, definition in load_providers().items():
         if name in result:

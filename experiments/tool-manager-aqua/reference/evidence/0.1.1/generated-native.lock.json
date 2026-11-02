@@ -1,0 +1,66 @@
+{
+  "ruff": {
+    "version": "0.11.13",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-apple-darwin/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-apple-darwin.tar.gz",
+        "sha256": "7d5e8feea7ee5c3962807996cad557e8a0c4d676c1cba6223bfb0e8b2ca07723",
+        "type": "tar.gz",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-unknown-linux-musl/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-unknown-linux-musl.tar.gz",
+        "sha256": "1ff8292d610302bc20791f6ab264de499b6d2fbf89030fef915908c564a78e82",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-x86_64-unknown-linux-musl/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-x86_64-unknown-linux-musl.tar.gz",
+        "sha256": "4540e8bc5b2af73c4b79e9e993724b044310eea4aa9003cf05ed4bdee6c25735",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "x86_64"
+      }
+    ]
+  },
+  "shellcheck": {
+    "version": "0.10.0",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.darwin.aarch64.tar.xz",
+        "sha256": "bbd2f14826328eee7679da7221f2bc3afb011f6a928b848c80c321f6046ddf81",
+        "type": "tar.xz",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.aarch64.tar.xz",
+        "sha256": "324a7e89de8fa2aed0d0c28f3dab59cf84c6d74264022c00c22af665ed1a09bb",
+        "type": "tar.xz",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "shellcheck-v0.10.0/shellcheck",
+        "url": "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz",
+        "sha256": "6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87",
+        "type": "tar.xz",
+        "os": "linux",
+        "cpu": "x86_64"
+      }
+    ]
+  }
+}

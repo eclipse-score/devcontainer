@@ -16,6 +16,10 @@ SPDX-License-Identifier: Apache-2.0
 
 # Proposed PR sequence from the local reference
 
+> **Conditional proposal:** This sequence applies to the explored implementation.
+> It is not an approved migration plan; requirements and architecture selection
+> remain open in the [decision record](tooling-decision-record.md).
+
 This local breakdown derives from the complete, validated
 [reference](tooling-reference-implementation.md). It specifies review outcomes
 and dependencies; no PRs have been created. The discovery commits are deliberately

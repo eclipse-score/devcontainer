@@ -16,117 +16,131 @@ SPDX-License-Identifier: Apache-2.0
 
 # Maintaining tools
 
-The catalog covers development commands, feature bundles, base images, and build
-helpers. Definitions own version decisions; environment compositions own selection.
-The container installer is a consumer of those inputs, as are documentation and
-verification. Standalone delivery imports no container installation code.
+`tools/owners/aqua/aqua.yaml` owns native releases and environment tags. Its
+local recipes cover APM and starpls. `tools/owners/aqua/pyproject.toml` owns
+Python distributions and versions. Root lockfiles, Python catalog versions,
+repository membership, and the local facade metadata are generated outputs.
 
-## Sources and responsibilities
+## Sources and runtime responsibilities
 
 | Source | Owns |
 | --- | --- |
-| `tools/lockfiles/*.lock.json` | Native releases, platforms, artifact hashes and layouts |
-| `tools/score_tools/python_tools.bzl` | Python distributions, exact top-level versions and entrypoints |
-| `tools/providers.json` | APT constraints, special release setup metadata, compatibility expectations and references to external owners |
-| `tools/environments.json` | Local feature and repository selections, including temporary build dependencies |
-| Dev Containers configs and lockfiles | External feature selection, options, resolved feature versions and OCI digests |
-| Dockerfiles / root Dev Containers config | Base images and trust-store refresh policy |
-| `.bazelversion` | Workspace Bazel version, independent of the image's preinstalled version |
+| `tools/owners/aqua/aqua.yaml` and local registry recipes | Native release selections and environment tags |
+| `tools/owners/aqua/aqua-checksums.json` | Generated checksums for selected native artifacts |
+| `tools/owners/aqua/pyproject.toml` | Python direct versions and dependency groups |
+| `tools/lockfiles/*.lock.json` | Portable URL/hash/layout snapshots for existing Bazel labels |
+| `tools/score_tools/python_tools.bzl` | Python command identities and generated versions for Bazel and compatibility consumers |
+| `tools/providers.json` | APT constraints, special release metadata, and external-provider lifecycle data |
+| `tools/environments.json` | Feature and repository provider selections |
+| Dev Containers configs and lockfiles | External feature selection, options, resolved versions, and OCI digests |
+| `.bazelversion` | Workspace Bazel version, independent of image provisioning |
 
-`score_tools.catalog` reads these definitions without installation side effects.
-The old `tools/lockfiles/python_tools.bzl` label remains a forwarding export
-for Bazel consumers; it carries no separate pins. The reader accepts only a
-literal Python-tool dictionary. Bazel loads that same Starlark
-file during analysis; its runtime launcher carries immutable arguments and the
-catalog-pinned uvx binary, so host Python is unnecessary.
+The feature Dockerfiles bootstrap checksum-pinned Aqua, copy the published
+native selection directly, and install Python groups with the selected uv.
+The generic root JavaScript/Node DevContainer provisions the repository
+profile from its post-create command into the current user's stable prefix.
+The helper records exposed command identities separately for each profile. A
+reprovision removes a deselected command only when its path still matches the
+recorded manager output and no other selected profile owns it. It preserves
+foreign and user-replaced commands, and refuses to overwrite an untracked name
+selected by Aqua or uv. A prefix without a supported ownership ledger needs a
+fresh `--prefix`; the provisioner does not infer ownership from names. Both
+paths retain APM's complete adjacent runtime directory. Runtime command
+execution calls the installed binaries, not Aqua or uv.
 
-The published image composes the s-core-local and bazel-feature selections.
-Repository development uses its own selection and retains its Docker feature.
-Features still own lifecycle hooks, mounts and special setup such as JAVA_HOME,
-CodeQL packs and Bazel completion. They do not own another list of native or
-Python commands. Python tools are installed to `/usr/local/bin` with environments
-under `/usr/local/share/uv/tools`, accessible to the development user. Bazel setup
-uses the Dev Containers `_REMOTE_USER`, defaulting to vscode.
+Feature installers keep lifecycle, APT, and provider setup. Their
+`install.py environment NAME` command applies APT/npm selection only; feature
+scripts continue to configure Java, CodeQL packs, Bazel completion,
+`bazel-compile-commands`, and other provider behavior. `install.py` retains
+metadata, selection, version, and installed-state verification commands. It no
+longer downloads native artifacts or installs Python tools.
 
-The yq download helper is removed: the existing image Python reads literal data
-and emits quoted shell metadata. yq is therefore intentionally absent from the
-shipped catalog. No new host Python requirement is introduced for Bazel callers.
+## Host provisioning and execution
 
-## Maintenance
-
-To add a native tool, define its lockfile and add the relevant environment
-membership. Register its multitool hub and Bazel aliases; catalog validation
-checks both explicit registrations against all native definitions.
-
-To add a Python tool, edit the literal dictionary and select its environments.
-Bazel targets derive from the dictionary and the distribution includes the file
-as package data. There is no second package requirements file to update.
-
-To add an APT tool, define its packages and policy in `providers.json`, then add
-its name to an environment's `apt` selection. Use `distribution` for intentionally
-unpinned installs, `prefix` for Debian version-prefix constraints (including any
-epoch), and `package-name` when the version selects the package identity.
-Compatibility expectations are separate fields and do not masquerade as install
-pins. Add tool-specific functional checks where package inspection is insufficient.
-
-To update a tool, change its owning definition, refresh native artifact hashes
-where relevant, and regenerate the overview. In native lockfiles, the command
-matching the file basename owns the release version; digest refresh derives the
-copies for sibling commands such as uvx from that owner. Validation rejects
-stale generated copies. Existing Renovate release managers
-continue to edit native lockfiles; duplicate apm/opencode YAML managers are removed.
-Other providers currently require the manual review named in the overview.
-
-To remove a tool from an environment, remove that membership. Installation,
-availability verification and generated membership use that same selection.
-Deleting the global definition additionally removes its delivery targets and
-registrations. Provider-specific lifecycle setup must be reviewed with the change.
+Provision the repository selection once into the default stable prefix:
 
 ```console
-python3 tools/internal/sync_readme.py
+python3 tools/internal/devcontainer/provision_host_tools.py
+```
+
+The default prefix is `~/.local/share/score-tools`; pass `--prefix PATH` to
+choose another location. Aqua's checksum-pinned bootstrap is installed under
+that prefix only when a refresh is required. `--profile published` installs
+the larger selection. `tools/run-tool --strict NAME ...` executes
+`SCORE_TOOLS_BIN/NAME` directly. If that prepared host binary is unavailable,
+the existing Bazel compatibility fallback remains. The direct route preserves
+cwd, arguments, signals, and exit status without launching a manager, resolver,
+or Bazel. Container calls prefer their image PATH and keep the same Bazel
+fallback if a selected command is absent.
+
+For normal `uv` and `uvx` commands in standalone host shells, add these exports
+to the user's shell startup file after provisioning:
+
+```sh
+export SCORE_TOOLS_BIN="${HOME}/.local/share/score-tools/bin"
+export PATH="${SCORE_TOOLS_BIN}:${PATH}"
+```
+
+The root DevContainer sets the same prefix in `remoteEnv`, so post-create
+provisioning remains available to later integrated terminals and editor tasks.
+
+Python Bazel targets continue to use the catalogued uvx executable. Ordinary
+`uv` projects and `uvx --with` consumers keep standard package metadata and
+extras; they do not need a custom consumer launcher. Existing native labels,
+including APM and OpenCode, retain portable URL/hash/layout metadata. Complex
+tools remain outside Bazel packaging.
+
+## Local dependency wheel and release updates
+
+Follow the maintained [local release and update workflow](aqua/README.md) for
+owner refresh/check, explicit wheel identity/version, release validation, an
+ordinary same-project uv/uvx update, native prefix reprovision, and the public
+Bazel compatibility check. It records prerequisites, artifact handoff, and
+recurring responsibilities. Hosting and public package identity remain open.
+
+## Owner refresh and updates
+
+After a Renovate update or an intentional owner edit, run:
+
+```console
+python3 tools/internal/aqua/refresh_owners.py
+python3 tools/internal/aqua/sync_repository.py --check
 python3 tools/internal/sync_readme.py --check
+```
+
+Renovate uses Aqua's pinned `aqua-renovate-config` preset for the live
+`aqua.yaml`, Renovate's PEP 621 manager for dependency groups, and one narrow
+custom manager for the Aqua bootstrap version in `aqua-bootstrap.toml`. Its
+refresh command updates bootstrap artifact hashes first, then Aqua package
+checksums and generated root metadata. Renovate ignores `experiments/**` so
+historical configs, evidence and generated package copies do not become
+additional owners. The daily job allowlists only
+`python3 tools/internal/aqua/refresh_owners.py`; it never publishes a package
+or image.
+
+To add a standard-registry native CLI, add its exact version and intended tag
+to `tools/owners/aqua/aqua.yaml`. Add a local registry recipe and policy entry
+only when the pinned upstream registry lacks that package. Extend
+`tools/internal/aqua/export_native.py` when its artifact name, archive layout,
+or URL family differs from the supported mappings. For a Python CLI, add its
+exact requirement to the intended dependency group and its public
+package/entrypoint(s)/description identity to `tools/score_tools/python_tools.bzl`.
+Refresh owners to derive versions, compatibility outputs, and tool docs.
+
+APT providers remain in `tools/providers.json`. Keep feature-specific external
+tools, npm packages and lifecycle duties with their established providers.
+
+## Checks and interfaces
+
+`tools/internal/devcontainer/install.py verify-environment NAME` checks
+selected executable versions and installed Debian packages after image
+construction. Existing Bazel labels preserve runner arguments, cwd and exit
+behavior for consumers that explicitly use them.
+
+```console
 python3 -m unittest discover -s tools/tests -p 'test_*.py'
 bazel test //tools:python_tool_runner_test //tools:run_tool_test
 ```
 
-`install.py verify-environment NAME` inspects selected executables' reported
-versions and installed Debian package state and constraints. Run it as the
-actual development user. It emits observed versions separately from requested
-policy. Feature tests additionally cover functionality, compatibility and setup.
-
-## Execution and migration
-
-Direct Bazel targets select native artifacts or the Python definition through
-pinned uvx. Native `<command>_binary` targets remain available as dependencies;
-Python targets are for invocation, not hermetic Bazel actions.
-
-`run-tool` retains existing behavior: container PATH wins even with `--strict`;
-non-strict host invocation prefers PATH; strict host invocation uses Bazel.
-A failed local invocation returns its exit code and suggests strict execution;
-it does not silently retry. PATH selection is not a version guarantee and a
-container marker is not an image attestation. This compatibility decision avoids
-changing downstream hooks during the catalog refactoring.
-
-The new explicit `score-tool` entrypoint selects Python tools through caller uv.
-It preserves cwd, argument boundaries, signals and exit status using exec.
-Future release-based consumer usage (replace RELEASE with a published Git ref):
-
-```console
-uvx --from 'git+https://github.com/eclipse-score/devcontainer.git@RELEASE' score-tool pre-commit run --all-files
-```
-
-For local verification, use `git+file:///absolute/path/to/repository@COMMIT` from
-outside the checkout. No package or image publication is needed. Consumers may
-migrate unpinned `uvx pre-commit` calls to this explicit release-selected form.
-The standalone path requires compatible uv already on PATH and does not pin or
-bootstrap it. Container and Bazel delivery retain their catalog-pinned uv runtime.
-
-## Guarantees
-
-Native hashes verify exact artifacts. APT prefixes constrain direct package
-versions without freezing repository state or transitive dependencies. Feature
-OCI digests lock feature implementations, not every package those features fetch.
-Python pins select direct distributions; interpreter and transitive resolution
-are still uv's responsibility. Trust-store refresh and intentionally distribution
-following tools remain unpinned. Full environment locking and reproducible image
-rebuilds are outside this refactoring.
+Native hashes identify portable artifacts. Aqua and Python dependency groups
+own versions; root files generated from them are not additional version pins.

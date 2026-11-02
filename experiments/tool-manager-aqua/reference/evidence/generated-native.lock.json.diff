@@ -1,0 +1,40 @@
+--- 0.1.1/generated-native.lock.json
++++ 0.2.0/generated-native.lock.json
+@@ -1,12 +1,12 @@
+ {
+   "ruff": {
+-    "version": "0.11.13",
++    "version": "0.11.12",
+     "binaries": [
+       {
+         "kind": "archive",
+         "file": "ruff-aarch64-apple-darwin/ruff",
+-        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-apple-darwin.tar.gz",
+-        "sha256": "7d5e8feea7ee5c3962807996cad557e8a0c4d676c1cba6223bfb0e8b2ca07723",
++        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-apple-darwin.tar.gz",
++        "sha256": "6e8bce88be5063d3378b6fa51430655884794f6cd04a059721839dc012b7ee7d",
+         "type": "tar.gz",
+         "os": "macos",
+         "cpu": "arm64"
+@@ -14,8 +14,8 @@
+       {
+         "kind": "archive",
+         "file": "ruff-aarch64-unknown-linux-musl/ruff",
+-        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-aarch64-unknown-linux-musl.tar.gz",
+-        "sha256": "1ff8292d610302bc20791f6ab264de499b6d2fbf89030fef915908c564a78e82",
++        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-unknown-linux-musl.tar.gz",
++        "sha256": "80f0b463a7417b93132d7411f2ed88170b3e8176abfbd49b1fe1efae7afe4d90",
+         "type": "tar.gz",
+         "os": "linux",
+         "cpu": "arm64"
+@@ -23,8 +23,8 @@
+       {
+         "kind": "archive",
+         "file": "ruff-x86_64-unknown-linux-musl/ruff",
+-        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.13/ruff-x86_64-unknown-linux-musl.tar.gz",
+-        "sha256": "4540e8bc5b2af73c4b79e9e993724b044310eea4aa9003cf05ed4bdee6c25735",
++        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-x86_64-unknown-linux-musl.tar.gz",
++        "sha256": "148e03ce15ad569066120905c86e446e066c0f7c4f986d03825c273c5e2147e2",
+         "type": "tar.gz",
+         "os": "linux",
+         "cpu": "x86_64"

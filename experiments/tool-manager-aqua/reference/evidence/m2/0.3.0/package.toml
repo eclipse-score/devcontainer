@@ -1,0 +1,17 @@
+# Generated from native config and Python dependency groups.
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "score-aqua-reference"
+version = "0.3.0"
+requires-python = ">=3.10"
+[project.optional-dependencies]
+"repository" = ["pre-commit==4.7.0", "ruff==0.11.13"]
+"pre-commit" = ["pre-commit==4.7.0"]
+"ruff" = ["ruff==0.11.13"]
+"published" = ["pre-commit==4.7.0", "pytest==9.0.2", "basedpyright==1.35.0", "ruff==0.11.13"]
+"pytest" = ["pytest==9.0.2"]
+"basedpyright" = ["basedpyright==1.35.0"]
+[tool.setuptools]
+packages = []

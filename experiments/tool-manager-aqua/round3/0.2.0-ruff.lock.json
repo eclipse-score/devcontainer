@@ -1,0 +1,35 @@
+{
+  "ruff": {
+    "version": "0.11.12",
+    "description": "Check and format Python",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-apple-darwin/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-apple-darwin.tar.gz",
+        "sha256": "6e8bce88be5063d3378b6fa51430655884794f6cd04a059721839dc012b7ee7d",
+        "type": "tar.gz",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-aarch64-unknown-linux-musl/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-aarch64-unknown-linux-musl.tar.gz",
+        "sha256": "80f0b463a7417b93132d7411f2ed88170b3e8176abfbd49b1fe1efae7afe4d90",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "ruff-x86_64-unknown-linux-musl/ruff",
+        "url": "https://github.com/astral-sh/ruff/releases/download/0.11.12/ruff-x86_64-unknown-linux-musl.tar.gz",
+        "sha256": "148e03ce15ad569066120905c86e446e066c0f7c4f986d03825c273c5e2147e2",
+        "type": "tar.gz",
+        "os": "linux",
+        "cpu": "x86_64"
+      }
+    ]
+  }
+}

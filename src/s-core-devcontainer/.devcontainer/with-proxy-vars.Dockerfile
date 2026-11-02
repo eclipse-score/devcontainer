@@ -37,14 +37,35 @@ LABEL dev.containers.features="common"
 # common-utils feature deliberately runs with `upgradePackages: false`, so a
 # distrusted CA would otherwise stay trusted for the life of the image.
 # Deliberately unpinned: a pinned trust store is a stale trust store.
+# The owner-driven tool bootstrap below is Python-based and runs before
+# Dev Container features can install their runtime providers. Use distro APT
+# for this bootstrap interpreter; tool versions remain in their existing owners.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates \
+    && apt-get install -y --no-install-recommends ca-certificates python3 \
     && update-ca-certificates --fresh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+COPY tools /usr/local/share/score-tools
+
+# Provision the current published owners during every image build. Aqua and uv
+# are build-time installers; only their direct selected tools remain in the image.
+ARG TARGETARCH
+COPY tools/owners/aqua/aqua.yaml /tmp/score-aqua-owner/aqua.yaml
+COPY tools/owners/aqua/aqua-policy.yaml /tmp/score-aqua-owner/aqua-policy.yaml
+COPY tools/owners/aqua/aqua-bootstrap.toml /tmp/score-aqua-owner/aqua-bootstrap.toml
+COPY tools/owners/aqua/aqua-checksums.json /tmp/score-aqua-owner/aqua-checksums.json
+COPY tools/owners/aqua/starpls-registry.yaml /tmp/score-aqua-owner/starpls-registry.yaml
+COPY tools/owners/aqua/apm-registry.yaml /tmp/score-aqua-owner/apm-registry.yaml
+COPY tools/owners/aqua/pyproject.toml /tmp/score-aqua-owner/pyproject.toml
+RUN SCORE_AQUA_PLATFORM="linux/${TARGETARCH}" \
+    /usr/local/share/score-tools/internal/devcontainer/provision_image_tools.sh \
+    /tmp/score-aqua-owner /opt/score-tools \
+    && rm -rf /tmp/score-aqua-owner
+
+ENV PATH="/opt/score-tools/bin:${PATH}"
+
 # Unset proxy variables for all login shells
 COPY src/s-core-devcontainer/.devcontainer/unset-proxy.sh /etc/bash_completion.d/unset-proxy.sh
-COPY tools /usr/local/share/score-tools
 
 RUN userdel -f -r ubuntu

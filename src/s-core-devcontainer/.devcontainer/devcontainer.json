@@ -73,7 +73,7 @@
                     "--pretty",
                     "--background-index"
                 ],
-                "bazel.lsp.command": "/usr/local/bin/starpls", // use the Starlark Language Server for Bazel projects
+                "bazel.lsp.command": "/opt/score-tools/bin/starpls", // use the image-provisioned Starlark Language Server
                 "bazel.lsp.args": [
                     "server", // see https://github.com/withered-magic/starpls/issues/400#issuecomment-3095469671 - this is "what developers expect"
                     "--experimental_infer_ctx_attributes",

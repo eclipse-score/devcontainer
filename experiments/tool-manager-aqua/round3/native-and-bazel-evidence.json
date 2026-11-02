@@ -1,0 +1,54 @@
+[
+  {
+    "release": "0.1.0",
+    "native_command": [
+      "/tmp/score-aqua-round3/releases/0.1.0/native-bin/ruff",
+      "--version"
+    ],
+    "native_output": "ruff 0.11.13",
+    "bazel_metadata_version": "0.11.13",
+    "bazel_platforms": [
+      [
+        "macos",
+        "arm64"
+      ],
+      [
+        "linux",
+        "arm64"
+      ],
+      [
+        "linux",
+        "x86_64"
+      ]
+    ],
+    "standard_optional_dependency": [
+      "ruff==0.11.13"
+    ]
+  },
+  {
+    "release": "0.2.0",
+    "native_command": [
+      "/tmp/score-aqua-round3/releases/0.2.0/native-bin/ruff",
+      "--version"
+    ],
+    "native_output": "ruff 0.11.12",
+    "bazel_metadata_version": "0.11.12",
+    "bazel_platforms": [
+      [
+        "macos",
+        "arm64"
+      ],
+      [
+        "linux",
+        "arm64"
+      ],
+      [
+        "linux",
+        "x86_64"
+      ]
+    ],
+    "standard_optional_dependency": [
+      "ruff==0.11.12"
+    ]
+  }
+]

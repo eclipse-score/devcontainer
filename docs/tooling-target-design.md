@@ -16,6 +16,11 @@ SPDX-License-Identifier: Apache-2.0
 
 # Proposed tool management architecture
 
+> **Architecture decision open:** This document describes the explored local
+> approach. Its technical validation does not establish the requirements or
+> select the final architecture. See the
+> [decision record](tooling-decision-record.md) for the current decision status.
+
 Validated local design for #190. The [status quo](tooling-status-quo.md) describes
 the baseline; this document explains the resulting architecture from high level
 to detail. The complete reference is implemented and validated on

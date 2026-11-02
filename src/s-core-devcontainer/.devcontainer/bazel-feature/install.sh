@@ -39,12 +39,18 @@ apt-get update
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature --phase build
 
-# Lockfile-managed Bazel tooling
+# Native and Python tools are provisioned in the base image from aqua owners.
+# This provider step applies the feature's APT and external-tool selection.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment bazel-feature
 
 if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then
     # Bazelisk + Bazel
-    ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
+    # The verified prepared runtime may supply Bazelisk outside /usr/local/bin.
+    bazelisk_path=$(command -v bazelisk) || {
+        echo "Selected Bazelisk is not available on PATH" >&2
+        exit 1
+    }
+    ln -sf "${bazelisk_path}" /usr/local/bin/bazel
 
     # Pre-install a fixed Bazel version, setup the bash command completion
     export USE_BAZEL_VERSION=${bazel_version}

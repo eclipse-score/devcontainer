@@ -1,0 +1,6 @@
+{
+  "ruff": "0.11.13",
+  "facade_release": "0.1.0",
+  "owner": "round3/aqua.yaml",
+  "bazel_version": "0.11.13"
+}

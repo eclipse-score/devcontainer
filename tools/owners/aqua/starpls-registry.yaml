@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+packages:
+  - type: github_release
+    repo_owner: withered-magic
+    repo_name: starpls
+    asset: starpls-{{.OS}}-{{.Arch}}
+    format: raw
+    description: Provide language-server support for Starlark
+    supported_envs:
+      - linux/amd64
+      - linux/arm64
+      - darwin/arm64
+    overrides:
+      - goos: linux
+        replacements:
+          arm64: aarch64
+    files:
+      - name: starpls

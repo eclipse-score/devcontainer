@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "profile": "published",
+  "target_platform": "linux/amd64",
+  "tools": {
+    "actionlint": {
+      "owner": "native",
+      "version": "1.7.7",
+      "entrypoint": "actionlint",
+      "path": "bin/actionlint",
+      "sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c"
+    },
+    "basedpyright": {
+      "owner": "python",
+      "version": "1.35.0",
+      "entrypoint": "basedpyright",
+      "path": "bin/basedpyright",
+      "sha256": "0770fb2d4f332e88958cd595dbb65af35af1b6d8052ff4b32376c614b3b68f63"
+    },
+    "bazelisk": {
+      "owner": "native",
+      "version": "1.27.0",
+      "entrypoint": "bazelisk",
+      "path": "bin/bazelisk",
+      "sha256": "e1508323f347ad1465a887bc5d2bfb91cffc232d11e8e997b623227c6b32fb76"
+    },
+    "buildifier": {
+      "owner": "native",
+      "version": "8.2.1",
+      "entrypoint": "buildifier",
+      "path": "bin/buildifier",
+      "sha256": "6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a"
+    },
+    "codespell": {
+      "owner": "python",
+      "version": "2.4.1",
+      "entrypoint": "codespell",
+      "path": "bin/codespell",
+      "sha256": "9cf94bed31bf46d250c06e9e1e6264cecdcfaa0d34b6138d33bb30db440b06e2"
+    },
+    "pre-commit": {
+      "owner": "python",
+      "version": "4.7.0",
+      "entrypoint": "pre-commit",
+      "path": "bin/pre-commit",
+      "sha256": "7503f09d7e56e545de5ded42750dc126ce15e31c18dbce826f8a624cc55da51b"
+    },
+    "pytest": {
+      "owner": "python",
+      "version": "9.0.2",
+      "entrypoint": "pytest",
+      "path": "bin/pytest",
+      "sha256": "267c75f784271ef4159a1d4e2abe9288773fa666fee7e24c68f45968dc77a630"
+    },
+    "ruff": {
+      "owner": "native",
+      "version": "0.11.12",
+      "entrypoint": "ruff",
+      "path": "bin/ruff",
+      "sha256": "b95e6560e91875236071fca25fd086b4bb36f327255056b276590f3bf682f1ed"
+    },
+    "shellcheck": {
+      "owner": "native",
+      "version": "0.10.0",
+      "entrypoint": "shellcheck",
+      "path": "bin/shellcheck",
+      "sha256": "f35ae15a4677945428bdfe61ccc297490d89dd1e544cc06317102637638c6deb"
+    },
+    "starpls": {
+      "owner": "native",
+      "version": "0.1.22",
+      "entrypoint": "starpls",
+      "path": "bin/starpls",
+      "sha256": "7c661cdde0d1c026665086d07523d825671e29056276681616bb32d0273c5eab"
+    },
+    "uv": {
+      "owner": "native",
+      "version": "0.13.6",
+      "entrypoint": "uv",
+      "path": "bin/uv",
+      "sha256": "f56ca7e29e708e20ed6b96f9a8cb89ac45129239c6166481cc3ae3cbab286a0f"
+    },
+    "uvx": {
+      "owner": "native",
+      "version": "0.13.6",
+      "entrypoint": "uvx",
+      "path": "bin/uvx",
+      "sha256": "8b9d44a59bb06a91fb7060d4c2c76087c60fed16399e49278c7e5e6ff44a232a"
+    },
+    "yamlfmt": {
+      "owner": "native",
+      "version": "0.17.0",
+      "entrypoint": "yamlfmt",
+      "path": "bin/yamlfmt",
+      "sha256": "c2f4acd79553ecd757197ebc7a06cc33ef9aa6d43c38f27bede1c25ca1bdfed2"
+    }
+  },
+  "environments": {
+    "s-core-local": {
+      "native": [
+        "shellcheck",
+        "ruff",
+        "actionlint",
+        "yamlfmt",
+        "uv",
+        "uvx",
+        "apm",
+        "opencode"
+      ],
+      "python": [
+        "pre-commit",
+        "basedpyright",
+        "pytest",
+        "codespell"
+      ],
+      "prepared_native": [
+        "shellcheck",
+        "ruff",
+        "actionlint",
+        "yamlfmt",
+        "uv",
+        "uvx"
+      ],
+      "prepared_python": [
+        "pre-commit",
+        "basedpyright",
+        "pytest",
+        "codespell"
+      ]
+    },
+    "bazel-feature": {
+      "native": [
+        "bazelisk",
+        "buildifier",
+        "starpls"
+      ],
+      "python": [],
+      "prepared_native": [
+        "bazelisk",
+        "buildifier",
+        "starpls"
+      ],
+      "prepared_python": []
+    }
+  }
+}

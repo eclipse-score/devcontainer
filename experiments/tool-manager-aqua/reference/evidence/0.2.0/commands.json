@@ -1,0 +1,390 @@
+[
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "12345:12345",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/releases/0.2.0/runtime/repository,dst=/opt/score-tools,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/runtime-check.sh,dst=/probe/check.sh,readonly",
+      "--tmpfs",
+      "/tmp:mode=1777",
+      "--tmpfs",
+      "/home/probe:mode=1777",
+      "--env",
+      "HOME=/home/probe",
+      "--env",
+      "PRE_COMMIT_HOME=/home/probe/pre-commit",
+      "--env",
+      "PATH=/opt/score-tools/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=repository",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.12",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "/probe/check.sh"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\npre-commit 4.7.0\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.fn8haX\n\nReference runtime passed: profile=repository uid=12345 cwd=/tmp/score-reference-consumer.fn8haX\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "init",
+      "--bare",
+      "--no-workspace",
+      "--python",
+      "/usr/bin/python3",
+      "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Initialized project `uv-repository` at `/tmp/score-aqua-reference/evidence/0.2.0/uv-repository`\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "add",
+      "--raw",
+      "score-aqua-reference[repository] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.14.3\nCreating virtual environment at: .venv\nResolved 14 packages in 87ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 431ms\nInstalled 13 packages in 12ms\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + nodeenv==1.12.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pre-commit==4.7.0\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-aqua-reference==0.2.0 (from file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "lock",
+      "--check"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 14 packages in 1ms\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[repository] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Installed 13 packages in 12ms\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[repository] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-repository",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "12345:12345",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/releases/0.2.0/runtime/published,dst=/opt/score-tools,readonly",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/runtime-check.sh,dst=/probe/check.sh,readonly",
+      "--tmpfs",
+      "/tmp:mode=1777",
+      "--tmpfs",
+      "/home/probe:mode=1777",
+      "--env",
+      "HOME=/home/probe",
+      "--env",
+      "PRE_COMMIT_HOME=/home/probe/pre-commit",
+      "--env",
+      "PATH=/opt/score-tools/bin:/usr/bin:/bin",
+      "--env",
+      "SCORE_REFERENCE_PROFILE=published",
+      "--env",
+      "SCORE_EXPECT_RUFF=0.11.12",
+      "--env",
+      "SCORE_EXPECT_PRE_COMMIT=4.7.0",
+      "--env",
+      "SCORE_EXPECT_SHELLCHECK=0.10.0",
+      "score-tool-manager-comparison-base:20261031",
+      "bash",
+      "/probe/check.sh"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\npre-commit 4.7.0\nShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\nfixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\nObserve consumer cwd and arguments.......................................Passed\n- hook id: observe-cwd\n- duration: 0s\n\n/tmp/score-reference-consumer.cMXzQp\n\nReference runtime passed: profile=published uid=12345 cwd=/tmp/score-reference-consumer.cMXzQp\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "init",
+      "--bare",
+      "--no-workspace",
+      "--python",
+      "/usr/bin/python3",
+      "/tmp/score-aqua-reference/evidence/0.2.0/uv-published"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Initialized project `uv-published` at `/tmp/score-aqua-reference/evidence/0.2.0/uv-published`\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "add",
+      "--raw",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.14.3\nCreating virtual environment at: .venv\nResolved 14 packages in 14ms\nInstalled 13 packages in 15ms\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + nodeenv==1.12.0\n + packaging==26.3\n + platformdirs==4.14.2\n + pre-commit==4.7.0\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-aqua-reference==0.2.0 (from file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "lock",
+      "--check"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 14 packages in 1ms\n"
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/releases/0.2.0/dist/score_aqua_reference-0.2.0-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/evidence/0.2.0/uv-published",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "init",
+      "-q"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "WARNING: Running Bazel server needs to be killed, because the following startup options are different:\n  - Only in old server: --workspace_directory=/tmp/score-aqua-reference/releases/0.1.1/bazel\n  - Only in new server: --workspace_directory=/tmp/score-aqua-reference/releases/0.2.0/bazel\nStarting local Bazel server (9.3.1) and connecting to it...\nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nComputing main repo mapping: \nWARNING: For repository 'rules_shell', the root module requires module version rules_shell@0.4.1, but got rules_shell@0.6.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off\nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (5 packages loaded, 6 targets configured)\nAnalyzing: target //tools:ruff (5 packages loaded, 6 targets configured)\n\nAnalyzing: target //tools:ruff (94 packages loaded, 508 targets configured)\n\nAnalyzing: target //tools:ruff (94 packages loaded, 508 targets configured)\n\nAnalyzing: target //tools:ruff (94 packages loaded, 508 targets configured)\n\nINFO: Analyzed target //tools:ruff (95 packages loaded, 513 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  ../bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 12.668s, Critical Path: 0.04s\nINFO: 3 processes: 4 action cache hit, 3 internal.\nINFO: Build completed successfully, 3 total actions\nINFO: Running command line: ../bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:shellcheck",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": "Computing main repo mapping: \nWARNING: For repository 'rules_shell', the root module requires module version rules_shell@0.4.1, but got rules_shell@0.6.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off\nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  ../bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.401s, Critical Path: 0.01s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: ../bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:pre-commit",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (2 packages loaded, 480 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  ../bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.272s, Critical Path: 0.01s\nINFO: 4 processes: 3 action cache hit, 4 internal.\nINFO: Build completed successfully, 4 total actions\nINFO: Running command line: ../bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:ruff",
+      "--",
+      "check",
+      "--isolated",
+      "fixture with space.py"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 1,
+    "stdout": "fixture with space.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  ../bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.216s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: ../bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:shellcheck",
+      "--",
+      "fixture with space.sh"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 1,
+    "stdout": "\nIn fixture with space.sh line 2:\necho $1\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$1\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  ../bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.198s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: ../bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "command": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/bazel-output",
+      "run",
+      "--enable_bzlmod",
+      "//tools:pre-commit",
+      "--",
+      "run",
+      "--all-files",
+      "--verbose"
+    ],
+    "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+    "exit": 0,
+    "stdout": "consumer cwd and argument................................................Passed\n- hook id: cwd\n- duration: 0s\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  ../bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.175s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: ../bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\n"
+  }
+]

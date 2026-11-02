@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+packages:
+  - type: github_release
+    repo_owner: microsoft
+    repo_name: apm
+    description: Agent Package Manager
+    asset: apm-{{.OS}}-{{.Arch}}.{{.Format}}
+    format: tar.gz
+    replacements:
+      amd64: x86_64
+    supported_envs:
+      - linux/amd64
+      - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
+    files:
+      - name: apm
+        src: apm-{{.OS}}-{{.Arch}}/apm
+    checksum:
+      type: github_release
+      asset: "{{.Asset}}.sha256"
+      algorithm: sha256

@@ -1,0 +1,15 @@
+# Generated from native config and Python dependency groups.
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "score-aqua-reference"
+version = "0.2.0"
+requires-python = ">=3.10"
+[project.optional-dependencies]
+"repository" = ["pre-commit==4.7.0", "ruff==0.11.12"]
+"pre-commit" = ["pre-commit==4.7.0"]
+"ruff" = ["ruff==0.11.12"]
+"published" = ["pre-commit==4.7.0", "ruff==0.11.12"]
+[tool.setuptools]
+packages = []

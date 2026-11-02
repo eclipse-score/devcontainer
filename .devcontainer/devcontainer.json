@@ -5,6 +5,11 @@
             "moby": "false" // does not work with Debian Trixie based images
         }
     },
+    "remoteUser": "node",
+    "remoteEnv": {
+        "SCORE_TOOLS_BIN": "/home/node/.local/share/score-tools/bin",
+        "PATH": "/home/node/.local/share/score-tools/bin:${containerEnv:PATH}"
+    },
     "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/post_create_command.sh",
     "customizations": {
         "vscode": {

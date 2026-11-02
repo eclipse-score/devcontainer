@@ -1,0 +1,16 @@
+{
+  "release": "/tmp/score-aqua-reference/releases/0.1.1",
+  "selections": {
+    "repository": {
+      "ruff": "0.11.13",
+      "pre-commit": "4.7.0"
+    },
+    "published": {
+      "ruff": "0.11.13",
+      "shellcheck": "0.10.0",
+      "pre-commit": "4.7.0"
+    }
+  },
+  "outcomes": "passed",
+  "commands": 24
+}

@@ -1,0 +1,6 @@
+{
+  "release": "/tmp/score-m3-aqua/release-0.3.1",
+  "exit_code": 1,
+  "rejected": true,
+  "reason": "AssertionError: Stale release owner snapshot: aqua.yaml"
+}

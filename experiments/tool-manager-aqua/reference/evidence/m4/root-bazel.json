@@ -1,0 +1,36 @@
+{
+  "//tools:starpls": {
+    "command": [
+      "bazelisk",
+      "--output_base=/tmp/score-m4-aqua/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:starpls",
+      "--",
+      "version"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "output_lines": [
+      "starpls version: v0.1.22",
+      "INFO: Build completed successfully, 1 total action"
+    ]
+  },
+  "//tools:codespell": {
+    "command": [
+      "bazelisk",
+      "--output_base=/tmp/score-m4-aqua/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:codespell",
+      "--",
+      "/tmp/score-m4-aqua/bazel-typo.txt"
+    ],
+    "exit_code": 65,
+    "expected_exit_code": 65,
+    "output_lines": [
+      "/tmp/score-m4-aqua/bazel-typo.txt:1: teh ==> the",
+      "INFO: Build completed successfully, 1 total action"
+    ]
+  }
+}

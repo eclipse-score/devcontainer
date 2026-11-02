@@ -1,0 +1,28 @@
+{
+  "repository": {
+    "actionlint": "1.7.7",
+    "bazelisk": "1.27.0",
+    "buildifier": "8.2.1",
+    "ruff": "0.11.12",
+    "shellcheck": "0.10.0",
+    "uv": "0.13.6",
+    "yamlfmt": "0.17.0",
+    "uvx": "0.13.6",
+    "pre-commit": "4.7.0"
+  },
+  "published": {
+    "actionlint": "1.7.7",
+    "bazelisk": "1.27.0",
+    "buildifier": "8.2.1",
+    "ruff": "0.11.12",
+    "shellcheck": "0.10.0",
+    "uv": "0.13.6",
+    "yamlfmt": "0.17.0",
+    "starpls": "0.1.22",
+    "uvx": "0.13.6",
+    "pre-commit": "4.7.0",
+    "pytest": "9.0.2",
+    "basedpyright": "1.35.0",
+    "codespell": "2.4.1"
+  }
+}

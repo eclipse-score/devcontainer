@@ -13,7 +13,8 @@
     "python": [
       "pre-commit",
       "basedpyright",
-      "pytest"
+      "pytest",
+      "codespell"
     ],
     "apt": [
       "graphviz",

@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+
+# Generated standard metadata; consumers do not execute the producer.
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "score-aqua-reference"
+version = "0.3.1"
+requires-python = ">=3.10"
+[project.optional-dependencies]
+"repository" = ["pre-commit==4.7.0", "ruff==0.11.12"]
+"pre-commit" = ["pre-commit==4.7.0"]
+"ruff" = ["ruff==0.11.12"]
+"published" = ["pre-commit==4.7.0", "pytest==9.0.2", "basedpyright==1.35.0", "ruff==0.11.12"]
+"pytest" = ["pytest==9.0.2"]
+"basedpyright" = ["basedpyright==1.35.0"]
+[tool.setuptools]
+packages = []

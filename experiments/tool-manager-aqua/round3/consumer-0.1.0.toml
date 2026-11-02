@@ -1,0 +1,7 @@
+[project]
+name="aqua-consumer-probe"
+version="0.0.0"
+requires-python=">=3.10"
+dependencies=[
+    "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl",
+]

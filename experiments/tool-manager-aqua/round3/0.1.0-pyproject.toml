@@ -1,0 +1,16 @@
+# Generated from aqua.yaml; do not maintain a Ruff pin here.
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "score-aqua-tools-probe"
+version = "0.1.0"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+
+[project.optional-dependencies]
+ruff = ["ruff==0.11.13"]
+
+[tool.setuptools]
+packages = []

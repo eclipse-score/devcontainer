@@ -1,0 +1,25 @@
+[
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/sync_repository.py",
+      "--check",
+      "--version",
+      "0.3.0"
+    ],
+    "exit": 1,
+    "stdout": "{\n  \"mode\": \"check\",\n  \"changed\": [\n    \"tools/lockfiles/ruff.lock.json\",\n    \"experiments/tool-manager-aqua/reference/generated-package.toml\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/check.py",
+      "/tmp/score-aqua-reference/m2/releases/0.3.0",
+      "/tmp/score-aqua-reference/m2/evidence/stale-release"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/check.py\", line 233, in <module>\n    main()\n  File \"/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/check.py\", line 43, in main\n    assert loader((release / file).read_text()) == loader(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Stale release owner snapshot: aqua.yaml\n"
+  }
+]

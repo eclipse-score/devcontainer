@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+registries:
+  - type: standard
+    ref: semver("= 4.579.0")
+  - name: score-local
+    type: local
+    path: starpls-registry.yaml
+  - name: score-local-apm
+    type: local
+    path: apm-registry.yaml
+packages:
+  - registry: standard
+  - name: withered-magic/starpls
+    registry: score-local
+  - name: microsoft/apm
+    registry: score-local-apm

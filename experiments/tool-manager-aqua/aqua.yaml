@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+registries:
+  - type: standard
+    ref: v4.579.0
+checksum:
+  enabled: true
+  require_checksum: true
+  supported_envs:
+    - linux/amd64
+    - linux/arm64
+    - darwin/arm64
+packages:
+  - name: astral-sh/ruff@0.11.13
+    tags: [container, repository, lint]
+  - name: astral-sh/uv@0.11.2
+    tags: [container, repository, python-runtime]

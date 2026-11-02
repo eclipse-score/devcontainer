@@ -45,8 +45,8 @@ bash -c "yes || true" | unminimize
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local --phase build
 
-# One environment selection owns APT, native and Python membership. Provider
-# installation runs before tool-specific lifecycle configuration below.
+# The base image already contains the selected pinned native and Python tools.
+# This runtime step applies only selected APT/npm providers.
 /usr/local/share/score-tools/internal/devcontainer/install.py environment s-core-local
 
 if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local openjdk_21; then

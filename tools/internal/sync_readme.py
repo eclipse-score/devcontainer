@@ -11,7 +11,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Synchronize the documented tool table with the lockfile catalog."""
+"""Synchronize the documented tool table with generated tool metadata."""
 
 from __future__ import annotations
 

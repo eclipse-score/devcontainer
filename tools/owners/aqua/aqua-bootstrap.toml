@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+# Build-time aqua bootstrap only; delivered tool versions remain owned by aqua.yaml.
+version = "2.65.2"
+
+[archives."linux/amd64"]
+name = "aqua_linux_amd64.tar.gz"
+sha256 = "971abaccd16d0521fdb8e45990dba2aea17587f476aa075b621aeb972f52a61f"
+
+[archives."linux/arm64"]
+name = "aqua_linux_arm64.tar.gz"
+sha256 = "7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81"
+
+[archives."darwin/amd64"]
+name = "aqua_darwin_amd64.tar.gz"
+sha256 = "6552dc8cd3b4e51f781b4341cc3bb396028755080c6927f5a6d20b8ada85d4d1"
+
+[archives."darwin/arm64"]
+name = "aqua_darwin_arm64.tar.gz"
+sha256 = "74096ac247be24ec3340e134b9ecdae37465009d7bd1acca934a14a5beeb3314"

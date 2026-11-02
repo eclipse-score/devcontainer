@@ -11,32 +11,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# A literal Starlark dictionary lets Bazel consume the pins during analysis
-# while ast.literal_eval preserves a data-only boundary for the root-running
-# DevContainer installer.
+# Generated versions from tools/owners/aqua/pyproject.toml.
+# Descriptions/public command identities retain the existing catalog contract.
 PYTHON_TOOLS = {
-    # The key is the public command and Bazel target name.
     "pre-commit": {
-        # `package` is resolved by uv; `entrypoint` is the executable exposed to
-        # users. They are separate because Python distributions may name them
-        # differently.
         "package": "pre-commit",
         "version": "4.7.0",
         "entrypoint": "pre-commit",
-        # Documentation is generated from the catalog so version and purpose
-        # are reviewed together.
         "description": "Run repository pre-commit hooks",
     },
     "basedpyright": {
         "package": "basedpyright",
         "version": "1.35.0",
         "entrypoint": "basedpyright",
+        "entrypoints": ["basedpyright", "basedpyright-langserver"],
         "description": "Type check Python and provide its language server",
     },
     "pytest": {
         "package": "pytest",
         "version": "9.0.2",
         "entrypoint": "pytest",
+        "entrypoints": ["pytest", "py.test"],
         "description": "Run Python tests",
+    },
+    "codespell": {
+        "package": "codespell",
+        "entrypoint": "codespell",
+        "description": "Check source files for common misspellings",
+        "version": "2.4.1",
     },
 }

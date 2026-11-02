@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: score-aqua-reference
+Version: 0.1.1
+Requires-Python: >=3.10
+Provides-Extra: repository
+Requires-Dist: pre-commit==4.7.0; extra == "repository"
+Requires-Dist: ruff==0.11.13; extra == "repository"
+Provides-Extra: pre-commit
+Requires-Dist: pre-commit==4.7.0; extra == "pre-commit"
+Provides-Extra: ruff
+Requires-Dist: ruff==0.11.13; extra == "ruff"
+Provides-Extra: published
+Requires-Dist: pre-commit==4.7.0; extra == "published"
+Requires-Dist: ruff==0.11.13; extra == "published"

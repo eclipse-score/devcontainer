@@ -1,0 +1,36 @@
+--- before/aqua.yaml
++++ after/aqua.yaml
+@@ -11,5 +11,5 @@
+     - linux/arm64
+     - darwin/arm64
+ packages:
+-  - name: astral-sh/ruff@0.11.13
++  - name: astral-sh/ruff@0.11.12
+     tags: [container, repository, lint]
+--- before/aqua-checksums.json
++++ after/aqua-checksums.json
+@@ -1,18 +1,18 @@
+ {
+   "checksums": [
+     {
+-      "id": "github_release/github.com/astral-sh/ruff/0.11.13/ruff-aarch64-apple-darwin.tar.gz",
+-      "checksum": "7D5E8FEEA7EE5C3962807996CAD557E8A0C4D676C1CBA6223BFB0E8B2CA07723",
++      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-aarch64-apple-darwin.tar.gz",
++      "checksum": "6E8BCE88BE5063D3378B6FA51430655884794F6CD04A059721839DC012B7EE7D",
+       "algorithm": "sha256"
+     },
+     {
+-      "id": "github_release/github.com/astral-sh/ruff/0.11.13/ruff-aarch64-unknown-linux-musl.tar.gz",
+-      "checksum": "1FF8292D610302BC20791F6AB264DE499B6D2FBF89030FEF915908C564A78E82",
++      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-aarch64-unknown-linux-musl.tar.gz",
++      "checksum": "80F0B463A7417B93132D7411F2ED88170B3E8176ABFBD49B1FE1EFAE7AFE4D90",
+       "algorithm": "sha256"
+     },
+     {
+-      "id": "github_release/github.com/astral-sh/ruff/0.11.13/ruff-x86_64-unknown-linux-musl.tar.gz",
+-      "checksum": "4540E8BC5B2AF73C4B79E9E993724B044310EEA4AA9003CF05ED4BDEE6C25735",
++      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-x86_64-unknown-linux-musl.tar.gz",
++      "checksum": "148E03CE15AD569066120905C86E446E066C0F7C4F986D03825C273C5E2147E2",
+       "algorithm": "sha256"
+     },
+     {

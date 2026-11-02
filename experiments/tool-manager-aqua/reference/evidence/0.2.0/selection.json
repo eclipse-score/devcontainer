@@ -1,0 +1,11 @@
+{
+  "repository": {
+    "ruff": "0.11.12",
+    "pre-commit": "4.7.0"
+  },
+  "published": {
+    "ruff": "0.11.12",
+    "shellcheck": "0.10.0",
+    "pre-commit": "4.7.0"
+  }
+}

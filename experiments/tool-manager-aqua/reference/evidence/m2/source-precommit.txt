@@ -1,0 +1,17 @@
+check yaml...............................................................Passed
+fix end of files.........................................................Passed
+trim trailing whitespace.................................................Passed
+check that scripts with shebangs are executable..........................Passed
+check that executables have shebangs.....................................Passed
+check for added large files..............................................Passed
+bazel mod tidy..........................................................Skipped
+bazel mod deps lockfile check...........................................Skipped
+yamlfmt..................................................................Passed
+ruff format..............................................................Passed
+buildifier...............................................................Passed
+actionlint...........................................(no files to check)Skipped
+shellcheck...............................................................Passed
+ruff check...............................................................Passed
+check tool documentation.................................................Passed
+Check and fix copyright headers with cr_checker..........................Passed
+reuse lint-file..........................................................Passed

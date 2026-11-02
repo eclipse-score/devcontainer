@@ -1,0 +1,204 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-aarch64-apple-darwin.tar.gz",
+      "checksum": "6E8BCE88BE5063D3378B6FA51430655884794F6CD04A059721839DC012B7EE7D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "80F0B463A7417B93132D7411F2ED88170B3E8176ABFBD49B1FE1EFAE7AFE4D90",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-x86_64-apple-darwin.tar.gz",
+      "checksum": "A843796077CEBA6AEB4A07BDA0756989CB1C517AB4D1B929EAD9EFCDE6FC17E6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/ruff/0.11.12/ruff-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "148E03CE15AD569066120905C86E446E066C0F7C4F986D03825C273C5E2147E2",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.13.6/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "60FBD5C8A1ED681845EEA28D9D622FCDE03C51E91A43465B64A1E17DB1ED3472",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.13.6/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "819692E404D23E5AAE6BC44C0E260F1F5492FD1910AB4693B2C650F926DBE800",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.13.6/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "63BA17FDDA55AD1A230D4B37FC6017FFA10C23688C83818BD3BFDF914C652A02",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.13.6/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "5D61F26B6C7213779EDA90EDC6971EA6B0B796BFB8D49A574C8AD69B59838548",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazel-contrib/buildtools/v8.2.1/buildifier-darwin-amd64",
+      "checksum": "9F8CFFCEB82F4E6722A32A021CBC9A5344B386B77B9F79EE095C61D087AAEA06",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazel-contrib/buildtools/v8.2.1/buildifier-darwin-arm64",
+      "checksum": "CFAB310AE22379E69A3B1810B433C4CD2FC2C8F4A324586DFE4CC199943B8D5A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazel-contrib/buildtools/v8.2.1/buildifier-linux-amd64",
+      "checksum": "6CEB7B0AB7CF66FCECCC56A027D21D9CC557A7F34AF37D2101EDB56B92FCFA1A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazel-contrib/buildtools/v8.2.1/buildifier-linux-arm64",
+      "checksum": "3BAA1CF7EB41D51F462FDD1FFF3A6A4D81D757275D05B2DD5F48671284E9A1A5",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazelbuild/bazelisk/v1.27.0/bazelisk-darwin-amd64",
+      "checksum": "8FCD7BA828F673BA4B1529425E01E15AC42599EF566C17F320D8CBFE7B96A167",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazelbuild/bazelisk/v1.27.0/bazelisk-darwin-arm64",
+      "checksum": "8BF08C894CCC19EF37F286E58184C3942C58CB08DA955E990522703526DDB720",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazelbuild/bazelisk/v1.27.0/bazelisk-linux-amd64",
+      "checksum": "E1508323F347AD1465A887BC5D2BFB91CFFC232D11E8E997B623227C6B32FB76",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bazelbuild/bazelisk/v1.27.0/bazelisk-linux-arm64",
+      "checksum": "BB608519A440D45D10304EB684A73A2B6BB7699C5B0E5434361661B25F113A5D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/yamlfmt/v0.17.0/yamlfmt_0.17.0_Darwin_arm64.tar.gz",
+      "checksum": "1BE37D76A79CAA5073CE342DE24F7B8B2509C2A482178286F44B72835469052B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/yamlfmt/v0.17.0/yamlfmt_0.17.0_Darwin_x86_64.tar.gz",
+      "checksum": "C2E501BE827379761BA4FCA72794549BE4CB91A6D8347575B36722927A429F9F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/yamlfmt/v0.17.0/yamlfmt_0.17.0_Linux_arm64.tar.gz",
+      "checksum": "EBE78A5547DAC68F05A01C9A2845901B3C658095432B107BEF3084DFE0B2629D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/yamlfmt/v0.17.0/yamlfmt_0.17.0_Linux_x86_64.tar.gz",
+      "checksum": "E91DD8722001596B8E4777A29D4A526A10FF276C4FF8A5AE39FF59BE5A033054",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.10.0/shellcheck-v0.10.0.darwin.aarch64.tar.xz",
+      "checksum": "BBD2F14826328EEE7679DA7221F2BC3AFB011F6A928B848C80C321F6046DDF81",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.10.0/shellcheck-v0.10.0.darwin.x86_64.tar.xz",
+      "checksum": "EF27684F23279D112D8AD84E0823642E43F838993BBB8C0963DB9B58A90464C2",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.10.0/shellcheck-v0.10.0.linux.aarch64.tar.xz",
+      "checksum": "324A7E89DE8FA2AED0D0C28F3DAB59CF84C6D74264022C00C22AF665ED1A09BB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/koalaman/shellcheck/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz",
+      "checksum": "6C881AB0698E4E6EA235245F22832860544F17BA386442FE7E9D629F8CBEDF87",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/microsoft/apm/v0.35.0/apm-darwin-arm64.tar.gz",
+      "checksum": "CB2C54152E3BD39ACFE2FBDA4A2AA91D2AF914E24859D3623423EFD7B27E3DD0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/microsoft/apm/v0.35.0/apm-darwin-x86_64.tar.gz",
+      "checksum": "EE17DAF433C49ED481D9F2DDEE31825CBCED9390637CAB9A5138815BBACE327C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/microsoft/apm/v0.35.0/apm-linux-arm64.tar.gz",
+      "checksum": "ADA8901CE1B29E5D188629EEED64E8499853A8CB5F047630EBEDBDE24008508E",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/microsoft/apm/v0.35.0/apm-linux-x86_64.tar.gz",
+      "checksum": "5AA23CE61EEBAE9411668F507772CDB5D87252C760078DC59B5ACDC5188D785B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rhysd/actionlint/v1.7.7/actionlint_1.7.7_darwin_amd64.tar.gz",
+      "checksum": "28E5DE5A05FC558474F638323D736D822FFF183D2D492F0AECB2B73CC44584F5",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rhysd/actionlint/v1.7.7/actionlint_1.7.7_darwin_arm64.tar.gz",
+      "checksum": "2693315B9093AEACB4EBD91A993FEA54FC215057BF0DA2659056B4BC033873DB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rhysd/actionlint/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+      "checksum": "023070A287CD8CCCD71515FEDC843F1985BF96C436B7EFFAECCE67290E7E0757",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rhysd/actionlint/v1.7.7/actionlint_1.7.7_linux_arm64.tar.gz",
+      "checksum": "401942F9C24ED71E4FE71B76C7D638F66D8633575C4016EFD2977CE7C28317D0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/withered-magic/starpls/v0.1.22/starpls-darwin-arm64",
+      "checksum": "675B7BE4554E6C219B6774A6B814EC21061096E08ECDD8B8AEEAF3913EB20A4E",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/withered-magic/starpls/v0.1.22/starpls-linux-aarch64",
+      "checksum": "55877EC4C3FF03E1D90D59C76F69A3A144B6C29688747C8AC4D77993E2EEF1AD",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/withered-magic/starpls/v0.1.22/starpls-linux-amd64",
+      "checksum": "7C661CDDE0D1C026665086D07523D825671E29056276681616BB32D0273C5EAB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/opencode.ai/files/bin/2.2.3/opencode-darwin-arm64.zip",
+      "checksum": "65DB03573E5717E6DA245AE3E5C2FFA35915B90689D37C43D4E1ADE4D47F55F9",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/opencode.ai/files/bin/2.2.3/opencode-darwin-x64.zip",
+      "checksum": "E6B67DEEB327AD25EFF94BB3C39D8B15466C3DE0224E3A0A47A385B69A266D4C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/opencode.ai/files/bin/2.2.3/opencode-linux-arm64.tar.gz",
+      "checksum": "72AAC82C021268F6CC9810DE913F8D47D05626B1AD974D7F5DC5B087E1AD0F68",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/opencode.ai/files/bin/2.2.3/opencode-linux-x64.tar.gz",
+      "checksum": "EF3AEEAF5522B10D69A3DA7BBD6E6D8D259F845833D96B8310767D3407B18A35",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.579.0/registry.yaml",
+      "checksum": "5BC609335C3E930F66B52E4EF44824852868C88898137557B078570C3CE9DF94",
+      "algorithm": "sha256"
+    }
+  ]
+}

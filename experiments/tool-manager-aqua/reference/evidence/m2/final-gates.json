@@ -1,0 +1,45 @@
+[
+  {
+    "argv": [
+      "python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/sync_repository.py",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"mode\": \"check\",\n  \"changed\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "tools/internal/sync_readme.py",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "mod",
+      "tidy"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": " no actions running\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "mod",
+      "deps",
+      "--lockfile_mode=error"
+    ],
+    "exit": 0,
+    "stdout": "<root> (score_devcontainer@_)\n\n",
+    "stderr": " no actions running\n"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "uid": 1000,
+  "ruff_command": [
+    "/tmp/score-aqua-eval/bootstrap/aqua",
+    "-c",
+    "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/aqua.yaml",
+    "exec",
+    "--",
+    "ruff"
+  ],
+  "pre_commit_command": [
+    "/tmp/score-aqua-eval/bin/uv",
+    "run",
+    "--no-project",
+    "--no-config",
+    "--isolated",
+    "--with-requirements",
+    "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/requirements.txt",
+    "pre-commit"
+  ],
+  "ruff_version": "ruff 0.11.13",
+  "pre-commit_version": "pre-commit 4.7.0",
+  "ruff_result": {
+    "exit": 1,
+    "code": "F401",
+    "filename": "/tmp/aqua consumer c9_0cxh5/file with spaces.py"
+  },
+  "pre_commit_result": {
+    "exit": 1,
+    "hook_exit": 7,
+    "observed": {
+      "cwd": "/tmp/aqua consumer c9_0cxh5",
+      "args": [
+        "two words",
+        "--literal=one two"
+      ]
+    }
+  },
+  "consumer_config_ignored": true,
+  "wrong_path_binaries_ignored": true
+}

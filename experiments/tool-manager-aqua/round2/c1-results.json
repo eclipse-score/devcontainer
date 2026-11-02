@@ -1,0 +1,22 @@
+{
+  "ruff_after_update": "ruff 0.11.12",
+  "pre_commit_unchanged": "pre-commit 4.7.0",
+  "container_after_add": [
+    "ruff",
+    "uv",
+    "uvx"
+  ],
+  "repository_after_add": [
+    "actionlint",
+    "ruff",
+    "uv",
+    "uvx"
+  ],
+  "repository_after_remove": [
+    "ruff",
+    "uv",
+    "uvx"
+  ],
+  "update_diff": "c1-update.diff",
+  "state": "/tmp/score-aqua-round2/c1"
+}

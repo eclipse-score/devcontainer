@@ -18,6 +18,13 @@ SPDX-License-Identifier: Apache-2.0
 
 This document explains how the S-CORE DevContainer is designed, built and what its requirements are.
 
+## Tool management decision in progress
+
+The [open decision record](tooling-decision-record.md) separates established
+constraints, unresolved requirements and existing implementation details before
+selecting a tool-management approach. The local reference and its proposed PR
+sequence are experiments supporting that decision.
+
 ## Overview
 
 One has to take ones own medicin and for that reason the [S-CORE devcontainer](../src/) is developed using another [simpler devcontainer](../.devcontainer).

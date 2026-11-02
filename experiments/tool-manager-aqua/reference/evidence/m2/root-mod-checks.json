@@ -1,0 +1,25 @@
+[
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "mod",
+      "tidy"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": " no actions running\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "mod",
+      "deps",
+      "--lockfile_mode=error"
+    ],
+    "exit": 0,
+    "stdout": "<root> (score_devcontainer@_)\n\n",
+    "stderr": " no actions running\n"
+  }
+]

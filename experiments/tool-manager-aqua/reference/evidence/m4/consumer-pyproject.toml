@@ -1,0 +1,7 @@
+[project]
+name = "consumer-project-owner-final"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "score-aqua-reference[codespell] @ file:///tmp/score-m4-aqua/release-0.3.2-owner-final/dist/score_aqua_reference-0.3.2-py3-none-any.whl",
+]

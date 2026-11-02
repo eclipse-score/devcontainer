@@ -1,0 +1,30 @@
+pre-commit 4.7.0
+ruff 0.11.13
++ /tmp/uv venv --python /usr/bin/python3 /opt/score-tools/python
+Using CPython 3.12.3 interpreter at: /usr/bin/python3
+Creating virtual environment at: /opt/score-tools/python
+Activate with: source /opt/score-tools/python/bin/activate
++ /tmp/uv pip install --python /opt/score-tools/python/bin/python -r /tmp/requirements.txt
+Using Python 3.12.3 environment at: /opt/score-tools/python
+Resolved 11 packages in 228ms
+Downloading virtualenv (5.3MiB)
+ Downloaded virtualenv
+Prepared 11 packages in 240ms
+warning: Failed to hardlink files; falling back to full copy. This may lead to degraded performance.
+         If the cache and target directories are on different filesystems, hardlinking may not be supported.
+         If this is intentional, set `export UV_LINK_MODE=copy` or use `--link-mode=copy` to suppress this warning.
+Installed 11 packages in 45ms
+ + cfgv==3.5.0
+ + distlib==0.4.4
+ + filelock==4.2.5
+ + identify==2.6.20
+ + nodeenv==1.11.1
+ + packaging==26.3
+ + platformdirs==4.14.0
+ + pre-commit==4.7.0
+ + python-discovery==1.9.0
+ + pyyaml==6.0.3
+ + virtualenv==21.15.2
++ chmod -R a+rX /opt/score-tools
++ /opt/score-tools/python/bin/pre-commit --version
++ /opt/score-tools/bin/ruff --version

@@ -1,0 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Contributors to the Eclipse Foundation
+# SPDX-License-Identifier: Apache-2.0
+[dependency-groups]
+repository = ["pre-commit==4.7.0"]
+published = [{include-group = "repository"}, "pytest==9.0.2", "basedpyright==1.35.0", "codespell==2.4.1"]

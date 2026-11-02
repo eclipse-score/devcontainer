@@ -1,0 +1,35 @@
+{
+  "wheel": "score_aqua_reference-0.3.2-py3-none-any.whl",
+  "consumer_direct_requirement": "score-aqua-reference[codespell] @ file:///tmp/score-m4-aqua/release-0.3.2-owner-final/dist/score_aqua_reference-0.3.2-py3-none-any.whl",
+  "consumer_direct_codespell_pin": false,
+  "locked_codespell_version": "2.4.1",
+  "consumer_commands": [
+    {
+      "command": "uv init --bare --no-workspace --python /usr/bin/python3",
+      "result": "passed"
+    },
+    {
+      "command": "uv add --raw <facade[codespell] wheel requirement>",
+      "result": "passed"
+    },
+    {
+      "command": "uv lock",
+      "result": "passed"
+    },
+    {
+      "command": "uv sync --locked",
+      "result": "passed"
+    },
+    {
+      "command": "uv run --locked codespell misspell.txt",
+      "exit_code": 65,
+      "diagnostic": "teh ==> the"
+    },
+    {
+      "command": "uvx --with <same facade[codespell] requirement> codespell misspell.txt",
+      "exit_code": 65,
+      "diagnostic": "teh ==> the"
+    }
+  ],
+  "network": "default enabled; no offline claim"
+}

@@ -1,0 +1,145 @@
+{
+  "consumer_managers_on_path": {
+    "aqua": null,
+    "mise": null,
+    "nix": null
+  },
+  "releases": [
+    {
+      "package_release": "0.1.0",
+      "ruff_selected": "0.11.13",
+      "ruff_uv_lock": "0.11.13",
+      "commands": [
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "add",
+            "--raw",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "",
+          "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 3 packages in 181ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 436ms\nInstalled 2 packages in 2ms\n + ruff==0.11.13\n + score-aqua-tools-probe==0.1.0 (from file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl)\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "lock"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "",
+          "stderr": "Resolved 3 packages in 1ms\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "run",
+            "--locked",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.13\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uvx",
+            "--from",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.13\n",
+          "stderr": "Installed 2 packages in 3ms\nwarning: An executable named `ruff` is not provided by package `score-aqua-tools-probe` but is available via the dependency `ruff`. Consider using `uvx --from ruff ruff` instead.\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uvx",
+            "--with",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.13\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "package_release": "0.2.0",
+      "ruff_selected": "0.11.12",
+      "ruff_uv_lock": "0.11.12",
+      "commands": [
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "add",
+            "--raw",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.2.0/dist/score_aqua_tools_probe-0.2.0-py3-none-any.whl"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "",
+          "stderr": "Resolved 3 packages in 69ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 1 package in 458ms\nUninstalled 2 packages in 0.48ms\nInstalled 2 packages in 2ms\n - ruff==0.11.13\n + ruff==0.11.12\n - score-aqua-tools-probe==0.1.0 (from file:///tmp/score-aqua-round3/releases/0.1.0/dist/score_aqua_tools_probe-0.1.0-py3-none-any.whl)\n + score-aqua-tools-probe==0.2.0 (from file:///tmp/score-aqua-round3/releases/0.2.0/dist/score_aqua_tools_probe-0.2.0-py3-none-any.whl)\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "lock"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "",
+          "stderr": "Resolved 3 packages in 0.98ms\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uv",
+            "run",
+            "--locked",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.12\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uvx",
+            "--from",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.2.0/dist/score_aqua_tools_probe-0.2.0-py3-none-any.whl",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.12\n",
+          "stderr": "Installed 2 packages in 3ms\nwarning: An executable named `ruff` is not provided by package `score-aqua-tools-probe` but is available via the dependency `ruff`. Consider using `uvx --from ruff ruff` instead.\n"
+        },
+        {
+          "argv": [
+            "/tmp/score-aqua-eval/bin/uvx",
+            "--with",
+            "score-aqua-tools-probe[ruff] @ file:///tmp/score-aqua-round3/releases/0.2.0/dist/score_aqua_tools_probe-0.2.0-py3-none-any.whl",
+            "ruff",
+            "--version"
+          ],
+          "cwd": "/tmp/score-aqua-round3/consumer",
+          "exit": 0,
+          "stdout": "ruff 0.11.12\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

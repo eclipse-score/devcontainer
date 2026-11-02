@@ -1,0 +1,592 @@
+[
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/experiments/tool-manager-aqua/reference/sync_repository.py",
+      "--check",
+      "--version",
+      "0.3.1"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "{\n  \"mode\": \"check\",\n  \"changed\": []\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua/tools/internal/sync_readme.py",
+      "--check"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:actionlint",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+    "stderr": "Starting local Bazel server (8.6.0) and connecting to it...\nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:actionlint (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:actionlint (1 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:actionlint (84 packages loaded, 579 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/actionlint:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/actionlint/cwd\nINFO: Elapsed time: 2.755s, Critical Path: 0.03s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/actionlint/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:bazelisk",
+      "--",
+      "--output_base=/tmp/score-aqua-reference/m2/nested-bazel",
+      "version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "Bazelisk version: v1.27.0\nBuild label: 8.6.0\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\nBuild timestamp: 1772135720\nBuild timestamp as int: 1772135720\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:bazelisk (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:bazelisk (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:bazelisk (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/bazelisk:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/bazelisk/cwd\nINFO: Elapsed time: 0.302s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/bazelisk/cwd <args omitted>\nStarting local Bazel server (8.6.0) and connecting to it...\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:buildifier",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:buildifier (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:buildifier (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:buildifier (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/buildifier:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/buildifier/cwd\nINFO: Elapsed time: 0.161s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/buildifier/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.483s, Critical Path: 0.02s\nINFO: 2 processes: 4 action cache hit, 2 internal.\nINFO: Build completed successfully, 2 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:shellcheck",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:shellcheck (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:shellcheck (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/shellcheck:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd\nINFO: Elapsed time: 0.190s, Critical Path: 0.01s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/shellcheck/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:uv",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "uv 0.13.6 (x86_64-unknown-linux-musl)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:uv (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:uv (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:uv (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/uv:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/uv/cwd\nINFO: Elapsed time: 0.282s, Critical Path: 0.03s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/uv/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:yamlfmt",
+      "--",
+      "-version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "yamlfmt 0.17.0 (45e5cb5)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:yamlfmt (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:yamlfmt (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:yamlfmt (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/yamlfmt:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/yamlfmt/cwd\nINFO: Elapsed time: 0.139s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/yamlfmt/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:uvx",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "uvx 0.13.6 (x86_64-unknown-linux-musl)\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:uvx (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:uvx (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:uvx (1 packages loaded, 5 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/uvx:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/uvx/cwd\nINFO: Elapsed time: 0.127s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/uvx/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "bazel",
+      "--output_base=/tmp/score-aqua-reference/m2/root-bazel",
+      "run",
+      "--lockfile_mode=update",
+      "//tools:pre-commit",
+      "--",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (0 packages loaded, 554 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.165s, Critical Path: 0.00s\nINFO: 1 process: 6 action cache hit, 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\nInstalled 11 packages in 13ms\n"
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "inspect",
+      "score-aqua-m2:0.3.1-repository",
+      "--format",
+      "{{.Id}}"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "sha256:1b984b96bbf6cb38a6afbb7db0213ad54d02b4db91c176404e7e8b7d4f3f8c7c\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--tmpfs",
+      "/tmp:mode=1777",
+      "score-aqua-m2:0.3.1-repository"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "{\"argv\": [\"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"Starting local Bazel server (8.6.0) and connecting to it...\\n\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"git\", \"init\", \"-q\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"ruff\", \"check\", \"--isolated\", \"fixture with space.py\"], \"exit\": 1, \"stdout\": \"fixture with space.py:1:8: F401 [*] `os` imported but unused\\n  |\\n1 | import os\\n  |        ^^ F401\\n  |\\n  = help: Remove unused import: `os`\\n\\nFound 1 error.\\n[*] 1 fixable with the `--fix` option.\\n\", \"stderr\": \"\"}\n{\"argv\": [\"shellcheck\", \"fixture with space.sh\"], \"exit\": 1, \"stdout\": \"\\nIn fixture with space.sh line 2:\\necho $1\\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\\n\\nDid you mean: \\necho \\\"$1\\\"\\n\\nFor more information:\\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\\n\", \"stderr\": \"\"}\n{\"argv\": [\"actionlint\", \"/tmp/score-repository-runtime-xr49ciyq/invalid-workflow.yaml\"], \"exit\": 1, \"stdout\": \"invalid-workflow.yaml:6:5: unexpected key \\\"invalid-key\\\" for \\\"job\\\" section. expected one of \\\"concurrency\\\", \\\"container\\\", \\\"continue-on-error\\\", \\\"defaults\\\", \\\"env\\\", \\\"environment\\\", \\\"if\\\", \\\"name\\\", \\\"needs\\\", \\\"outputs\\\", \\\"permissions\\\", \\\"runs-on\\\", \\\"secrets\\\", \\\"services\\\", \\\"steps\\\", \\\"strategy\\\", \\\"timeout-minutes\\\", \\\"uses\\\", \\\"with\\\" [syntax-check]\\n  |\\n6 |     invalid-key: nope\\n  |     ^~~~~~~~~~~~\\n\", \"stderr\": \"\"}\n{\"argv\": [\"yamlfmt\", \"/tmp/score-repository-runtime-xr49ciyq/format.yaml\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"/tmp/score-repository-runtime-xr49ciyq/BUILD.bazel\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"-mode=check\", \"/tmp/score-repository-runtime-xr49ciyq/BUILD.bazel\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"git\", \"add\", \".\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"pre-commit\", \"run\", \"--all-files\", \"--verbose\"], \"exit\": 0, \"stdout\": \"Consumer cwd and arguments...............................................Passed\\n- hook id: cwd-and-args\\n- duration: 0s\\n\", \"stderr\": \"\"}\n{\"profile\": \"repository\", \"result\": \"passed\", \"versions\": {\"actionlint\": \"1.7.7\", \"bazelisk\": \"1.27.0\", \"buildifier\": \"8.2.1\", \"ruff\": \"0.11.12\", \"shellcheck\": \"0.10.0\", \"uv\": \"0.13.6\", \"yamlfmt\": \"0.17.0\", \"uvx\": \"0.13.6\", \"pre-commit\": \"4.7.0\"}, \"uid\": 12345, \"commands\": 36}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "inspect",
+      "score-aqua-m2:0.3.1-published",
+      "--format",
+      "{{.Id}}"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "sha256:e68e27e557ea1adabeeb3d824b57a6d60bb7137bf102b3bf4506a279de96651f\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--tmpfs",
+      "/tmp:mode=1777",
+      "score-aqua-m2:0.3.1-published"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "{\"argv\": [\"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"actionlint\", \"-version\"], \"exit\": 0, \"stdout\": \"1.7.7\\ninstalled by downloading from release page\\nbuilt with go1.23.4 compiler for linux/amd64\\n\", \"stderr\": \"\"}\n{\"argv\": [\"basedpyright\", \"--version\"], \"exit\": 0, \"stdout\": \"basedpyright 1.35.0\\nbased on pyright 1.1.407\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"basedpyright\", \"--version\"], \"exit\": 0, \"stdout\": \"basedpyright 1.35.0\\nbased on pyright 1.1.407\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"basedpyright\", \"--version\"], \"exit\": 0, \"stdout\": \"basedpyright 1.35.0\\nbased on pyright 1.1.407\\n\", \"stderr\": \"\"}\n{\"argv\": [\"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"Starting local Bazel server (8.6.0) and connecting to it...\\n\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"bazelisk\", \"version\"], \"exit\": 0, \"stdout\": \"Bazelisk version: v1.27.0\\nBuild label: 8.6.0\\nBuild target: @@//src/main/java/com/google/devtools/build/lib/bazel:BazelServer\\nBuild time: Thu Feb 26 19:55:20 2026 (1772135720)\\nBuild timestamp: 1772135720\\nBuild timestamp as int: 1772135720\\n\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"buildifier\", \"-version\"], \"exit\": 0, \"stdout\": \"buildifier version: 8.2.1 \\nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \\n\", \"stderr\": \"\"}\n{\"argv\": [\"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"pre-commit\", \"--version\"], \"exit\": 0, \"stdout\": \"pre-commit 4.7.0\\n\", \"stderr\": \"\"}\n{\"argv\": [\"pytest\", \"--version\"], \"exit\": 0, \"stdout\": \"pytest 9.0.2\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"pytest\", \"--version\"], \"exit\": 0, \"stdout\": \"pytest 9.0.2\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"pytest\", \"--version\"], \"exit\": 0, \"stdout\": \"pytest 9.0.2\\n\", \"stderr\": \"\"}\n{\"argv\": [\"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"ruff\", \"--version\"], \"exit\": 0, \"stdout\": \"ruff 0.11.12\\n\", \"stderr\": \"\"}\n{\"argv\": [\"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"shellcheck\", \"--version\"], \"exit\": 0, \"stdout\": \"ShellCheck - shell script analysis tool\\nversion: 0.10.0\\nlicense: GNU General Public License, version 3\\nwebsite: https://www.shellcheck.net\\n\", \"stderr\": \"\"}\n{\"argv\": [\"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"uv\", \"--version\"], \"exit\": 0, \"stdout\": \"uv 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"uvx\", \"--version\"], \"exit\": 0, \"stdout\": \"uvx 0.13.6 (x86_64-unknown-linux-musl)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"/usr/local/bin/run-tool\", \"--strict\", \"yamlfmt\", \"-version\"], \"exit\": 0, \"stdout\": \"yamlfmt 0.17.0 (45e5cb5)\\n\", \"stderr\": \"\"}\n{\"argv\": [\"git\", \"init\", \"-q\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"ruff\", \"check\", \"--isolated\", \"fixture with space.py\"], \"exit\": 1, \"stdout\": \"fixture with space.py:1:8: F401 [*] `os` imported but unused\\n  |\\n1 | import os\\n  |        ^^ F401\\n  |\\n  = help: Remove unused import: `os`\\n\\nFound 1 error.\\n[*] 1 fixable with the `--fix` option.\\n\", \"stderr\": \"\"}\n{\"argv\": [\"shellcheck\", \"fixture with space.sh\"], \"exit\": 1, \"stdout\": \"\\nIn fixture with space.sh line 2:\\necho $1\\n     ^-- SC2086 (info): Double quote to prevent globbing and word splitting.\\n\\nDid you mean: \\necho \\\"$1\\\"\\n\\nFor more information:\\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\\n\", \"stderr\": \"\"}\n{\"argv\": [\"actionlint\", \"/tmp/score-repository-runtime-yrd7v31c/invalid-workflow.yaml\"], \"exit\": 1, \"stdout\": \"invalid-workflow.yaml:6:5: unexpected key \\\"invalid-key\\\" for \\\"job\\\" section. expected one of \\\"concurrency\\\", \\\"container\\\", \\\"continue-on-error\\\", \\\"defaults\\\", \\\"env\\\", \\\"environment\\\", \\\"if\\\", \\\"name\\\", \\\"needs\\\", \\\"outputs\\\", \\\"permissions\\\", \\\"runs-on\\\", \\\"secrets\\\", \\\"services\\\", \\\"steps\\\", \\\"strategy\\\", \\\"timeout-minutes\\\", \\\"uses\\\", \\\"with\\\" [syntax-check]\\n  |\\n6 |     invalid-key: nope\\n  |     ^~~~~~~~~~~~\\n\", \"stderr\": \"\"}\n{\"argv\": [\"yamlfmt\", \"/tmp/score-repository-runtime-yrd7v31c/format.yaml\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"/tmp/score-repository-runtime-yrd7v31c/BUILD.bazel\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"buildifier\", \"-mode=check\", \"/tmp/score-repository-runtime-yrd7v31c/BUILD.bazel\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"git\", \"add\", \".\"], \"exit\": 0, \"stdout\": \"\", \"stderr\": \"\"}\n{\"argv\": [\"pre-commit\", \"run\", \"--all-files\", \"--verbose\"], \"exit\": 0, \"stdout\": \"Consumer cwd and arguments...............................................Passed\\n- hook id: cwd-and-args\\n- duration: 0s\\n\", \"stderr\": \"\"}\n{\"argv\": [\"pytest\", \"-q\", \"test_selected.py\"], \"exit\": 0, \"stdout\": \".                                                                        [100%]\\n1 passed in 0.00s\\n\", \"stderr\": \"\"}\n{\"argv\": [\"basedpyright\", \"--pythonpath\", \"/usr/bin/python3\", \"type_error.py\"], \"exit\": 1, \"stdout\": \"/tmp/score-repository-runtime-yrd7v31c/type_error.py\\n  /tmp/score-repository-runtime-yrd7v31c/type_error.py:1:14 - error: Type \\\"Literal['wrong']\\\" is not assignable to declared type \\\"int\\\"\\n  \\u00a0\\u00a0\\\"Literal['wrong']\\\" is not assignable to \\\"int\\\" (reportAssignmentType)\\n1 error, 0 warnings, 0 notes\\n\", \"stderr\": \"\"}\n{\"profile\": \"published\", \"result\": \"passed\", \"versions\": {\"actionlint\": \"1.7.7\", \"bazelisk\": \"1.27.0\", \"buildifier\": \"8.2.1\", \"ruff\": \"0.11.12\", \"shellcheck\": \"0.10.0\", \"uv\": \"0.13.6\", \"yamlfmt\": \"0.17.0\", \"uvx\": \"0.13.6\", \"pre-commit\": \"4.7.0\", \"pytest\": \"9.0.2\", \"basedpyright\": \"1.35.0\"}, \"uid\": 12345, \"commands\": 44}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "init",
+      "--bare",
+      "--no-workspace",
+      "--python",
+      "/usr/bin/python3",
+      "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Initialized project `consumer` at `/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer`\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "add",
+      "--raw",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: .venv\nResolved 21 packages in 263ms\nDownloading ruff (11.0MiB)\n Downloaded ruff\nPrepared 2 packages in 426ms\nInstalled 19 packages in 287ms\n + basedpyright==1.35.0\n + cfgv==3.5.0\n + distlib==0.4.4\n + filelock==4.2.6\n + identify==2.6.20\n + iniconfig==2.3.1\n + nodeenv==1.12.0\n + nodejs-wheel-binaries==24.19.0\n + packaging==26.3\n + platformdirs==4.14.3\n + pluggy==1.7.0\n + pre-commit==4.7.0\n + pygments==2.21.0\n + pytest==9.0.2\n + python-discovery==1.9.0\n + pyyaml==6.0.3\n + ruff==0.11.12\n + score-aqua-reference==0.3.1 (from file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl)\n + virtualenv==21.15.2\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "lock",
+      "--check"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 21 packages in 2ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.11.12\n",
+    "stderr": "Installed 19 packages in 215ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl",
+      "pre-commit",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "pytest",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "pytest 9.0.2\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl",
+      "pytest",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "pytest 9.0.2\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "basedpyright",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uvx",
+      "--no-config",
+      "--with",
+      "score-aqua-reference[published] @ file:///tmp/score-aqua-reference/m2/releases/0.3.1/dist/score_aqua_reference-0.3.1-py3-none-any.whl",
+      "basedpyright",
+      "--version"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "pytest",
+      "-q",
+      "test_selected.py"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 0,
+    "stdout": ".                                                                        [100%]\n1 passed in 0.00s\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/tmp/score-aqua-eval/bin/uv",
+      "--no-config",
+      "run",
+      "--locked",
+      "basedpyright",
+      "--pythonpath",
+      "/usr/bin/python3",
+      "type_error.py"
+    ],
+    "cwd": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer",
+    "exit": 1,
+    "stdout": "/tmp/score-aqua-reference/m2/evidence/0.3.1/consumer/type_error.py\n  /tmp/score-aqua-reference/m2/evidence/0.3.1/consumer/type_error.py:1:14 - error: Type \"Literal['wrong']\" is not assignable to declared type \"int\"\n  \u00a0\u00a0\"Literal['wrong']\" is not assignable to \"int\" (reportAssignmentType)\n1 error, 0 warnings, 0 notes\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "ruff-format",
+      "--files",
+      "tools/score_tools/catalog.py"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "ruff format..............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "ruff-check",
+      "--files",
+      "tools/score_tools/catalog.py"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "ruff check...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "shellcheck",
+      "--files",
+      "tools/run-tool"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "shellcheck...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "yamlfmt",
+      "--files",
+      ".github/workflows/ci.yaml"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "yamlfmt..................................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "buildifier",
+      "--files",
+      "tools/BUILD.bazel"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "buildifier...............................................................Passed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "run",
+      "--rm",
+      "--user",
+      "1000:1000",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua,dst=/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "--mount",
+      "type=bind,src=/home/alex/git/etas-contrib/score_devcontainer/.git,dst=/home/alex/git/etas-contrib/score_devcontainer/.git,readonly",
+      "--mount",
+      "type=bind,src=/tmp/score-aqua-reference/m2/hook-home,dst=/hook-home",
+      "--env",
+      "HOME=/hook-home",
+      "--env",
+      "PRE_COMMIT_HOME=/hook-home/pre-commit",
+      "--workdir",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+      "score-aqua-m2:0.3.1-repository",
+      "pre-commit",
+      "run",
+      "actionlint",
+      "--files",
+      ".github/workflows/ci.yaml"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-aqua",
+    "exit": 0,
+    "stdout": "actionlint...............................................................Passed\n",
+    "stderr": ""
+  }
+]

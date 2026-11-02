@@ -1,0 +1,14 @@
+{
+  "command": [
+    "aqua",
+    "-c",
+    "experiments/tool-manager-aqua/reference/aqua.yaml",
+    "generate",
+    "standard,withered-magic/starpls@v0.1.22"
+  ],
+  "registry_pin": "v4.579.0",
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "\u001b[2mNov  1 20:51:33.359\u001b[0m \u001b[91mERR\u001b[0m aqua failed \u001b[2mprogram=\u001b[0maqua \u001b[2mversion=\u001b[0m2.65.2 \u001b[2menv=\u001b[0mlinux/amd64 \u001b[2mpackage_name=\u001b[0mstandard,withered-magic/starpls@v0.1.22 \u001b[2merror=\u001b[0m\"unknown package\"",
+  "finding": "unknown package"
+}

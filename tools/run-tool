@@ -14,9 +14,10 @@
 # *******************************************************************************
 
 # Consumer repositories install this runner as .devcontainer/run-tool.
-# It runs an available CLI tool from PATH in a container, from local PATH on the host
-# when available, or through Bazel otherwise.
-# Use --strict to bypass local tools on the host and force execution through Bazel.
+# It runs an installed CLI from the image PATH, from local PATH on the host when
+# available, from the directly provisioned host prefix in strict mode, or via
+# the compatible Bazel target when a local/pinned executable is unavailable.
+# Use --strict to bypass host PATH and prefer the directly installed pinned tool.
 # See https://github.com/eclipse-score/devcontainer/tree/main/tools.
 
 set -euo pipefail
@@ -51,27 +52,48 @@ in_container() {
     esac
 }
 
-# Container PATH remains preferred for compatibility, including --strict.
-# Container detection is an execution shortcut, not a version attestation.
-# shellcheck disable=SC2310
-if in_container && command -v "${tool_name}" >/dev/null 2>&1; then
-    exec "${tool_name}" "$@"
-# On the host, prefer the local tool on PATH for faster execution unless --strict
-# is set. If local execution fails, suggest --strict to run the pinned Bazel target.
-elif [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
+run_bazel() {
+    if command -v bazel >/dev/null 2>&1; then
+        # Consumer repositories expose this module as @score_devcontainer; `--`
+        # prevents tool flags from being interpreted as Bazel flags.
+        exec bazel run "@score_devcontainer//tools:${tool_name}" -- "$@"
+    fi
+    echo "Could not run '${tool_name}': no container command or Bazel executable is available." >&2
+    exit 127
+}
+
+container_mode=0
+# shellcheck disable=SC2310 # Capture status 2 separately from a valid host result.
+if in_container; then
+    container_mode=1
+else
+    container_status=$?
+    if [[ "${container_status}" -gt 1 ]]; then
+        exit "${container_status}"
+    fi
+fi
+
+if [[ "${container_mode}" -eq 1 ]]; then
+    if command -v "${tool_name}" >/dev/null 2>&1; then
+        exec "${tool_name}" "$@"
+    fi
+    run_bazel "$@"
+elif [[ "${strict}" -eq 1 ]]; then
+    host_tools_bin="${SCORE_TOOLS_BIN:-${HOME}/.local/share/score-tools/bin}"
+    pinned_tool="${host_tools_bin}/${tool_name}"
+    if [[ -x "${pinned_tool}" ]]; then
+        exec "${pinned_tool}" "$@"
+    fi
+    run_bazel "$@"
+elif command -v "${tool_name}" >/dev/null 2>&1; then
     if "${tool_name}" "$@"; then
         exit 0
     else
         exit_code=$?
         echo "Execution of local '${tool_name}' failed with exit code ${exit_code}." >&2
-        echo "Use '--strict' to bypass the local tool and run the pinned version via Bazel." >&2
+        echo "Use '--strict' to run the directly provisioned pinned version." >&2
         exit "${exit_code}"
     fi
-elif command -v bazel >/dev/null 2>&1; then
-    # Consumer repositories expose this module as @score_devcontainer; `--`
-    # prevents tool flags from being interpreted as Bazel flags.
-    exec bazel run "@score_devcontainer//tools:${tool_name}" -- "$@"
 else
-    echo "Could not run '${tool_name}': no container command or Bazel executable is available." >&2
-    exit 127
+    run_bazel "$@"
 fi

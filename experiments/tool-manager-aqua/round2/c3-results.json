@@ -1,0 +1,33 @@
+{
+  "uid": 12345,
+  "ruff_command": [
+    "/opt/score-tools/bin/ruff"
+  ],
+  "pre_commit_command": [
+    "/opt/score-tools/python/bin/pre-commit"
+  ],
+  "ruff_version": "ruff 0.11.13",
+  "pre-commit_version": "pre-commit 4.7.0",
+  "ruff_result": {
+    "exit": 1,
+    "code": "F401",
+    "filename": "/tmp/aqua consumer 3zbrwcfz/file with spaces.py"
+  },
+  "pre_commit_result": {
+    "exit": 1,
+    "hook_exit": 7,
+    "observed": {
+      "cwd": "/tmp/aqua consumer 3zbrwcfz",
+      "args": [
+        "two words",
+        "--literal=one two"
+      ]
+    }
+  },
+  "consumer_config_ignored": true,
+  "wrong_path_binaries_ignored": true,
+  "common_image_id": "sha256:1b1ebf493ffb1a5a3a4d3c4c2a822cfe0da563d7028159078b0a02a12122a28d",
+  "network": "none",
+  "runtime_manager_present": false,
+  "mount_readonly": true
+}

@@ -29,6 +29,28 @@ class CatalogTest(unittest.TestCase):
     def test_current_compositions_and_bazel_registrations_are_consistent(self):
         catalog.validate_catalog()
 
+    def test_m4_tools_stay_out_of_repository_and_keep_existing_providers(self):
+        environments = catalog.load_environments()
+        self.assertEqual(
+            environments["repository"]["native"],
+            [
+                "actionlint",
+                "bazelisk",
+                "buildifier",
+                "ruff",
+                "shellcheck",
+                "uv",
+                "uvx",
+                "yamlfmt",
+            ],
+        )
+        self.assertEqual(environments["repository"]["python"], ["pre-commit"])
+        self.assertIn("starpls", environments["bazel-feature"]["native"])
+        self.assertIn("codespell", environments["s-core-local"]["python"])
+        self.assertIn("apm", environments["s-core-local"]["native"])
+        self.assertIn("opencode", environments["s-core-local"]["native"])
+        self.assertIn("git", environments["s-core-local"]["apt"])
+
     def test_undefined_environment_member_fails(self):
         with (
             patch.object(
@@ -210,6 +232,28 @@ class InstalledResultTest(unittest.TestCase):
             self.installer._cmd_verify_environment(
                 argparse.Namespace(environment="image")
             )
+
+    def test_runtime_environment_leaves_native_and_python_tools_to_image_owner(self):
+        import argparse
+
+        selection = {
+            "native": ["ruff"],
+            "python": ["pre-commit"],
+            "apt": [],
+            "npm": [],
+        }
+        with (
+            patch.object(self.installer, "all_definitions", return_value={}),
+            patch.object(
+                self.installer, "validate_environment", return_value=selection
+            ),
+            patch.object(self.installer, "apt_requirements", return_value=[]),
+            patch.object(self.installer.subprocess, "run") as provider_install,
+        ):
+            self.installer._cmd_environment(
+                argparse.Namespace(environment="fixture", phase="runtime")
+            )
+        provider_install.assert_not_called()
 
     def test_nonroot_missing_command_is_rejected(self):
         import argparse

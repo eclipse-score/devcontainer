@@ -1,0 +1,23 @@
+{
+  "command": [
+    "bazel",
+    "--output_base=/tmp/score-aqua-reference/bazel-output",
+    "run",
+    "--enable_bzlmod",
+    "//tools:pre-commit",
+    "--",
+    "--version"
+  ],
+  "cwd": "/tmp/score-aqua-reference/releases/0.2.0/bazel/consumer",
+  "env": {
+    "UV_CACHE_DIR": "/tmp/score-aqua-reference/bazel-uv-cache",
+    "UV_PYTHON_INSTALL_DIR": "/tmp/score-aqua-reference/python",
+    "UV_PYTHON_DOWNLOADS": "automatic",
+    "UV_PYTHON_PREFERENCE": "only-managed"
+  },
+  "exit": 0,
+  "output": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:pre-commit (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:pre-commit (0 packages loaded, 0 targets configured).\nINFO: Found 1 target...\nTarget //tools:pre-commit up-to-date:\n  ../bazel-bin/tools/pre-commit\nINFO: Elapsed time: 0.133s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: ../bazel-bin/tools/pre-commit ../rules_multitool++multitool+multitool/tools/uvx/uvx 'pre-commit==4.7.0' pre-commit <args omitted>\nDownloading cpython-3.15.2-linux-x86_64-gnu (download) (36.4MiB)\n Downloaded cpython-3.15.2-linux-x86_64-gnu (download)\nDownloading virtualenv (5.3MiB)\n   Building pyyaml==6.0.3\n Downloaded virtualenv\n      Built pyyaml==6.0.3\nInstalled 11 packages in 7ms\npre-commit 4.7.0\n",
+  "interpreter_links": {
+    "/tmp/score-aqua-reference/bazel-uv-cache/archive-v0/zVkLRekfREzpk17i/bin/python": "/tmp/score-aqua-reference/python/cpython-3.15.2-linux-x86_64-gnu/bin/python3.15"
+  }
+}

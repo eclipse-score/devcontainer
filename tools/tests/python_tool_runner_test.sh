@@ -35,8 +35,7 @@ assert_lines() {
     diff -u "${expected_file}" "${actual_file}"
 }
 
-# One fake executable models both `uvx` execution and `uv tool install`, keeping
-# checks of process boundaries, arguments, cwd, and environment network-free.
+# The fake uvx executable keeps process-boundary checks network-free.
 cat > "${fake_uvx}" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -44,9 +43,6 @@ set -euo pipefail
     printf '%s\n' "${PWD}"
     printf '%s\n' "$@"
 } > "${OUTPUT_FILE}"
-if [[ -n "${ENV_OUTPUT:-}" ]]; then
-    printf '%s\n%s\n' "${UV_TOOL_BIN_DIR:-}" "${UV_TOOL_DIR:-}" > "${ENV_OUTPUT}"
-fi
 exit "${FAKE_UV_EXIT_CODE:-0}"
 EOF
 chmod +x "${fake_uvx}"
@@ -71,36 +67,6 @@ assert_lines "${output}" \
     "pre-commit" \
     "run" \
     "--all-files"
-
-# Explicit uv directories keep root-owned feature installs independent of
-# whichever home directory uv would otherwise infer during image creation.
-environment_output="${TEST_TMPDIR}/uvx.env"
-OUTPUT_FILE="${output}" ENV_OUTPUT="${environment_output}" \
-    "${installer}" install-python pre-commit \
-    --uv "${fake_uvx}" --bin-dir /test/bin --tool-dir /test/tools
-
-assert_lines "${output}" \
-    "${PWD}" \
-    "tool" \
-    "install" \
-    "--force" \
-    "pre-commit==${catalog_version}"
-assert_lines "${environment_output}" "/test/bin" "/test/tools"
-
-# Validate all names before invoking uv. Including a valid name first proves an
-# error cannot leave behind a partially installed tool set.
-rm -f "${output}"
-if OUTPUT_FILE="${output}" "${installer}" install-python \
-    pre-commit missing-tool \
-    --uv "${fake_uvx}" 2> "${TEST_TMPDIR}/unknown.err"; then
-    echo "Unknown Python tool unexpectedly succeeded" >&2
-    exit 1
-fi
-grep -qF "Tool 'missing-tool' not found in Python tool catalog" "${TEST_TMPDIR}/unknown.err"
-if [[ -e "${output}" ]]; then
-    echo "uv was invoked before all requested tools were validated" >&2
-    exit 1
-fi
 
 # Hook failures must reach Bazel/CI as failures instead of being swallowed by
 # the shell boundary after the working-directory change.

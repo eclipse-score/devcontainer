@@ -1,0 +1,24 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "12345:12345",
+    "--mount",
+    "type=bind,src=/tmp/score-aqua-round2/runtime,dst=/opt/score-tools,readonly",
+    "score-tool-manager-comparison-base:20261031",
+    "/bin/sh",
+    "-ec",
+    "/opt/score-tools/updated/ruff --version; /opt/score-tools/python/bin/pre-commit --version"
+  ],
+  "output": [
+    "ruff 0.11.12",
+    "pre-commit 4.7.0"
+  ],
+  "source": "C1 aqua cp output /tmp/score-aqua-round2/c1/changed/ruff",
+  "python_state": "unchanged C3 fixed venv; requirements bytes unchanged in C1",
+  "scope": "targeted changed native tool runtime check; primary C3 behavioral fixture uses baseline state"
+}

@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: score-aqua-reference
+Version: 0.3.1
+Requires-Python: >=3.10
+Provides-Extra: repository
+Requires-Dist: pre-commit==4.7.0; extra == "repository"
+Requires-Dist: ruff==0.11.12; extra == "repository"
+Provides-Extra: pre-commit
+Requires-Dist: pre-commit==4.7.0; extra == "pre-commit"
+Provides-Extra: ruff
+Requires-Dist: ruff==0.11.12; extra == "ruff"
+Provides-Extra: published
+Requires-Dist: pre-commit==4.7.0; extra == "published"
+Requires-Dist: pytest==9.0.2; extra == "published"
+Requires-Dist: basedpyright==1.35.0; extra == "published"
+Requires-Dist: ruff==0.11.12; extra == "published"
+Provides-Extra: pytest
+Requires-Dist: pytest==9.0.2; extra == "pytest"
+Provides-Extra: basedpyright
+Requires-Dist: basedpyright==1.35.0; extra == "basedpyright"
