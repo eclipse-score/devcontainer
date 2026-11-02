@@ -1,0 +1,255 @@
+[
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "build",
+      "--output",
+      "/tmp/score-own-copilot/release-final-evidence/release-a",
+      "--version",
+      "0.8.0",
+      "--package-name",
+      "score-own-release-local",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-a/tools",
+      "--uv",
+      "/home/alex/.local/bin/uv"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "/tmp/score-own-copilot/release-final-evidence/release-a/dist/score_own_release_local-0.8.0-py3-none-any.whl\n",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_own_release_local.egg-info\nwriting score_own_release_local.egg-info/PKG-INFO\nwriting dependency_links to score_own_release_local.egg-info/dependency_links.txt\nwriting requirements to score_own_release_local.egg-info/requires.txt\nwriting top-level names to score_own_release_local.egg-info/top_level.txt\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nreading manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_own_release_local.egg-info/PKG-INFO\nwriting dependency_links to score_own_release_local.egg-info/dependency_links.txt\nwriting requirements to score_own_release_local.egg-info/requires.txt\nwriting top-level names to score_own_release_local.egg-info/top_level.txt\nreading manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nCopying score_own_release_local.egg-info to build/bdist.linux-x86_64/wheel/./score_own_release_local-0.8.0-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_own_release_local-0.8.0.dist-info/WHEEL\ncreating '/tmp/score-own-copilot/release-final-evidence/release-a/dist/.tmp-k4ybnftb/score_own_release_local-0.8.0-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_own_release_local-0.8.0.dist-info/METADATA'\nadding 'score_own_release_local-0.8.0.dist-info/WHEEL'\nadding 'score_own_release_local-0.8.0.dist-info/top_level.txt'\nadding 'score_own_release_local-0.8.0.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built dist/score_own_release_local-0.8.0-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "check",
+      "/tmp/score-own-copilot/release-final-evidence/release-a",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-a/tools"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "Dependency release matches current owners\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "check",
+      "/tmp/score-own-copilot/release-final-evidence/release-a",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-b/tools"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Dependency release failed: Stale native artifact metadata for ruff; refresh ruff.lock.json\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "build",
+      "--output",
+      "/tmp/score-own-copilot/release-final-evidence/release-b",
+      "--version",
+      "0.8.1",
+      "--package-name",
+      "score-own-release-local",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-b/tools",
+      "--uv",
+      "/home/alex/.local/bin/uv"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "/tmp/score-own-copilot/release-final-evidence/release-b/dist/score_own_release_local-0.8.1-py3-none-any.whl\n",
+    "stderr": "Building wheel...\nrunning egg_info\ncreating score_own_release_local.egg-info\nwriting score_own_release_local.egg-info/PKG-INFO\nwriting dependency_links to score_own_release_local.egg-info/dependency_links.txt\nwriting requirements to score_own_release_local.egg-info/requires.txt\nwriting top-level names to score_own_release_local.egg-info/top_level.txt\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nreading manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nrunning bdist_wheel\nrunning build\ninstalling to build/bdist.linux-x86_64/wheel\nrunning install\nrunning install_egg_info\nrunning egg_info\nwriting score_own_release_local.egg-info/PKG-INFO\nwriting dependency_links to score_own_release_local.egg-info/dependency_links.txt\nwriting requirements to score_own_release_local.egg-info/requires.txt\nwriting top-level names to score_own_release_local.egg-info/top_level.txt\nreading manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nwriting manifest file 'score_own_release_local.egg-info/SOURCES.txt'\nCopying score_own_release_local.egg-info to build/bdist.linux-x86_64/wheel/./score_own_release_local-0.8.1-py3.14.egg-info\nrunning install_scripts\ncreating build/bdist.linux-x86_64/wheel/score_own_release_local-0.8.1.dist-info/WHEEL\ncreating '/tmp/score-own-copilot/release-final-evidence/release-b/dist/.tmp-aj4nz4j3/score_own_release_local-0.8.1-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it\nadding 'score_own_release_local-0.8.1.dist-info/METADATA'\nadding 'score_own_release_local-0.8.1.dist-info/WHEEL'\nadding 'score_own_release_local-0.8.1.dist-info/top_level.txt'\nadding 'score_own_release_local-0.8.1.dist-info/RECORD'\nremoving build/bdist.linux-x86_64/wheel\nSuccessfully built dist/score_own_release_local-0.8.1-py3-none-any.whl\n"
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "check",
+      "/tmp/score-own-copilot/release-final-evidence/release-b",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-b/tools"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "Dependency release matches current owners\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/alex/git/etas-contrib/score_devcontainer-eval-own/tools/internal/dependency_package.py",
+      "check",
+      "/tmp/score-own-copilot/release-final-evidence/release-a",
+      "--catalog-root",
+      "/tmp/score-own-copilot/release-final-evidence/source-b/tools"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Dependency release failed: Stale dependency release: owners/identity differ; rebuild\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "lock",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-a/dist"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.14.3\nResolved 3 packages in 298ms\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "sync",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-a/dist"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using CPython 3.14.3\nCreating virtual environment at: .venv\nResolved 3 packages in 0.68ms\nPrepared 1 package in 3ms\nInstalled 2 packages in 1ms\n + ruff==0.11.13\n + score-own-release-local==0.8.0\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "tool",
+      "run",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-a/dist",
+      "--with",
+      "score-own-release-local[ruff]==0.8.0",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": "Installed 2 packages in 3ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-own-copilot/release-final-evidence/native/bin/ruff",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "ruff 0.11.13\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "lock",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-b/dist"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 70ms\nUpdated ruff v0.11.13 -> v0.14.6\nUpdated score-own-release-local v0.8.0 -> v0.8.1\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "sync",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-b/dist"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Resolved 3 packages in 0.92ms\nPrepared 1 package in 4ms\nUninstalled 2 packages in 0.53ms\nInstalled 2 packages in 1ms\n - ruff==0.11.13\n + ruff==0.14.6\n - score-own-release-local==0.8.0\n + score-own-release-local==0.8.1\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "run",
+      "--no-sync",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/uv",
+      "tool",
+      "run",
+      "--find-links",
+      "/tmp/score-own-copilot/release-final-evidence/release-b/dist",
+      "--with",
+      "score-own-release-local[ruff]==0.8.1",
+      "ruff",
+      "--version"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/consumer",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": "Installed 2 packages in 4ms\n"
+  },
+  {
+    "argv": [
+      "/tmp/score-own-copilot/release-final-evidence/native/bin/ruff",
+      "--version"
+    ],
+    "cwd": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "run",
+      "//tools:ruff",
+      "--",
+      "--version"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/source-b/caller",
+    "exit": 0,
+    "stdout": "ruff 0.14.6\n",
+    "stderr": "Starting local Bazel server (8.6.0) and connecting to it...\nComputing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (1 packages loaded)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (1 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (84 packages loaded, 579 targets configured).\n[5 / 6] [Prepa] Creating symlink external/rules_multitool++multitool+multitool/tools/ruff/ruff [for tool]\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 3.763s, Critical Path: 0.03s\nINFO: 6 processes: 6 internal.\nINFO: Build completed successfully, 6 total actions\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  },
+  {
+    "argv": [
+      "/home/alex/.local/bin/bazel",
+      "run",
+      "//tools:ruff",
+      "--",
+      "check",
+      "bad input.py"
+    ],
+    "cwd": "/tmp/score-own-copilot/release-final-evidence/source-b/caller",
+    "exit": 1,
+    "stdout": "\u001b[1m\u001b[91m\u001b]8;;https://docs.astral.sh/ruff/rules/unused-import\u001b\\F401\u001b]8;;\u001b\\ \u001b[0m[\u001b[1m\u001b[96m*\u001b[0m] \u001b[1m`os` imported but unused\u001b[0m\n \u001b[1m\u001b[94m-->\u001b[0m bad input.py:1:8\n  \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[94m1 |\u001b[0m import os\n  \u001b[1m\u001b[94m|\u001b[0m        \u001b[1m\u001b[91m^^\u001b[0m\n  \u001b[1m\u001b[94m|\u001b[0m\n\u001b[1m\u001b[96mhelp\u001b[0m: \u001b[1mRemove unused import: `os`\u001b[0m\n\nFound 1 error.\n[\u001b[36m*\u001b[0m] 1 fixable with the `--fix` option.\n",
+    "stderr": "Computing main repo mapping: \nLoading: \nLoading: 0 packages loaded\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\nAnalyzing: target //tools:ruff (0 packages loaded, 0 targets configured)\n\nINFO: Analyzed target //tools:ruff (32 packages loaded, 158 targets configured).\nINFO: Found 1 target...\nTarget @@rules_multitool++multitool+multitool//tools/ruff:cwd up-to-date:\n  bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd\nINFO: Elapsed time: 0.310s, Critical Path: 0.00s\nINFO: 1 process: 1 internal.\nINFO: Build completed successfully, 1 total action\nINFO: Running command line: bazel-bin/external/rules_multitool++multitool+multitool/tools/ruff/cwd <args omitted>\n"
+  }
+]

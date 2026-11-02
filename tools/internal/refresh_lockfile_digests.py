@@ -130,6 +130,16 @@ def refresh_lockfile(path, token=None, cache=None):
                     f"{tool_name}: no digest for asset {asset!r} in {tag}; review the release manually"
                 )
             sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
+            # Archive members and directory prefixes can carry the release
+            # version just like asset filenames. Keep extraction metadata tied
+            # to the same release as the refreshed download URL.
+            for field in ("file", "dir"):
+                if field in binary:
+                    previous_path = binary[field]
+                    next_path = previous_path.replace(previous_version, version)
+                    if next_path != previous_path:
+                        binary[field] = next_path
+                        changed.append(f"{tool_name}/{field}")
             # Rebuild the URL from the version so the file is consistent
             # whether or not Renovate already updated the URL.
             new_url = (

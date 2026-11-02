@@ -1,0 +1,496 @@
+{
+  "status": "passed",
+  "uid": 1000,
+  "cwd": "/evidence/prepared-fixtures",
+  "intercepted": false,
+  "cases": [
+    {
+      "tool": "uv",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/uv",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "uv",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "uv 0.13.6 (x86_64-unknown-linux-gnu)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "uvx",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/uvx",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "uvx",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "uvx 0.13.6 (x86_64-unknown-linux-gnu)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "ruff",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/ruff",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "ruff 0.11.13\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "ruff",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "ruff 0.11.13\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "pre-commit",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/pre-commit",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pre-commit 4.7.0\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "pre-commit",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pre-commit 4.7.0\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "ruff",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/ruff",
+            "check",
+            "bad input.py"
+          ],
+          "exit": 1,
+          "stdout": "bad input.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "ruff",
+            "check",
+            "bad input.py"
+          ],
+          "exit": 1,
+          "stdout": "bad input.py:1:8: F401 [*] `os` imported but unused\n  |\n1 | import os\n  |        ^^ F401\n  |\n  = help: Remove unused import: `os`\n\nFound 1 error.\n[*] 1 fixable with the `--fix` option.\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "shellcheck",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/shellcheck",
+            "bad input.sh"
+          ],
+          "exit": 1,
+          "stdout": "\nIn bad input.sh line 2:\necho $value\n     ^----^ SC2154 (warning): value is referenced but not assigned.\n     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$value\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2154 -- value is referenced but not assig...\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "shellcheck",
+            "bad input.sh"
+          ],
+          "exit": 1,
+          "stdout": "\nIn bad input.sh line 2:\necho $value\n     ^----^ SC2154 (warning): value is referenced but not assigned.\n     ^----^ SC2086 (info): Double quote to prevent globbing and word splitting.\n\nDid you mean: \necho \"$value\"\n\nFor more information:\n  https://www.shellcheck.net/wiki/SC2154 -- value is referenced but not assig...\n  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "starpls",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/starpls",
+            "version"
+          ],
+          "exit": 0,
+          "stdout": "starpls version: v0.1.22\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "starpls",
+            "version"
+          ],
+          "exit": 0,
+          "stdout": "starpls version: v0.1.22\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "buildifier",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/buildifier",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "buildifier",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "buildifier version: 8.2.1 \nbuildifier scm revision: b1e23f1025b8556cc75eebb28ff7f40b8930d353 \n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "pre-commit",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/pre-commit",
+            "validate-config",
+            ".pre-commit-config.yaml"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "pre-commit",
+            "validate-config",
+            ".pre-commit-config.yaml"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "actionlint",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/actionlint",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "actionlint",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/amd64\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "yamlfmt",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/yamlfmt",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "yamlfmt 0.17.0 (45e5cb5)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "yamlfmt",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "yamlfmt 0.17.0 (45e5cb5)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "apm",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/apm",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "apm",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "opencode",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/opencode",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "opencode v2.2.3\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "opencode",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "opencode v2.2.3\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "basedpyright",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/basedpyright",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "basedpyright",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "basedpyright 1.35.0\nbased on pyright 1.1.407\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "pytest",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/pytest",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pytest 9.0.2\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "pytest",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pytest 9.0.2\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "py.test",
+      "results": [
+        {
+          "argv": [
+            "/tmp/score-own-copilot/published-prepared/bin/py.test",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pytest 9.0.2\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/bin/bash",
+            "/own-tools/run-tool",
+            "--strict",
+            "py.test",
+            "--version"
+          ],
+          "exit": 0,
+          "stdout": "pytest 9.0.2\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "tool": "basedpyright",
+      "behavior": {
+        "argv": [
+          "/tmp/score-own-copilot/published-prepared/bin/basedpyright",
+          "good.py"
+        ],
+        "exit": 0,
+        "stdout": "0 errors, 0 warnings, 0 notes\n",
+        "stderr": ""
+      }
+    },
+    {
+      "tool": "pytest",
+      "behavior": {
+        "argv": [
+          "/tmp/score-own-copilot/published-prepared/bin/pytest",
+          "-q",
+          "test_sample.py"
+        ],
+        "exit": 0,
+        "stdout": ".                                                                        [100%]\n1 passed in 0.00s\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "language_servers": [
+    {
+      "tool": "basedpyright-langserver",
+      "argv": [
+        "/tmp/score-own-copilot/published-prepared/bin/basedpyright-langserver",
+        "--stdio"
+      ],
+      "exit": 0,
+      "response_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "tool": "starpls",
+      "argv": [
+        "/tmp/score-own-copilot/published-prepared/bin/starpls",
+        "server"
+      ],
+      "exit": 0,
+      "response_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "tool": "ruff",
+      "argv": [
+        "/tmp/score-own-copilot/published-prepared/bin/ruff",
+        "server"
+      ],
+      "exit": 0,
+      "response_ids": [
+        1,
+        2
+      ]
+    }
+  ],
+  "bazelisk_guard": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "2026/11/02 12:04:06 could not get Bazel version: not allowed to use fallback version \"score-own-no-engine\"\n"
+  }
+}

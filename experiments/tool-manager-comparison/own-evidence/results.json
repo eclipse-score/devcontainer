@@ -1,0 +1,106 @@
+{
+  "actual_python_bazel": {
+    "command": "bazel run //tools:pre-commit -- --version",
+    "exit": 0,
+    "stdout": "pre-commit 4.7.0\n"
+  },
+  "arm64_bazel_provider_recovery": {
+    "boundary": "Targeted existing engine-provider probe: actual ARM64 Bazel 8.6.0 downloaded using newly prepared Bazelisk into isolated uid-1000 cache, then ran offline from warm cache. Not a full-image/suite pass.",
+    "result": "arm64/bazel-provider.json"
+  },
+  "arm64_prepared": {
+    "additional_behavior_checks": 2,
+    "architecture": "arm64/offline/architecture.json",
+    "architecture_verified": "11 native commands, Python interpreter and basedpyright bundled Node: AArch64 ELF; all 16 commands resolve into new prefix.",
+    "bazelisk": "bounded actual fallback guard",
+    "boundary": "QEMU ARM64, cached OS providers only; all selected tool output newly prepared using original URLs.",
+    "direct_strict_pairs": 16,
+    "exposed_identities": 16,
+    "inspection": "arm64/inspect.json",
+    "language_servers": 3,
+    "network": "none during check/inspection",
+    "prepare": "arm64/prepare.json",
+    "prepared": "arm64/offline/prepared.json",
+    "root_and_prefix": "read-only",
+    "runtime": "arm64/check.json",
+    "selections": 14,
+    "status": "passed",
+    "substrate_image": "sha256:b36448960057f54745f841561338487c5e9e2128526113c24b4861a7cf0f065a",
+    "uid": 1000
+  },
+  "cached_feature_suite": {
+    "driver": "integration/published_runtime.sh",
+    "result": "integration/cached-feature-summary.json",
+    "source_hashes": "integration/cached-feature-source-hashes.json"
+  },
+  "corrected_scope": "Removal changes new metadata/Bazel/image offerings, not automatic developer-machine cleanup. No uninstall/ledger/rollback parity requirement.",
+  "fresh_published": {
+    "amd64": {
+      "result": "integration/own-published-20261102T122320Z-55a4764a/result.json",
+      "status": "passed",
+      "summary": "integration/own-published-20261102T122320Z-55a4764a/build-summary.json"
+    },
+    "arm64": {
+      "result": "integration/own-published-arm64-20261102T130249Z-e68aa5e1/result.json",
+      "status": "failed",
+      "summary": "integration/own-published-arm64-20261102T130249Z-e68aa5e1/build-summary.json"
+    }
+  },
+  "historical_boundaries": [
+    "Original full amd64 attempt disk-cancelled at 1.21 GiB; its failure remains, not relabeled.",
+    "Earlier cached-provider suite used a checksum-identical OpenCode mirror after container timeouts; later fresh gates use production URLs.",
+    "Parent-authorized obsolete comparison-image cleanup reclaimed headroom; missing older image tags do not remove source/evidence records."
+  ],
+  "node": {
+    "final_free_space_floor_gib": 2,
+    "harness": "read-only main M6 gate, task-specific root/source; max 3 same-container terminal attempts",
+    "result": "integration/own-lifecycle-20261102T120944Z-49cd7dbb/result.json"
+  },
+  "prepared": {
+    "additional_behavior_checks": 2,
+    "direct_strict_pairs": 16,
+    "docker": "docker run --rm --network none --read-only --user 1000:1000 --tmpfs /tmp:rw,mode=1777 -e HOME=/tmp -v PREPARED:PREPARED:ro -v WORKTREE/tools:/own-tools:ro -v OUTPUT:/evidence --entrypoint /usr/bin/python3 score-tooling-reference:final-amd64 /own-tools/tests/prepared_smoke.py --prefix PREPARED --output /evidence/prepared.json",
+    "exposed_identities": 16,
+    "lsp_initialize_shutdown": 3,
+    "network": "none",
+    "result": "prepared.json",
+    "root_and_prefix": "read-only",
+    "selected_tools": 14,
+    "starpls_functional_bazel_query": [
+      "info",
+      "execution_root",
+      "output_base",
+      "release",
+      "starlark-semantics",
+      "workspace"
+    ],
+    "uid": 1000
+  },
+  "public_shell_tests": {
+    "command": "bazel test //tools:run_tool_test //tools:python_tool_runner_test --test_output=errors",
+    "passed": 2
+  },
+  "release_gate": {
+    "command": "python3 tools/tests/release_smoke.py --output /tmp/score-own-copilot/release-final-evidence",
+    "result": "release/result.json"
+  },
+  "remaining_gaps": [
+    "No native macOS execution or native ARM hardware execution.",
+    "Public package identity, hosting/publication and long-term retention remain undecided/unperformed.",
+    "Current preserved own inventory does not include peers' additional codespell selection.",
+    "Fresh full arm64 image/provider gate not passed; inspect latest record."
+  ],
+  "static_checks": [
+    "ruff check (changed Python implementation/test files): passed",
+    "ruff format --check (same files): passed",
+    "buildifier -mode=check MODULE.bazel tools/BUILD.bazel tools/score_tools/python_tools.bzl: passed",
+    "shellcheck tools/run-tool .devcontainer/post_create_command.sh: passed",
+    "python3 tools/internal/sync_readme.py --check: passed",
+    "python3 -m compileall -q tools: passed"
+  ],
+  "status": "implemented-and-verified-with-explicit-hardware-distribution-gaps",
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s tools/tests -v",
+    "passed": 45
+  }
+}

@@ -14,6 +14,7 @@
 
 import ast
 import json
+import re
 from collections.abc import Iterator
 from pathlib import Path
 from typing import NotRequired, TypedDict
@@ -53,11 +54,12 @@ class PythonTool(TypedDict):
     entrypoint: str
     # User-facing text is kept beside the pin so generated docs cannot drift.
     description: str
+    aliases: NotRequired[list[str]]
 
 
-def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
+def _iter_catalog(root: Path = LOCKFILE_ROOT) -> Iterator[tuple[str, str, ToolData]]:
     """Yield (tool, lockfile filename, definition) for every catalog entry."""
-    for path in sorted(LOCKFILE_ROOT.glob("*.lock.json")):
+    for path in sorted(root.glob("*.lock.json")):
         with path.open(encoding="utf-8") as handle:
             data = json.load(handle)
 
@@ -69,7 +71,36 @@ def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
             yield tool, path.name, definition
 
 
-def _parse_python_tool_catalog() -> object:
+def load_native_tools(root: Path | None = None) -> dict[str, ToolData]:
+    """Read portable native owners, rejecting duplicate/stale release decisions."""
+    tools: dict[str, ToolData] = {}
+    releases: dict[str, str] = {}
+    for name, filename, data in _iter_catalog(
+        (root / "lockfiles") if root else LOCKFILE_ROOT
+    ):
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", name):
+            raise ValueError(f"Invalid native command name: {name!r}")
+        if name in tools:
+            raise ValueError(f"Duplicate native tool: {name}")
+        version = data.get("version")
+        if not isinstance(version, str) or not version:
+            raise ValueError(f"Missing native version: {name}")
+        if filename in releases and releases[filename] != version:
+            raise ValueError(f"Inconsistent shared release in {filename}")
+        releases[filename] = version
+        for binary in data["binaries"]:
+            match = re.search(
+                r"github\.com/[^/]+/[^/]+/releases/download/v?([^/]+)/", binary["url"]
+            )
+            if match and match.group(1) != version:
+                raise ValueError(
+                    f"Stale native artifact metadata for {name}; refresh {filename}"
+                )
+        tools[name] = data
+    return tools
+
+
+def _parse_python_tool_catalog(path: Path = PYTHON_TOOL_CATALOG) -> object:
     """Return the literal assigned to ``PYTHON_TOOLS``.
 
     The feature installer runs as root, so importing or executing a repository
@@ -78,8 +109,8 @@ def _parse_python_tool_catalog() -> object:
     """
     try:
         module = ast.parse(
-            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
-            filename=str(PYTHON_TOOL_CATALOG),
+            path.read_text(encoding="utf-8"),
+            filename=str(path),
         )
     except SyntaxError as exc:
         raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
@@ -106,9 +137,9 @@ def _parse_python_tool_catalog() -> object:
         raise SystemExit("Python tool catalog must contain only literal data") from exc
 
 
-def _load_python_tools() -> dict[str, PythonTool]:
+def _load_python_tools(path: Path | None = None) -> dict[str, PythonTool]:
     """Validate the shared catalog and return typed Python tool metadata."""
-    catalog = _parse_python_tool_catalog()
+    catalog = _parse_python_tool_catalog(path or PYTHON_TOOL_CATALOG)
     if not isinstance(catalog, dict):
         raise SystemExit("PYTHON_TOOLS must be a dictionary")
 
@@ -139,6 +170,14 @@ def _load_python_tools() -> dict[str, PythonTool]:
             "entrypoint": entrypoint,
             "description": description,
         }
+        aliases = metadata.get("aliases", [])
+        if not isinstance(aliases, list) or any(
+            not isinstance(alias, str) or not alias or Path(alias).name != alias
+            for alias in aliases
+        ):
+            raise SystemExit(f"Malformed Python aliases for '{command}'")
+        if aliases:
+            tools[command]["aliases"] = aliases
     return tools
 
 
@@ -331,17 +370,9 @@ def validate_catalog():
     """Reject undefined selections and drift in unavoidable Bazel registrations."""
     import re
 
+    load_native_tools()
+
     tools = all_definitions()
-    # Related commands in a multitool lockfile share a release decision (uv and
-    # uvx). The backend format repeats that field, so reject inconsistent copies.
-    release_versions = {}
-    for name, filename, definition in _iter_catalog():
-        version = definition.get("version")
-        if not isinstance(version, str) or not version:
-            raise ValueError(f"Missing native version: {name}")
-        if filename in release_versions and release_versions[filename] != version:
-            raise ValueError(f"Inconsistent shared release in {filename}")
-        release_versions[filename] = version
     for environment in load_environments():
         validate_environment(environment, tools)
     root = LOCKFILE_ROOT.parents[1]

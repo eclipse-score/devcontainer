@@ -16,6 +16,11 @@ SPDX-License-Identifier: Apache-2.0
 
 # Proposed tool management architecture
 
+> **Architecture decision open:** This document describes the explored local
+> approach. Its technical validation does not establish the requirements or
+> select the final architecture. See the
+> [decision record](tooling-decision-record.md) for the current decision status.
+
 Validated local design for #190. The [status quo](tooling-status-quo.md) describes
 the baseline; this document explains the resulting architecture from high level
 to detail. The complete reference is implemented and validated on
@@ -179,9 +184,12 @@ prerequisite for every cleanup here.
   installs and separate compatibility expectations. Normal recommendations remain
   enabled, with QEMU's existing exception. Resolved packages are inspected rather
   than described as a fully locked environment.
-- **Invocation:** keep run-tool behavior for compatibility, including strict
-  container PATH precedence. Document its limits and offer explicit Bazel targets
-  and standalone `score-tool` when catalog-selected execution is required.
+- **Invocation:** preserve run-tool compatibility and container trust. Separate
+  provisioning from execution: every supported tool needs a direct installed
+  execution path without mandatory per-call resolution, synchronization or
+  Bazel analysis. Thin adapters are allowed; an optional runner is not the only
+  interface. The [execution-path decision](tooling-execution-paths.md) records
+  the confirmed requirement and pending overhead checks.
 
 The [reference implementation](tooling-reference-implementation.md) records the
 concrete arrangement and validation. The [completion audit](tooling-completion-audit.md)

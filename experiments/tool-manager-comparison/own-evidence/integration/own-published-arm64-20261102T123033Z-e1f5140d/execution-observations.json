@@ -1,0 +1,20 @@
+{
+  "classification": "task-bounded QEMU full-image timeout; exit 124 during pycairo source-build dependency installation, not a feature-suite pass",
+  "command_timeout_seconds": 1800,
+  "observed_command_exit": 124,
+  "completed": [
+    "fresh stock ARM64 base and CA refresh",
+    "common-utils and LLVM features",
+    "both local feature install stages, native and Python tools on original artifact URLs",
+    "feature suite through selected s-core-local verification and checks preceding pycairo"
+  ],
+  "incomplete": [
+    "pycairo source-build check",
+    "later Bazel feature assertions and environment checks",
+    "full suite success and completed build output"
+  ],
+  "artifact_overrides": false,
+  "production_changes_required": false,
+  "cause_boundary": "The task adapter imposed a 30-minute cap. QEMU/provider installation and recovered download timeouts consumed that budget; no selected-tool implementation failure was observed. This is not a disk failure or a claim that longer execution is impossible.",
+  "cleanup": "Shared harness removed only this task builder and source snapshot."
+}

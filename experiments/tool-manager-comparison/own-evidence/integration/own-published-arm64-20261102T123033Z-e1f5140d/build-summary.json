@@ -1,0 +1,248 @@
+{
+  "artifact_mirror_or_override": false,
+  "artifact_retry_messages": [
+    "Artifact download attempt 1/3 failed: The read operation timed out; retrying",
+    "Artifact download attempt 1/3 failed: The read operation timed out; retrying",
+    "Artifact download attempt 2/3 failed: The read operation timed out; retrying"
+  ],
+  "assertions": [
+    "\ud83e\uddea Testing validate clangd is working and has the correct version",
+    "\ud83e\uddea Testing validate clang-format is working and has the correct version",
+    "\ud83e\uddea Testing validate clang-tidy is working and has the correct version",
+    "\ud83e\uddea Testing validate clang is working and has the correct version",
+    "\ud83e\uddea Testing validate the system CA bundle is present and parsable",
+    "\ud83e\uddea Testing validate the compromised emSign ECC Root CA - G3 is not in the system CA bundle",
+    "\ud83e\uddea Testing validate the Java keystore is present and parsable",
+    "\ud83e\uddea Testing validate the compromised emSign ECC Root CA - G3 is not in the Java keystore",
+    "\ud83e\uddea Testing verify selected s-core-local tools and packages",
+    "\ud83e\uddea Testing validate Graphviz can execute",
+    "\ud83e\uddea Testing validate Git compatibility",
+    "\ud83e\uddea Testing validate Git LFS compatibility",
+    "\ud83e\uddea Testing validate GitHub CLI compatibility",
+    "\ud83e\uddea Testing validate Java executes",
+    "\ud83e\uddea Testing validate JAVA_HOME",
+    "\ud83e\uddea Testing validate Black executes",
+    "\ud83e\uddea Testing validate pycairo builds from source"
+  ],
+  "builder_removed": true,
+  "checks_passed": 16,
+  "failure_boundary": {
+    "artifact_overrides": false,
+    "cause_boundary": "The task adapter imposed a 30-minute cap. QEMU/provider installation and recovered download timeouts consumed that budget; no selected-tool implementation failure was observed. This is not a disk failure or a claim that longer execution is impossible.",
+    "classification": "task-bounded QEMU full-image timeout; exit 124 during pycairo source-build dependency installation, not a feature-suite pass",
+    "cleanup": "Shared harness removed only this task builder and source snapshot.",
+    "command_timeout_seconds": 1800,
+    "completed": [
+      "fresh stock ARM64 base and CA refresh",
+      "common-utils and LLVM features",
+      "both local feature install stages, native and Python tools on original artifact URLs",
+      "feature suite through selected s-core-local verification and checks preceding pycairo"
+    ],
+    "incomplete": [
+      "pycairo source-build check",
+      "later Bazel feature assertions and environment checks",
+      "full suite success and completed build output"
+    ],
+    "observed_command_exit": 124,
+    "production_changes_required": false
+  },
+  "local_log_sha256": "d594124bc733b45a11bcdd62e5065cdf031b186ad610f52103fea52deea7f09c",
+  "original_artifact_urls": true,
+  "provider_boundary": "Fresh no-cache build from stock base, external features and local features; cacheonly output.",
+  "rendered_dockerfile_sha256": "307efeb5019414a05eba2f3eba9004847f7b53588d53ce3bf04ede3b50b29653",
+  "runtime": "vscode login shell with passwd HOME inside freshly built image",
+  "selected_observations": [
+    {
+      "observed": {
+        "actionlint": {
+          "command": "/usr/local/bin/actionlint",
+          "reported": "1.7.7\ninstalled by downloading from release page\nbuilt with go1.23.4 compiler for linux/arm64"
+        },
+        "apm": {
+          "command": "/usr/local/bin/apm",
+          "reported": "Agent Package Manager (APM) CLI version 0.35.0 (17a2fc4)"
+        },
+        "bandit": {
+          "policy": "distribution",
+          "resolved": "1.6.2-3"
+        },
+        "basedpyright": {
+          "command": "/usr/local/bin/basedpyright",
+          "reported": "basedpyright 1.35.0\nbased on pyright 1.1.407"
+        },
+        "black": {
+          "policy": "distribution",
+          "resolved": "24.2.0-1ubuntu1"
+        },
+        "ca-certificates-java": {
+          "policy": "distribution",
+          "resolved": "20240118"
+        },
+        "flake8": {
+          "policy": "distribution",
+          "resolved": "7.0.0-1"
+        },
+        "gdb": {
+          "policy": "prefix",
+          "resolved": "15.0.50.20240403-0ubuntu1"
+        },
+        "gh": {
+          "policy": "distribution",
+          "resolved": "2.45.0-1ubuntu0.3"
+        },
+        "git": {
+          "policy": "distribution",
+          "resolved": "1:2.43.0-1ubuntu7.4"
+        },
+        "git-lfs": {
+          "policy": "distribution",
+          "resolved": "3.4.1-1ubuntu0.4"
+        },
+        "graphviz": {
+          "policy": "prefix",
+          "resolved": "2.42.2-9ubuntu0.1"
+        },
+        "lcov": {
+          "policy": "prefix",
+          "resolved": "2.0-4ubuntu2"
+        },
+        "libcairo2-dev": {
+          "policy": "prefix",
+          "resolved": "1.18.0-3build1"
+        },
+        "man-db": {
+          "policy": "distribution",
+          "resolved": "2.12.0-4build2"
+        },
+        "manpages": {
+          "policy": "distribution",
+          "resolved": "6.7-2"
+        },
+        "manpages-dev": {
+          "policy": "distribution",
+          "resolved": "6.7-2"
+        },
+        "manpages-posix": {
+          "policy": "distribution",
+          "resolved": "2017a-2"
+        },
+        "manpages-posix-dev": {
+          "policy": "distribution",
+          "resolved": "2017a-2"
+        },
+        "mypy": {
+          "policy": "distribution",
+          "resolved": "1.9.0-4ubuntu1"
+        },
+        "opencode": {
+          "command": "/usr/local/bin/opencode",
+          "reported": "opencode v2.2.3"
+        },
+        "openjdk-21-jdk-headless": {
+          "policy": "prefix",
+          "resolved": "21.0.12.1+1-1~24.04.4"
+        },
+        "pipenv": {
+          "policy": "distribution",
+          "resolved": "2023.12.1+ds-1"
+        },
+        "pkg-config": {
+          "policy": "prefix",
+          "resolved": "1.8.1-2build1"
+        },
+        "pre-commit": {
+          "command": "/usr/local/bin/pre-commit",
+          "reported": "pre-commit 4.7.0"
+        },
+        "protobuf-compiler": {
+          "policy": "prefix",
+          "resolved": "3.21.12-8.2ubuntu0.4"
+        },
+        "pycodestyle": {
+          "policy": "distribution",
+          "resolved": "2.11.1-1"
+        },
+        "pydocstyle": {
+          "policy": "distribution",
+          "resolved": "6.3.0-1.1"
+        },
+        "pylint": {
+          "policy": "distribution",
+          "resolved": "3.0.3-2"
+        },
+        "pytest": {
+          "command": "/usr/local/bin/pytest",
+          "reported": "pytest 9.0.2"
+        },
+        "python3-autopep8": {
+          "policy": "distribution",
+          "resolved": "2.0.4-2"
+        },
+        "python3-pip": {
+          "policy": "distribution",
+          "resolved": "24.0+dfsg-1ubuntu1.3"
+        },
+        "python3-venv": {
+          "policy": "distribution",
+          "resolved": "3.12.3-0ubuntu2.1"
+        },
+        "python3-yapf": {
+          "policy": "distribution",
+          "resolved": "0.33.0-1"
+        },
+        "python3.12": {
+          "policy": "package-name",
+          "resolved": "3.12.3-1ubuntu0.17"
+        },
+        "qemu-system-arm": {
+          "policy": "prefix",
+          "resolved": "1:8.2.2+ds-0ubuntu1.18"
+        },
+        "qemu-system-x86": {
+          "policy": "prefix",
+          "resolved": "1:8.2.2+ds-0ubuntu1.18"
+        },
+        "ripgrep": {
+          "policy": "prefix",
+          "resolved": "14.1.0-1"
+        },
+        "ruff": {
+          "command": "/usr/local/bin/ruff",
+          "reported": "ruff 0.11.13"
+        },
+        "shellcheck": {
+          "command": "/usr/local/bin/shellcheck",
+          "reported": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net"
+        },
+        "sshpass": {
+          "policy": "prefix",
+          "resolved": "1.09-1"
+        },
+        "uv": {
+          "command": "/usr/local/bin/uv",
+          "reported": "uv 0.13.6 (aarch64-unknown-linux-gnu)"
+        },
+        "uvx": {
+          "command": "/usr/local/bin/uvx",
+          "reported": "uvx 0.13.6 (aarch64-unknown-linux-gnu)"
+        },
+        "valgrind": {
+          "policy": "prefix",
+          "resolved": "1:3.22.0-0ubuntu3"
+        },
+        "virtualenv": {
+          "policy": "distribution",
+          "resolved": "20.25.0+ds-2"
+        },
+        "yamlfmt": {
+          "command": "/usr/local/bin/yamlfmt",
+          "reported": "yamlfmt 0.17.0 (45e5cb5)"
+        }
+      },
+      "selection": "s-core-local"
+    }
+  ],
+  "source_hashes": "source-hashes.json",
+  "status": "failed",
+  "suite": "unchanged test-project/test.sh and both feature test_default.sh files"
+}

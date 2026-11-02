@@ -1,0 +1,17 @@
+{
+  "artifact_mirror_or_override": false,
+  "artifact_retry_messages": [],
+  "assertions": [],
+  "builder_removed": true,
+  "checks_passed": 0,
+  "failure_boundary": null,
+  "local_log_sha256": "fb2c4e84b63300549cde78b8a9851ad9334a6c8176996195328f4159d4e6cb53",
+  "original_artifact_urls": true,
+  "provider_boundary": "Fresh no-cache build from stock base, external features and local features; cacheonly output.",
+  "rendered_dockerfile_sha256": "307efeb5019414a05eba2f3eba9004847f7b53588d53ce3bf04ede3b50b29653",
+  "runtime": "vscode login shell with passwd HOME inside freshly built image",
+  "selected_observations": [],
+  "source_hashes": "source-hashes.json",
+  "status": "failed",
+  "suite": "unchanged test-project/test.sh and both feature test_default.sh files"
+}

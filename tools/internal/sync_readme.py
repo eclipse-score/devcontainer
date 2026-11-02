@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from score_tools.catalog import load_environments, validate_catalog
+from score_tools.catalog import _iter_catalog, load_environments, validate_catalog
 
 TOOLS_DIR = Path(__file__).resolve().parent.parent
 README_PATH = TOOLS_DIR / "README.md"
@@ -99,6 +99,50 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    stale = False
+    registrations = list(_iter_catalog())
+    for path, label, lines in (
+        (
+            TOOLS_DIR.parent / "MODULE.bazel",
+            "HUBS",
+            [
+                f'multitool.hub(lockfile = "//tools:lockfiles/{filename}")'
+                for filename in sorted({filename for _, filename, _ in registrations})
+            ],
+        ),
+        (
+            TOOLS_DIR / "BUILD.bazel",
+            "ALIASES",
+            [f'multitool_aliases("{name}")' for name, _, _ in sorted(registrations)],
+        ),
+    ):
+        start = "# BEGIN GENERATED NATIVE " + label
+        end = "# END GENERATED NATIVE " + label
+        content = path.read_text()
+        if content.count(start) != 1 or content.count(end) != 1:
+            raise SystemExit(f"Missing unique registration markers: {path}")
+        expected = (
+            content[: content.index(start)]
+            + (
+                start
+                + "\n"
+                + ("\n\n" if label == "ALIASES" else "\n").join(lines)
+                + ("\n\n" if label == "HUBS" else "\n")
+                + end
+            )
+            + content[content.index(end) + len(end) :]
+        )
+        if content != expected:
+            if args.check:
+                print(
+                    f"Generated native registrations are stale: {path.name}",
+                    file=sys.stderr,
+                )
+                stale = True
+            else:
+                path.write_text(expected)
+    if stale:
+        return 1
     current = README_PATH.read_text(encoding="utf-8")
     table = _render_table(validate_catalog(), load_environments())
     expected = _updated_readme(current, table)

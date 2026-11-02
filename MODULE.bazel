@@ -20,6 +20,8 @@ bazel_dep(name = "rules_multitool", version = "1.11.1")
 bazel_dep(name = "rules_shell", version = "0.4.1")
 
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
+
+# BEGIN GENERATED NATIVE HUBS
 multitool.hub(lockfile = "//tools:lockfiles/actionlint.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/apm.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/bazelisk.lock.json")
@@ -30,6 +32,8 @@ multitool.hub(lockfile = "//tools:lockfiles/shellcheck.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/starpls.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/uv.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/yamlfmt.lock.json")
+
+# END GENERATED NATIVE HUBS
 use_repo(multitool, "multitool")
 
 register_toolchains("@multitool//toolchains:all")

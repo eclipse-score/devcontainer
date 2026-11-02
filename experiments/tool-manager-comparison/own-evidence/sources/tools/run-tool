@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Consumer repositories install this runner as .devcontainer/run-tool.
+# It runs an available CLI tool from PATH in a container, from local PATH on the host
+# when available, or through Bazel otherwise.
+# Strict host calls prefer an explicitly prepared prefix, then existing Bazel delivery.
+# See https://github.com/eclipse-score/devcontainer/tree/main/tools.
+
+set -euo pipefail
+
+strict=0
+if [[ "${1:-}" == "--strict" ]]; then
+    strict=1
+    shift
+fi
+
+if [[ "$#" -lt 1 ]]; then
+    echo "Usage: $0 [--strict] <tool> [args...]" >&2
+    exit 2
+fi
+
+tool_name="$1"
+shift
+if [[ ! "${tool_name}" =~ ^[a-zA-Z0-9][a-zA-Z0-9_.-]*$ ]]; then
+    echo "Invalid tool name: ${tool_name}" >&2
+    exit 2
+fi
+
+# Tests can force either side of the container boundary without changing the
+# runtime's automatic detection behavior.
+in_container() {
+    case "${RUN_TOOL_CONTAINER_MODE:-auto}" in
+        host) return 1 ;;
+        container) return 0 ;;
+        auto)
+            [[ -f /.dockerenv ]] || [[ -f /run/.containerenv ]] || [[ -d /devcontainer ]]
+            ;;
+        *)
+            echo "Invalid RUN_TOOL_CONTAINER_MODE: ${RUN_TOOL_CONTAINER_MODE}" >&2
+            return 2
+            ;;
+    esac
+}
+
+# Container PATH remains preferred for compatibility, including --strict.
+# Container detection is an execution shortcut, not a version attestation.
+# shellcheck disable=SC2310
+if in_container && command -v "${tool_name}" >/dev/null 2>&1; then
+    exec "${tool_name}" "$@"
+# On the host, prefer the local tool on PATH for faster execution unless --strict
+# is set. If local execution fails, suggest --strict for prepared/Bazel delivery.
+elif [[ "${strict}" -eq 0 ]] && command -v "${tool_name}" >/dev/null 2>&1; then
+    if "${tool_name}" "$@"; then
+        exit 0
+    else
+        exit_code=$?
+        echo "Execution of local '${tool_name}' failed with exit code ${exit_code}." >&2
+        echo "Use '--strict' to use the prepared tool or pinned version via Bazel." >&2
+        exit "${exit_code}"
+    fi
+elif [[ -n "${SCORE_TOOLS_PREFIX:-}" &&
+    -L "${SCORE_TOOLS_PREFIX}/bin/${tool_name}" &&
+    -x "${SCORE_TOOLS_PREFIX}/bin/${tool_name}" ]] &&
+    prepared_target="$(readlink "${SCORE_TOOLS_PREFIX}/bin/${tool_name}")" &&
+    [[ "${prepared_target}" == "${SCORE_TOOLS_PREFIX%/}/data/packages/"* ]]; then
+    exec "${SCORE_TOOLS_PREFIX}/bin/${tool_name}" "$@"
+elif command -v bazel >/dev/null 2>&1; then
+    # Consumer repositories expose this module as @score_devcontainer; `--`
+    # prevents tool flags from being interpreted as Bazel flags.
+    exec bazel run "@score_devcontainer//tools:${tool_name}" -- "$@"
+else
+    echo "Could not run '${tool_name}': no container command or Bazel executable is available." >&2
+    exit 127
+fi

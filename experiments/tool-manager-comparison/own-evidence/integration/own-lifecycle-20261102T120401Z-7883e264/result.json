@@ -1,0 +1,10 @@
+{
+  "candidate": "own",
+  "gate": "root-generic-node-lifecycle",
+  "status": "failed",
+  "source": "/home/alex/git/etas-contrib/score_devcontainer-eval-own",
+  "workspace_retained": false,
+  "interactive_terminal_check": "failed",
+  "volume_journal": "/tmp/score-own-copilot/integration/own-lifecycle-20261102T120401Z-7883e264/volume-journal.json",
+  "log": "/tmp/score-own-copilot/integration/own-lifecycle-20261102T120401Z-7883e264/lifecycle.log"
+}

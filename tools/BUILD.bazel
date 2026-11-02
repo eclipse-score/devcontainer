@@ -27,11 +27,16 @@ exports_files(glob([
     "lockfiles/*.lock.json",
 ]))
 
+# BEGIN GENERATED NATIVE ALIASES
 multitool_aliases("actionlint")
+
+multitool_aliases("apm")
 
 multitool_aliases("bazelisk")
 
 multitool_aliases("buildifier")
+
+multitool_aliases("opencode")
 
 multitool_aliases("ruff")
 
@@ -44,10 +49,7 @@ multitool_aliases("uv")
 multitool_aliases("uvx")
 
 multitool_aliases("yamlfmt")
-
-multitool_aliases("apm")
-
-multitool_aliases("opencode")
+# END GENERATED NATIVE ALIASES
 
 # Python distributions are resolved through pinned uvx because they do not
 # provide the platform-specific release binaries consumed by rules_multitool.
@@ -65,6 +67,7 @@ sh_test(
         "internal/run_python_tool.sh",
         "score_tools/__init__.py",
         "score_tools/catalog.py",
+        "score_tools/provision.py",
         "score_tools/python_tools.bzl",
     ],
 )

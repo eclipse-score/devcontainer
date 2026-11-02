@@ -1,0 +1,23 @@
+{
+  "classification": "external connection reset during preserved Bazel-engine provider acquisition; full ARM64 image gate failed, not a pass",
+  "command_timeout_seconds": 2700,
+  "timeout_reached": false,
+  "observed_command_exit": 1,
+  "failed_stage": "Bazel feature preinstallation of Bazel engine 8.6.0",
+  "failed_url": "https://releases.bazel.build/8.6.0/release/bazel-8.6.0-linux-arm64",
+  "reported_error": "could not copy download: read: connection reset by peer",
+  "completed": [
+    "fresh stock ARM64 base and CA refresh",
+    "common-utils and LLVM features",
+    "s-core-local feature including current native/Python provisioning on original URLs"
+  ],
+  "incomplete": [
+    "Bazel feature engine preinstallation and remaining setup",
+    "unchanged feature suite",
+    "completed build output"
+  ],
+  "artifact_overrides": false,
+  "production_changes_required": false,
+  "cause_boundary": "The connection reset occurred in the existing Bazelisk-managed engine preinstall, not the shared native artifact installer. The extended task cap was not reached. Original URLs, hashes and tests were not replaced or weakened; this does not establish that the failure is permanent.",
+  "cleanup": "Shared harness removed only this task builder and source snapshot."
+}

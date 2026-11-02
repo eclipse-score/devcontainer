@@ -1,0 +1,9 @@
+{
+  "platform": "linux/arm64",
+  "adapter_sha256": "c353e6ad7babd855fd4101a59b88a8ba7bf70f47fe7dedb6de68390ed7910af8",
+  "harness_sha256": "8c77108154a7db5b4d8d8318bcfa5806381e7792126b9d908d57e4e3a3561f54",
+  "artifact_overrides": false,
+  "feature_suite": "unchanged source suite appended to rendered Dockerfile",
+  "output": "type=cacheonly; no image loaded, launched or published",
+  "platform_adapter": "Only Dev Containers --platform and result/image labels change for ARM64; build command bounded to 45 minutes."
+}

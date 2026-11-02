@@ -30,12 +30,60 @@ $ .devcontainer/run-tool ruff check .
 
 Everything after the command is passed to that command. In the DevContainer,
 it runs the installed executable. Outside the container, it uses the local tool
-when available or Bazel otherwise (`--strict` selects Bazel on the host).
+when available or Bazel otherwise. On the host, `--strict` first uses a prepared
+`SCORE_TOOLS_PREFIX` and otherwise retains the existing Bazel fallback.
 Container PATH remains preferred even with `--strict`. PATH execution does not
 verify a version; direct Bazel targets select the catalog release. The first
 host-side Bazel invocation may require network access to download the binary.
 
-## Standalone Python tools
+## Native host preparation
+
+```sh
+python3 tools/internal/provision.py repository --prefix "$HOME/.local/share/score-tools"
+export SCORE_TOOLS_PREFIX="$HOME/.local/share/score-tools"
+export PATH="$SCORE_TOOLS_PREFIX/bin:$PATH"
+ruff --version
+uvx --version
+```
+
+This installs only the named environment's native/Python selection, not its
+APT/npm/features. It requires Python 3.11+ while provisioning; Python tools use
+the catalogued uv and default to the provisioning Python (override with ordinary
+`UV_PYTHON` if needed). Prepared Python environments retain that interpreter;
+they are not portable runtime bundles. Commands subsequently run directly. Explicit small selections
+use `--native ruff shellcheck --python pre-commit`; an empty explicit selection
+installs nothing and does not uninstall existing commands.
+
+Use a fresh dedicated prefix. Updates replace only links into that prefix's
+prepared package tree and reject unrelated files or user-replaced commands.
+Old copied installations are not adopted by guessing ownership; use a new
+prefix or resolve the conflicting paths explicitly. Old prepared packages and
+commands are retained when deselected. Removing offerings means changing owners
+and selections, regenerating registrations/metadata, and building a new image
+or package, not automatically cleaning developer machines.
+
+## Ordinary release-selected Python dependencies
+
+The maintained producer builds an ordinary wheel with exact owner-derived
+extras, including Ruff, and no executable runner or bundled runtime:
+
+```sh
+python3 tools/internal/dependency_package.py build \
+  --output /tmp/tool-release --version 1.2.3 --package-name score-tools-local
+python3 tools/internal/dependency_package.py check /tmp/tool-release
+```
+
+The identity above is a local example, not a published package. An independent
+consumer selects only that facade release, e.g.
+`score-tools-local[ruff]==1.2.3`, with the wheel supplied through normal
+`--find-links`/index configuration. Then ordinary `uv sync` and `uv run ruff`
+use the generated Ruff dependency. Ordinary
+`uvx --find-links /tmp/tool-release/dist --with 'score-tools-local[ruff]==1.2.3' ruff --version`
+also works. Neither consumer needs this checkout, a container, Bazel, a producer
+manager or `score-tool`. Each consumer owns its normal transitive uv lock.
+Public naming/hosting/publication remain undecided.
+
+## Legacy standalone Python convenience
 
 With compatible uv already installed, select a published Git release:
 
@@ -45,6 +93,7 @@ uvx --from 'git+https://github.com/eclipse-score/devcontainer.git@RELEASE' score
 
 Replace `RELEASE` with the intended release ref. This path needs neither Bazel
 nor a container and packages the same Python definitions used by both.
+It remains compatible, but is not required for ordinary dependency consumption.
 
 ## Available tools
 

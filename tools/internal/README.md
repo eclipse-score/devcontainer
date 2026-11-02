@@ -45,7 +45,7 @@ Repository development uses its own selection and retains its Docker feature.
 Features still own lifecycle hooks, mounts and special setup such as JAVA_HOME,
 CodeQL packs and Bazel completion. They do not own another list of native or
 Python commands. Python tools are installed to `/usr/local/bin` with environments
-under `/usr/local/share/uv/tools`, accessible to the development user. Bazel setup
+under the shared provisioner's prepared package tree, accessible to the development user. Bazel setup
 uses the Dev Containers `_REMOTE_USER`, defaulting to vscode.
 
 The yq download helper is removed: the existing image Python reads literal data
@@ -55,8 +55,8 @@ shipped catalog. No new host Python requirement is introduced for Bazel callers.
 ## Maintenance
 
 To add a native tool, define its lockfile and add the relevant environment
-membership. Register its multitool hub and Bazel aliases; catalog validation
-checks both explicit registrations against all native definitions.
+membership. Run `sync_readme.py` to generate its multitool hub, Bazel aliases
+and inventory; `--check` rejects stale registrations.
 
 To add a Python tool, edit the literal dictionary and select its environments.
 Bazel targets derive from the dictionary and the distribution includes the file
@@ -80,7 +80,10 @@ Other providers currently require the manual review named in the overview.
 To remove a tool from an environment, remove that membership. Installation,
 availability verification and generated membership use that same selection.
 Deleting the global definition additionally removes its delivery targets and
-registrations. Provider-specific lifecycle setup must be reviewed with the change.
+registrations after regeneration. Provider-specific lifecycle setup must be reviewed with the change.
+This changes new outputs only: automatic removal from existing host installations
+is not required. New containers must be built from their base, not treated as an
+in-place uninstaller for an old image.
 
 ```console
 python3 tools/internal/sync_readme.py
@@ -101,13 +104,14 @@ pinned uvx. Native `<command>_binary` targets remain available as dependencies;
 Python targets are for invocation, not hermetic Bazel actions.
 
 `run-tool` retains existing behavior: container PATH wins even with `--strict`;
-non-strict host invocation prefers PATH; strict host invocation uses Bazel.
+non-strict host invocation prefers PATH; strict host invocation uses an explicit
+prepared `SCORE_TOOLS_PREFIX` when available, retaining the existing Bazel fallback.
 A failed local invocation returns its exit code and suggests strict execution;
 it does not silently retry. PATH selection is not a version guarantee and a
 container marker is not an image attestation. This compatibility decision avoids
 changing downstream hooks during the catalog refactoring.
 
-The new explicit `score-tool` entrypoint selects Python tools through caller uv.
+The optional compatible `score-tool` entrypoint selects Python tools through caller uv.
 It preserves cwd, argument boundaries, signals and exit status using exec.
 Future release-based consumer usage (replace RELEASE with a published Git ref):
 
@@ -120,6 +124,21 @@ outside the checkout. No package or image publication is needed. Consumers may
 migrate unpinned `uvx pre-commit` calls to this explicit release-selected form.
 The standalone path requires compatible uv already on PATH and does not pin or
 bootstrap it. Container and Bazel delivery retain their catalog-pinned uv runtime.
+
+For ordinary resolver-visible dependencies, use
+`tools/internal/dependency_package.py build --output FRESH --version VERSION
+--package-name LOCAL_ID`, then `check FRESH`. This emits owner-derived per-tool
+extras, including Ruff, as a normal wheel; consumers need only that wheel and
+ordinary uv/uvx. The package carries no runner or native runtime. Its manifest
+binds owners, metadata and wheel digest; changed owners require rebuilding.
+See [usage](../README.md) and [implementation/evidence](../../docs/tooling-own-provisioning.md).
+
+Host/native preparation uses `tools/internal/provision.py`. Container provider
+orchestration delegates to that same engine; there is no second downloader.
+Use a fresh dedicated prefix; unrelated files/foreign links are never adopted.
+Repeated preparation updates selected prepared links without deleting unselected
+commands or old payloads. Complete packages are cached, but installed-byte
+verification/repair and cache garbage collection are not promised.
 
 ## Guarantees
 

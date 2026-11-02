@@ -1,0 +1,180 @@
+{
+  "status": "passed",
+  "machine": "aarch64",
+  "uid": 1000,
+  "prefix": "/tmp/score-own-copilot/arm64/prepared",
+  "commands": {
+    "actionlint": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/actionlint",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-841ac25c2ac67b762e8bab3a026ad2a0a544f1ca1db461d4dfc115d388fff031/actionlint",
+      "sha256": "446687e63fac45472b0a66bae28975c28678af062670af119c11a7087baf35cc",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "apm": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/apm",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-adf60c2ef1d97da201850a71505e8a6d58d3e983e128d1ccac460522be2c6118/apm",
+      "sha256": "9d2f7cf34ec2fa0b3d806a4711abd223ee429839ec96787279f1c5d82abd25b8",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "basedpyright": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/basedpyright",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/basedpyright-845b72077eeff56beaf36a88daa2b185c0f3005dc4abbefd9012965af95c467f/tools/basedpyright/bin/basedpyright",
+      "sha256": "6b98d54cbb9c09288ef5c5626bff77198317dcbb5338c0ef232cf385a3c47d2d",
+      "format": "script",
+      "shebang": "#!/bin/sh"
+    },
+    "basedpyright-langserver": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/basedpyright-langserver",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/basedpyright-845b72077eeff56beaf36a88daa2b185c0f3005dc4abbefd9012965af95c467f/tools/basedpyright/bin/basedpyright-langserver",
+      "sha256": "5b8b15a9e79fef9657cff87f0fcb11ef0c6005079147efe91d332f3effecdd38",
+      "format": "script",
+      "shebang": "#!/bin/sh"
+    },
+    "bazelisk": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/bazelisk",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-a1f6698cfdbbfe4ec0c87a83ecf4c035f045ff3333c751dd4a4c86eb7d4b1eda/bazelisk",
+      "sha256": "bb608519a440d45d10304eb684a73a2b6bb7699c5b0e5434361661b25f113a5d",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "buildifier": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/buildifier",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-8a1ee871443bbf781d56c4b86a636faa97d7ea32448aafeffbaff894964aab35/buildifier",
+      "sha256": "3baa1cf7eb41d51f462fdd1fff3a6a4d81d757275d05b2dd5f48671284e9a1a5",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "opencode": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/opencode",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-431e2bffb3222005c361c6f26d715ae13bea2323ab415261f4bfbe8e96a7f18c/opencode",
+      "sha256": "d6ccc061d9da0ad6a207a6ee1f79734aba0b9ac28e6ed6ffc4196f25f4634a70",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "pre-commit": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/pre-commit",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/pre-commit-6277204ee29770398842f1ecca18b2378286952a2e1024cd1277c3c7adab60d6/tools/pre-commit/bin/pre-commit",
+      "sha256": "16a55e1aec371c78430f2603625da5feb8358d7539dc6ca661463708fbe33335",
+      "format": "script",
+      "shebang": "#!/bin/sh"
+    },
+    "py.test": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/py.test",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/pytest-3c514ffd99ea75aab695306f5576336fb1756ee5985248a04baa444b482883e3/tools/pytest/bin/py.test",
+      "sha256": "7e1e8e8462464e764cc0b2e215fcbbb800913bd118ebf2b82e3639ec383e6f56",
+      "format": "script",
+      "shebang": "#!/bin/sh"
+    },
+    "pytest": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/pytest",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/pytest-3c514ffd99ea75aab695306f5576336fb1756ee5985248a04baa444b482883e3/tools/pytest/bin/pytest",
+      "sha256": "7e1e8e8462464e764cc0b2e215fcbbb800913bd118ebf2b82e3639ec383e6f56",
+      "format": "script",
+      "shebang": "#!/bin/sh"
+    },
+    "ruff": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/ruff",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-cd75b172f02552cf9113c867bd42287c735c6f01195e3312377ef44d180f5a65/ruff",
+      "sha256": "e3c731446ef2dd7938d34bc0e8ca9bb3bdbe399e2555a019a9b508c06404df8b",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "shellcheck": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/shellcheck",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-c916a880be7110ceeb0567f68d953166a1a1cc6e986d105fdea15552ab7e5f4f/shellcheck",
+      "sha256": "4111c09318d10b93653a42179381273f31061b34987978346fbd19a6e81a74c3",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "starpls": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/starpls",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-928a261b1c3b40f91106450797bb96ee451646b5a58024b0d9daac9260b54680/starpls",
+      "sha256": "55877ec4c3ff03e1d90d59c76f69a3a144b6c29688747c8ac4d77993e2eef1ad",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "uv": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/uv",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-138bc6dec9c10421ba572ef0253a6b1a37e34af362252ac3e2ef7b316ead9c06/uv",
+      "sha256": "7d60258dc76bca41d7b3591cdd829fa9633827fad944970bf5e1fb2a8c01476d",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "uvx": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/uvx",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-138bc6dec9c10421ba572ef0253a6b1a37e34af362252ac3e2ef7b316ead9c06/uvx",
+      "sha256": "9b3cadb1a15326792f24fd210b6d10428457b68eb00b92f2c92b36f85a23fe54",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "yamlfmt": {
+      "exposed": "/tmp/score-own-copilot/arm64/prepared/bin/yamlfmt",
+      "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/artifact-88a1422de38202cf29e3a48150b6742d85e92b3c411dce10c59624da95e6ac5b/yamlfmt",
+      "sha256": "4b0eb758288a7a7143008b7e3e174276262e38b62fa8df8bba8176c10d282b1f",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    }
+  },
+  "owner_versions": {
+    "actionlint": "1.7.7",
+    "apm": "0.35.0",
+    "basedpyright": "1.35.0",
+    "basedpyright-langserver": "1.35.0",
+    "bazelisk": "1.27.0",
+    "buildifier": "8.2.1",
+    "opencode": "2.2.3",
+    "pre-commit": "4.7.0",
+    "py.test": "9.0.2",
+    "pytest": "9.0.2",
+    "ruff": "0.11.13",
+    "shellcheck": "0.10.0",
+    "starpls": "0.1.22",
+    "uv": "0.13.6",
+    "uvx": "0.13.6",
+    "yamlfmt": "0.17.0"
+  },
+  "python_interpreters": {
+    "basedpyright": {
+      "path": "/usr/bin/python3.12",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "pre-commit": {
+      "path": "/usr/bin/python3.12",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    },
+    "pytest": {
+      "path": "/usr/bin/python3.12",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960",
+      "format": "ELF",
+      "machine": 183,
+      "architecture": "AArch64"
+    }
+  },
+  "bundled_node": {
+    "path": "/tmp/score-own-copilot/arm64/prepared/data/packages/basedpyright-845b72077eeff56beaf36a88daa2b185c0f3005dc4abbefd9012965af95c467f/tools/basedpyright/lib/python3.12/site-packages/nodejs_wheel/bin/node",
+    "sha256": "ab9e1e7f3b45bf693feda492eb6291781885de9f63aad6663f4a812e229dcef2",
+    "format": "ELF",
+    "machine": 183,
+    "architecture": "AArch64"
+  },
+  "boundary": "Prepared commands and Python Node executable, not every shared object or substrate provider."
+}

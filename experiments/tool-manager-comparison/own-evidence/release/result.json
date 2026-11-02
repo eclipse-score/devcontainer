@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "platform": "linux/x86_64",
+  "ruff_a": "0.11.13",
+  "ruff_b": "0.14.6",
+  "releases": [
+    "0.8.0",
+    "0.8.1"
+  ],
+  "name": "score-own-release-local",
+  "checks": [
+    "stale-owner-before-refresh",
+    "owner-bound-wheel-A-and-B",
+    "A-rejected-against-B",
+    "same-uv-project-release-only-update",
+    "ordinary-uvx-generated-pin",
+    "same-native-prefix-update-preserves-buildifier-and-user-sentinel",
+    "actual-public-Bazel-Ruff-version-and-relative-spaced-lint-exit-1"
+  ]
+}

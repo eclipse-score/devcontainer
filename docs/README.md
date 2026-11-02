@@ -18,6 +18,29 @@ SPDX-License-Identifier: Apache-2.0
 
 This document explains how the S-CORE DevContainer is designed, built and what its requirements are.
 
+## Tool management decision in progress
+
+The [open decision record](tooling-decision-record.md) separates established
+constraints, unresolved requirements and existing implementation details before
+selecting a tool-management approach. mise, aqua and Nix now continue equally as
+[local reference implementations](tooling-reference-milestone.md). Earlier
+reference code and proposed PR sequences remain supporting experiments.
+The [repository integration milestone](tooling-repository-milestone.md) records
+the subsequent changes to real root consumers and locally built tooling images.
+The completed [production integration milestone](tooling-production-milestone.md)
+connects prepared runtimes to the full published DevContainer and its local
+features in all three worktrees, with full image and runtime tests. All results
+remain local.
+
+The [maintenance comparison](tooling-maintenance-milestone.md) follows a concrete
+tool addition through all three variants and separates routine authoring from
+one-time adapter repairs.
+
+The [own-provisioning implementation](tooling-own-provisioning.md) adds option 4
+using the shared portable artifact owners and uv, including ordinary dependency
+releases and actual A/B updates. Its corrected scope does not require automatic
+uninstall or cleanup of existing developer installations.
+
 ## Overview
 
 One has to take ones own medicin and for that reason the [S-CORE devcontainer](../src/) is developed using another [simpler devcontainer](../.devcontainer).
@@ -98,3 +121,22 @@ It strengthens the supply chain by pinning versions and hashes, sourcing feature
 Pre-built images have a higer availability than the set of all tools which are installed (one download from a location controlled by S-CORE vs. many downloads from "everywhere").
 Pre-built images can be easily archived anywhere, e.g. for reproducibility of builds in real production use-cases.
 It also enforces a clear separation of concerns: general tooling is delivered through reusable features, S-CORE–specific logic lives in a dedicated feature, and image composition plus publishing are centralized.
+
+The [execution-path comparison](tooling-execution-paths.md) separates provisioning
+from execution and records process traces, paired startup measurements and signal
+checks for the prepared native/Python commands; M5 adds the strict host path.
+
+The [effort assessment and conclusion](tooling-effort-conclusion.md) compares what
+each manager replaces, what remains ours, and the managerless baseline.
+
+The [M8 release workflow](tooling-release-workflow.md) compares the complete
+local version-change, release and user-update sequence, including retained
+maintenance work and cleanup. The [M7 platform comparison](tooling-platform-milestone.md)
+records ARM64 tool execution; [M6 integration](tooling-integration-milestone.md)
+records command deselection, ordinary Python packages and amd64 integration gates. The [M5 installer retirement](tooling-retirement-milestone.md)
+and [earlier investigation](tooling-installer-retirement.md) retain their
+historical boundaries and managerless control as supporting evidence.
+
+The [operational comparison](tooling-operations-comparison.md) adds offline recovery,
+installed-content verification/repair and removal of commands from an existing
+selection, including the resulting maintenance responsibilities.

@@ -16,6 +16,10 @@ SPDX-License-Identifier: Apache-2.0
 
 # Local tool-management reference
 
+> **Technical experiment:** The validation below applies to the written goal
+> criteria. Requirements and architecture selection are being reconsidered in
+> the [decision record](tooling-decision-record.md).
+
 The complete reference is implemented and validated locally on
 `refactor/tool-management-reference`. All goal criteria passed on 2026-10-30;
 nothing has been pushed or published. The

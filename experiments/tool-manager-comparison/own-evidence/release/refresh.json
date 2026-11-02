@@ -1,0 +1,5 @@
+[
+  "ruff/ruff-aarch64-apple-darwin.tar.gz",
+  "ruff/ruff-x86_64-unknown-linux-gnu.tar.gz",
+  "ruff/ruff-aarch64-unknown-linux-gnu.tar.gz"
+]

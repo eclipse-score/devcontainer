@@ -1,0 +1,8 @@
+{
+  "tools/score_tools/provision.py": "a9327d0c1df76c31f679a77297de4f468fc83eee91a5859d41a5909771d61322",
+  "tools/score_tools/catalog.py": "a7a82f6eebc821d39ac27988043d75d0c181ed6e42d3e6415108d2a21de623a3",
+  "tools/internal/devcontainer/install.py": "e80828212d9b3fdec5bad021bdcea06d36e683b232e71441dcc22e50fe205ded",
+  ".devcontainer/post_create_command.sh": "696092b0a1238d9923d7c191f2630a0334c27c28ad90472bc2f7565f13686f53",
+  "src/s-core-devcontainer/.devcontainer/s-core-local/install.sh": "93f0bfa8c9218248df531a734212d31163512582e349eabb0592cdce14a22180",
+  "src/s-core-devcontainer/.devcontainer/bazel-feature/install.sh": "60a5ea7d62cfd02fd66ba25c584fc806b760af3904510bb0153527e110142589"
+}
