@@ -46,6 +46,7 @@ class ToolData(TypedDict):
 
 LOCKFILE_ROOT = Path(__file__).resolve().parents[1] / "lockfiles"
 PYTHON_TOOL_CATALOG = LOCKFILE_ROOT / "python_tools.bzl"
+ENVIRONMENTS_PATH = LOCKFILE_ROOT.parent / "environments.json"
 
 
 class PythonTool(TypedDict):
@@ -233,3 +234,137 @@ def resolve_lockfile(tool: str, lockfile: str | None = None) -> str:
     if _lockfile_path(tool).exists():
         return tool
     return _find_lockfile(tool)
+
+
+PROVIDERS_PATH = LOCKFILE_ROOT.parent / "providers.json"
+
+
+def load_providers() -> dict:
+    """Read APT, npm and feature-specific setup definitions."""
+    providers = json.loads(PROVIDERS_PATH.read_text(encoding="utf-8"))
+    if not isinstance(providers, dict):
+        raise SystemExit("Tool providers must be a dictionary")
+    for name, definition in providers.items():
+        if not isinstance(definition, dict) or definition.get("provider") not in (
+            "apt",
+            "npm",
+            "release",
+            "bazelisk",
+        ):
+            raise SystemExit(f"Invalid provider definition for '{name}'")
+        if definition["provider"] == "apt":
+            if definition.get("policy") not in (
+                "distribution",
+                "prefix",
+                "package-name",
+            ):
+                raise SystemExit(f"Invalid APT policy for '{name}'")
+            packages = definition.get("packages")
+            if (
+                not isinstance(packages, list)
+                or not packages
+                or any(
+                    not isinstance(package, str)
+                    or not package
+                    or package.startswith("-")
+                    for package in packages
+                )
+            ):
+                raise SystemExit(f"Invalid APT packages for '{name}'")
+            if definition["policy"] != "distribution" and not definition.get("version"):
+                raise SystemExit(f"Missing APT version constraint for '{name}'")
+        elif definition["provider"] == "npm":
+            if (
+                not isinstance(definition.get("package"), str)
+                or not definition["package"]
+            ):
+                raise SystemExit(f"Missing npm package for '{name}'")
+    return providers
+
+
+def all_definitions() -> dict:
+    """Combine metadata for reference validation without loading repository configs."""
+    tools = {}
+    sources = (
+        ((name, {**data, "provider": "native"}) for name, _, data in _iter_catalog()),
+        (
+            (name, {**data, "provider": "python", "requires": ["uv"]})
+            for name, data in load_python_tools().items()
+        ),
+        load_providers().items(),
+    )
+    for source in sources:
+        for name, definition in source:
+            if name in tools:
+                raise SystemExit(f"Duplicate tool definition: '{name}'")
+            tools[name] = definition
+    return tools
+
+
+def load_environments() -> dict[str, dict[str, list[str]]]:
+    """Validate membership, provider categories and deliberately selected dependencies."""
+    data = json.loads(ENVIRONMENTS_PATH.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise SystemExit("Tool environments must be a dictionary")
+    tools = all_definitions()
+    categories = {
+        "native": {"native"},
+        "python": {"python"},
+        "apt": {"apt"},
+        "build-apt": {"apt"},
+        "npm": {"npm"},
+        "setup": {"release", "bazelisk"},
+    }
+    for name, selection in data.items():
+        if not isinstance(name, str) or not name:
+            raise SystemExit("Tool environment names must be nonempty strings")
+        if not isinstance(selection, dict) or selection.keys() - categories.keys():
+            raise SystemExit(f"Invalid provider categories in environment '{name}'")
+        for category, names in selection.items():
+            if not isinstance(names, list) or any(
+                not isinstance(tool, str) or not tool for tool in names
+            ):
+                raise SystemExit(f"Environment '{name}/{category}' must be a tool list")
+            if len(names) != len(set(names)):
+                raise SystemExit(
+                    f"Environment '{name}/{category}' lists a tool more than once"
+                )
+            for tool in names:
+                if tool not in tools:
+                    raise SystemExit(f"Unknown tool '{tool}' in environment '{name}'")
+                if tools[tool]["provider"] not in categories[category]:
+                    raise SystemExit(
+                        f"Wrong provider for '{tool}' in environment '{name}/{category}'"
+                    )
+                if (category == "build-apt") != (
+                    tools[tool].get("phase") == "build-only"
+                ):
+                    raise SystemExit(
+                        f"Wrong installation phase for '{tool}' in environment '{name}'"
+                    )
+        selected = {tool for names in selection.values() for tool in names}
+        for tool in selected:
+            for dependency in tools[tool].get("requires", []):
+                if dependency not in selected:
+                    raise SystemExit(
+                        f"Tool '{tool}' requires '{dependency}' in environment '{name}'"
+                    )
+    return data
+
+
+def apt_requirements(
+    selection: dict, definitions: dict, *, recommends: bool
+) -> list[str]:
+    """Translate selected APT policies to requests, preserving Debian epochs."""
+    requirements = []
+    for name in selection.get("apt", []):
+        tool = definitions[name]
+        if tool.get("install_recommends", True) != recommends:
+            continue
+        for package in tool["packages"]:
+            if tool["policy"] == "package-name":
+                package = package.format(version=tool["version"])
+            elif tool["policy"] == "prefix":
+                package += "=" + tool["version"] + "*"
+            requirements.append(package)
+    return requirements

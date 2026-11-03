@@ -52,7 +52,7 @@ class CatalogTest(unittest.TestCase):
         source = (TOOLS_DIR / "lockfiles/python_tools.bzl").read_text(encoding="utf-8")
         python_tools = ast.literal_eval(ast.parse(source).body[0].value)
         self.assertEqual(catalog.load_python_tools(), python_tools)
-        self.assertEqual(set(python_tools), {"pre-commit"})
+        self.assertEqual(set(python_tools), {"pre-commit", "basedpyright", "pytest"})
         versions.update(
             (name, metadata["version"]) for name, metadata in python_tools.items()
         )

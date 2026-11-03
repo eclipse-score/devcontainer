@@ -51,6 +51,10 @@ multitool_aliases("opencode")
 # provide the platform-specific release binaries consumed by rules_multitool.
 python_tool("pre-commit")
 
+python_tool("basedpyright")
+
+python_tool("pytest")
+
 # This contract test keeps Bazel's shell launcher and the container installer
 # aligned with their shared catalog.
 sh_test(

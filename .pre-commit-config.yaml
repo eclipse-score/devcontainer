@@ -73,7 +73,7 @@ repos:
         language: system
         pass_filenames: false
         # Watch the shared reader as well as both catalog formats.
-        files: ^tools/(README\.md|internal/(catalog\.py|sync_readme\.py|devcontainer/install\.py)|lockfiles/(.*\.lock\.json|python_tools\.bzl))$
+        files: ^tools/(README\.md|(environments|providers)\.json|internal/(catalog\.py|sync_readme\.py|devcontainer/install\.py)|lockfiles/(.*\.lock\.json|python_tools\.bzl))$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:

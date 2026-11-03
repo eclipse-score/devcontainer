@@ -26,10 +26,10 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 
 # shellcheck disable=SC2034
 # used by apt-get only inside this script
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/bazel/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
 ARCHITECTURE=$(dpkg --print-architecture)
 
@@ -37,43 +37,48 @@ apt-get update
 
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
-apt-get install apt-transport-https -y
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase build
 
 # Lockfile-managed Bazel tooling
-/usr/local/share/score-tools/internal/devcontainer/install.py install bazelisk buildifier starpls
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature
 
-# Bazelisk + Bazel
-ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel; then
+    # Bazelisk + Bazel
+    ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
 
-# Pre-install a fixed Bazel version, setup the bash command completion
-export USE_BAZEL_VERSION=${bazel_version}
-# bazelisk downloads Bazel into the home directory of the user running the command
-# lets assume there is only one user in the devcontainer
-su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
-mkdir -p /etc/bash_completion.d
-mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
-sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/bazel/bazel_setup.sh"
+    # Pre-install a fixed Bazel version, setup the bash command completion
+    export USE_BAZEL_VERSION=${bazel_version}
+    # Bazelisk caches the release for the development user selected by Dev Containers.
+    su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
+    mkdir -p /etc/bash_completion.d
+    mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
+    sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/bazel/bazel_setup.sh"
+
+fi
 
 # Configure Bazel to use system trust store for SSL/TLS connections
 # This is required for corporate environments with custom CA certificates
 echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
 
-# Code completion for C++ code of Bazel projects
-# (see https://github.com/kiron1/bazel-compile-commands)
-source /etc/lsb-release
-curl -L "https://github.com/kiron1/bazel-compile-commands/releases/download/v${bazel_compile_commands_version}/bazel-compile-commands_${bazel_compile_commands_version}-${DISTRIB_CODENAME}_${ARCHITECTURE}.deb" -o /tmp/bazel-compile-commands.deb
-# Extract correct sha256 for current DISTRIB_CODENAME and check
-SHA256SUM="${bazel_compile_commands_amd64_sha256}"
-if [ "${ARCHITECTURE}" = "arm64" ]; then
-    SHA256SUM="${bazel_compile_commands_arm64_sha256}"
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected bazel-feature bazel_compile_commands; then
+    # Code completion for C++ code of Bazel projects
+    # (see https://github.com/kiron1/bazel-compile-commands)
+    source /etc/lsb-release
+    curl -L "https://github.com/kiron1/bazel-compile-commands/releases/download/v${bazel_compile_commands_version}/bazel-compile-commands_${bazel_compile_commands_version}-${DISTRIB_CODENAME}_${ARCHITECTURE}.deb" -o /tmp/bazel-compile-commands.deb
+    # Extract correct sha256 for current DISTRIB_CODENAME and check
+    SHA256SUM="${bazel_compile_commands_amd64_sha256}"
+    if [ "${ARCHITECTURE}" = "arm64" ]; then
+        SHA256SUM="${bazel_compile_commands_arm64_sha256}"
+    fi
+    echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit 1
+    apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
+    rm /tmp/bazel-compile-commands.deb
+
 fi
-echo "${SHA256SUM} /tmp/bazel-compile-commands.deb" | sha256sum -c - || exit 1
-apt-get install -y --no-install-recommends --fix-broken /tmp/bazel-compile-commands.deb
-rm /tmp/bazel-compile-commands.deb
 
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
-apt-get remove --purge -y apt-transport-https
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase cleanup
 apt-get autoremove -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*

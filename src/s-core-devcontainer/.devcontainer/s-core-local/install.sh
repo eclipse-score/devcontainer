@@ -28,10 +28,10 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 
 # shellcheck disable=SC2034
 # used by apt-get only inside this script
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
@@ -40,147 +40,103 @@ apt-get update
 
 # Unminimize the image to include standard packages like man pages
 bash -c "yes || true" | unminimize
-apt-get install -y man-db manpages manpages-dev manpages-posix manpages-posix-dev
 
 # INSTALL CONTAINER BUILD DEPENDENCIES
 # Container build dependencies are not pinned, since they are removed anyway after container creation.
-apt-get install apt-transport-https -y
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase build
 
-# Python, via APT
-apt-get install -y "python${python_version}" python3-pip python3-venv
-# The following packages correspond to the list of packages installed by the
-# devcontainer feature "python" (cf. https://github.com/devcontainers/features/tree/main/src/python )
-apt-get install -y flake8 python3-autopep8 black python3-yapf mypy pydocstyle pycodestyle bandit pipenv virtualenv pylint
+# One environment selection owns APT, native and Python membership. Provider
+# installation runs before tool-specific lifecycle configuration below.
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local
 
-# uv must be installed from the native lockfile before it can install the
-# Python distributions declared in the shared Python tool catalog below.
-/usr/local/share/score-tools/internal/devcontainer/install.py install shellcheck ruff actionlint yamlfmt uv uvx apm opencode
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local openjdk_21; then
+    # OpenJDK 21, via APT
+    # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
+    JAVA_HOME="$(dirname "$(dirname "$(realpath "$(command -v javac)")")")"
+    export JAVA_HOME
+    echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
 
-# Keep Python CLIs in system directories so every DevContainer user sees the
-# same entrypoint and isolated environment. Bazel reads the same package pin
-# from this catalog but executes it on demand with uvx.
-/usr/local/share/score-tools/internal/devcontainer/install.py install-python pre-commit \
-    --bin-dir /usr/local/bin --tool-dir /usr/local/share/uv/tools
-
-# GraphViz
-# The Ubuntu Noble package of GraphViz
-apt-get install -y graphviz="${graphviz_version}*"
-
-# Protobuf compiler, via APT (needed by FEO)
-apt-get install -y protobuf-compiler="${protobuf_compiler_version}*"
-
-# Git and Git LFS, via APT
-apt-get install -y git
-apt-get install -y git-lfs
-apt-get install -y gh
-
-# OpenJDK 21, via APT
-# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
-apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
-JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
-export JAVA_HOME
-echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
-
-# QEMU system emulators for ARM and x86
-apt-get install -y --no-install-recommends --fix-broken \
-    qemu-system-arm="${qemu_system_version}*" \
-    qemu-system-x86="${qemu_system_version}*"
-
-# basedpyright
-su $(ls /home) -c "uv tool install basedpyright@\"${basedpyright_version}\""
-
-# pytest
-su $(ls /home) -c "uv tool install pytest@\"${pytest_version}\""
-
-# sshpass
-apt-get install -y sshpass="${sshpass_version}*"
-
-# pycairo build dependencies (pkg-config + cairo headers needed when pip builds pycairo from source)
-apt-get install -y pkg-config="${pkg_config_version}*" libcairo2-dev="${libcairo2_dev_version}*"
-
-# additional developer tools
-apt-get install -y gdb="${gdb_version}*"
-
-apt-get install -y valgrind="1:${valgrind_version}*"
-
-apt-get install -y ripgrep="${ripgrep_version}*"
-
-# lcov - code coverage reporting for C/C++
-apt-get install -y lcov="${lcov_version}*"
-
-# CodeQL
-apt-get install -y zstd
-if [ "${ARCHITECTURE}" = "amd64" ]; then
-    VARIANT=linux64
-    SHA256SUM="${codeql_amd64_sha256}"
-elif [ "${ARCHITECTURE}" = "arm64" ]; then
-    if [ "${KERNEL}" = "Darwin" ]; then
-        VARIANT=osx64
-        SHA256SUM="${codeql_arm64_sha256}"
-    else
-        echo "CodeQl unsupported architecture/os: ${ARCHITECTURE} on ${KERNEL}, skipping installation"
-        VARIANT=noinstall
-    fi
-else
-    echo "Unsupported architecture: ${ARCHITECTURE} for CodeQL"
-    exit 1
 fi
 
-if [ "${VARIANT}" != "noinstall" ]; then
-    codeql_install_dir="/usr/local"
-    curl -L "https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-${VARIANT}.tar.zst" -o /tmp/codeql.tar.zst
-    echo "${SHA256SUM} /tmp/codeql.tar.zst" | sha256sum -c - || exit 1
-    tar -I zstd -xf /tmp/codeql.tar.zst -C "${codeql_install_dir}"
-    ln -s "${codeql_install_dir}"/codeql/codeql /usr/local/bin/codeql
-    rm /tmp/codeql.tar.zst
-    export CODEQL_HOME=${codeql_install_dir}/codeql
-    echo "export CODEQL_HOME=${codeql_install_dir}/codeql" > /etc/profile.d/codeql.sh
-
-    codeql pack download codeql/misra-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/misra-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/cert-cpp-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-    codeql pack download codeql/cert-c-coding-standards@"${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
-
-    # slim down codeql bundle (1.7GB -> 1.1 GB) by removing unnecessary language extractors and qlpacks
-    codeql_purge_dirs=(
-        "${codeql_install_dir}/codeql/csharp"
-        "${codeql_install_dir}/codeql/go"
-        "${codeql_install_dir}/codeql/java"
-        "${codeql_install_dir}/codeql/javascript"
-        "${codeql_install_dir}/codeql/python"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/go-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/go-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/go-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/java-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/java-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/java-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/python-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/python-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/python-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-examples"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-queries"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/swift-all"
-        "${codeql_install_dir}/codeql/qlpacks/codeql/swift-queries"
-        "${codeql_install_dir}/codeql/ruby"
-        "${codeql_install_dir}/codeql/swift"
-    )
-    for dir in "${codeql_purge_dirs[@]}"; do
-        if [ -d "${dir}" ]; then
-            rm -rf "${dir}"
+# Special setup also consumes environment membership, so removing a selection
+# removes its installation rather than only changing the generated overview.
+if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql; then
+    # CodeQL
+    if [ "${ARCHITECTURE}" = "amd64" ]; then
+        VARIANT=linux64
+        SHA256SUM="${codeql_amd64_sha256}"
+    elif [ "${ARCHITECTURE}" = "arm64" ]; then
+        if [ "${KERNEL}" = "Darwin" ]; then
+            VARIANT=osx64
+            SHA256SUM="${codeql_arm64_sha256}"
+        else
+            echo "CodeQl unsupported architecture/os: ${ARCHITECTURE} on ${KERNEL}, skipping installation"
+            VARIANT=noinstall
         fi
-    done
+    else
+        echo "Unsupported architecture: ${ARCHITECTURE} for CodeQL"
+        exit 1
+    fi
+
+    if [ "${VARIANT}" != "noinstall" ]; then
+        codeql_install_dir="/usr/local"
+        curl -L "https://github.com/github/codeql-action/releases/download/codeql-bundle-v${codeql_version}/codeql-bundle-${VARIANT}.tar.zst" -o /tmp/codeql.tar.zst
+        echo "${SHA256SUM} /tmp/codeql.tar.zst" | sha256sum -c - || exit 1
+        tar -I zstd -xf /tmp/codeql.tar.zst -C "${codeql_install_dir}"
+        ln -s "${codeql_install_dir}"/codeql/codeql /usr/local/bin/codeql
+        rm /tmp/codeql.tar.zst
+        export CODEQL_HOME=${codeql_install_dir}/codeql
+        echo "export CODEQL_HOME=${codeql_install_dir}/codeql" > /etc/profile.d/codeql.sh
+
+        if /usr/local/share/score-tools/internal/devcontainer/install.py selected s-core-local codeql_coding_standards; then
+            codeql_packs="$(/usr/local/share/score-tools/internal/devcontainer/install.py items codeql_coding_standards packs)"
+            while IFS= read -r pack; do
+                codeql pack download "${pack}@${codeql_coding_standards_version}" -d "${codeql_install_dir}/codeql/qlpacks/"
+            done <<< "${codeql_packs}"
+        fi
+
+        # slim down codeql bundle (1.7GB -> 1.1 GB) by removing unnecessary language extractors and qlpacks
+        codeql_purge_dirs=(
+            "${codeql_install_dir}/codeql/csharp"
+            "${codeql_install_dir}/codeql/go"
+            "${codeql_install_dir}/codeql/java"
+            "${codeql_install_dir}/codeql/javascript"
+            "${codeql_install_dir}/codeql/python"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/csharp-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/go-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/go-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/go-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/java-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/java-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/java-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/javascript-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/python-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/python-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/python-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-examples"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/ruby-queries"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/swift-all"
+            "${codeql_install_dir}/codeql/qlpacks/codeql/swift-queries"
+            "${codeql_install_dir}/codeql/ruby"
+            "${codeql_install_dir}/codeql/swift"
+        )
+        for dir in "${codeql_purge_dirs[@]}"; do
+            if [ -d "${dir}" ]; then
+                rm -rf "${dir}"
+            fi
+        done
+    fi
+
 fi
 
 # Cleanup
 # REMOVE CONTAINER BUILD DEPENDENCIES
-apt-get remove --purge -y apt-transport-https zstd
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase cleanup
 apt-get autoremove -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*

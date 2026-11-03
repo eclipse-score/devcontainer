@@ -1,0 +1,96 @@
+{
+  "s-core-local": {
+    "native": [
+      "shellcheck",
+      "ruff",
+      "actionlint",
+      "yamlfmt",
+      "uv",
+      "uvx",
+      "apm",
+      "opencode"
+    ],
+    "python": [
+      "pre-commit",
+      "basedpyright",
+      "pytest"
+    ],
+    "apt": [
+      "graphviz",
+      "protobuf_compiler",
+      "qemu_system",
+      "sshpass",
+      "gdb",
+      "git",
+      "git_lfs",
+      "gh",
+      "openjdk_21",
+      "valgrind",
+      "ripgrep",
+      "lcov",
+      "pkg_config",
+      "libcairo2_dev",
+      "python",
+      "python3-pip",
+      "python3-venv",
+      "flake8",
+      "python3-autopep8",
+      "black",
+      "python3-yapf",
+      "mypy",
+      "pydocstyle",
+      "pycodestyle",
+      "bandit",
+      "pipenv",
+      "virtualenv",
+      "pylint",
+      "ca-certificates-java",
+      "man-db",
+      "manpages",
+      "manpages-dev",
+      "manpages-posix",
+      "manpages-posix-dev"
+    ],
+    "setup": [
+      "codeql",
+      "codeql_coding_standards"
+    ],
+    "build-apt": [
+      "apt-transport-https",
+      "zstd"
+    ]
+  },
+  "bazel-feature": {
+    "native": [
+      "bazelisk",
+      "buildifier",
+      "starpls"
+    ],
+    "python": [],
+    "setup": [
+      "bazel",
+      "bazel_compile_commands"
+    ],
+    "build-apt": [
+      "apt-transport-https"
+    ]
+  },
+  "repository-devcontainer": {
+    "native": [
+      "actionlint",
+      "bazelisk",
+      "buildifier",
+      "ruff",
+      "shellcheck",
+      "uv",
+      "uvx",
+      "yamlfmt"
+    ],
+    "python": [
+      "pre-commit"
+    ],
+    "npm": [
+      "devcontainers-cli"
+    ]
+  }
+}

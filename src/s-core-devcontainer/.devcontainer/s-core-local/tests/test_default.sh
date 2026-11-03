@@ -19,7 +19,7 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
+. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
 
 shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
 ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"
@@ -95,7 +95,7 @@ check "validate pycairo can be built and installed from source" bash -c "pip ins
 check "validate gdb is working and has the correct version" bash -c "gdb --version | grep '${gdb_version}'"
 check "validate pkg-config is working and has the correct version" bash -c "pkg-config --version | grep '${pkg_config_version}'"
 check "validate gh is working and has the correct version" bash -c "gh --version | grep '${gh_version}'"
-check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version}'"
+check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version#*:}'"
 check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
 if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
     check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
@@ -106,6 +106,6 @@ fi
 check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"
 
 # Qemu target-related tools
-check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version}'"
-check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version}'"
+check "validate qemu-system-aarch64 is working and has the correct version" bash -c "qemu-system-aarch64 --version | grep '${qemu_system_version#*:}'"
+check "validate qemu-system-x86_64 is working and has the correct version" bash -c "qemu-system-x86_64 --version | grep '${qemu_system_version#*:}'"
 check "validate sshpass is working and has the correct version" bash -c "sshpass -V | grep '${sshpass_version}'"

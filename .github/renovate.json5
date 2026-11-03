@@ -79,30 +79,6 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv",
       "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "versions\\.yaml$"
-      ],
-      "matchStrings": [
-        "apm:\\n\\s+version:\\s+(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/apm",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "versions\\.yaml$"
-      ],
-      "matchStrings": [
-        "opencode:\\n\\s+version:\\s+(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "anomalyco/opencode",
-      "versioningTemplate": "semver"
     }
   ],
   "enabledManagers": [

@@ -19,6 +19,7 @@ the pinned uvx runtime, keeping this installer container-specific.
 
 Usage:
   install.py install shellcheck yamlfmt
+  install.py install-environment s-core-local
   install.py install-python pre-commit
   install.py version shellcheck
 """
@@ -46,8 +47,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from catalog import (
     Binary,
     ToolData,
+    all_definitions,
+    apt_requirements,
     load_catalog_versions,
+    load_environments,
     load_python_tools,
+    load_providers,
     load_tool,
     resolve_lockfile,
 )
@@ -209,11 +214,19 @@ def _cmd_install(args: argparse.Namespace) -> int:
     """Download, verify, and install tools from the lockfile catalog."""
     dest_dir = Path(args.destination)
 
+    # Resolve the complete selection before downloading or writing anything.
+    # Otherwise a missing tool/platform late in the list leaves a partial set.
+    binaries: list[tuple[str, Binary]] = []
     for tool in args.tools:
         lockfile = resolve_lockfile(tool, args.lockfile)
         tool_data = load_tool(lockfile, tool)
-        binary = _select_binary(tool_data, args.os, args.cpu)
+        try:
+            binary = _select_binary(tool_data, args.os, args.cpu)
+        except SystemExit as exc:
+            raise SystemExit(f"Tool '{tool}': {exc}") from exc
+        binaries.append((tool, binary))
 
+    for tool, binary in binaries:
         kind = binary["kind"]
         url = binary["url"]
         expected_sha256 = binary["sha256"]
@@ -254,11 +267,138 @@ def _cmd_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_install_environment(args: argparse.Namespace) -> int:
+    """Apply selected provider groups; feature scripts retain special setup."""
+    selection = load_environments().get(args.environment)
+    if selection is None:
+        raise SystemExit(f"Unknown tool environment '{args.environment}'")
+    definitions = all_definitions()
+    system = args.os + "/" + args.cpu
+    # Preflight the complete environment, even for a build/cleanup phase. A
+    # missing runtime artifact must be reported before installing build packages.
+    for names in selection.values():
+        for name in names:
+            definition = definitions[name]
+            if definition["provider"] == "native":
+                try:
+                    _select_binary(definition, args.os, args.cpu)
+                except SystemExit as exc:
+                    raise SystemExit(f"Tool '{name}': {exc}") from exc
+            elif definition["provider"] in ("apt", "release", "bazelisk"):
+                if system not in definition[
+                    "platforms"
+                ] and system not in definition.get("omissions", {}):
+                    raise SystemExit(f"Tool '{name}' is unsupported on {system}")
+
+    if args.phase != "runtime":
+        packages = [
+            package
+            for name in selection.get("build-apt", [])
+            for package in definitions[name]["packages"]
+        ]
+        if packages:
+            action = (
+                ["install", "-y"]
+                if args.phase == "build"
+                else ["remove", "--purge", "-y"]
+            )
+            subprocess.run(["apt-get", *action, *packages], check=True)
+        return 0
+
+    # QEMU deliberately omits recommendations. Other packages keep apt's normal
+    # recommendations, including the headers needed to build Python extensions.
+    for recommends in (True, False) if "apt" in args.providers else ():
+        packages = apt_requirements(selection, definitions, recommends=recommends)
+        if packages:
+            flags = [] if recommends else ["--no-install-recommends", "--fix-broken"]
+            subprocess.run(["apt-get", "install", "-y", *flags, *packages], check=True)
+    if "native" in args.providers:
+        args.tools = selection.get("native", [])
+        args.lockfile = None
+        _cmd_install(args)
+    if "python" in args.providers and selection.get("python"):
+        args.tools = selection["python"]
+        args.uv = str(Path(args.destination).resolve() / "uv")
+        args.bin_dir = args.destination
+        _cmd_install_python(args)
+    for name in selection.get("npm", []) if "npm" in args.providers else ():
+        subprocess.run(
+            ["npm", "install", "-g", definitions[name]["package"]], check=True
+        )
+    return 0
+
+
+def _cmd_shell_metadata(args: argparse.Namespace) -> int:
+    """Emit quoted data for the provider-specific feature setup, never shell code from definitions."""
+    import re
+    import shlex
+
+    def emit(name, value):
+        if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name):
+            raise SystemExit(f"Invalid metadata variable: {name}")
+        if isinstance(value, dict):
+            for key, child in value.items():
+                emit(name + "_" + key, child)
+        elif isinstance(value, str):
+            print("export " + name + "=" + shlex.quote(value))
+
+    for name, definition in load_providers().items():
+        # Export only lifecycle setup inputs. Inventory metadata can use keys
+        # such as linux/arm64 which deliberately are not shell identifiers.
+        for field in ("version", "compatibility_version", "amd64", "arm64"):
+            if field in definition:
+                emit(name.replace("-", "_") + "_" + field, definition[field])
+        if "compatibility_version" in definition:
+            emit(
+                name.replace("-", "_") + "_version", definition["compatibility_version"]
+            )
+    # Python distributions share their pins with Bazel and container setup.
+    for name, definition in load_python_tools().items():
+        emit(name.replace("-", "_"), definition)
+    return 0
+
+
+def _cmd_selected(args: argparse.Namespace) -> int:
+    """Return whether a tool is selected, for provider-specific lifecycle setup."""
+    selections = load_environments()[args.environment]
+    return 0 if any(args.tool in names for names in selections.values()) else 1
+
+
+def _cmd_items(args: argparse.Namespace) -> int:
+    """Expose a provider-owned bundle list to lifecycle setup and verification."""
+    value = load_providers()[args.tool][args.field]
+    if (
+        not isinstance(value, list)
+        or not value
+        or any(not isinstance(item, str) or not item or "\n" in item for item in value)
+    ):
+        raise SystemExit(
+            f"{args.tool}/{args.field} must be a non-empty list of single-line strings"
+        )
+    print("\n".join(value))
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install pinned tools from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    metadata_parser = subparsers.add_parser(
+        "shell-metadata", help="Read feature setup metadata."
+    )
+    metadata_parser.set_defaults(func=_cmd_shell_metadata)
+    selected_parser = subparsers.add_parser(
+        "selected", help="Query membership for feature-specific setup."
+    )
+    selected_parser.add_argument("environment")
+    selected_parser.add_argument("tool")
+    selected_parser.set_defaults(func=_cmd_selected)
+    items_parser = subparsers.add_parser("items", help="Read a setup bundle's members.")
+    items_parser.add_argument("tool")
+    items_parser.add_argument("field")
+    items_parser.set_defaults(func=_cmd_items)
 
     install_parser = subparsers.add_parser(
         "install",
@@ -270,6 +410,27 @@ def _build_parser() -> argparse.ArgumentParser:
     install_parser.add_argument("--os", default=_detect_os())
     install_parser.add_argument("--cpu", default=_detect_cpu())
     install_parser.set_defaults(func=_cmd_install)
+
+    environment_parser = subparsers.add_parser(
+        "install-environment",
+        help="Apply a tool selection from tools/environments.json.",
+    )
+    environment_parser.add_argument("environment")
+    environment_parser.add_argument(
+        "--providers",
+        nargs="+",
+        choices=("apt", "native", "python", "npm"),
+        default=("apt", "native", "python", "npm"),
+        help="Apply only these provider groups, e.g. npm as the development user.",
+    )
+    environment_parser.add_argument(
+        "--phase", choices=("runtime", "build", "cleanup"), default="runtime"
+    )
+    environment_parser.add_argument("--tool-dir", default="/usr/local/share/uv/tools")
+    environment_parser.add_argument("--destination", default="/usr/local/bin")
+    environment_parser.add_argument("--os", default=_detect_os())
+    environment_parser.add_argument("--cpu", default=_detect_cpu())
+    environment_parser.set_defaults(func=_cmd_install_environment)
 
     install_python_parser = subparsers.add_parser(
         "install-python",
