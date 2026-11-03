@@ -12,17 +12,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py supplies catalog version variables in the process environment.
+# install.py passes version and checksum variables from providers.json.
 # shellcheck disable=SC2154
 set -euo pipefail
 
 ARCHITECTURE=$(dpkg --print-architecture)
 
-# Code completion for C++ code of Bazel projects
+# Install the helper that writes compile_commands.json for editors using Bazel.
 # (see https://github.com/kiron1/bazel-compile-commands)
 source /etc/lsb-release
 curl -L "https://github.com/kiron1/bazel-compile-commands/releases/download/v${bazel_compile_commands_version}/bazel-compile-commands_${bazel_compile_commands_version}-${DISTRIB_CODENAME}_${ARCHITECTURE}.deb" -o /tmp/bazel-compile-commands.deb
-# Extract correct sha256 for current DISTRIB_CODENAME and check
+# Check the checksum for this CPU before installing the downloaded package.
 SHA256SUM="${bazel_compile_commands_amd64_sha256}"
 if [ "${ARCHITECTURE}" = "arm64" ]; then
     SHA256SUM="${bazel_compile_commands_arm64_sha256}"

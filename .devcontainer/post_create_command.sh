@@ -16,8 +16,8 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-# npm's global directory belongs to the development user in the Node.js base
-# image. Keep npm setup in that user's environment; system tools require root.
+# This repo uses a Node.js image whose global npm directory belongs to the
+# development user. Install npm packages as that user; system tools need sudo.
 "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-environment repository-devcontainer --providers npm
 sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-environment repository-devcontainer --providers native python
 

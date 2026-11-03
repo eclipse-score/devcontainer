@@ -14,7 +14,8 @@
 
 set -euo pipefail
 
-# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
+# Make JAVA_HOME available in later terminals so tools such as Bazel can find
+# Java. Derive the path from the installed javac, not a release number.
 JAVA_HOME="$(dirname "$(dirname "$(realpath "$(command -v javac)")")")"
 export JAVA_HOME
 echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh

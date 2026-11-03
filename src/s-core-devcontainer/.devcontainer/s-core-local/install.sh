@@ -32,7 +32,7 @@ apt-get update
 # Restore standard OS documentation in the development image.
 bash -c "yes || true" | unminimize
 
-# Selection metadata owns the tool list; the installer runs any declared setup.
+# environments.json selects the tools; providers.json names their extra setup scripts.
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase build
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase cleanup

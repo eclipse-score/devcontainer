@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Read pinned native and Python tool metadata without executing catalog code."""
+"""Read tool definitions and environment selections without running installation code."""
 
 # pyright: reportAny=false, reportUnusedCallResult=false, reportExplicitAny=false
 
@@ -240,7 +240,7 @@ PROVIDERS_PATH = LOCKFILE_ROOT.parent / "providers.json"
 
 
 def load_providers() -> dict:
-    """Read APT, npm and feature-specific setup definitions."""
+    """Read and check installation details for APT, npm and tools with custom setup."""
     providers = json.loads(PROVIDERS_PATH.read_text(encoding="utf-8"))
     if not isinstance(providers, dict):
         raise SystemExit("Tool providers must be a dictionary")
@@ -283,7 +283,9 @@ def load_providers() -> dict:
 
 
 def all_definitions() -> dict:
-    """Combine metadata for reference validation without loading repository configs."""
+    """Look up every defined tool by name, regardless of how it is installed.
+
+    Only the copied tools/ directory is needed, so this also works inside images."""
     tools = {}
     sources = (
         ((name, {**data, "provider": "native"}) for name, _, data in _iter_catalog()),
@@ -302,11 +304,13 @@ def all_definitions() -> dict:
 
 
 def load_environments() -> dict[str, dict[str, list[str]]]:
-    """Validate membership, provider categories and deliberately selected dependencies."""
+    """Read environments.json and check tool names, installation groups and dependencies."""
     data = json.loads(ENVIRONMENTS_PATH.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise SystemExit("Tool environments must be a dictionary")
     tools = all_definitions()
+    # Build-only packages use the same APT definitions as regular packages,
+    # but are removed once image setup is complete.
     categories = {
         "native": {"native"},
         "python": {"python"},
@@ -342,6 +346,8 @@ def load_environments() -> dict[str, dict[str, list[str]]]:
                     raise SystemExit(
                         f"Wrong installation phase for '{tool}' in environment '{name}'"
                     )
+        # Dependencies can be in another group: CodeQL needs zstd during the
+        # build, while Python tools need uv from the native tool selection.
         selected = {tool for names in selection.values() for tool in names}
         for tool in selected:
             for dependency in tools[tool].get("requires", []):
@@ -355,15 +361,19 @@ def load_environments() -> dict[str, dict[str, list[str]]]:
 def apt_requirements(
     selection: dict, definitions: dict, *, recommends: bool
 ) -> list[str]:
-    """Translate selected APT policies to requests, preserving Debian epochs."""
+    """Build apt package arguments for the chosen recommendation setting.
+
+    Keep version strings intact, including Debian's optional prefix such as "1:"."""
     requirements = []
     for name in selection.get("apt", []):
         tool = definitions[name]
         if tool.get("install_recommends", True) != recommends:
             continue
         for package in tool["packages"]:
+            # Some releases are selected by package name, such as python3.12.
             if tool["policy"] == "package-name":
                 package = package.format(version=tool["version"])
+            # Include Ubuntu's package revisions, e.g. graphviz=2.42.2*.
             elif tool["policy"] == "prefix":
                 package += "=" + tool["version"] + "*"
             requirements.append(package)

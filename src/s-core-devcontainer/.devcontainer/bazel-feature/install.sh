@@ -30,7 +30,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
 
-# Selection metadata owns the tool list; the installer runs any declared setup.
+# environments.json selects the tools; providers.json names their extra setup scripts.
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase build
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase cleanup

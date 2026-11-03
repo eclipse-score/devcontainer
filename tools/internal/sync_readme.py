@@ -11,7 +11,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Synchronize the documented tool table with the lockfile catalog."""
+"""Update the documented tool table and check environment selections."""
 
 from __future__ import annotations
 
@@ -67,7 +67,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.parse_args(argv)
 
-    # Validate selection references alongside the catalog in the documentation hook.
+    # The pre-commit documentation check also catches unknown tools and missing
+    # dependencies in environments.json, even when the table does not change.
     load_environments()
     current = README_PATH.read_text(encoding="utf-8")
     table = _render_table(load_catalog_versions(), load_catalog_descriptions())

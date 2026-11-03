@@ -214,8 +214,8 @@ def _cmd_install(args: argparse.Namespace) -> int:
     """Download, verify, and install tools from the lockfile catalog."""
     dest_dir = Path(args.destination)
 
-    # Resolve the complete selection before downloading or writing anything.
-    # Otherwise a missing tool/platform late in the list leaves a partial set.
+    # Check every requested tool has a download for this OS and CPU first.
+    # A bad name late in the list must not leave earlier tools installed.
     binaries: list[tuple[str, Binary]] = []
     for tool in args.tools:
         lockfile = resolve_lockfile(tool, args.lockfile)
@@ -268,14 +268,14 @@ def _cmd_install(args: argparse.Namespace) -> int:
 
 
 def _cmd_install_environment(args: argparse.Namespace) -> int:
-    """Install the tools selected for one environment."""
+    """Install an environment's tools, or add/remove its temporary build packages."""
     selection = load_environments().get(args.environment)
     if selection is None:
         raise SystemExit(f"Unknown tool environment '{args.environment}'")
     definitions = all_definitions()
     system = args.os + "/" + args.cpu
-    # Preflight the complete environment, even for a build/cleanup phase. A
-    # missing runtime artifact must be reported before installing build packages.
+    # Even the build phase checks tools needed by the finished image. Report
+    # missing downloads before installing packages used only during setup.
     for names in selection.values():
         for name in names:
             definition = definitions[name]
@@ -290,6 +290,8 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
                 ] and system not in definition.get("omissions", {}):
                     raise SystemExit(f"Tool '{name}' is unsupported on {system}")
 
+    # Some tools need extra configuration, such as setting JAVA_HOME. Only
+    # setup scripts shipped next to this installer can be selected.
     setup_scripts = []
     setup_root = Path(__file__).resolve().parent / "setup"
     for name in selection.get("apt", []) + selection.get("setup", []):
@@ -302,6 +304,8 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
         if system not in definition.get("omissions", {}):
             setup_scripts.append(setup_root / script)
 
+    # Build packages, such as zstd for unpacking CodeQL, are added before tool
+    # installation and removed after all setup steps have finished.
     if args.phase != "runtime":
         packages = [
             package
@@ -317,13 +321,14 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
             subprocess.run(["apt-get", *action, *packages], check=True)
         return 0
 
-    # QEMU deliberately omits recommendations. Other packages keep apt's normal
-    # recommendations, including the headers needed to build Python extensions.
+    # APT normally installs recommended extra packages. QEMU opts out; the
+    # other packages keep that default, including Python build dependencies.
     for recommends in (True, False) if "apt" in args.providers else ():
         packages = apt_requirements(selection, definitions, recommends=recommends)
         if packages:
             flags = [] if recommends else ["--no-install-recommends", "--fix-broken"]
             subprocess.run(["apt-get", "install", "-y", *flags, *packages], check=True)
+    # Install uv as a native tool before using it to install Python tools.
     if "native" in args.providers:
         args.tools = selection.get("native", [])
         args.lockfile = None
@@ -337,6 +342,8 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
         subprocess.run(
             ["npm", "install", "-g", definitions[name]["package"]], check=True
         )
+    # Pass variables to the setup processes. Python cannot change the
+    # environment of the shell that launched this installer.
     if "setup" in args.providers and setup_scripts:
         environment = {**os.environ, **_metadata_values()}
         environment["SCORE_TOOL_ENVIRONMENT"] = args.environment
@@ -347,7 +354,7 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
 
 
 def _metadata_values() -> dict[str, str]:
-    """Collect version variables for setup scripts and feature tests."""
+    """Turn definition fields into variables such as codeql_version for setup and tests."""
     import re
 
     values: dict[str, str] = {}
@@ -362,23 +369,25 @@ def _metadata_values() -> dict[str, str]:
             values[name] = value
 
     for name, definition in load_providers().items():
-        # Export only lifecycle setup inputs. Inventory metadata can use keys
-        # such as linux/arm64 which deliberately are not shell identifiers.
+        # Use only version and checksum fields. Other data, such as platform
+        # names containing slashes, cannot be used as shell variable names.
         for field in ("version", "compatibility_version", "amd64", "arm64"):
             if field in definition:
                 emit(name.replace("-", "_") + "_" + field, definition[field])
+        # Unpinned APT tools can still have expected versions for feature tests.
+        # Give these expectations the same _version names as pinned tools.
         if "compatibility_version" in definition:
             emit(
                 name.replace("-", "_") + "_version", definition["compatibility_version"]
             )
-    # Python distributions share their pins with Bazel and container setup.
+    # Tests and Python installation read the same version definitions.
     for name, definition in load_python_tools().items():
         emit(name.replace("-", "_"), definition)
     return values
 
 
 def _cmd_shell_metadata(args: argparse.Namespace) -> int:
-    """Print quoted variable assignments for the feature tests."""
+    """Print shell-quoted exports so feature tests can read versions in their shell."""
     import shlex
 
     for name, value in _metadata_values().items():
@@ -393,7 +402,7 @@ def _cmd_selected(args: argparse.Namespace) -> int:
 
 
 def _cmd_items(args: argparse.Namespace) -> int:
-    """Print a list from a tool definition, one item per line."""
+    """Print a tool definition's list, such as CodeQL packs, one item per line."""
     value = load_providers()[args.tool][args.field]
     if (
         not isinstance(value, list)

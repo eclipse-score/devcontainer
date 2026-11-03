@@ -12,7 +12,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py supplies catalog version variables in the process environment.
+# install.py passes version and checksum variables from providers.json.
 # shellcheck disable=SC2154
 set -euo pipefail
 
@@ -40,7 +40,7 @@ if "${SCORE_TOOLS_INSTALLER}" selected "${SCORE_TOOL_ENVIRONMENT}" codeql_coding
     done <<< "${codeql_packs}"
 fi
 
-# slim down codeql bundle (1.7GB -> 1.1 GB) by removing unnecessary language extractors and qlpacks
+# Remove unused language tools and query packs to keep the image smaller.
 codeql_purge_dirs=(
     "${codeql_install_dir}/codeql/csharp"
     "${codeql_install_dir}/codeql/go"

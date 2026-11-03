@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Tool selections are portable and fail before applying an invalid set."""
+"""Check selected tools are installed and invalid selections fail before installation."""
 
 from __future__ import annotations
 
@@ -55,8 +55,8 @@ class EnvironmentTest(unittest.TestCase):
                             catalog.load_environments()
 
     def test_copied_installer_applies_an_independent_ci_selection(self) -> None:
-        # A new image selection needs no changes to the installer or its caller.
-        # Local artifacts exercise actual download, checksum and install code.
+        # A new image can declare its own tool list without changing the
+        # installer. Local files exercise the real download/checksum/install path.
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             tools = self._copy_tools(root)
@@ -162,8 +162,8 @@ class EnvironmentTest(unittest.TestCase):
             tools = self._copy_tools(root)
             fake_bin = root / "fake-bin"
             fake_bin.mkdir()
-            # Real subprocesses record the apt/npm/uv boundary without changing
-            # host packages. uv itself is installed from a checked local artifact.
+            # Fake apt/npm/uv commands record what would be installed without
+            # changing host packages. uv itself comes from a checksum-checked file.
             recorder = (
                 f"#!{sys.executable}\n"
                 "import json, os, sys\n"
@@ -288,8 +288,8 @@ class EnvironmentTest(unittest.TestCase):
                 [(c["command"], c["args"]) for c in npm_only],
                 [("npm", ["install", "-g", "@fixture/cli"])],
             )
-            # Deselecting an entire provider group changes the actual setup,
-            # rather than merely updating the inventory.
+            # Removing a group from the selection must stop its install commands,
+            # not just change the displayed tool list.
             (tools / "environments.json").write_text(
                 json.dumps({"ci": {"apt": ["minimal"]}})
             )
@@ -440,8 +440,8 @@ class EnvironmentTest(unittest.TestCase):
                 output.read_text().splitlines(), [provider["version"], "ci"]
             )
             output.unlink()
-            # A platform omission must skip the setup script as well as accept
-            # the selection; deselection must also prevent running the script.
+            # An explicitly unsupported platform must skip this setup script.
+            # Removing the tool from the selection must also stop it running.
             provider["platforms"] = ["linux/x86_64"]
             provider["omissions"] = {"linux/arm64": "Fixture has no ARM artifact"}
             providers_path.write_text(json.dumps({"fixture": provider}))
@@ -454,8 +454,8 @@ class EnvironmentTest(unittest.TestCase):
             self.assertFalse(output.exists())
 
     def test_volume_setup_prepares_writable_user_parent_directories(self) -> None:
-        # A nested Docker volume mount may create .local as root. Repair the
-        # parent directories explicitly instead of relying on a user tool install.
+        # Docker can create .local as root when mounting a volume below it.
+        # Its owner must be fixed so the user can create sibling state directories.
         script = (
             TOOLS_DIR.parent
             / "src/s-core-devcontainer/.devcontainer/s-core-local/fix_config_volume_ownership.sh"

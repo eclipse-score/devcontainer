@@ -12,21 +12,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py supplies catalog version variables in the process environment.
+# install.py passes version and checksum variables from providers.json.
 # shellcheck disable=SC2154
 set -euo pipefail
 
-# Bazelisk + Bazel
+# Let the bazel command use Bazelisk to select and download the requested version.
 ln -sf /usr/local/bin/bazelisk /usr/local/bin/bazel
 
-# Pre-install a fixed Bazel version, setup the bash command completion
+# Download the chosen Bazel release into the development user's cache and save
+# shell completion for later terminals.
 export USE_BAZEL_VERSION=${bazel_version}
-# Bazelisk caches the release for the development user selected by Dev Containers.
+# Run as the development user so their first Bazel call can reuse this download.
 su $(ls /home) -c "bazel help completion bash > /tmp/bazel-complete.bash"
 mkdir -p /etc/bash_completion.d
 mv /tmp/bazel-complete.bash /etc/bash_completion.d/bazel-complete.bash
 sh -c "echo 'INSTALLED_BAZEL_VERSION=${bazel_version}' >> /devcontainer/features/bazel/bazel_setup.sh"
 
-# Configure Bazel to use system trust store for SSL/TLS connections
-# This is required for corporate environments with custom CA certificates
+# Make Bazel trust the same certificates as the OS, including company CAs.
 echo 'startup --host_jvm_args=-Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --host_jvm_args=-Djavax.net.ssl.trustStorePassword=changeit' >> /etc/bazel.bazelrc
