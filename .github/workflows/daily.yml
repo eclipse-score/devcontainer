@@ -33,29 +33,31 @@ jobs:
       id-token: write
       actions: write
   renovate:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'schedule' }}
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     permissions:
       contents: read
     steps:
       - name: Checkout config file
         uses: actions/checkout@v7
       - name: Run renovate
-        uses: renovatebot/github-action@a63d9a7bc606f7336fd20b47f2f32259a35e6213 # v46.3.9
+        uses: renovatebot/github-action@43b963bf5dd5e57f1f95c59765a018d782870211 # v46.3.11
         with:
           # Pull requests from forks do not have access to secrets
           token: ${{ secrets.RENOVATE_TOKEN }}
-          configurationFile: .github/renovate.json5
         env:
           LOG_LEVEL: debug
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Enable only this runner; repository config disables other instances.
+          RENOVATE_FORCE: '{"enabled": true}'
           # Allow the post-upgrade tasks that refresh lockfile URLs and sha256
           # digests and re-sync the generated tool table in tools/README.md
           # (allowedCommands is a global-only option, so it must be set here
           # rather than in renovate.json5).
-          RENOVATE_ALLOWED_COMMANDS: '["tools/internal/refresh_lockfile_digests.py", "tools/internal/sync_readme.py"]'
+          RENOVATE_ALLOWED_COMMANDS: '["^tools/internal/refresh_lockfile_digests\\.py$", "^tools/internal/sync_readme\\.py$"]'
   validate-renovate-config:
     name: Validate Renovate config
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:

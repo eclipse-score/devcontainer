@@ -12,6 +12,9 @@
 // *******************************************************************************
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  // Only the self-hosted daily job has permission to run post-upgrade tasks.
+  // It overrides this setting with RENOVATE_FORCE to avoid competing runners.
+  "enabled": false,
   "extends": [
     "config:base",
     ":dependencyDashboard",

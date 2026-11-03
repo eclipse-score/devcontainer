@@ -81,18 +81,21 @@ its pre-commit configuration. Consumer documentation only presents the copied
 Native tool metadata lives in
 [`tools/lockfiles/*.lock.json`](../lockfiles). Each lockfile records versions,
 supported platforms, download URLs, checksums, and archive layouts.
-`rules_multitool` consumes the files for Bazel;
-[`devcontainer/install.py`](devcontainer/install.py) consumes them while
-building the DevContainer.
+`rules_multitool` consumes the files for Bazel. The standard-library-only
+[`catalog.py`](catalog.py) reads metadata for
+[`devcontainer/install.py`](devcontainer/install.py) and README generation.
+The reader has no installation side effects; download, platform selection,
+and installation remain in the container installer.
 
 Python command-line tool metadata lives in
 [`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
 a data-only Starlark dictionary because Bazel must read the pin during analysis,
 before the command can run. Its restricted literal form is also valid Python
 syntax. During DevContainer setup, `install.py` runs as root so it can install
-tools in system locations such as `/usr/local/bin`. It parses the catalog with
-`ast.literal_eval` instead of executing it as Python, so catalog changes can
-provide only literal data and cannot run code with the installer's privileges.
+tools in system locations such as `/usr/local/bin`. The shared reader parses
+the catalog with `ast.literal_eval` instead of executing it as Python, so
+catalog changes can provide only literal data and cannot run code with the
+installer's privileges.
 This shared format keeps the package, console entrypoint, version, and
 description in one source of truth while Bazel execution remains independent
 of host Python.
@@ -181,6 +184,17 @@ environment variables, and working-directory behavior without network access.
 CI additionally runs the real `//tools:pre-commit` target as a smoke test
 because only that target exercises `rules_multitool`, Bazel runfiles, and uvx
 together.
+
+Run the shared reader and README regression tests with the image's Python
+(no additional packages or installation needed):
+
+```console
+$ python3 -m unittest discover -s tools/tests -p '*_test.py'
+```
+
+The scripts locate the shared internal reader relative to their own files, so they also work
+from another working directory and in the image's copied `tools` directory.
+Ordinary imports from the repository use `tools.internal.catalog`.
 
 ## Bazel target conventions
 
