@@ -19,7 +19,8 @@
     "policy": "prefix",
     "platforms": ["linux/x86_64", "linux/arm64"],
     "version": "1:8.2.2",
-    "install_recommends": false
+    "install_recommends": false,
+    "description": "Both ARM and x86 guest emulators are installed on each supported host platform."
   },
   "sshpass": {
     "provider": "apt",
@@ -56,12 +57,13 @@
     "platforms": ["linux/x86_64", "linux/arm64"],
     "compatibility_version": "2.45.0"
   },
-  "openjdk_21": {
+  "openjdk": {
     "provider": "apt",
     "packages": ["openjdk-21-jdk-headless"],
     "policy": "prefix",
     "platforms": ["linux/x86_64", "linux/arm64"],
-    "version": "21.0.12"
+    "version": "21.0.12",
+    "setup_script": "java.sh"
   },
   "valgrind": {
     "provider": "apt",
@@ -122,7 +124,8 @@
     "provider": "apt",
     "packages": ["black"],
     "policy": "distribution",
-    "platforms": ["linux/x86_64", "linux/arm64"]
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "description": "Ubuntu-provided Black; distribution policy does not pin an exact version."
   },
   "python3-yapf": {
     "provider": "apt",
@@ -176,7 +179,8 @@
     "provider": "apt",
     "packages": ["ca-certificates-java"],
     "policy": "distribution",
-    "platforms": ["linux/x86_64", "linux/arm64"]
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "description": "Populate the Java trust store from system CA certificates; follow distribution updates."
   },
   "man-db": {
     "provider": "apt",
@@ -216,12 +220,11 @@
     "amd64": {
       "sha256": "6da9f3df228d4e162af877569240a627c1af22f6adbd26352b22357fb8bd7545"
     },
-    "arm64": {
-      "sha256": "810a1fff48aeb081be754e46e255edd90d8695966e78431a65edb00e9e6cc399"
-    },
     "omissions": {
       "linux/arm64": "The selected bundle has no supported Linux arm64 artifact"
-    }
+    },
+    "setup_script": "codeql.sh",
+    "requires": ["zstd"]
   },
   "codeql_coding_standards": {
     "provider": "release",
@@ -244,7 +247,8 @@
     "policy": "exact",
     "platforms": ["linux/x86_64", "linux/arm64"],
     "version": "8.6.0",
-    "requires": ["bazelisk"]
+    "requires": ["bazelisk"],
+    "setup_script": "bazel.sh"
   },
   "bazel_compile_commands": {
     "provider": "release",
@@ -256,7 +260,8 @@
     },
     "arm64": {
       "sha256": "d73998efa01cbd501b82ad6266642464b78ecd9fc6224a60c9cb558182d52d88"
-    }
+    },
+    "setup_script": "bazel_compile_commands.sh"
   },
   "apt-transport-https": {
     "provider": "apt",

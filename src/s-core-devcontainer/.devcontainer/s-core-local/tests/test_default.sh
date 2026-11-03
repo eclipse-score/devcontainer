@@ -19,7 +19,7 @@ ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh
+eval "$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
 
 shellcheck_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version shellcheck)"
 ruff_lockfile_version="$(/usr/local/share/score-tools/internal/devcontainer/install.py version ruff)"
@@ -66,8 +66,10 @@ check "validate pytest is working" bash -c "pytest --version"
 check "validate pylint is working" bash -c "pylint --version"
 
 # OpenJDK
-check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_21_version}'"
-check "validate JAVA_HOME is set correctly" bash -c "echo ${JAVA_HOME} | xargs readlink -f | grep \"java-21-openjdk\""
+check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_version}'"
+# Expansion belongs to the child shell that performs the check.
+# shellcheck disable=SC2016
+check "validate JAVA_HOME matches javac" bash -c 'test "$(readlink -f "$JAVA_HOME")" = "$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"'
 
 # ruff
 check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_lockfile_version}'"

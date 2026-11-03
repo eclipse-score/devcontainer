@@ -24,7 +24,7 @@
       "git",
       "git_lfs",
       "gh",
-      "openjdk_21",
+      "openjdk",
       "valgrind",
       "ripgrep",
       "lcov",

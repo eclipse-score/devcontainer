@@ -268,7 +268,7 @@ def _cmd_install(args: argparse.Namespace) -> int:
 
 
 def _cmd_install_environment(args: argparse.Namespace) -> int:
-    """Apply selected provider groups; feature scripts retain special setup."""
+    """Install the tools selected for one environment."""
     selection = load_environments().get(args.environment)
     if selection is None:
         raise SystemExit(f"Unknown tool environment '{args.environment}'")
@@ -289,6 +289,18 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
                     "platforms"
                 ] and system not in definition.get("omissions", {}):
                     raise SystemExit(f"Tool '{name}' is unsupported on {system}")
+
+    setup_scripts = []
+    setup_root = Path(__file__).resolve().parent / "setup"
+    for name in selection.get("apt", []) + selection.get("setup", []):
+        definition = definitions[name]
+        script = definition.get("setup_script")
+        if script is None:
+            continue
+        if Path(script).name != script or not (setup_root / script).is_file():
+            raise SystemExit(f"Invalid setup script for '{name}': {script}")
+        if system not in definition.get("omissions", {}):
+            setup_scripts.append(setup_root / script)
 
     if args.phase != "runtime":
         packages = [
@@ -325,13 +337,20 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
         subprocess.run(
             ["npm", "install", "-g", definitions[name]["package"]], check=True
         )
+    if "setup" in args.providers and setup_scripts:
+        environment = {**os.environ, **_metadata_values()}
+        environment["SCORE_TOOL_ENVIRONMENT"] = args.environment
+        environment["SCORE_TOOLS_INSTALLER"] = str(Path(__file__).resolve())
+        for script in setup_scripts:
+            subprocess.run(["bash", str(script)], check=True, env=environment)
     return 0
 
 
-def _cmd_shell_metadata(args: argparse.Namespace) -> int:
-    """Emit quoted data for the provider-specific feature setup, never shell code from definitions."""
+def _metadata_values() -> dict[str, str]:
+    """Collect version variables for setup scripts and feature tests."""
     import re
-    import shlex
+
+    values: dict[str, str] = {}
 
     def emit(name, value):
         if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name):
@@ -340,7 +359,7 @@ def _cmd_shell_metadata(args: argparse.Namespace) -> int:
             for key, child in value.items():
                 emit(name + "_" + key, child)
         elif isinstance(value, str):
-            print("export " + name + "=" + shlex.quote(value))
+            values[name] = value
 
     for name, definition in load_providers().items():
         # Export only lifecycle setup inputs. Inventory metadata can use keys
@@ -355,17 +374,26 @@ def _cmd_shell_metadata(args: argparse.Namespace) -> int:
     # Python distributions share their pins with Bazel and container setup.
     for name, definition in load_python_tools().items():
         emit(name.replace("-", "_"), definition)
+    return values
+
+
+def _cmd_shell_metadata(args: argparse.Namespace) -> int:
+    """Print quoted variable assignments for the feature tests."""
+    import shlex
+
+    for name, value in _metadata_values().items():
+        print("export " + name + "=" + shlex.quote(value))
     return 0
 
 
 def _cmd_selected(args: argparse.Namespace) -> int:
-    """Return whether a tool is selected, for provider-specific lifecycle setup."""
+    """Exit with 0 if the environment selects this tool, or 1 if it does not."""
     selections = load_environments()[args.environment]
     return 0 if any(args.tool in names for names in selections.values()) else 1
 
 
 def _cmd_items(args: argparse.Namespace) -> int:
-    """Expose a provider-owned bundle list to lifecycle setup and verification."""
+    """Print a list from a tool definition, one item per line."""
     value = load_providers()[args.tool][args.field]
     if (
         not isinstance(value, list)
@@ -419,8 +447,8 @@ def _build_parser() -> argparse.ArgumentParser:
     environment_parser.add_argument(
         "--providers",
         nargs="+",
-        choices=("apt", "native", "python", "npm"),
-        default=("apt", "native", "python", "npm"),
+        choices=("apt", "native", "python", "npm", "setup"),
+        default=("apt", "native", "python", "npm", "setup"),
         help="Apply only these provider groups, e.g. npm as the development user.",
     )
     environment_parser.add_argument(

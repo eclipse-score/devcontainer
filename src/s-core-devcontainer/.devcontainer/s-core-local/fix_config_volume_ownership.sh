@@ -36,6 +36,12 @@ ensure_owner() {
   fi
 }
 
-ensure_owner "/home/vscode/.config/opencode"
-ensure_owner "/home/vscode/.local/share/opencode"
-ensure_owner "/home/vscode/.config/gh"
+# Docker creates missing parents of nested volume mounts as root. These are
+# user-owned XDG directories; writable mount roots alone do not let tools create
+# sibling state/cache directories. Change only the parents, not their contents.
+sudo install -d -o "$(id -un)" -g "$(id -gn)" \
+  "${HOME}/.config" "${HOME}/.local" "${HOME}/.local/share"
+
+ensure_owner "${HOME}/.config/opencode"
+ensure_owner "${HOME}/.local/share/opencode"
+ensure_owner "${HOME}/.config/gh"

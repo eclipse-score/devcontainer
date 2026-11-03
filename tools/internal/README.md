@@ -109,9 +109,9 @@ of host Python.
 APT `distribution` policies intentionally follow the distribution, `prefix`
 constraints include Debian epochs, and `package-name` selects a versioned package
 name (for example `python3.12`). Compatibility expectations for Git, Git LFS and
-gh remain separate from their unpinned APT requests. The shell metadata bridge
-quotes catalog data and uses the image's standard-library Python; it does not
-download another parser.
+gh remain separate from their unpinned APT requests. The installer passes version variables directly to its setup subprocesses.
+Feature tests use `shell-metadata` to read quoted assignments in their own shell;
+there is no separate loader script or downloaded parser.
 
 The catalogs have distinct ownership: `devcontainer-lock.json` records external
 DevContainer features, `python_tools.bzl` records Python package releases, and
@@ -148,14 +148,14 @@ Each selection groups its tools by installation method:
 | `apt` | `providers.json` | apt, preserving package/version policy and recommendations |
 | `build-apt` | `providers.json` | apt during build; removed during cleanup |
 | `npm` | `providers.json` | npm in the appropriate user's environment |
-| `setup` | `providers.json` | The feature's existing special setup, gated by membership |
+| `setup` | `providers.json` | Setup scripts declared by `setup_script`, gated by membership |
 
 For example, the local feature applies its selected groups during setup:
 
 ```console
 $ python3 tools/internal/devcontainer/install.py install-environment s-core-local --phase build
 $ python3 tools/internal/devcontainer/install.py install-environment s-core-local
-# Feature-specific configuration follows, then temporary packages are removed:
+# Declared setup runs during installation, then temporary packages are removed:
 $ python3 tools/internal/devcontainer/install.py install-environment s-core-local --phase cleanup
 ```
 
@@ -173,10 +173,38 @@ dependencies and unsupported platform artifacts fail before installation.
 CodeQL's existing Linux ARM64 omission is explicit. Download or installation
 failure can still leave earlier tools installed; application is not transactional.
 
-Feature scripts query `selected ENVIRONMENT TOOL` before special setup such as
-JAVA_HOME, CodeQL or Bazel preinstallation. CodeQL pack names come from the owned
-bundle through `items`, not a second list in the script. Removing membership stops
-new setup from offering the tool; it does not uninstall existing host copies.
+Feature entry scripts only apply the selection's build, runtime and cleanup
+phases. Tool-specific steps live in `internal/devcontainer/setup/`; definitions
+name the required script with `setup_script`. For example, `openjdk` selects an
+APT package and declares Java home configuration. Its name carries no version;
+`packages` and `version` select the actual OpenJDK release.
+
+The installer gives setup scripts version variables directly as their process
+environment. Python can set a child's environment, but cannot change the shell
+that invoked it. Java and CodeQL setup therefore also write profile files for
+later terminals. The feature tests read quoted `shell-metadata` output directly.
+
+Setup scripts can query `selected ENVIRONMENT TOOL` for optional bundle members.
+CodeQL pack names come from the owned bundle through `items`, not a second list.
+CodeQL declares `zstd` as a build dependency, so missing decompression support is
+rejected before the build phase. Removing membership stops new setup from
+offering the tool; it does not uninstall existing host copies.
+
+For APT definitions, `packages` and `platforms` are independent lists. Every
+listed package is installed on each supported host; apt selects its host build.
+For example, both QEMU guest emulators are installed on both Linux host CPUs.
+Their order does not map packages to architectures.
+
+A distribution policy is not an exact pin: Black and the other APT-provided
+Python CLIs retain the current Ubuntu version selection. Changing their provider
+to pinned uv distributions requires explicit version choices and removal of the
+APT copies. It is a separate change from recording existing selections.
+
+`ca-certificates-java` builds the Java trust store from system certificates.
+Pinning that helper alone does not freeze the trust data or imported corporate
+CAs. These continue to receive distribution updates. Reproducible base/APT and
+certificate snapshots, and rebuilding releases for trust updates, are outside
+this change's guarantee.
 
 This file covers the direct tools managed by our three setup scripts. Base-image
 contents, external Dev Container features (such as LLVM, common-utils and DinD),

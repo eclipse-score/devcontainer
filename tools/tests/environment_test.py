@@ -382,6 +382,116 @@ class EnvironmentTest(unittest.TestCase):
             self.assertEqual(check.returncode, 0, check.stderr)
             self.assertFalse(marker.exists())
 
+    def test_missing_codeql_build_dependency_is_rejected_before_build(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tools = self._copy_tools(root)
+            path = tools / "environments.json"
+            selections = json.loads(path.read_text())
+            selections["s-core-local"]["build-apt"].remove("zstd")
+            path.write_text(json.dumps(selections))
+            marker = root / "apt-was-called"
+            fake_bin = root / "fake-bin"
+            fake_bin.mkdir()
+            apt = fake_bin / "apt-get"
+            apt.write_text(f"#!/bin/sh\ntouch '{marker}'\n")
+            apt.chmod(0o755)
+            environment = dict(
+                os.environ, PATH=str(fake_bin) + os.pathsep + os.environ["PATH"]
+            )
+            result = self._run(
+                tools,
+                root,
+                "s-core-local",
+                root / "bin",
+                "--phase",
+                "build",
+                env=environment,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("Tool 'codeql' requires 'zstd'", result.stderr)
+            self.assertFalse(marker.exists())
+
+    def test_declared_setup_receives_metadata_without_changing_the_parent_shell(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tools = self._copy_tools(root)
+            provider = {
+                "provider": "release",
+                "version": "a 'literal' value",
+                "platforms": ["linux/arm64"],
+                "setup_script": "fixture.sh",
+            }
+            providers_path = tools / "providers.json"
+            providers_path.write_text(json.dumps({"fixture": provider}))
+            selections_path = tools / "environments.json"
+            selections_path.write_text(json.dumps({"ci": {"setup": ["fixture"]}}))
+            script = tools / "internal/devcontainer/setup/fixture.sh"
+            script.write_text(
+                'printf "%s\\n" "$fixture_version" "$SCORE_TOOL_ENVIRONMENT" > "$SCORE_TEST_OUTPUT"\n'
+            )
+            output = root / "setup-output"
+            environment = dict(os.environ, SCORE_TEST_OUTPUT=str(output))
+            result = self._run(tools, root, "ci", root / "bin", env=environment)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(
+                output.read_text().splitlines(), [provider["version"], "ci"]
+            )
+            output.unlink()
+            # A platform omission must skip the setup script as well as accept
+            # the selection; deselection must also prevent running the script.
+            provider["platforms"] = ["linux/x86_64"]
+            provider["omissions"] = {"linux/arm64": "Fixture has no ARM artifact"}
+            providers_path.write_text(json.dumps({"fixture": provider}))
+            result = self._run(tools, root, "ci", root / "bin", env=environment)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(output.exists())
+            selections_path.write_text(json.dumps({"ci": {"setup": []}}))
+            result = self._run(tools, root, "ci", root / "bin", env=environment)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(output.exists())
+
+    def test_volume_setup_prepares_writable_user_parent_directories(self) -> None:
+        # A nested Docker volume mount may create .local as root. Repair the
+        # parent directories explicitly instead of relying on a user tool install.
+        script = (
+            TOOLS_DIR.parent
+            / "src/s-core-devcontainer/.devcontainer/s-core-local/fix_config_volume_ownership.sh"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            home = root / "home"
+            fake_bin = root / "bin"
+            fake_bin.mkdir()
+            for name in (".config/opencode", ".config/gh", ".local/share/opencode"):
+                (home / name).mkdir(parents=True, exist_ok=True)
+            sudo = fake_bin / "sudo"
+            sudo.write_text(
+                '#!/bin/sh\nprintf "%s\\n" "$@" >> "$SCORE_TEST_LOG"\nexec "$@"\n'
+            )
+            sudo.chmod(0o755)
+            log = root / "calls"
+            result = subprocess.run(
+                ["bash", str(script)],
+                env=dict(
+                    os.environ,
+                    HOME=str(home),
+                    PATH=str(fake_bin) + os.pathsep + os.environ["PATH"],
+                    SCORE_TEST_LOG=str(log),
+                ),
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            calls = log.read_text().splitlines()
+            self.assertEqual(calls[0], "install")
+            self.assertIn("-o", calls)
+            self.assertIn("-g", calls)
+            for name in (".config", ".local", ".local/share"):
+                self.assertIn(str(home / name), calls)
+
     def _copy_tools(self, root: Path) -> Path:
         tools = root / "copied-tools"
         shutil.copytree(TOOLS_DIR, tools, ignore=shutil.ignore_patterns("__pycache__"))

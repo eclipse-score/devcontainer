@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
@@ -15,8 +14,7 @@
 
 set -euo pipefail
 
-# Shared definitions are literal data. The bridge quotes values and validates
-# variable names before emitting exports for provider-specific shell setup.
-score_feature_metadata="$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
-eval "${score_feature_metadata}"
-unset score_feature_metadata
+# Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
+JAVA_HOME="$(dirname "$(dirname "$(realpath "$(command -v javac)")")")"
+export JAVA_HOME
+echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
