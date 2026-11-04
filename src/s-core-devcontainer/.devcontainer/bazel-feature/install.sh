@@ -31,9 +31,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 
 # environments.json selects the tools; providers.json names their extra setup scripts.
-/usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase build
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature
-/usr/local/share/score-tools/internal/devcontainer/install.py install-environment bazel-feature --phase cleanup
 
 apt-get autoremove -y
 apt-get clean

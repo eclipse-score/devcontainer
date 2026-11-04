@@ -267,6 +267,67 @@ def _cmd_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def _is_writable(path: str) -> bool:
+    """Check the nearest existing parent when an install directory is still missing."""
+    directory = Path(path).resolve()
+    while not directory.exists():
+        directory = directory.parent
+    return os.access(directory, os.W_OK)
+
+
+def _delegate_system_installation(
+    args: argparse.Namespace, selection: dict[str, list[str]]
+) -> bool:
+    """Return whether system installation was completed by a privileged child."""
+    if os.geteuid() == 0:
+        return False
+    providers = [
+        provider
+        for provider in args.providers
+        if provider != "npm" and selection.get(provider)
+    ]
+    if args.phase != "runtime":
+        providers = ["apt"]
+        needs_root = bool(selection.get("build-apt"))
+    else:
+        needs_root = (
+            any(provider in providers for provider in ("apt", "setup"))
+            or ("native" in providers and not _is_writable(args.destination))
+            or (
+                "python" in providers
+                and not all(_is_writable(p) for p in (args.destination, args.tool_dir))
+            )
+        )
+    if not needs_root:
+        return False
+
+    # Reuse the same installer and explicit paths under sudo. Do not elevate the
+    # whole invocation: npm must retain the user's PATH and global package prefix.
+    subprocess.run(
+        [
+            "sudo",
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "install-environment",
+            args.environment,
+            "--phase",
+            args.phase,
+            "--destination",
+            str(Path(args.destination).resolve()),
+            "--tool-dir",
+            str(Path(args.tool_dir).resolve()),
+            "--os",
+            args.os,
+            "--cpu",
+            args.cpu,
+            "--providers",
+            *providers,
+        ],
+        check=True,
+    )
+    return True
+
+
 def _cmd_install_environment(args: argparse.Namespace) -> int:
     """Install an environment's tools, or add/remove its temporary build packages."""
     selection = load_environments().get(args.environment)
@@ -303,6 +364,26 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
             raise SystemExit(f"Invalid setup script for '{name}': {script}")
         if system not in definition.get("omissions", {}):
             setup_scripts.append(setup_root / script)
+
+    if args.phase == "all":
+        phases = ("build", "runtime", "cleanup")
+        if set(args.providers) == {"npm"}:
+            phases = ("runtime",)
+        for phase in phases:
+            phase_args = argparse.Namespace(**vars(args))
+            phase_args.phase = phase
+            _apply_environment(phase_args, selection, definitions, setup_scripts)
+        return 0
+    return _apply_environment(args, selection, definitions, setup_scripts)
+
+
+def _apply_environment(args, selection, definitions, setup_scripts) -> int:
+    """Apply one validated installation phase, elevating system steps when needed."""
+    if _delegate_system_installation(args, selection):
+        if args.phase != "runtime":
+            return 0
+        # System groups are complete; npm still runs with the caller's Node setup.
+        args.providers = [p for p in args.providers if p == "npm"]
 
     # Build packages, such as zstd for unpacking CodeQL, are added before tool
     # installation and removed after all setup steps have finished.
@@ -380,7 +461,11 @@ def _metadata_values() -> dict[str, str]:
             emit(
                 name.replace("-", "_") + "_version", definition["compatibility_version"]
             )
-    # Tests and Python installation read the same version definitions.
+    # Native and Python command versions use the same variable names as the
+    # other definitions, so feature tests need just one metadata query.
+    for name, version in load_catalog_versions().items():
+        emit(name.replace("-", "_") + "_version", version)
+    # Python package and entrypoint metadata is also available to setup scripts.
     for name, definition in load_python_tools().items():
         emit(name.replace("-", "_"), definition)
     return values
@@ -458,10 +543,13 @@ def _build_parser() -> argparse.ArgumentParser:
         nargs="+",
         choices=("apt", "native", "python", "npm", "setup"),
         default=("apt", "native", "python", "npm", "setup"),
-        help="Apply only these provider groups, e.g. npm as the development user.",
+        help="Apply only these provider groups; installation rights are handled automatically.",
     )
     environment_parser.add_argument(
-        "--phase", choices=("runtime", "build", "cleanup"), default="runtime"
+        "--phase",
+        choices=("all", "runtime", "build", "cleanup"),
+        default="all",
+        help="Run all installation phases by default, or apply just one phase.",
     )
     environment_parser.add_argument("--tool-dir", default="/usr/local/share/uv/tools")
     environment_parser.add_argument("--destination", default="/usr/local/bin")

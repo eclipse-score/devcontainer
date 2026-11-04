@@ -16,10 +16,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
 
-# This repo uses a Node.js image whose global npm directory belongs to the
-# development user. Install npm packages as that user; system tools need sudo.
-"${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-environment repository-devcontainer --providers npm
-sudo "${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-environment repository-devcontainer --providers native python
+"${REPOSITORY_ROOT}/tools/internal/devcontainer/install.py" install-environment repository-devcontainer
 
 # Hooks can only be registered after the catalogued executable is on PATH.
 pre-commit install

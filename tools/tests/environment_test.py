@@ -28,6 +28,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from tools.internal import catalog
+from tools.internal.devcontainer import install as installer
 
 TOOLS_DIR = Path(__file__).resolve().parents[1]
 
@@ -171,7 +172,8 @@ class EnvironmentTest(unittest.TestCase):
                 "with open(os.environ['SCORE_TEST_LOG'], 'a') as log:\n"
                 "    log.write(json.dumps({'command': Path(sys.argv[0]).name, "
                 "'args': sys.argv[1:], 'bin_dir': os.environ.get('UV_TOOL_BIN_DIR'), "
-                "'tool_dir': os.environ.get('UV_TOOL_DIR')}) + '\\n')\n"
+                "'tool_dir': os.environ.get('UV_TOOL_DIR'), "
+                "'privileged': os.environ.get('SCORE_TEST_PRIVILEGED')}) + '\\n')\n"
             )
             for name in ("apt-get", "npm"):
                 executable = fake_bin / name
@@ -240,19 +242,18 @@ class EnvironmentTest(unittest.TestCase):
                 PATH=str(fake_bin) + os.pathsep + os.environ["PATH"],
                 SCORE_TEST_LOG=str(log),
             )
-            for phase in ("build", "runtime", "cleanup"):
-                result = self._run(
-                    tools,
-                    root,
-                    "ci",
-                    destination,
-                    "--phase",
-                    phase,
-                    "--tool-dir",
-                    str(tool_dir),
-                    env=environment,
-                )
-                self.assertEqual(result.returncode, 0, result.stderr)
+            # One ordinary invocation installs build dependencies, applies tools,
+            # and removes the temporary dependencies after successful setup.
+            result = self._run(
+                tools,
+                root,
+                "ci",
+                destination,
+                "--tool-dir",
+                str(tool_dir),
+                env=environment,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
             calls = [json.loads(line) for line in log.read_text().splitlines()]
             self.assertEqual(
                 [(c["command"], c["args"]) for c in calls],
@@ -276,8 +277,18 @@ class EnvironmentTest(unittest.TestCase):
             )
             self.assertEqual(calls[3]["bin_dir"], str(destination))
             self.assertEqual(calls[3]["tool_dir"], str(tool_dir))
-            # Repository setup can apply npm in the user's environment while
-            # applying system tools in a separate privileged invocation.
+            # The installer elevates system tools but keeps npm in the user's
+            # environment. This fixture's sudo records that boundary without root.
+            expected_privilege = "1" if os.geteuid() != 0 else None
+            self.assertTrue(
+                all(
+                    c["privileged"] == expected_privilege
+                    for c in calls
+                    if c["command"] != "npm"
+                )
+            )
+            self.assertIsNone(calls[4]["privileged"])
+            # A provider filter still permits installing just one group.
             log.unlink()
             result = self._run(
                 tools, root, "ci", destination, "--providers", "npm", env=environment
@@ -299,6 +310,125 @@ class EnvironmentTest(unittest.TestCase):
             remaining = [json.loads(line) for line in log.read_text().splitlines()]
             self.assertEqual([c["command"] for c in remaining], ["apt-get"])
             self.assertEqual(remaining[0]["args"][-1], "minimal")
+
+    def test_repository_setup_elevates_system_tools_and_keeps_npm_in_caller(
+        self,
+    ) -> None:
+        with (
+            patch.object(installer.os, "geteuid", return_value=1000),
+            patch.object(installer, "_is_writable", return_value=False),
+            patch.object(installer, "_cmd_install") as native,
+            patch.object(installer, "_cmd_install_python") as python,
+            patch.object(installer.subprocess, "run") as run,
+        ):
+            result = installer.main(
+                [
+                    "install-environment",
+                    "repository-devcontainer",
+                    "--os",
+                    "linux",
+                    "--cpu",
+                    "arm64",
+                ]
+            )
+        self.assertEqual(result, 0)
+        self.assertEqual(run.call_count, 2)
+        system, npm = [call.args[0] for call in run.call_args_list]
+        self.assertEqual(system[:2], ["sudo", sys.executable])
+        self.assertEqual(
+            system[system.index("--providers") + 1 :], ["native", "python"]
+        )
+        self.assertIn("/usr/local/bin", system)
+        self.assertIn("/usr/local/share/uv/tools", system)
+        self.assertEqual(npm, ["npm", "install", "-g", "@devcontainers/cli"])
+        native.assert_not_called()
+        python.assert_not_called()
+
+    def test_root_image_build_does_not_delegate_or_repeat_installation(self) -> None:
+        with (
+            patch.object(installer.os, "geteuid", return_value=0),
+            patch.object(installer, "_cmd_install") as native,
+            patch.object(installer, "_cmd_install_python") as python,
+            patch.object(installer.subprocess, "run") as run,
+        ):
+            result = installer.main(
+                [
+                    "install-environment",
+                    "repository-devcontainer",
+                    "--os",
+                    "linux",
+                    "--cpu",
+                    "arm64",
+                ]
+            )
+        self.assertEqual(result, 0)
+        native.assert_called_once()
+        python.assert_called_once()
+        run.assert_called_once_with(
+            ["npm", "install", "-g", "@devcontainers/cli"], check=True
+        )
+
+    def test_failed_system_installation_stops_before_npm(self) -> None:
+        with (
+            patch.object(installer.os, "geteuid", return_value=1000),
+            patch.object(installer, "_is_writable", return_value=False),
+            patch.object(
+                installer.subprocess,
+                "run",
+                side_effect=subprocess.CalledProcessError(1, "sudo"),
+            ) as run,
+        ):
+            with self.assertRaises(subprocess.CalledProcessError):
+                installer.main(
+                    [
+                        "install-environment",
+                        "repository-devcontainer",
+                        "--os",
+                        "linux",
+                        "--cpu",
+                        "arm64",
+                    ]
+                )
+        run.assert_called_once()
+
+    def test_writable_native_destination_does_not_require_sudo(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            args = installer._build_parser().parse_args(
+                [
+                    "install-environment",
+                    "fixture",
+                    "--destination",
+                    str(Path(directory) / "new" / "bin"),
+                ]
+            )
+            with (
+                patch.object(installer.os, "geteuid", return_value=1000),
+                patch.object(installer.subprocess, "run") as run,
+            ):
+                self.assertFalse(
+                    installer._delegate_system_installation(args, {"native": ["ruff"]})
+                )
+            run.assert_not_called()
+
+    def test_default_lifecycle_stops_if_runtime_installation_fails(self) -> None:
+        with patch.object(
+            installer,
+            "_apply_environment",
+            side_effect=[0, subprocess.CalledProcessError(1, "install")],
+        ) as apply:
+            with self.assertRaises(subprocess.CalledProcessError):
+                installer.main(["install-environment", "repository-devcontainer"])
+        self.assertEqual(
+            [call.args[0].phase for call in apply.call_args_list], ["build", "runtime"]
+        )
+
+    def test_shell_metadata_includes_every_native_and_python_command_version(
+        self,
+    ) -> None:
+        # Feature tests should get all expected versions in one shell-metadata call.
+        metadata = installer._metadata_values()
+        for name, version in catalog.load_catalog_versions().items():
+            self.assertEqual(metadata[name.replace("-", "_") + "_version"], version)
 
     def test_python_dependency_and_build_only_phase_are_validated(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -467,6 +597,9 @@ class EnvironmentTest(unittest.TestCase):
             fake_bin.mkdir()
             for name in (".config/opencode", ".config/gh", ".local/share/opencode"):
                 (home / name).mkdir(parents=True, exist_ok=True)
+            private_directories = (home / ".config", home / ".local")
+            for path in private_directories:
+                path.chmod(0o700)
             sudo = fake_bin / "sudo"
             sudo.write_text(
                 '#!/bin/sh\nprintf "%s\\n" "$@" >> "$SCORE_TEST_LOG"\nexec "$@"\n'
@@ -486,9 +619,10 @@ class EnvironmentTest(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             calls = log.read_text().splitlines()
-            self.assertEqual(calls[0], "install")
-            self.assertIn("-o", calls)
-            self.assertIn("-g", calls)
+            self.assertEqual(calls[0], "mkdir")
+            self.assertIn("chown", calls)
+            for path in private_directories:
+                self.assertEqual(path.stat().st_mode & 0o777, 0o700)
             for name in (".config", ".local", ".local/share"):
                 self.assertIn(str(home / name), calls)
 
@@ -506,6 +640,23 @@ class EnvironmentTest(unittest.TestCase):
         *arguments,
         env=None,
     ):
+        # Simulate sudo for isolated integration tests: child commands may write
+        # only fixture paths and use fake apt/npm executables, never host packages.
+        fake_bin = cwd / "sudo-bin"
+        fake_bin.mkdir(exist_ok=True)
+        sudo = fake_bin / "sudo"
+        sudo.write_text(
+            f"#!{sys.executable}\n"
+            "import os, runpy, sys\n"
+            "from unittest.mock import patch\n"
+            "os.environ['SCORE_TEST_PRIVILEGED'] = '1'\n"
+            "sys.argv = sys.argv[2:]\n"
+            "with patch('os.geteuid', return_value=0):\n"
+            "    runpy.run_path(sys.argv[0], run_name='__main__')\n"
+        )
+        sudo.chmod(0o755)
+        env = dict(os.environ if env is None else env)
+        env["PATH"] = str(fake_bin) + os.pathsep + env["PATH"]
         return subprocess.run(
             [
                 sys.executable,

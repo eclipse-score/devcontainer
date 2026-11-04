@@ -39,7 +39,9 @@ ensure_owner() {
 # Docker may create .local and .local/share as root when mounting a volume
 # below them. Give the user ownership of these parents too, so tools can create
 # directories such as .local/state. Leave existing contents alone.
-sudo install -d -o "$(id -un)" -g "$(id -gn)" \
+# mkdir preserves existing directory permissions, including private mode 0700.
+sudo mkdir -p "${HOME}/.config" "${HOME}/.local" "${HOME}/.local/share"
+sudo chown "${current_user_group}" \
   "${HOME}/.config" "${HOME}/.local" "${HOME}/.local/share"
 
 ensure_owner "${HOME}/.config/opencode"

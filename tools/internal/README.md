@@ -139,6 +139,14 @@ they are not newly designed tool groups. The published image combines the first
 two through its existing features. A future lean CI image can define its own
 selection based on the jobs it needs to run. This does not add another image.
 
+Callers request the selection with one command, for example
+`install.py install-environment repository-devcontainer`. The installer checks
+the complete selection before starting installation. It uses `sudo` for system
+installation when needed and keeps npm in the calling user's Node environment.
+Image builds already running as root install directly. Native and Python tools
+can also be installed without `sudo` when their destination directories are
+writable by the caller.
+
 Each selection groups its tools by installation method:
 
 | Group | Definition owner | Applied by |
@@ -153,15 +161,16 @@ Each selection groups its tools by installation method:
 For example, the local feature applies its selected groups during setup:
 
 ```console
-$ python3 tools/internal/devcontainer/install.py install-environment s-core-local --phase build
 $ python3 tools/internal/devcontainer/install.py install-environment s-core-local
-# Declared setup runs during installation, then temporary packages are removed:
-$ python3 tools/internal/devcontainer/install.py install-environment s-core-local --phase cleanup
 ```
 
-The repository setup applies `npm` as the development user and `native python`
-with sudo, using `--providers`. This preserves the Node base image's npm access
-while putting Python commands in system paths. The feature's pre-commit,
+By default, the installer adds temporary build packages, installs the tools and
+runs their setup, then removes the temporary packages. `--phase` can select one
+phase explicitly; `--providers` can restrict installation to a provider group.
+The repository setup uses the same single invocation. The installer keeps npm
+in the development user's environment and elevates system installation as needed.
+This preserves the Node base image's npm access while putting Python commands
+in system paths. The feature's pre-commit,
 basedpyright and pytest use `/usr/local/bin` and shared uv tool environments;
 all container users can access them. Package versions are unchanged.
 
@@ -173,8 +182,8 @@ dependencies and unsupported platform artifacts fail before installation.
 CodeQL's existing Linux ARM64 omission is explicit. Download or installation
 failure can still leave earlier tools installed; application is not transactional.
 
-Feature entry scripts only apply the selection's build, runtime and cleanup
-phases. Tool-specific steps live in `internal/devcontainer/setup/`; definitions
+Feature entry scripts request their selection once; the installer handles the
+build, runtime and cleanup phases. Tool-specific steps live in `internal/devcontainer/setup/`; definitions
 name the required script with `setup_script`. For example, `openjdk` selects an
 APT package and declares Java home configuration. Its name carries no version;
 `packages` and `version` select the actual OpenJDK release.

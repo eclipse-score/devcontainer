@@ -33,9 +33,7 @@ apt-get update
 bash -c "yes || true" | unminimize
 
 # environments.json selects the tools; providers.json names their extra setup scripts.
-/usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase build
 /usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local
-/usr/local/share/score-tools/internal/devcontainer/install.py install-environment s-core-local --phase cleanup
 
 apt-get autoremove -y
 apt-get clean
