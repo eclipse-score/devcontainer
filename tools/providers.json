@@ -1,0 +1,328 @@
+{
+  "graphviz": {
+    "provider": "apt",
+    "packages": ["graphviz"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "2.42.2"
+  },
+  "protobuf_compiler": {
+    "provider": "apt",
+    "packages": ["protobuf-compiler"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "3.21.12"
+  },
+  "qemu_system": {
+    "provider": "apt",
+    "packages": ["qemu-system-arm", "qemu-system-x86"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "1:8.2.2",
+    "install_recommends": false,
+    "description": "Both ARM and x86 guest emulators are installed on each supported host platform."
+  },
+  "sshpass": {
+    "provider": "apt",
+    "packages": ["sshpass"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "1.09"
+  },
+  "gdb": {
+    "provider": "apt",
+    "packages": ["gdb"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "15.0.50"
+  },
+  "git": {
+    "provider": "apt",
+    "packages": ["git"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "compatibility_version": "2.43.0"
+  },
+  "git_lfs": {
+    "provider": "apt",
+    "packages": ["git-lfs"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "compatibility_version": "3.4.1"
+  },
+  "gh": {
+    "provider": "apt",
+    "packages": ["gh"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "compatibility_version": "2.45.0"
+  },
+  "openjdk": {
+    "provider": "apt",
+    "packages": ["openjdk-21-jdk-headless"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "21.0.12",
+    "setup_script": "java.sh"
+  },
+  "valgrind": {
+    "provider": "apt",
+    "packages": ["valgrind"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "1:3.22.0"
+  },
+  "ripgrep": {
+    "provider": "apt",
+    "packages": ["ripgrep"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "14.1.0"
+  },
+  "lcov": {
+    "provider": "apt",
+    "packages": ["lcov"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "2.0"
+  },
+  "pkg_config": {
+    "provider": "apt",
+    "packages": ["pkg-config"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "1.8.1"
+  },
+  "libcairo2_dev": {
+    "provider": "apt",
+    "packages": ["libcairo2-dev"],
+    "policy": "prefix",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "1.18.0"
+  },
+  "python": {
+    "provider": "apt",
+    "description": "Distribution Python interpreter",
+    "packages": ["python{version}"],
+    "policy": "package-name",
+    "version": "3.12",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "flake8": {
+    "provider": "apt",
+    "packages": ["flake8"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "python3-autopep8": {
+    "provider": "apt",
+    "packages": ["python3-autopep8"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "black": {
+    "provider": "apt",
+    "packages": ["black"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "description": "Ubuntu-provided Black; distribution policy does not pin an exact version."
+  },
+  "python3-yapf": {
+    "provider": "apt",
+    "packages": ["python3-yapf"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "mypy": {
+    "provider": "apt",
+    "packages": ["mypy"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pydocstyle": {
+    "provider": "apt",
+    "packages": ["pydocstyle"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pycodestyle": {
+    "provider": "apt",
+    "packages": ["pycodestyle"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "bandit": {
+    "provider": "apt",
+    "packages": ["bandit"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pipenv": {
+    "provider": "apt",
+    "packages": ["pipenv"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "virtualenv": {
+    "provider": "apt",
+    "packages": ["virtualenv"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pylint": {
+    "provider": "apt",
+    "packages": ["pylint"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "ca-certificates-java": {
+    "provider": "apt",
+    "packages": ["ca-certificates-java"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "description": "Populate the Java trust store from system CA certificates; follow distribution updates."
+  },
+  "man-db": {
+    "provider": "apt",
+    "packages": ["man-db"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "manpages": {
+    "provider": "apt",
+    "packages": ["manpages"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "manpages-dev": {
+    "provider": "apt",
+    "packages": ["manpages-dev"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "manpages-posix": {
+    "provider": "apt",
+    "packages": ["manpages-posix"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "manpages-posix-dev": {
+    "provider": "apt",
+    "packages": ["manpages-posix-dev"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "codeql": {
+    "provider": "release",
+    "policy": "exact",
+    "platforms": ["linux/x86_64"],
+    "version": "2.21.4",
+    "amd64": {
+      "sha256": "6da9f3df228d4e162af877569240a627c1af22f6adbd26352b22357fb8bd7545"
+    },
+    "omissions": {
+      "linux/arm64": "The selected bundle has no supported Linux arm64 artifact"
+    },
+    "setup_script": "codeql.sh",
+    "requires": ["zstd"]
+  },
+  "codeql_coding_standards": {
+    "provider": "release",
+    "policy": "exact",
+    "platforms": ["linux/x86_64"],
+    "version": "2.54.0",
+    "requires": ["codeql"],
+    "omissions": {
+      "linux/arm64": "Not installed without the CodeQL bundle"
+    },
+    "packs": [
+      "codeql/misra-cpp-coding-standards",
+      "codeql/misra-c-coding-standards",
+      "codeql/cert-cpp-coding-standards",
+      "codeql/cert-c-coding-standards"
+    ]
+  },
+  "bazel": {
+    "provider": "bazelisk",
+    "policy": "exact",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "8.6.0",
+    "requires": ["bazelisk"],
+    "setup_script": "bazel.sh"
+  },
+  "bazel_compile_commands": {
+    "provider": "release",
+    "policy": "exact",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "0.18.0",
+    "amd64": {
+      "sha256": "6735ea846241497094719792ad3d4f67b1d3123048693d34fcdf7190f8c2da4e"
+    },
+    "arm64": {
+      "sha256": "d73998efa01cbd501b82ad6266642464b78ecd9fc6224a60c9cb558182d52d88"
+    },
+    "setup_script": "bazel_compile_commands.sh"
+  },
+  "apt-transport-https": {
+    "provider": "apt",
+    "description": "Temporary container build dependency (removed after setup)",
+    "packages": ["apt-transport-https"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "phase": "build-only"
+  },
+  "zstd": {
+    "provider": "apt",
+    "description": "Temporary container build dependency (removed after setup)",
+    "packages": ["zstd"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "phase": "build-only"
+  },
+  "devcontainers-cli": {
+    "provider": "npm",
+    "description": "Build and test Dev Containers",
+    "package": "@devcontainers/cli",
+    "policy": "latest",
+    "platforms": ["Node.js-supported platforms"],
+    "phase": "repository setup"
+  },
+  "python3-pip": {
+    "provider": "apt",
+    "description": "Distribution pip (independent of the interpreter package-name constraint)",
+    "packages": ["python3-pip"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "python3-venv": {
+    "provider": "apt",
+    "description": "Distribution Python venv support",
+    "packages": ["python3-venv"],
+    "policy": "distribution",
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pre-commit": {
+    "provider": "python",
+    "package": "pre-commit",
+    "version": "4.7.0",
+    "entrypoint": "pre-commit",
+    "description": "Run repository pre-commit hooks",
+    "requires": ["uv"]
+  },
+  "basedpyright": {
+    "provider": "python",
+    "package": "basedpyright",
+    "version": "1.35.0",
+    "entrypoint": "basedpyright",
+    "description": "Type check Python and provide its language server",
+    "requires": ["uv"]
+  },
+  "pytest": {
+    "provider": "python",
+    "package": "pytest",
+    "version": "9.0.2",
+    "entrypoint": "pytest",
+    "description": "Run Python tests",
+    "requires": ["uv"]
+  }
+}

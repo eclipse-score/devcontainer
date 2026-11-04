@@ -18,7 +18,7 @@ shell and the pinned uvx executable supplied by rules_multitool.
 """
 
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
-load(":lockfiles/python_tools.bzl", "PYTHON_TOOLS")
+load("@score_tool_catalog//:python_tools.bzl", "PYTHON_TOOLS")
 
 def python_tool(name):
     """Creates a runnable target from the shared Python tool catalog."""
@@ -26,7 +26,7 @@ def python_tool(name):
     # Fail during analysis so a misspelled target cannot degrade into an
     # unpinned uvx invocation at runtime.
     if name not in PYTHON_TOOLS:
-        fail("Python tool '{}' is not defined in python_tools.bzl".format(name))
+        fail("Python tool '{}' is not defined in providers.json".format(name))
 
     tool = PYTHON_TOOLS[name]
 
@@ -51,3 +51,12 @@ def python_tool(name):
         # its version and platform selection.
         data = [":uvx_binary"],
     )
+
+def python_tools():
+    """Expose every catalogued Python command as a public Bazel target."""
+
+    # Environment selections control image contents. The module API includes
+    # every command in the catalog so removing a tool from one image does not
+    # remove a public target used by other repositories.
+    for name in PYTHON_TOOLS:
+        python_tool(name)

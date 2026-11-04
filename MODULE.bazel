@@ -19,6 +19,16 @@ bazel_dep(name = "rules_multitool", version = "1.11.1")
 # Bazel versions.
 bazel_dep(name = "rules_shell", version = "0.4.1")
 
+# Python packages live beside the other provider definitions in JSON. Convert
+# that data to a loadable Starlark value in Bazel's cache, without a second
+# maintained package list or a host Python dependency.
+catalog_repository = use_repo_rule("//tools:catalog_repository.bzl", "catalog_repository")
+
+catalog_repository(
+    name = "score_tool_catalog",
+    definitions = "//tools:providers.json",
+)
+
 multitool = use_extension("@rules_multitool//multitool:extension.bzl", "multitool")
 multitool.hub(lockfile = "//tools:lockfiles/actionlint.lock.json")
 multitool.hub(lockfile = "//tools:lockfiles/apm.lock.json")

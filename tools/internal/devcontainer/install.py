@@ -48,6 +48,7 @@ from catalog import (
     ToolData,
     load_catalog_versions,
     load_python_tools,
+    load_providers,
     load_tool,
     resolve_lockfile,
 )
@@ -254,11 +255,62 @@ def _cmd_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def _metadata_values() -> dict[str, str]:
+    """Turn definition fields into variables such as codeql_version for setup and tests."""
+    import re
+
+    values: dict[str, str] = {}
+
+    def emit(name, value):
+        if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name):
+            raise SystemExit(f"Invalid metadata variable: {name}")
+        if isinstance(value, dict):
+            for key, child in value.items():
+                emit(name + "_" + key, child)
+        elif isinstance(value, str):
+            values[name] = value
+
+    for name, definition in load_providers().items():
+        # Use only version and checksum fields. Other data, such as platform
+        # names containing slashes, cannot be used as shell variable names.
+        for field in ("version", "compatibility_version", "amd64", "arm64"):
+            if field in definition:
+                emit(name.replace("-", "_") + "_" + field, definition[field])
+        # Unpinned APT tools can still have expected versions for feature tests.
+        # Give these expectations the same _version names as pinned tools.
+        if "compatibility_version" in definition:
+            emit(
+                name.replace("-", "_") + "_version", definition["compatibility_version"]
+            )
+    # Native and Python command versions use the same variable names as the
+    # other definitions, so feature tests need just one metadata query.
+    for name, version in load_catalog_versions().items():
+        emit(name.replace("-", "_") + "_version", version)
+    # Python package and entrypoint metadata is also available to setup scripts.
+    for name, definition in load_python_tools().items():
+        emit(name.replace("-", "_"), definition)
+    return values
+
+
+def _cmd_shell_metadata(args: argparse.Namespace) -> int:
+    """Print shell-quoted exports so feature tests can read versions in their shell."""
+    import shlex
+
+    for name, value in _metadata_values().items():
+        print("export " + name + "=" + shlex.quote(value))
+    return 0
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Install pinned tools from multitool-compatible lockfiles.",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    metadata_parser = subparsers.add_parser(
+        "shell-metadata", help="Print quoted version variables for feature scripts."
+    )
+    metadata_parser.set_defaults(func=_cmd_shell_metadata)
 
     install_parser = subparsers.add_parser(
         "install",
@@ -273,7 +325,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     install_python_parser = subparsers.add_parser(
         "install-python",
-        help="Install Python command-line tools declared in python_tools.bzl.",
+        help="Install Python command-line tools declared in providers.json.",
     )
     install_python_parser.add_argument(
         "tools",

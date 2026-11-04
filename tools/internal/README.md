@@ -28,7 +28,8 @@ One catalog is delivered through two execution paths:
 
 | Component | Responsibility |
 | --- | --- |
-| `tools/lockfiles/*.lock.json` and `tools/lockfiles/python_tools.bzl` | Define versions and delivery metadata. |
+| `tools/lockfiles/*.lock.json` | Define native tool versions and delivery metadata. |
+| `tools/providers.json` | Define Python/npm packages, APT policies and special setup metadata. |
 | `MODULE.bazel` | Makes native tool lockfiles available to `rules_multitool`. |
 | `tools/BUILD.bazel` | Exposes public Bazel targets for each command. |
 | Feature installers | Install the commands exposed on the DevContainer's `PATH`. |
@@ -87,23 +88,25 @@ supported platforms, download URLs, checksums, and archive layouts.
 The reader has no installation side effects; download, platform selection,
 and installation remain in the container installer.
 
-Python command-line tool metadata lives in
-[`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
-a data-only Starlark dictionary because Bazel must read the pin during analysis,
-before the command can run. Its restricted literal form is also valid Python
-syntax. During DevContainer setup, `install.py` runs as root so it can install
-tools in system locations such as `/usr/local/bin`. The shared reader parses
-the catalog with `ast.literal_eval` instead of executing it as Python, so
-catalog changes can provide only literal data and cannot run code with the
-installer's privileges.
-This shared format keeps the package, console entrypoint, version, and
-description in one source of truth while Bazel execution remains independent
-of host Python.
+Other package and setup definitions live in
+[`providers.json`](../providers.json). Python commands declare their package,
+version, console entrypoint and description there, alongside APT policies, npm
+packages and feature-specific setup metadata. Native release artifacts keep
+their multitool-compatible lockfiles.
 
-The catalogs have distinct ownership: `devcontainer-lock.json` records external
-DevContainer features, `python_tools.bzl` records Python package releases, and
-`uv.lock.json` records the installer runtime. Each version is therefore owned
-by the component that resolves it.
+The installer reads JSON directly. Bazel uses
+[`catalog_repository.bzl`](../catalog_repository.bzl) to derive loadable Python
+package data in its cache, so there is no second maintained Python catalog.
+The existing feature installers and tests use `install.py shell-metadata` to
+read quoted version/checksum variables without downloading yq. Their package
+installation steps remain in the feature scripts.
+
+APT `distribution` policies follow Ubuntu, while version prefixes retain Debian
+epochs such as `1:3.22.0`. Executables omit that prefix when reporting their
+version. CodeQL declares Linux x86_64 support and an explicit Linux ARM64
+omission; the former macOS checksum is not a Linux ARM64 artifact.
+`devcontainer-lock.json` continues to record external Dev Container features,
+and `uv.lock.json` records the native installer runtime.
 
 The published `score_devcontainer` Bazel module and DevContainer image share a
 release version. Consumers using both must pin the same release.
@@ -139,18 +142,15 @@ changes together:
 7. If this repository's own DevContainer needs the command, add it to
    [`.devcontainer/post_create_command.sh`](../../.devcontainer/post_create_command.sh).
 
-For a Python command-line tool, add an entry to
-`tools/lockfiles/python_tools.bzl`, add `python_tool("<command>")` to
-`tools/BUILD.bazel`, and install it through `install.py install-python` in
-each applicable DevContainer installer. Keep the catalog as a single literal
-`PYTHON_TOOLS` assignment: this is what makes it safe for the installer and
-directly loadable by Bazel. The `package` selects the distribution passed to
-`uv`, while `entrypoint` names the console command because those names need not
-be identical.
+For a Python command-line tool, add its definition to `tools/providers.json`
+with `provider: "python"`, `package`, `version`, `entrypoint`, `description` and
+`requires: ["uv"]`. Bazel targets are created for every Python definition
+automatically. Add the command to each applicable DevContainer installer.
+The Python package and console command may have different names.
 
-Bazel invokes Python tools on demand with the pinned `uvx`; DevContainers
-install the same package with the pinned `uv`. Add launcher and installer
-coverage to `python_tool_runner_test` when either delivery contract changes.
+Bazel executes the pinned package on demand with uvx; DevContainer installation
+uses the same definition through uv. Add launcher and installer coverage to
+`python_tool_runner_test` when either delivery contract changes.
 
 Keep related commands such as `uv` and `uvx` in one lockfile when upstream
 publishes them together. The installer can locate a command in a differently

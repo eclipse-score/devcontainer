@@ -27,6 +27,7 @@ SPDX-License-Identifier = "Apache-2.0"
 path = ["resources/reopen_in_container.png",
         "resources/devcontainer_success.png",
         "tools/lockfiles/*.lock.json",
+        "tools/providers.json",
         "MODULE.bazel.lock",
         ".bazelversion",
         ]

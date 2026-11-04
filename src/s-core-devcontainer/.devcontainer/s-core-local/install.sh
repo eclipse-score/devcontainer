@@ -31,10 +31,9 @@ rm -f "${COPY_TARGET}/devcontainer-features.env" "${COPY_TARGET}/devcontainer-fe
 DEBIAN_FRONTEND=noninteractive
 
 # Read tool versions + metadata into environment variables
-. /usr/local/share/score-tools/internal/devcontainer/load_feature_versions.sh /devcontainer/features/s-core-local/versions.yaml
+eval "$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
 
 ARCHITECTURE=$(dpkg --print-architecture)
-KERNEL=$(uname -s)
 
 apt-get update
 
@@ -76,7 +75,7 @@ apt-get install -y gh
 
 # OpenJDK 21, via APT
 # Set JAVA_HOME environment variable system-wide, since some tools rely on it (e.g., Bazel's rules_java)
-apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_21_version}*"
+apt-get install -y ca-certificates-java openjdk-21-jdk-headless="${openjdk_version}*"
 JAVA_HOME="$(dirname $(dirname $(realpath $(command -v javac))))"
 export JAVA_HOME
 echo -e "JAVA_HOME=${JAVA_HOME}\nexport JAVA_HOME" > /etc/profile.d/java_home.sh
@@ -101,7 +100,7 @@ apt-get install -y pkg-config="${pkg_config_version}*" libcairo2-dev="${libcairo
 # additional developer tools
 apt-get install -y gdb="${gdb_version}*"
 
-apt-get install -y valgrind="1:${valgrind_version}*"
+apt-get install -y valgrind="${valgrind_version}*"
 
 apt-get install -y ripgrep="${ripgrep_version}*"
 
@@ -114,13 +113,8 @@ if [ "${ARCHITECTURE}" = "amd64" ]; then
     VARIANT=linux64
     SHA256SUM="${codeql_amd64_sha256}"
 elif [ "${ARCHITECTURE}" = "arm64" ]; then
-    if [ "${KERNEL}" = "Darwin" ]; then
-        VARIANT=osx64
-        SHA256SUM="${codeql_arm64_sha256}"
-    else
-        echo "CodeQl unsupported architecture/os: ${ARCHITECTURE} on ${KERNEL}, skipping installation"
-        VARIANT=noinstall
-    fi
+    echo "CodeQL has no selected Linux ARM64 bundle; skipping installation"
+    VARIANT=noinstall
 else
     echo "Unsupported architecture: ${ARCHITECTURE} for CodeQL"
     exit 1

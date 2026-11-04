@@ -41,10 +41,12 @@ host-side Bazel invocation may require network access to download the binary.
 | --- | --- | --- |
 | `actionlint` | `1.7.7` | Check GitHub Actions workflow files |
 | `apm` | `0.35.0` | Manage APM packages |
+| `basedpyright` | `1.35.0` | Type check Python and provide its language server |
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `2.2.3` | Run the OpenCode CLI |
 | `pre-commit` | `4.7.0` | Run repository pre-commit hooks |
+| `pytest` | `9.0.2` | Run Python tests |
 | `ruff` | `0.11.13` | Check and format Python code |
 | `shellcheck` | `0.10.0` | Check shell scripts |
 | `starpls` | `0.1.22` | Provide language-server support for Starlark |
