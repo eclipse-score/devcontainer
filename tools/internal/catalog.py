@@ -16,7 +16,6 @@
 
 from __future__ import annotations
 
-import ast
 import json
 from collections.abc import Iterator
 from pathlib import Path
@@ -45,7 +44,6 @@ class ToolData(TypedDict):
 
 
 LOCKFILE_ROOT = Path(__file__).resolve().parents[1] / "lockfiles"
-PYTHON_TOOL_CATALOG = LOCKFILE_ROOT / "python_tools.bzl"
 ENVIRONMENTS_PATH = LOCKFILE_ROOT.parent / "environments.json"
 
 
@@ -74,77 +72,18 @@ def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
             yield tool, path.name, definition
 
 
-def _parse_python_tool_catalog() -> object:
-    """Return the literal assigned to ``PYTHON_TOOLS``.
-
-    The feature installer runs as root, so importing or executing a repository
-    file would cross a privilege boundary. Parsing one assignment and accepting
-    only literal data lets Bazel and the installer share a catalog safely.
-    """
-    try:
-        module = ast.parse(
-            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
-            filename=str(PYTHON_TOOL_CATALOG),
-        )
-    except SyntaxError as exc:
-        raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
-
-    # Exactly one statement preserves the catalog's data-only contract.
-    if len(module.body) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    assignment = module.body[0]
-    if not isinstance(assignment, ast.Assign) or len(assignment.targets) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    target = assignment.targets[0]
-    if not isinstance(target, ast.Name) or target.id != "PYTHON_TOOLS":
-        raise SystemExit("Python tool catalog must assign its data to PYTHON_TOOLS")
-
-    try:
-        return ast.literal_eval(assignment.value)
-    except (TypeError, ValueError) as exc:
-        raise SystemExit("Python tool catalog must contain only literal data") from exc
-
-
 def load_python_tools() -> dict[str, PythonTool]:
-    """Validate the shared catalog and return typed Python tool metadata."""
-    catalog = _parse_python_tool_catalog()
-    if not isinstance(catalog, dict):
-        raise SystemExit("PYTHON_TOOLS must be a dictionary")
-
-    tools: dict[str, PythonTool] = {}
-    for command, metadata in catalog.items():
-        if (
-            not isinstance(command, str)
-            or not command
-            or not isinstance(metadata, dict)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        package = metadata.get("package")
-        version = metadata.get("version")
-        entrypoint = metadata.get("entrypoint")
-        description = metadata.get("description")
-        # Central validation gives Bazel, installation, and documentation the
-        # same required-field contract.
-        if not all(
-            isinstance(value, str) and value
-            for value in (package, version, entrypoint, description)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        tools[command] = {
-            "package": package,
-            "version": version,
-            "entrypoint": entrypoint,
-            "description": description,
+    """Read Python package definitions from the shared provider catalog."""
+    return {
+        name: {
+            "package": definition["package"],
+            "version": definition["version"],
+            "entrypoint": definition["entrypoint"],
+            "description": definition["description"],
         }
-    return tools
+        for name, definition in load_providers().items()
+        if definition["provider"] == "python"
+    }
 
 
 def load_catalog_versions() -> dict[str, str]:
@@ -240,7 +179,7 @@ PROVIDERS_PATH = LOCKFILE_ROOT.parent / "providers.json"
 
 
 def load_providers() -> dict:
-    """Read and check installation details for APT, npm and tools with custom setup."""
+    """Read and check package definitions and tool-specific setup metadata."""
     providers = json.loads(PROVIDERS_PATH.read_text(encoding="utf-8"))
     if not isinstance(providers, dict):
         raise SystemExit("Tool providers must be a dictionary")
@@ -248,6 +187,7 @@ def load_providers() -> dict:
         if not isinstance(definition, dict) or definition.get("provider") not in (
             "apt",
             "npm",
+            "python",
             "release",
             "bazelisk",
         ):
@@ -273,6 +213,15 @@ def load_providers() -> dict:
                 raise SystemExit(f"Invalid APT packages for '{name}'")
             if definition["policy"] != "distribution" and not definition.get("version"):
                 raise SystemExit(f"Missing APT version constraint for '{name}'")
+        elif definition["provider"] == "python":
+            if not all(
+                isinstance(definition.get(field), str) and definition[field]
+                for field in ("package", "version", "entrypoint", "description")
+            ):
+                raise SystemExit(f"Malformed Python package definition for '{name}'")
+            dependencies = definition.get("requires", [])
+            if not isinstance(dependencies, list) or "uv" not in dependencies:
+                raise SystemExit(f"Python tool '{name}' must declare its uv dependency")
         elif definition["provider"] == "npm":
             if (
                 not isinstance(definition.get("package"), str)
@@ -289,10 +238,6 @@ def all_definitions() -> dict:
     tools = {}
     sources = (
         ((name, {**data, "provider": "native"}) for name, _, data in _iter_catalog()),
-        (
-            (name, {**data, "provider": "python", "requires": ["uv"]})
-            for name, data in load_python_tools().items()
-        ),
         load_providers().items(),
     )
     for source in sources:

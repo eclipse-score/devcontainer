@@ -300,5 +300,29 @@
     "packages": ["python3-venv"],
     "policy": "distribution",
     "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "pre-commit": {
+    "provider": "python",
+    "package": "pre-commit",
+    "version": "4.7.0",
+    "entrypoint": "pre-commit",
+    "description": "Run repository pre-commit hooks",
+    "requires": ["uv"]
+  },
+  "basedpyright": {
+    "provider": "python",
+    "package": "basedpyright",
+    "version": "1.35.0",
+    "entrypoint": "basedpyright",
+    "description": "Type check Python and provide its language server",
+    "requires": ["uv"]
+  },
+  "pytest": {
+    "provider": "python",
+    "package": "pytest",
+    "version": "9.0.2",
+    "entrypoint": "pytest",
+    "description": "Run Python tests",
+    "requires": ["uv"]
   }
 }

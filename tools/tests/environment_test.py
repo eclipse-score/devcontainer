@@ -225,6 +225,7 @@ class EnvironmentTest(unittest.TestCase):
                 },
                 "cli": {"provider": "npm", "package": "@fixture/cli"},
             }
+            providers["pre-commit"] = catalog.load_providers()["pre-commit"]
             (tools / "providers.json").write_text(json.dumps(providers))
             selection = {
                 "native": ["uv"],

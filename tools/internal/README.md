@@ -28,10 +28,10 @@ One catalog is delivered through two execution paths:
 
 | Component | Responsibility |
 | --- | --- |
-| `tools/lockfiles/*.lock.json` and `tools/lockfiles/python_tools.bzl` | Define versions and delivery metadata. |
+| `tools/lockfiles/*.lock.json` | Define native tool versions and release artifacts. |
 | `MODULE.bazel` | Makes native tool lockfiles available to `rules_multitool`. |
 | `tools/BUILD.bazel` | Exposes public Bazel targets for each command. |
-| `tools/providers.json` | Define APT policies, npm packages and special feature setup metadata. |
+| `tools/providers.json` | Define Python and npm packages, APT policies and special setup metadata. |
 | `tools/environments.json` | Record the complete tool selection of each existing setup caller. |
 | Feature installers | Apply selections and install the commands exposed on the DevContainer's `PATH`. |
 | `tools/run-tool` | Uses the command on `PATH` in a container or locally when available; otherwise uses the public Bazel alias (`--strict` forces Bazel). |
@@ -89,20 +89,16 @@ supported platforms, download URLs, checksums, and archive layouts.
 The reader has no installation side effects; download, platform selection,
 and installation remain in the container installer.
 Other direct packages and special setup are defined in
-[`providers.json`](../providers.json): APT constraints, npm package identities,
-Bazel preinstallation and CodeQL metadata. The selections reference these names
+[`providers.json`](../providers.json): Python package pins, APT constraints,
+npm package identities, Bazel preinstallation and CodeQL metadata. The selections reference these names
 without copying their versions.
 
-Python package definitions live in
-[`lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). Bazel and the
-DevContainer installer read this same catalog; its introductory comments explain
-the fields and literal data format. A container selects Python commands by name
-in `environments.json`, just as it selects native commands.
-
-The catalogs have distinct ownership: `devcontainer-lock.json` records external
-DevContainer features, `python_tools.bzl` records Python package releases, and
-`uv.lock.json` records the installer runtime. Each version is therefore owned
-by the component that resolves it.
+Bazel reads the Python entries from this same JSON file through
+[`catalog_repository.bzl`](../catalog_repository.bzl). It creates loadable
+Starlark data in Bazel's cache; contributors maintain only `providers.json`.
+The container installer reads the JSON directly. `devcontainer-lock.json`
+continues to record external Dev Container features, while `uv.lock.json`
+records the native installer runtime.
 
 The published `score_devcontainer` Bazel module and DevContainer image share a
 release version. Consumers using both must pin the same release.
@@ -147,7 +143,8 @@ changes together:
    `repository-devcontainer` selection in `tools/environments.json`.
 
 For a Python command-line tool, add its package definition to
-[`lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl) and its name to the
+[`providers.json`](../providers.json) with `provider: "python"`, its package,
+version, entrypoint, description and `requires: ["uv"]`. Add its name to the
 `python` group of the applicable selections in `environments.json`. Bazel targets
 are created for every Python catalog entry automatically; no second command list
 is needed in `BUILD.bazel`. Select native `uv` alongside Python tools for

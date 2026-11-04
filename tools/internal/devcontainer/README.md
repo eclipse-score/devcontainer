@@ -58,7 +58,7 @@ require `sudo`. `--destination` and `--tool-dir` select these directories.
 | Group in a selection | Definition owner | Installation |
 | --- | --- | --- |
 | `native` | `lockfiles/*.lock.json` | Download and verify the release artifact |
-| `python` | `lockfiles/python_tools.bzl` | Install the pinned Python package with uv |
+| `python` | `providers.json` | Install the pinned Python package with uv |
 | `apt` | `providers.json` | Install the declared packages using their version policy |
 | `build-apt` | `providers.json` | Add temporary packages for build/setup; remove afterward |
 | `npm` | `providers.json` | Install npm packages in the caller's environment |

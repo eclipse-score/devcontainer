@@ -562,7 +562,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     install_python_parser = subparsers.add_parser(
         "install-python",
-        help="Install Python command-line tools declared in python_tools.bzl.",
+        help="Install Python command-line tools declared in providers.json.",
     )
     install_python_parser.add_argument(
         "tools",

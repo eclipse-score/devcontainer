@@ -20,6 +20,24 @@ runfiles_root="${TEST_SRCDIR}/${TEST_WORKSPACE}"
 installer="${runfiles_root}/tools/internal/devcontainer/install.py"
 runner="${runfiles_root}/tools/internal/run_python_tool.sh"
 
+# Bazel and the container installer must consume the same package definitions.
+# Only the cached Starlark representation is generated; JSON remains the source.
+python3 - "${runfiles_root}/tools/providers.json" "${runfiles_root}/$1" <<'PYTHON'
+import ast
+import json
+import sys
+from pathlib import Path
+
+providers = json.loads(Path(sys.argv[1]).read_text())
+expected = {
+    name: {field: definition[field] for field in ("package", "version", "entrypoint", "description")}
+    for name, definition in providers.items()
+    if definition["provider"] == "python"
+}
+generated = ast.literal_eval(ast.parse(Path(sys.argv[2]).read_text()).body[0].value)
+assert generated == expected, (generated, expected)
+PYTHON
+
 fake_uvx="${TEST_TMPDIR}/uvx"
 output="${TEST_TMPDIR}/uvx.args"
 working_directory="${TEST_TMPDIR}/working-directory"

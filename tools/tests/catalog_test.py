@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 
-import ast
 import json
 import shutil
 import subprocess
@@ -49,8 +48,15 @@ class CatalogTest(unittest.TestCase):
                 if "description" in metadata:
                     descriptions[name] = metadata["description"]
 
-        source = (TOOLS_DIR / "lockfiles/python_tools.bzl").read_text(encoding="utf-8")
-        python_tools = ast.literal_eval(ast.parse(source).body[0].value)
+        providers = json.loads((TOOLS_DIR / "providers.json").read_text())
+        python_tools = {
+            name: {
+                field: definition[field]
+                for field in ("package", "version", "entrypoint", "description")
+            }
+            for name, definition in providers.items()
+            if definition["provider"] == "python"
+        }
         self.assertEqual(catalog.load_python_tools(), python_tools)
         self.assertEqual(set(python_tools), {"pre-commit", "basedpyright", "pytest"})
         versions.update(
@@ -64,38 +70,42 @@ class CatalogTest(unittest.TestCase):
         self.assertEqual(catalog.resolve_lockfile("uvx"), "uv")
         self.assertEqual(catalog.resolve_lockfile("uvx", "explicit"), "explicit")
 
-    def test_rejects_malformed_and_executable_python_catalogs(self) -> None:
+    def test_rejects_python_packages_with_missing_fields_or_uv_dependency(self) -> None:
+        valid = {
+            "provider": "python",
+            "package": "example",
+            "version": "1",
+            "entrypoint": "example",
+            "description": "Example tool",
+            "requires": ["uv"],
+        }
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            path = root / "python_tools.bzl"
-            marker = root / "executed"
-            payload = f"__import__('pathlib').Path({str(marker)!r}).touch()"
-            cases = [
-                ("PYTHON_TOOLS = {", "Malformed Python tool catalog"),
-                ("OTHER = {}", "must assign its data to PYTHON_TOOLS"),
-                ("PYTHON_TOOLS = []", "PYTHON_TOOLS must be a dictionary"),
-                (
-                    "PYTHON_TOOLS = {'bad': {'version': '1'}}",
-                    "Malformed Python tool catalog entry",
-                ),
-                (f"PYTHON_TOOLS = {payload}", "must contain only literal data"),
-                (
-                    f"PYTHON_TOOLS = {{}}\n{payload}",
-                    "must contain only a PYTHON_TOOLS assignment",
-                ),
-            ]
-            with patch.object(catalog, "PYTHON_TOOL_CATALOG", path):
-                for source, message in cases:
-                    with self.subTest(source=source):
-                        path.write_text(source, encoding="utf-8")
+            path = Path(directory) / "providers.json"
+            with patch.object(catalog, "PROVIDERS_PATH", path):
+                for field in (
+                    "package",
+                    "version",
+                    "entrypoint",
+                    "description",
+                    "requires",
+                ):
+                    with self.subTest(field=field):
+                        definition = {
+                            key: value for key, value in valid.items() if key != field
+                        }
+                        path.write_text(json.dumps({"example": definition}))
+                        message = (
+                            "uv dependency"
+                            if field == "requires"
+                            else "Malformed Python package definition"
+                        )
                         with self.assertRaisesRegex(SystemExit, message):
                             catalog.load_python_tools()
-                        self.assertFalse(marker.exists())
 
     def test_duplicate_definitions_retain_rejection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            python_path = root / "python_tools.bzl"
+            python_path = root / "providers.json"
             metadata = {
                 "version": "1",
                 "description": "Example tool",
@@ -105,6 +115,8 @@ class CatalogTest(unittest.TestCase):
             native_path.write_text(json.dumps({"example": metadata}), encoding="utf-8")
             duplicate_path = root / "two.lock.json"
             python_metadata = {
+                "provider": "python",
+                "requires": ["uv"],
                 "package": "example",
                 "version": "1",
                 "entrypoint": "example",
@@ -112,16 +124,16 @@ class CatalogTest(unittest.TestCase):
             }
             with (
                 patch.object(catalog, "LOCKFILE_ROOT", root),
-                patch.object(catalog, "PYTHON_TOOL_CATALOG", python_path),
+                patch.object(catalog, "PROVIDERS_PATH", python_path),
             ):
                 for duplicate in ("lockfiles", "catalogs"):
                     if duplicate == "lockfiles":
                         duplicate_path.write_bytes(native_path.read_bytes())
-                        python_path.write_text("PYTHON_TOOLS = {}", encoding="utf-8")
+                        python_path.write_text("{}", encoding="utf-8")
                     else:
                         duplicate_path.unlink()
                         python_path.write_text(
-                            f"PYTHON_TOOLS = {{'example': {python_metadata!r}}}",
+                            json.dumps({"example": python_metadata}),
                             encoding="utf-8",
                         )
                     for query in (
