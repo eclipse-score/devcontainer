@@ -406,7 +406,9 @@ class EnvironmentTest(unittest.TestCase):
                 patch.object(installer.subprocess, "run") as run,
             ):
                 self.assertFalse(
-                    installer._delegate_system_installation(args, {"native": ["ruff"]})
+                    installer._delegate_system_installation(
+                        args, {"native": ["ruff"]}, []
+                    )
                 )
             run.assert_not_called()
 
@@ -429,6 +431,75 @@ class EnvironmentTest(unittest.TestCase):
         metadata = installer._metadata_values()
         for name, version in catalog.load_catalog_versions().items():
             self.assertEqual(metadata[name.replace("-", "_") + "_version"], version)
+
+    def test_apt_tool_setup_is_retained_when_installation_is_delegated(self) -> None:
+        # Java is selected through APT, but also needs java.sh to set JAVA_HOME.
+        # Both an image build and a normal user must execute that setup.
+        for uid in (0, 1000):
+            with (
+                self.subTest(uid=uid),
+                patch.object(installer.os, "geteuid", return_value=uid),
+                patch.object(
+                    installer,
+                    "load_environments",
+                    return_value={"java-only": {"apt": ["openjdk"]}},
+                ),
+                patch.object(installer.subprocess, "run") as run,
+            ):
+                installer.main(
+                    [
+                        "install-environment",
+                        "java-only",
+                        "--os",
+                        "linux",
+                        "--cpu",
+                        "arm64",
+                    ]
+                )
+                commands = [call.args[0] for call in run.call_args_list]
+                if uid == 0:
+                    self.assertEqual(commands[0][0], "apt-get")
+                    self.assertEqual(commands[1][0], "bash")
+                    self.assertEqual(Path(commands[1][1]).name, "java.sh")
+                else:
+                    self.assertEqual(len(commands), 1)
+                    self.assertEqual(commands[0][0], "sudo")
+                    self.assertEqual(
+                        commands[0][commands[0].index("--providers") + 1 :],
+                        ["apt", "setup"],
+                    )
+
+    def test_native_only_installation_skips_apt_even_if_selection_has_build_packages(
+        self,
+    ) -> None:
+        # s-core-local includes APT build dependencies for special setup. A user
+        # requesting only native tools must not install or purge those packages.
+        with tempfile.TemporaryDirectory() as directory:
+            for phase in ("all", "build", "cleanup"):
+                with (
+                    self.subTest(phase=phase),
+                    patch.object(installer.os, "geteuid", return_value=1000),
+                    patch.object(installer, "_cmd_install") as native,
+                    patch.object(installer.subprocess, "run") as run,
+                ):
+                    installer.main(
+                        [
+                            "install-environment",
+                            "s-core-local",
+                            "--destination",
+                            directory,
+                            "--os",
+                            "linux",
+                            "--cpu",
+                            "arm64",
+                            "--phase",
+                            phase,
+                            "--providers",
+                            "native",
+                        ]
+                    )
+                    run.assert_not_called()
+                    self.assertEqual(native.call_count, 1 if phase == "all" else 0)
 
     def test_python_dependency_and_build_only_phase_are_validated(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

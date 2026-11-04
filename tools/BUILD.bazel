@@ -13,7 +13,7 @@
 
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load(":multitool.bzl", "multitool_aliases")
-load(":python_tool.bzl", "python_tool")
+load(":python_tool.bzl", "python_tools")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -49,11 +49,9 @@ multitool_aliases("opencode")
 
 # Python distributions are resolved through pinned uvx because they do not
 # provide the platform-specific release binaries consumed by rules_multitool.
-python_tool("pre-commit")
-
-python_tool("basedpyright")
-
-python_tool("pytest")
+# Export every catalogued Python command. environments.json chooses which of
+# these are installed in each container; it does not restrict the module API.
+python_tools()
 
 # This contract test keeps Bazel's shell launcher and the container installer
 # aligned with their shared catalog.

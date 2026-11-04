@@ -12,7 +12,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py passes version and checksum variables from providers.json.
+# Make Bazel available through Bazelisk, pre-download the chosen release for the
+# development user, and configure completion and the Java trust store.
+# install.py starts this script with bazel_version as an environment variable.
 # shellcheck disable=SC2154
 set -euo pipefail
 

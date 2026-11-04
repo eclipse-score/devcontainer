@@ -51,3 +51,12 @@ def python_tool(name):
         # its version and platform selection.
         data = [":uvx_binary"],
     )
+
+def python_tools():
+    """Expose every catalogued Python command as a public Bazel target."""
+
+    # Environment selections control image contents. The module API includes
+    # every command in the catalog so removing a tool from one image does not
+    # remove a public target used by other repositories.
+    for name in PYTHON_TOOLS:
+        python_tool(name)

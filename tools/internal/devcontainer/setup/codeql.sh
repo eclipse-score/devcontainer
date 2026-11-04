@@ -12,7 +12,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py passes version and checksum variables from providers.json.
+# Install the CodeQL bundle and selected C/C++ query packs, configure CODEQL_HOME
+# for later terminals, and remove unused language tools to reduce image size.
+# install.py supplies codeql_version, checksums and query-pack versions as
+# environment variables. SCORE_TOOLS_INSTALLER and SCORE_TOOL_ENVIRONMENT let
+# this script query the selected pack bundle from the same tool definitions.
 # shellcheck disable=SC2154
 set -euo pipefail
 

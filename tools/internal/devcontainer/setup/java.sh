@@ -12,6 +12,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Configure JAVA_HOME for later terminals after APT has installed the JDK.
+# install.py runs this script for the selected OpenJDK definition; no arguments
+# or version variables are needed because javac identifies the installed JDK.
+
 set -euo pipefail
 
 # Make JAVA_HOME available in later terminals so tools such as Bazel can find

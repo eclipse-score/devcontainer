@@ -93,25 +93,11 @@ Other direct packages and special setup are defined in
 Bazel preinstallation and CodeQL metadata. The selections reference these names
 without copying their versions.
 
-Python command-line tool metadata lives in
-[`tools/lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). The file is
-a data-only Starlark dictionary because Bazel must read the pin during analysis,
-before the command can run. Its restricted literal form is also valid Python
-syntax. During DevContainer setup, `install.py` runs as root so it can install
-tools in system locations such as `/usr/local/bin`. The shared reader parses
-the catalog with `ast.literal_eval` instead of executing it as Python, so
-catalog changes can provide only literal data and cannot run code with the
-installer's privileges.
-This shared format keeps the package, console entrypoint, version, and
-description in one source of truth while Bazel execution remains independent
-of host Python.
-
-APT `distribution` policies intentionally follow the distribution, `prefix`
-constraints include Debian epochs, and `package-name` selects a versioned package
-name (for example `python3.12`). Compatibility expectations for Git, Git LFS and
-gh remain separate from their unpinned APT requests. The installer passes version variables directly to its setup subprocesses.
-Feature tests use `shell-metadata` to read quoted assignments in their own shell;
-there is no separate loader script or downloaded parser.
+Python package definitions live in
+[`lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl). Bazel and the
+DevContainer installer read this same catalog; its introductory comments explain
+the fields and literal data format. A container selects Python commands by name
+in `environments.json`, just as it selects native commands.
 
 The catalogs have distinct ownership: `devcontainer-lock.json` records external
 DevContainer features, `python_tools.bzl` records Python package releases, and
@@ -121,104 +107,15 @@ by the component that resolves it.
 The published `score_devcontainer` Bazel module and DevContainer image share a
 release version. Consumers using both must pin the same release.
 
-## Tool selections and image variants
+## DevContainer installation
 
-Definitions answer **which version and installation method?** Named selections
-in [`tools/environments.json`](../environments.json) answer **which tools belong
-here?** Image and feature setup determines the base OS and lifecycle.
-Selections contain names, not another copy of versions or download metadata.
-
-| Selection | Existing caller |
-| --- | --- |
-| `s-core-local` | The published image's `s-core-local` feature |
-| `bazel-feature` | Its `bazel-feature` feature |
-| `repository-devcontainer` | This repository's post-create setup |
-
-These names identify the current callers and their historical tool membership;
-they are not newly designed tool groups. The published image combines the first
-two through its existing features. A future lean CI image can define its own
-selection based on the jobs it needs to run. This does not add another image.
-
-Callers request the selection with one command, for example
-`install.py install-environment repository-devcontainer`. The installer checks
-the complete selection before starting installation. It uses `sudo` for system
-installation when needed and keeps npm in the calling user's Node environment.
-Image builds already running as root install directly. Native and Python tools
-can also be installed without `sudo` when their destination directories are
-writable by the caller.
-
-Each selection groups its tools by installation method:
-
-| Group | Definition owner | Applied by |
-| --- | --- | --- |
-| `native` | `lockfiles/*.lock.json` | The native downloader |
-| `python` | `lockfiles/python_tools.bzl` | Catalogued uv, with system-wide entrypoints |
-| `apt` | `providers.json` | apt, preserving package/version policy and recommendations |
-| `build-apt` | `providers.json` | apt during build; removed during cleanup |
-| `npm` | `providers.json` | npm in the appropriate user's environment |
-| `setup` | `providers.json` | Setup scripts declared by `setup_script`, gated by membership |
-
-For example, the local feature applies its selected groups during setup:
-
-```console
-$ python3 tools/internal/devcontainer/install.py install-environment s-core-local
-```
-
-By default, the installer adds temporary build packages, installs the tools and
-runs their setup, then removes the temporary packages. `--phase` can select one
-phase explicitly; `--providers` can restrict installation to a provider group.
-The repository setup uses the same single invocation. The installer keeps npm
-in the development user's environment and elevates system installation as needed.
-This preserves the Node base image's npm access while putting Python commands
-in system paths. The feature's pre-commit,
-basedpyright and pytest use `/usr/local/bin` and shared uv tool environments;
-all container users can access them. Package versions are unchanged.
-
-`--destination`, `--os` and `--cpu` retain their native-install meanings.
-APT/setup platform declarations are also checked; `--os` and `--cpu` select
-metadata, not an emulated runtime for apt or uv. The whole selection is checked
-before applying any phase: unknown names, wrong provider groups, missing direct
-dependencies and unsupported platform artifacts fail before installation.
-CodeQL's existing Linux ARM64 omission is explicit. Download or installation
-failure can still leave earlier tools installed; application is not transactional.
-
-Feature entry scripts request their selection once; the installer handles the
-build, runtime and cleanup phases. Tool-specific steps live in `internal/devcontainer/setup/`; definitions
-name the required script with `setup_script`. For example, `openjdk` selects an
-APT package and declares Java home configuration. Its name carries no version;
-`packages` and `version` select the actual OpenJDK release.
-
-The installer gives setup scripts version variables directly as their process
-environment. Python can set a child's environment, but cannot change the shell
-that invoked it. Java and CodeQL setup therefore also write profile files for
-later terminals. The feature tests read quoted `shell-metadata` output directly.
-
-Setup scripts can query `selected ENVIRONMENT TOOL` for optional bundle members.
-CodeQL pack names come from the owned bundle through `items`, not a second list.
-CodeQL declares `zstd` as a build dependency, so missing decompression support is
-rejected before the build phase. Removing membership stops new setup from
-offering the tool; it does not uninstall existing host copies.
-
-For APT definitions, `packages` and `platforms` are independent lists. Every
-listed package is installed on each supported host; apt selects its host build.
-For example, both QEMU guest emulators are installed on both Linux host CPUs.
-Their order does not map packages to architectures.
-
-A distribution policy is not an exact pin: Black and the other APT-provided
-Python CLIs retain the current Ubuntu version selection. Changing their provider
-to pinned uv distributions requires explicit version choices and removal of the
-APT copies. It is a separate change from recording existing selections.
-
-`ca-certificates-java` builds the Java trust store from system certificates.
-Pinning that helper alone does not freeze the trust data or imported corporate
-CAs. These continue to receive distribution updates. Reproducible base/APT and
-certificate snapshots, and rebuilding releases for trust updates, are outside
-this change's guarantee.
-
-This file covers the direct tools managed by our three setup scripts. Base-image
-contents, external Dev Container features (such as LLVM, common-utils and DinD),
-and their options and locks retain their existing configuration owners. It is
-not an inventory of transitive packages, editor extensions or image contents.
+Each setup caller selects its tools in
+[`environments.json`](../environments.json). Definitions contain versions and
+installation metadata; selections contain tool names. See the
+[DevContainer installer guide](devcontainer/README.md) for selections,
+installation phases, permissions and package policies. The scripts in
+[`devcontainer/setup/`](devcontainer/setup) explain tool-specific configuration
+and their environment-variable inputs beside the implementation.
 
 ## Adding or updating a tool
 
@@ -235,8 +132,8 @@ changes together:
 4. Add the command to the applicable native selection in
    [`tools/environments.json`](../environments.json): `s-core-local` for the
    `s-core-local` feature or `bazel-feature` for the `bazel-feature` feature.
-5. Read the lockfile version and test the installed command in the matching
-   feature test:
+5. Read expected versions with `install.py shell-metadata` and test the installed
+   command in the matching feature test:
    [`s-core-local/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh)
    or
    [`bazel-feature/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
@@ -249,19 +146,12 @@ changes together:
 7. If this repository's own DevContainer needs the command, add it to the
    `repository-devcontainer` selection in `tools/environments.json`.
 
-For a Python command-line tool, add an entry to
-`tools/lockfiles/python_tools.bzl`, add `python_tool("<command>")` to
-`tools/BUILD.bazel`, and add its name to the `python` group of each applicable
-selection in `tools/environments.json`. Keep the catalog as a single literal
-`PYTHON_TOOLS` assignment: this is what makes it safe for the installer and
-directly loadable by Bazel. The `package` selects the distribution passed to
-`uv`, while `entrypoint` names the console command because those names need not
-be identical.
-
-Bazel invokes Python tools on demand with the pinned `uvx`; DevContainers
-install the same package with the pinned `uv`. A Python selection must also
-select native `uv`; Bazel already carries pinned uvx in its launcher runfiles. Add launcher and installer
-coverage to `python_tool_runner_test` when either delivery contract changes.
+For a Python command-line tool, add its package definition to
+[`lockfiles/python_tools.bzl`](../lockfiles/python_tools.bzl) and its name to the
+`python` group of the applicable selections in `environments.json`. Bazel targets
+are created for every Python catalog entry automatically; no second command list
+is needed in `BUILD.bazel`. Select native `uv` alongside Python tools for
+container installation; Bazel supplies its own pinned `uvx`.
 
 Keep related commands such as `uv` and `uvx` in one lockfile when upstream
 publishes them together. The installer can locate a command in a differently

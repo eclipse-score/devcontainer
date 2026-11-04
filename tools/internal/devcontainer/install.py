@@ -276,7 +276,7 @@ def _is_writable(path: str) -> bool:
 
 
 def _delegate_system_installation(
-    args: argparse.Namespace, selection: dict[str, list[str]]
+    args: argparse.Namespace, selection: dict[str, list[str]], setup_scripts: list[Path]
 ) -> bool:
     """Return whether system installation was completed by a privileged child."""
     if os.geteuid() == 0:
@@ -284,7 +284,8 @@ def _delegate_system_installation(
     providers = [
         provider
         for provider in args.providers
-        if provider != "npm" and selection.get(provider)
+        if provider != "npm"
+        and (selection.get(provider) or (provider == "setup" and setup_scripts))
     ]
     if args.phase != "runtime":
         providers = ["apt"]
@@ -367,7 +368,7 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
 
     if args.phase == "all":
         phases = ("build", "runtime", "cleanup")
-        if set(args.providers) == {"npm"}:
+        if not {"apt", "setup"}.intersection(args.providers):
             phases = ("runtime",)
         for phase in phases:
             phase_args = argparse.Namespace(**vars(args))
@@ -379,7 +380,9 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
 
 def _apply_environment(args, selection, definitions, setup_scripts) -> int:
     """Apply one validated installation phase, elevating system steps when needed."""
-    if _delegate_system_installation(args, selection):
+    if args.phase != "runtime" and not {"apt", "setup"}.intersection(args.providers):
+        return 0
+    if _delegate_system_installation(args, selection, setup_scripts):
         if args.phase != "runtime":
             return 0
         # System groups are complete; npm still runs with the caller's Node setup.

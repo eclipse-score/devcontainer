@@ -12,7 +12,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# install.py passes version and checksum variables from providers.json.
+# Install the helper that generates compile_commands.json for Bazel projects.
+# install.py supplies the release version and per-CPU checksums as environment
+# variables: bazel_compile_commands_version and bazel_compile_commands_*_sha256.
 # shellcheck disable=SC2154
 set -euo pipefail
 

@@ -11,9 +11,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# A literal Starlark dictionary lets Bazel consume the pins during analysis
-# while ast.literal_eval preserves a data-only boundary for the root-running
-# DevContainer installer.
+# Define each Python tool's package, pinned version and console command here.
+# Both Bazel and the DevContainer installer read these definitions directly;
+# environments.json selects which commands to install in each container.
+# providers.json holds the APT, npm and special setup definitions instead.
+# Keep this a literal dictionary: Bazel loads it as Starlark, while Python
+# reads it with ast.literal_eval without executing repository code as root.
 PYTHON_TOOLS = {
     # The key is the public command and Bazel target name.
     "pre-commit": {
