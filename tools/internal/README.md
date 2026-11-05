@@ -86,8 +86,10 @@ supported platforms, download URLs, checksums, and archive layouts.
 `rules_multitool` consumes the files for Bazel. The standard-library-only
 [`catalog.py`](catalog.py) reads metadata for
 [`devcontainer/install.py`](devcontainer/install.py) and README generation.
-The reader has no installation side effects; download, platform selection,
-and installation remain in the container installer.
+The reader also prepares version and checksum variables for setup scripts and
+feature tests through `load_setup_metadata()`. It has no installation side
+effects; shell quoting, download, platform selection and installation remain in
+the container installer.
 Other direct packages and special setup are defined in
 [`providers.json`](../providers.json): Python package pins, APT constraints,
 npm package identities, Bazel preinstallation and CodeQL metadata. The selections reference these names
