@@ -15,6 +15,26 @@
 
 set -euo pipefail
 
+check_config_volume_ownership() (
+    test_home=$(mktemp -d)
+    trap 'sudo rm -rf "${test_home}"' EXIT
+
+    # Reproduce Docker's root-owned volume parents, including private permissions.
+    sudo mkdir -p "${test_home}/.config/opencode" "${test_home}/.config/gh" "${test_home}/.local/share/opencode"
+    sudo chown root:root "${test_home}/.config" "${test_home}/.local" "${test_home}/.local/share"
+    sudo chmod 700 "${test_home}/.config" "${test_home}/.local" "${test_home}/.local/share"
+
+    HOME="${test_home}" bash /devcontainer/features/s-core-local/fix_config_volume_ownership.sh
+
+    for directory in .config .local .local/share; do
+        [ -O "${test_home}/${directory}" ] || return 1
+        [ "$(stat -c %a "${test_home}/${directory}")" = 700 ] || return 1
+    done
+    mkdir "${test_home}/.local/state"
+)
+
+check "config volume parents belong to the user and retain private permissions" check_config_volume_ownership
+
 ARCHITECTURE=$(dpkg --print-architecture)
 KERNEL=$(uname -s)
 
