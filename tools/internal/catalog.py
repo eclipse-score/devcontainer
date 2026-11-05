@@ -10,13 +10,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Read pinned native and Python tool metadata without executing catalog code."""
+"""Read tool definitions and environment selections without running installation code."""
 
 # pyright: reportAny=false, reportUnusedCallResult=false, reportExplicitAny=false
 
 from __future__ import annotations
 
-import ast
 import json
 from collections.abc import Iterator
 from pathlib import Path
@@ -45,7 +44,7 @@ class ToolData(TypedDict):
 
 
 LOCKFILE_ROOT = Path(__file__).resolve().parents[1] / "lockfiles"
-PYTHON_TOOL_CATALOG = LOCKFILE_ROOT / "python_tools.bzl"
+ENVIRONMENTS_PATH = LOCKFILE_ROOT.parent / "environments.json"
 
 
 class PythonTool(TypedDict):
@@ -73,77 +72,18 @@ def _iter_catalog() -> Iterator[tuple[str, str, ToolData]]:
             yield tool, path.name, definition
 
 
-def _parse_python_tool_catalog() -> object:
-    """Return the literal assigned to ``PYTHON_TOOLS``.
-
-    The feature installer runs as root, so importing or executing a repository
-    file would cross a privilege boundary. Parsing one assignment and accepting
-    only literal data lets Bazel and the installer share a catalog safely.
-    """
-    try:
-        module = ast.parse(
-            PYTHON_TOOL_CATALOG.read_text(encoding="utf-8"),
-            filename=str(PYTHON_TOOL_CATALOG),
-        )
-    except SyntaxError as exc:
-        raise SystemExit(f"Malformed Python tool catalog: {exc}") from exc
-
-    # Exactly one statement preserves the catalog's data-only contract.
-    if len(module.body) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    assignment = module.body[0]
-    if not isinstance(assignment, ast.Assign) or len(assignment.targets) != 1:
-        raise SystemExit(
-            "Python tool catalog must contain only a PYTHON_TOOLS assignment"
-        )
-
-    target = assignment.targets[0]
-    if not isinstance(target, ast.Name) or target.id != "PYTHON_TOOLS":
-        raise SystemExit("Python tool catalog must assign its data to PYTHON_TOOLS")
-
-    try:
-        return ast.literal_eval(assignment.value)
-    except (TypeError, ValueError) as exc:
-        raise SystemExit("Python tool catalog must contain only literal data") from exc
-
-
 def load_python_tools() -> dict[str, PythonTool]:
-    """Validate the shared catalog and return typed Python tool metadata."""
-    catalog = _parse_python_tool_catalog()
-    if not isinstance(catalog, dict):
-        raise SystemExit("PYTHON_TOOLS must be a dictionary")
-
-    tools: dict[str, PythonTool] = {}
-    for command, metadata in catalog.items():
-        if (
-            not isinstance(command, str)
-            or not command
-            or not isinstance(metadata, dict)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        package = metadata.get("package")
-        version = metadata.get("version")
-        entrypoint = metadata.get("entrypoint")
-        description = metadata.get("description")
-        # Central validation gives Bazel, installation, and documentation the
-        # same required-field contract.
-        if not all(
-            isinstance(value, str) and value
-            for value in (package, version, entrypoint, description)
-        ):
-            raise SystemExit(f"Malformed Python tool catalog entry for '{command}'")
-
-        tools[command] = {
-            "package": package,
-            "version": version,
-            "entrypoint": entrypoint,
-            "description": description,
+    """Read Python package definitions from the shared provider catalog."""
+    return {
+        name: {
+            "package": definition["package"],
+            "version": definition["version"],
+            "entrypoint": definition["entrypoint"],
+            "description": definition["description"],
         }
-    return tools
+        for name, definition in load_providers().items()
+        if definition["provider"] == "python"
+    }
 
 
 def load_catalog_versions() -> dict[str, str]:
@@ -233,3 +173,153 @@ def resolve_lockfile(tool: str, lockfile: str | None = None) -> str:
     if _lockfile_path(tool).exists():
         return tool
     return _find_lockfile(tool)
+
+
+PROVIDERS_PATH = LOCKFILE_ROOT.parent / "providers.json"
+
+
+def load_providers() -> dict:
+    """Read and check package definitions and tool-specific setup metadata."""
+    providers = json.loads(PROVIDERS_PATH.read_text(encoding="utf-8"))
+    if not isinstance(providers, dict):
+        raise SystemExit("Tool providers must be a dictionary")
+    for name, definition in providers.items():
+        if not isinstance(definition, dict) or definition.get("provider") not in (
+            "apt",
+            "npm",
+            "python",
+            "release",
+            "bazelisk",
+        ):
+            raise SystemExit(f"Invalid provider definition for '{name}'")
+        if definition["provider"] == "apt":
+            if definition.get("policy") not in (
+                "distribution",
+                "prefix",
+                "package-name",
+            ):
+                raise SystemExit(f"Invalid APT policy for '{name}'")
+            packages = definition.get("packages")
+            if (
+                not isinstance(packages, list)
+                or not packages
+                or any(
+                    not isinstance(package, str)
+                    or not package
+                    or package.startswith("-")
+                    for package in packages
+                )
+            ):
+                raise SystemExit(f"Invalid APT packages for '{name}'")
+            if definition["policy"] != "distribution" and not definition.get("version"):
+                raise SystemExit(f"Missing APT version constraint for '{name}'")
+        elif definition["provider"] == "python":
+            if not all(
+                isinstance(definition.get(field), str) and definition[field]
+                for field in ("package", "version", "entrypoint", "description")
+            ):
+                raise SystemExit(f"Malformed Python package definition for '{name}'")
+            dependencies = definition.get("requires", [])
+            if not isinstance(dependencies, list) or "uv" not in dependencies:
+                raise SystemExit(f"Python tool '{name}' must declare its uv dependency")
+        elif definition["provider"] == "npm":
+            if (
+                not isinstance(definition.get("package"), str)
+                or not definition["package"]
+            ):
+                raise SystemExit(f"Missing npm package for '{name}'")
+    return providers
+
+
+def all_definitions() -> dict:
+    """Look up every defined tool by name, regardless of how it is installed.
+
+    Only the copied tools/ directory is needed, so this also works inside images."""
+    tools = {}
+    sources = (
+        ((name, {**data, "provider": "native"}) for name, _, data in _iter_catalog()),
+        load_providers().items(),
+    )
+    for source in sources:
+        for name, definition in source:
+            if name in tools:
+                raise SystemExit(f"Duplicate tool definition: '{name}'")
+            tools[name] = definition
+    return tools
+
+
+def load_environments() -> dict[str, dict[str, list[str]]]:
+    """Read environments.json and check tool names, installation groups and dependencies."""
+    data = json.loads(ENVIRONMENTS_PATH.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise SystemExit("Tool environments must be a dictionary")
+    tools = all_definitions()
+    # Build-only packages use the same APT definitions as regular packages,
+    # but are removed once image setup is complete.
+    categories = {
+        "native": {"native"},
+        "python": {"python"},
+        "apt": {"apt"},
+        "build-apt": {"apt"},
+        "npm": {"npm"},
+        "setup": {"release", "bazelisk"},
+    }
+    for name, selection in data.items():
+        if not isinstance(name, str) or not name:
+            raise SystemExit("Tool environment names must be nonempty strings")
+        if not isinstance(selection, dict) or selection.keys() - categories.keys():
+            raise SystemExit(f"Invalid provider categories in environment '{name}'")
+        for category, names in selection.items():
+            if not isinstance(names, list) or any(
+                not isinstance(tool, str) or not tool for tool in names
+            ):
+                raise SystemExit(f"Environment '{name}/{category}' must be a tool list")
+            if len(names) != len(set(names)):
+                raise SystemExit(
+                    f"Environment '{name}/{category}' lists a tool more than once"
+                )
+            for tool in names:
+                if tool not in tools:
+                    raise SystemExit(f"Unknown tool '{tool}' in environment '{name}'")
+                if tools[tool]["provider"] not in categories[category]:
+                    raise SystemExit(
+                        f"Wrong provider for '{tool}' in environment '{name}/{category}'"
+                    )
+                if (category == "build-apt") != (
+                    tools[tool].get("phase") == "build-only"
+                ):
+                    raise SystemExit(
+                        f"Wrong installation phase for '{tool}' in environment '{name}'"
+                    )
+        # Dependencies can be in another group: CodeQL needs zstd during the
+        # build, while Python tools need uv from the native tool selection.
+        selected = {tool for names in selection.values() for tool in names}
+        for tool in selected:
+            for dependency in tools[tool].get("requires", []):
+                if dependency not in selected:
+                    raise SystemExit(
+                        f"Tool '{tool}' requires '{dependency}' in environment '{name}'"
+                    )
+    return data
+
+
+def apt_requirements(
+    selection: dict, definitions: dict, *, recommends: bool
+) -> list[str]:
+    """Build apt package arguments for the chosen recommendation setting.
+
+    Keep version strings intact, including Debian's optional prefix such as "1:"."""
+    requirements = []
+    for name in selection.get("apt", []):
+        tool = definitions[name]
+        if tool.get("install_recommends", True) != recommends:
+            continue
+        for package in tool["packages"]:
+            # Some releases are selected by package name, such as python3.12.
+            if tool["policy"] == "package-name":
+                package = package.format(version=tool["version"])
+            # Include Ubuntu's package revisions, e.g. graphviz=2.42.2*.
+            elif tool["policy"] == "prefix":
+                package += "=" + tool["version"] + "*"
+            requirements.append(package)
+    return requirements

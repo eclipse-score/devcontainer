@@ -11,7 +11,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Synchronize the documented tool table with the lockfile catalog."""
+"""Update the documented tool table and check environment selections."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from catalog import load_catalog_descriptions, load_catalog_versions
+from catalog import load_catalog_descriptions, load_catalog_versions, load_environments
 
 
 TOOLS_DIR = Path(__file__).resolve().parent.parent
@@ -67,6 +67,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.parse_args(argv)
 
+    # The pre-commit documentation check also catches unknown tools and missing
+    # dependencies in environments.json, even when the table does not change.
+    load_environments()
     current = README_PATH.read_text(encoding="utf-8")
     table = _render_table(load_catalog_versions(), load_catalog_descriptions())
     expected = _updated_readme(current, table)
