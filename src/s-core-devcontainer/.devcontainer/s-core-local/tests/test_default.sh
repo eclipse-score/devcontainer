@@ -24,7 +24,7 @@ check_config_volume_ownership() (
     sudo chown root:root "${test_home}/.config" "${test_home}/.local" "${test_home}/.local/share"
     sudo chmod 700 "${test_home}/.config" "${test_home}/.local" "${test_home}/.local/share"
 
-    HOME="${test_home}" bash /devcontainer/features/s-core-local/fix_config_volume_ownership.sh
+    HOME="${test_home}" bash /devcontainer/features/s-core-local/fix_config_volume_ownership.sh || return 1
 
     for directory in .config .local .local/share; do
         [ -O "${test_home}/${directory}" ] || return 1
