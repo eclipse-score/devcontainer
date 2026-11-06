@@ -32,6 +32,14 @@ TOOLS_DIR = Path(__file__).resolve().parents[1]
 
 
 class CatalogTest(unittest.TestCase):
+    def test_setup_metadata_includes_every_native_and_python_command_version(
+        self,
+    ) -> None:
+        # Feature tests should get all expected versions in one shell-metadata call.
+        metadata = catalog.load_setup_metadata()
+        for name, version in catalog.load_catalog_versions().items():
+            self.assertEqual(metadata[name.replace("-", "_") + "_version"], version)
+
     def test_metadata_matches_definitions(self) -> None:
         versions = {}
         descriptions = {}

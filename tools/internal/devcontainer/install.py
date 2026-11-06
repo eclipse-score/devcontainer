@@ -53,6 +53,7 @@ from catalog import (
     load_environments,
     load_python_tools,
     load_providers,
+    load_setup_metadata,
     load_tool,
     resolve_lockfile,
 )
@@ -429,7 +430,7 @@ def _apply_environment(args, selection, definitions, setup_scripts) -> int:
     # Pass variables to the setup processes. Python cannot change the
     # environment of the shell that launched this installer.
     if "setup" in args.providers and setup_scripts:
-        environment = {**os.environ, **_metadata_values()}
+        environment = {**os.environ, **load_setup_metadata()}
         environment["SCORE_TOOL_ENVIRONMENT"] = args.environment
         environment["SCORE_TOOLS_INSTALLER"] = str(Path(__file__).resolve())
         for script in setup_scripts:
@@ -437,48 +438,11 @@ def _apply_environment(args, selection, definitions, setup_scripts) -> int:
     return 0
 
 
-def _metadata_values() -> dict[str, str]:
-    """Turn definition fields into variables such as codeql_version for setup and tests."""
-    import re
-
-    values: dict[str, str] = {}
-
-    def emit(name, value):
-        if not re.fullmatch(r"[a-zA-Z_][a-zA-Z0-9_]*", name):
-            raise SystemExit(f"Invalid metadata variable: {name}")
-        if isinstance(value, dict):
-            for key, child in value.items():
-                emit(name + "_" + key, child)
-        elif isinstance(value, str):
-            values[name] = value
-
-    for name, definition in load_providers().items():
-        # Use only version and checksum fields. Other data, such as platform
-        # names containing slashes, cannot be used as shell variable names.
-        for field in ("version", "compatibility_version", "amd64", "arm64"):
-            if field in definition:
-                emit(name.replace("-", "_") + "_" + field, definition[field])
-        # Unpinned APT tools can still have expected versions for feature tests.
-        # Give these expectations the same _version names as pinned tools.
-        if "compatibility_version" in definition:
-            emit(
-                name.replace("-", "_") + "_version", definition["compatibility_version"]
-            )
-    # Native and Python command versions use the same variable names as the
-    # other definitions, so feature tests need just one metadata query.
-    for name, version in load_catalog_versions().items():
-        emit(name.replace("-", "_") + "_version", version)
-    # Python package and entrypoint metadata is also available to setup scripts.
-    for name, definition in load_python_tools().items():
-        emit(name.replace("-", "_"), definition)
-    return values
-
-
 def _cmd_shell_metadata(args: argparse.Namespace) -> int:
     """Print shell-quoted exports so feature tests can read versions in their shell."""
     import shlex
 
-    for name, value in _metadata_values().items():
+    for name, value in load_setup_metadata().items():
         print("export " + name + "=" + shlex.quote(value))
     return 0
 

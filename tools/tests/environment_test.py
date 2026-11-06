@@ -425,14 +425,6 @@ class EnvironmentTest(unittest.TestCase):
             [call.args[0].phase for call in apply.call_args_list], ["build", "runtime"]
         )
 
-    def test_shell_metadata_includes_every_native_and_python_command_version(
-        self,
-    ) -> None:
-        # Feature tests should get all expected versions in one shell-metadata call.
-        metadata = installer._metadata_values()
-        for name, version in catalog.load_catalog_versions().items():
-            self.assertEqual(metadata[name.replace("-", "_") + "_version"], version)
-
     def test_apt_tool_setup_is_retained_when_installation_is_delegated(self) -> None:
         # Java is selected through APT, but also needs java.sh to set JAVA_HOME.
         # Both an image build and a normal user must execute that setup.
