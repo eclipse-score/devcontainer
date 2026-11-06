@@ -43,3 +43,11 @@ multitool.hub(lockfile = "//tools:lockfiles/yamlfmt.lock.json")
 use_repo(multitool, "multitool")
 
 register_toolchains("@multitool//toolchains:all")
+
+# PlantUML's native image needs the shared libraries bundled with its executable.
+plantuml_repository = use_repo_rule("//tools:plantuml_repository.bzl", "plantuml_repository")
+
+plantuml_repository(
+    name = "native_plantuml",
+    lockfile = "//tools:lockfiles/plantuml.lock.json",
+)

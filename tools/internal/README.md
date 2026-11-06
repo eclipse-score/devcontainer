@@ -53,6 +53,12 @@ use the same command line without choosing the execution path.
 Native tools with upstream release artifacts use
 [`rules_multitool`](https://github.com/bazel-contrib/rules_multitool).
 
+PlantUML is an exception: [`plantuml_repository.bzl`](../plantuml_repository.bzl)
+reads its lockfile and preserves the complete native archive in Bazel runfiles,
+including Linux rendering libraries. Its targets select the Bazel host platform;
+`plantuml_binary` preserves the action's working directory. Pass its
+`FilesToRunProvider` to actions so the bundled libraries are included.
+
 The `multitool_aliases` helper exposes the `rules_multitool` `cwd` target as
 the public command. That wrapper restores `BUILD_WORKING_DIRECTORY` before
 starting a tool, so configuration discovery and repository-relative paths

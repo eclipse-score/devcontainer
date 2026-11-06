@@ -45,6 +45,7 @@ host-side Bazel invocation may require network access to download the binary.
 | `bazelisk` | `1.27.0` | Run the Bazel version selected by a repository |
 | `buildifier` | `8.2.1` | Format and lint Bazel files |
 | `opencode` | `2.2.3` | Run the OpenCode CLI |
+| `plantuml` | `1.2026.9` | Generate diagrams without a Java installation |
 | `pre-commit` | `4.7.0` | Run repository pre-commit hooks |
 | `pytest` | `9.0.2` | Run Python tests |
 | `ruff` | `0.11.13` | Check and format Python code |
@@ -55,6 +56,10 @@ host-side Bazel invocation may require network access to download the binary.
 | `yamlfmt` | `0.17.0` | Format YAML files |
 
 <!-- END GENERATED TOOL TABLE -->
+
+PlantUML's native binary is available through Bazel on Linux x86_64, Linux arm64,
+and macOS arm64 without Java. It is not installed in the DevContainer's `PATH`.
+Diagram types using Graphviz still require a local `dot` executable.
 
 Pass `--help` through the runner to see a command's own documentation:
 

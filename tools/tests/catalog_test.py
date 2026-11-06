@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -32,6 +33,97 @@ TOOLS_DIR = Path(__file__).resolve().parents[1]
 
 
 class CatalogTest(unittest.TestCase):
+    def test_plantuml_launcher_preserves_bundle_arguments_and_working_directory(
+        self,
+    ) -> None:
+        template = (TOOLS_DIR / "internal/run_plantuml.sh").read_text()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            runfiles = root / "runfiles"
+            library = runfiles / "bazel_tools/tools/bash/runfiles/runfiles.bash"
+            library.parent.mkdir(parents=True)
+            library.write_text(
+                'rlocation() { printf "%s/%s\\n" "$TEST_RUNFILES" "$1"; }\n'
+            )
+            bundle = runfiles / "native_plantuml/bundle"
+            bundle.mkdir(parents=True)
+            (bundle / "libawt.so").touch()
+            binary = bundle / "plantuml"
+            binary.write_text(
+                '#!/bin/bash\nset -eu\ntest -f "$(dirname "$0")/libawt.so"\n'
+                'printf "%s\\n" "$PWD" "$@"\n'
+            )
+            binary.chmod(0o755)
+            caller = root / "caller directory"
+            caller.mkdir()
+            launcher = root / "launcher.sh"
+            launcher.with_suffix(".sh.runfiles").symlink_to(runfiles)
+            manifest = root / "MANIFEST"
+            manifest.write_text(
+                f"bazel_tools/tools/bash/runfiles/runfiles.bash {library}\n"
+            )
+            for mode, expected_directory in (("cwd", caller), ("action", root)):
+                for layout in ("directory", "manifest", "adjacent"):
+                    with self.subTest(mode=mode, layout=layout):
+                        launcher.write_text(
+                            template.replace("@MODE@", mode).replace(
+                                "@BINARY@", "native_plantuml/bundle/plantuml"
+                            )
+                        )
+                        environment = {
+                            **os.environ,
+                            "TEST_RUNFILES": str(runfiles),
+                            "BUILD_WORKING_DIRECTORY": str(caller),
+                        }
+                        for variable in ("RUNFILES_DIR", "RUNFILES_MANIFEST_FILE"):
+                            environment.pop(variable, None)
+                        if layout == "directory":
+                            environment["RUNFILES_DIR"] = str(runfiles)
+                        elif layout == "manifest":
+                            environment["RUNFILES_MANIFEST_FILE"] = str(manifest)
+                        result = subprocess.run(
+                            [
+                                "bash",
+                                str(launcher),
+                                "diagram with spaces.puml",
+                                "-tsvg",
+                            ],
+                            cwd=root,
+                            env=environment,
+                            check=True,
+                            capture_output=True,
+                            text=True,
+                        )
+                        self.assertEqual(
+                            result.stdout.splitlines(),
+                            [
+                                str(expected_directory),
+                                "diagram with spaces.puml",
+                                "-tsvg",
+                            ],
+                        )
+
+    def test_plantuml_uses_native_release_archives(self) -> None:
+        metadata = catalog.load_tool("plantuml", "plantuml")
+        self.assertEqual(catalog.resolve_lockfile("plantuml"), "plantuml")
+        self.assertEqual(
+            {(binary["os"], binary["cpu"]) for binary in metadata["binaries"]},
+            {("linux", "x86_64"), ("linux", "arm64"), ("macos", "arm64")},
+        )
+        for binary in metadata["binaries"]:
+            with self.subTest(os=binary["os"], cpu=binary["cpu"]):
+                self.assertEqual(binary["kind"], "archive")
+                self.assertEqual(binary["type"], "zip")
+                self.assertEqual(binary["file"], "plantuml")
+                cpu = "amd64" if binary["cpu"] == "x86_64" else binary["cpu"]
+                self.assertEqual(
+                    binary["url"],
+                    "https://github.com/plantuml/plantuml/releases/download/"
+                    f"v{metadata['version']}/native-plantuml-"
+                    f"{binary['os']}-{cpu}-{metadata['version']}.zip",
+                )
+                self.assertRegex(binary["sha256"], r"^[0-9a-f]{64}$")
+
     def test_metadata_matches_definitions(self) -> None:
         versions = {}
         descriptions = {}

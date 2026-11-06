@@ -43,6 +43,16 @@ multitool_aliases("apm")
 
 multitool_aliases("opencode")
 
+alias(
+    name = "plantuml",
+    actual = "@native_plantuml//:plantuml",
+)
+
+alias(
+    name = "plantuml_binary",
+    actual = "@native_plantuml//:plantuml_binary",
+)
+
 # Python distributions are resolved through pinned uvx because they do not
 # provide the platform-specific release binaries consumed by rules_multitool.
 # Export every catalogued Python command. environments.json chooses which of

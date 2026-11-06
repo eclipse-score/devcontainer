@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
+  "plantuml": {
+    "version": "1.2026.9",
+    "description": "Generate diagrams without a Java installation",
+    "binaries": [
+      {
+        "kind": "archive",
+        "file": "plantuml",
+        "url": "https://github.com/plantuml/plantuml/releases/download/v1.2026.9/native-plantuml-macos-arm64-1.2026.9.zip",
+        "sha256": "3315869dbfee61971f63af79afff0857308f29ea0f6bfca4c322d3d6a211d770",
+        "type": "zip",
+        "os": "macos",
+        "cpu": "arm64"
+      },
+      {
+        "kind": "archive",
+        "file": "plantuml",
+        "url": "https://github.com/plantuml/plantuml/releases/download/v1.2026.9/native-plantuml-linux-amd64-1.2026.9.zip",
+        "sha256": "4bf6d1a3efee62e5e42a4f950ac4b6c11c6455a37fc1a0f784fb5867ca8c2ff0",
+        "type": "zip",
+        "os": "linux",
+        "cpu": "x86_64"
+      },
+      {
+        "kind": "archive",
+        "file": "plantuml",
+        "url": "https://github.com/plantuml/plantuml/releases/download/v1.2026.9/native-plantuml-linux-arm64-1.2026.9.zip",
+        "sha256": "04d51abe63f33a18c6b180f8e6c4c65449c1422f47f4dd0dd30261a1e4aed5e2",
+        "type": "zip",
+        "os": "linux",
+        "cpu": "arm64"
+      }
+    ]
+  }
+}
