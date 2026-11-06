@@ -14,8 +14,8 @@
 """Refresh URLs and sha256 digests in tool lockfiles after a version bump.
 
 Intended to run as a Renovate ``postUpgradeTask``: Renovate rewrites the
-``version`` field (and the version embedded in each binary URL) via its
-``custom.regex`` manager, but it cannot compute the new sha256 digests. This
+``version`` field via its ``custom.regex`` manager, but it cannot compute
+the new sha256 digests. This
 script reads the (possibly new) version from each lockfile, fetches the
 corresponding GitHub release, and rewrites every binary's ``url`` and
 ``sha256`` from the release's asset list.
@@ -30,6 +30,7 @@ refreshed (e.g. the release or an expected asset is missing).
 
 import json
 import os
+import re
 import sys
 import urllib.request
 
@@ -89,11 +90,7 @@ def refresh_lockfile(path, token=None, cache=None):
         first_url = tool["binaries"][0].get("url", "")
         parsed = _parse_release_url(first_url)
         if parsed is None:
-            print(
-                f"  ! {tool_name}: cannot derive repo from {first_url!r}",
-                file=sys.stderr,
-            )
-            continue
+            raise ValueError(f"{tool_name}: cannot derive repo from {first_url!r}")
         owner, repo, first_tag, _ = parsed
 
         # Release tags are not uniformly prefixed: most projects publish
@@ -106,25 +103,32 @@ def refresh_lockfile(path, token=None, cache=None):
 
         for binary in tool["binaries"]:
             binary_parts = _parse_release_url(binary.get("url", ""))
-            asset = binary_parts[3] if binary_parts else None
-            digest = digests.get(asset)
-            if not digest:
-                print(
-                    f"  ! {tool_name}: no digest for asset {asset!r} in {tag}",
-                    file=sys.stderr,
-                )
-                continue
-            sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
-            # Rebuild the URL from the version so the file is consistent
-            # whether or not Renovate already updated the URL.
+            if binary_parts is None:
+                raise ValueError(f"{tool_name}: unsupported release URL")
+            # Renovate updates the pin; the URL identifies the old version in
+            # asset names and archive member paths (for example, ShellCheck).
+            old_version = binary_parts[2].removeprefix("v")
+            asset = binary_parts[3].replace(old_version, version)
+            if asset not in digests:
+                raise ValueError(f"{tool_name}: missing asset {asset!r} in {tag}")
+            match = re.fullmatch(r"sha256:([0-9a-fA-F]{64})", digests[asset] or "")
+            if match is None:
+                raise ValueError(f"{tool_name}: no valid SHA256 for {asset!r} in {tag}")
+            sha = match[1].lower()
+            # Keep the release tag aligned with the catalog pin.
             new_url = (
                 f"https://github.com/{owner}/{repo}/releases/download/{tag}/{asset}"
             )
-            if binary.get("sha256") != sha or binary.get("url") != new_url:
-                binary["url"] = new_url
-                binary["sha256"] = sha
+            updated = {**binary, "url": new_url, "sha256": sha}
+            for field in ("file", "dir"):
+                if field in updated:
+                    updated[field] = updated[field].replace(old_version, version)
+            if updated != binary:
+                binary.update(updated)
                 changed.append(f"{tool_name}/{asset}")
 
+    # Validate every platform before writing, so an incomplete release cannot
+    # leave a lockfile with a mixture of old and new artifacts.
     if changed:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
