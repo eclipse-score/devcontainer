@@ -80,8 +80,8 @@ jobs:
             # Check
             pre-commit run --show-diff-on-failure --color=always --all-files || exit 1
 
-            # Metadata and README generation must also work without importing
-            # the container installer or installing a Python package.
+            # Catalog validation and lockfile refresh tests use the image's
+            # Python without installing additional packages.
             python3 -m unittest discover -s tools/tests -p '*_test.py' -v
 
             # A fake uv executable makes the launcher contract deterministic:

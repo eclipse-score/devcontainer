@@ -14,11 +14,10 @@
 """Refresh URLs and sha256 digests in tool lockfiles after a version bump.
 
 Intended to run as a Renovate ``postUpgradeTask``: Renovate rewrites the
-``version`` field (and the version embedded in each binary URL) via its
-``custom.regex`` manager, but it cannot compute the new sha256 digests. This
-script reads the (possibly new) version from each lockfile, fetches the
-corresponding GitHub release, and rewrites every binary's ``url`` and
-``sha256`` from the release's asset list.
+``version`` field via its ``custom.regex`` manager, but it cannot compute
+the new sha256 digests. This script reads the version from each lockfile,
+fetches the corresponding GitHub release, and updates download URLs, archive
+member paths and SHA256 digests for every platform.
 
 Usage:
     python3 tools/internal/refresh_lockfile_digests.py [LOCKFILE ...]
@@ -30,8 +29,10 @@ refreshed (e.g. the release or an expected asset is missing).
 
 import json
 import os
+import re
 import sys
 import urllib.request
+from urllib.parse import urlsplit
 
 GITHUB_API = "https://api.github.com"
 
@@ -45,7 +46,7 @@ def _api_get(url, token=None):
             **({"Authorization": f"Bearer {token}"} if token else {}),
         },
     )
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)
 
 
@@ -55,10 +56,19 @@ def _parse_release_url(url):
     Layout: https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>
     Returns ``(owner, repo, tag, asset)`` or ``None`` if the URL does not match.
     """
-    parts = url.split("/")
-    if len(parts) != 9 or parts[2] != "github.com" or parts[5] != "releases":
+    parsed = urlsplit(url)
+    parts = parsed.path.split("/")
+    if (
+        parsed.scheme != "https"
+        or parsed.netloc != "github.com"
+        or parsed.query
+        or parsed.fragment
+        or len(parts) != 7
+        or parts[3:5] != ["releases", "download"]
+        or not all(parts[1:])
+    ):
         return None
-    return parts[3], parts[4], parts[7], parts[8]
+    return parts[1], parts[2], parts[5], parts[6]
 
 
 def _release_digests(owner, repo, tag, token, cache):
@@ -83,48 +93,49 @@ def refresh_lockfile(path, token=None, cache=None):
         if not isinstance(tool, dict) or "binaries" not in tool:
             continue
         version = tool.get("version")
-        if not version:
-            continue
-
-        first_url = tool["binaries"][0].get("url", "")
-        parsed = _parse_release_url(first_url)
-        if parsed is None:
-            print(
-                f"  ! {tool_name}: cannot derive repo from {first_url!r}",
-                file=sys.stderr,
-            )
-            continue
-        owner, repo, first_tag, _ = parsed
-
-        # Release tags are not uniformly prefixed: most projects publish
-        # `v1.27.0`, while the astral-sh ones (uv, ruff) publish a bare
-        # `0.13.5`. Reuse the prefix the pinned URL already encodes; assuming
-        # `v` here would rewrite those tools to a nonexistent tag.
-        tag = ("v" if first_tag.startswith("v") else "") + version
-
-        digests = _release_digests(owner, repo, tag, token, cache)
+        if not version or not tool["binaries"]:
+            raise ValueError(f"{tool_name}: version and binaries are required")
 
         for binary in tool["binaries"]:
-            binary_parts = _parse_release_url(binary.get("url", ""))
-            asset = binary_parts[3] if binary_parts else None
-            digest = digests.get(asset)
-            if not digest:
-                print(
-                    f"  ! {tool_name}: no digest for asset {asset!r} in {tag}",
-                    file=sys.stderr,
+            url = binary.get("url", "")
+            parsed = _parse_release_url(url)
+            if parsed is None:
+                raise ValueError(f"{tool_name}: unsupported release URL {url!r}")
+            owner, repo, old_tag, old_asset = parsed
+
+            # Projects publish either v-prefixed or bare release tags. The URL
+            # still carries the old version after Renovate updates the pin;
+            # use it to update versioned asset names and archive member paths.
+            prefix = "v" if old_tag.startswith("v") else ""
+            old_version = old_tag.removeprefix("v")
+            tag = prefix + version
+            asset = old_asset.replace(old_version, version)
+            digests = _release_digests(owner, repo, tag, token, cache)
+            if asset not in digests:
+                raise ValueError(
+                    f"{tool_name}: missing asset {asset!r} in {owner}/{repo} {tag}"
                 )
-                continue
-            sha = digest.split(":", 1)[1] if digest.startswith("sha256:") else digest
-            # Rebuild the URL from the version so the file is consistent
-            # whether or not Renovate already updated the URL.
-            new_url = (
-                f"https://github.com/{owner}/{repo}/releases/download/{tag}/{asset}"
-            )
-            if binary.get("sha256") != sha or binary.get("url") != new_url:
-                binary["url"] = new_url
-                binary["sha256"] = sha
+            digest = digests[asset]
+            match = re.fullmatch(r"sha256:([0-9a-fA-F]{64})", digest or "")
+            if match is None:
+                raise ValueError(
+                    f"{tool_name}: no valid SHA256 digest for {asset!r} in {tag}"
+                )
+
+            updated = {
+                **binary,
+                "url": f"https://github.com/{owner}/{repo}/releases/download/{tag}/{asset}",
+                "sha256": match[1].lower(),
+            }
+            for field in ("file", "dir"):
+                if field in updated:
+                    updated[field] = updated[field].replace(old_version, version)
+            if updated != binary:
+                binary.update(updated)
                 changed.append(f"{tool_name}/{asset}")
 
+    # Validate every platform before writing: an incomplete upstream release
+    # must not leave a lockfile with a mixture of old and new artifacts.
     if changed:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)

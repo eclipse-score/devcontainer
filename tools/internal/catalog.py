@@ -55,7 +55,7 @@ class PythonTool(TypedDict):
     package: str
     version: str
     entrypoint: str
-    # User-facing text is kept beside the pin so generated docs cannot drift.
+    # Keep the package description beside its version and installation metadata.
     description: str
 
 

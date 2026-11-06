@@ -35,7 +35,7 @@ One catalog is delivered through two execution paths:
 | `tools/environments.json` | Record the complete tool selection of each existing setup caller. |
 | Feature installers | Apply selections and install the commands exposed on the DevContainer's `PATH`. |
 | `tools/run-tool` | Uses the command on `PATH` in a container or locally when available; otherwise uses the public Bazel alias (`--strict` forces Bazel). |
-| `tools/README.md` | Documents every command and its version from the catalog. |
+| `tools/README.md` | Documents the runner and links to the tool catalogs. |
 
 A command is available when its catalog metadata, Bazel target, and applicable
 DevContainer installer are registered together. The runner selects between
@@ -85,7 +85,7 @@ Native tool metadata lives in
 supported platforms, download URLs, checksums, and archive layouts.
 `rules_multitool` consumes the files for Bazel. The standard-library-only
 [`catalog.py`](catalog.py) reads metadata for
-[`devcontainer/install.py`](devcontainer/install.py) and README generation.
+[`devcontainer/install.py`](devcontainer/install.py).
 The reader also prepares version and checksum variables for setup scripts and
 feature tests through `load_setup_metadata()`. It has no installation side
 effects; shell quoting, download, platform selection and installation remain in
@@ -154,6 +154,41 @@ cases.
 To remove a command, remove it from the same integration points, including
 its `description` field.
 
+## Automated version updates
+
+The self-hosted daily Renovate job discovers native pins from every
+`tools/lockfiles/*.lock.json` file and Python package pins from
+`tools/providers.json`. Native release repositories are derived from the
+existing download URLs; adding a lockfile does not require a separate Renovate
+entry. Keep the native `version` before `binaries`, and Python
+`provider`, `package`, `version` fields in that order for the regex managers.
+Commands shipped together, such as `uv` and `uvx`, share a release update.
+
+After bumping a native version, Renovate runs
+`refresh_lockfile_digests.py` on that lockfile. The script preserves the release
+tag's `v` prefix when present, updates versioned asset names and archive member
+paths, and takes each SHA256 from GitHub's release asset metadata. It writes
+only after all platforms in the file have valid assets and digests. Missing
+assets, missing digests, or unsupported URLs cause an error; an upstream rename
+or archive layout change needs a manual metadata adjustment. Renovate reports
+post-upgrade failures as artifact errors; check these before merging an update.
+
+For a manual native update, edit only the `version` fields first, then run:
+
+```console
+$ python3 tools/internal/refresh_lockfile_digests.py tools/lockfiles/shellcheck.lock.json
+```
+
+The old URLs supply the previous version used to rewrite asset and archive
+paths. Set `GITHUB_TOKEN` or `RENOVATE_TOKEN` for authenticated release lookups.
+Passing no lockfile refreshes all native pins, including older releases which
+may not have GitHub digests. Scoped updates avoid requiring those unrelated
+releases to be refreshed.
+
+Python updates change the package pin directly in `providers.json` and need no
+post-upgrade task. APT policies and special providers in `providers.json` remain
+maintained separately.
+
 ## Validation and release alignment
 
 Run the feature test for every installer changed. The feature tests read their
@@ -168,7 +203,7 @@ CI additionally runs the real `//tools:pre-commit` target as a smoke test
 because only that target exercises `rules_multitool`, Bazel runfiles, and uvx
 together.
 
-Run the shared reader and README regression tests with the image's Python
+Run the catalog and lockfile refresh regression tests with the image's Python
 (no additional packages or installation needed):
 
 ```console
