@@ -246,7 +246,7 @@
     "provider": "bazelisk",
     "policy": "exact",
     "platforms": ["linux/x86_64", "linux/arm64"],
-    "version": "8.6.0",
+    "version": "8.8.2",
     "requires": ["bazelisk"],
     "setup_script": "bazel.sh"
   },
