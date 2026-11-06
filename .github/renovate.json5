@@ -37,13 +37,27 @@
   "prConcurrentLimit": 5,
   "prCreation": "immediate",
   "automerge": false,
-  "postUpgradeTasks": {
-    "commands": [
-      "tools/internal/refresh_lockfile_digests.py"
-    ],
-    "fileFilters": ["**/*"],
-    "executionMode": "update"
-  },
+  // Refresh only the updated native lockfile: older, unrelated releases may
+  // have no GitHub asset digests.
+  "packageRules": [
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "tools/lockfiles/*.lock.json"
+      ],
+      "postUpgradeTasks": {
+        "commands": [
+          "tools/internal/refresh_lockfile_digests.py {{{packageFile}}}"
+        ],
+        "fileFilters": [
+          "tools/lockfiles/*.lock.json"
+        ],
+        "executionMode": "update"
+      }
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
