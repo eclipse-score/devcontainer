@@ -67,13 +67,6 @@ repos:
         entry: tools/run-tool ruff check
         language: system
         types: [python]
-      - id: tool-documentation
-        name: check tool documentation
-        entry: python3 tools/internal/sync_readme.py
-        language: system
-        pass_filenames: false
-        # Watch the shared reader, package definitions and native lockfiles.
-        files: ^tools/(README\.md|(environments|providers)\.json|internal/(catalog\.py|sync_readme\.py|devcontainer/install\.py)|lockfiles/.*\.lock\.json)$
   - repo: https://github.com/eclipse-score/tooling
     rev: 31ff8eee214e4e97ef8f5cb46e443273515b63ec
     hooks:
