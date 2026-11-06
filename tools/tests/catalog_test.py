@@ -42,7 +42,6 @@ class CatalogTest(unittest.TestCase):
 
     def test_metadata_matches_definitions(self) -> None:
         versions = {}
-        descriptions = {}
         for path in sorted((TOOLS_DIR / "lockfiles").glob("*.lock.json")):
             for name, metadata in json.loads(path.read_text(encoding="utf-8")).items():
                 if name.startswith("$"):
@@ -53,8 +52,6 @@ class CatalogTest(unittest.TestCase):
                         metadata,
                     )
                 versions[name] = metadata["version"]
-                if "description" in metadata:
-                    descriptions[name] = metadata["description"]
 
         providers = json.loads((TOOLS_DIR / "providers.json").read_text())
         python_tools = {
@@ -70,11 +67,7 @@ class CatalogTest(unittest.TestCase):
         versions.update(
             (name, metadata["version"]) for name, metadata in python_tools.items()
         )
-        descriptions.update(
-            (name, metadata["description"]) for name, metadata in python_tools.items()
-        )
         self.assertEqual(catalog.load_catalog_versions(), versions)
-        self.assertEqual(catalog.load_catalog_descriptions(), descriptions)
         self.assertEqual(catalog.resolve_lockfile("uvx"), "uv")
         self.assertEqual(catalog.resolve_lockfile("uvx", "explicit"), "explicit")
 
@@ -144,63 +137,20 @@ class CatalogTest(unittest.TestCase):
                             json.dumps({"example": python_metadata}),
                             encoding="utf-8",
                         )
-                    for query in (
-                        catalog.load_catalog_versions,
-                        catalog.load_catalog_descriptions,
-                    ):
-                        with self.subTest(duplicate=duplicate, query=query.__name__):
-                            with self.assertRaisesRegex(
-                                SystemExit,
-                                f"Tool 'example' is defined by multiple {duplicate}",
-                            ):
-                                query()
+                    with self.subTest(duplicate=duplicate):
+                        with self.assertRaisesRegex(
+                            SystemExit,
+                            f"Tool 'example' is defined by multiple {duplicate}",
+                        ):
+                            catalog.load_catalog_versions()
 
-    def test_copied_scripts_work_without_installer_import_for_readme(self) -> None:
+    def test_copied_installer_reports_python_version(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             copied = root / "tools"
             shutil.copytree(
                 TOOLS_DIR, copied, ignore=shutil.ignore_patterns("__pycache__")
             )
-            readme = copied / "README.md"
-            expected = readme.read_bytes()
-            # Force regeneration, rather than only testing the no-change path.
-            readme.write_text(
-                expected.decode("utf-8").replace(
-                    "| `pre-commit` |", "| `stale-command` |"
-                ),
-                encoding="utf-8",
-            )
-            blocker = """
-import importlib.abc
-import runpy
-import sys
-
-class BlockInstaller(importlib.abc.MetaPathFinder):
-    def find_spec(self, fullname, path=None, target=None):
-        if "devcontainer" in fullname.split("."):
-            raise AssertionError("README generation imported the container installer")
-
-sys.meta_path.insert(0, BlockInstaller())
-script = sys.argv[1]
-sys.argv = [script]
-runpy.run_path(script, run_name="__main__")
-"""
-            subprocess.run(
-                [
-                    sys.executable,
-                    "-I",
-                    "-B",
-                    "-c",
-                    blocker,
-                    str(copied / "internal/sync_readme.py"),
-                ],
-                cwd=root,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-            self.assertEqual(readme.read_bytes(), expected)
             result = subprocess.run(
                 [
                     sys.executable,

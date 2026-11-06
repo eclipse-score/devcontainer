@@ -109,35 +109,6 @@ def load_catalog_versions() -> dict[str, str]:
     return versions
 
 
-def load_catalog_descriptions() -> dict[str, str]:
-    """Return every tool description declared by the lockfile catalog.
-
-    Tools without a description are omitted so callers can report a
-    friendly list of undocumented tools instead of failing on the first
-    one encountered.
-    """
-    descriptions: dict[str, str] = {}
-
-    for tool, filename, definition in _iter_catalog():
-        description = definition.get("description")
-        if description is None:
-            continue
-        if not isinstance(description, str):
-            raise SystemExit(
-                f"Tool '{tool}' in '{filename}' has a non-string description"
-            )
-        if tool in descriptions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple lockfiles")
-        descriptions[tool] = description
-
-    for tool, definition in load_python_tools().items():
-        if tool in descriptions:
-            raise SystemExit(f"Tool '{tool}' is defined by multiple catalogs")
-        descriptions[tool] = definition["description"]
-
-    return descriptions
-
-
 def _lockfile_path(lockfile: str) -> Path:
     """Resolve a lockfile basename like `ruff` to `ruff.lock.json`."""
     return LOCKFILE_ROOT / f"{lockfile}.lock.json"

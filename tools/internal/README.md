@@ -122,7 +122,7 @@ changes together:
 
 1. Add or update the multitool-compatible
    `tools/lockfiles/<command>.lock.json`, including a `description` field
-   for each tool entry (used to generate the README table).
+   for each tool entry.
 2. Register the lockfile with `multitool.hub` in the root
    [`MODULE.bazel`](../../MODULE.bazel).
 3. Add `multitool_aliases("<command>")` to
@@ -135,13 +135,7 @@ changes together:
    [`s-core-local/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/s-core-local/tests/test_default.sh)
    or
    [`bazel-feature/tests/test_default.sh`](../../src/s-core-devcontainer/.devcontainer/bazel-feature/tests/test_default.sh).
-6. Regenerate the documented command table:
-
-   ```console
-   $ python3 tools/internal/sync_readme.py
-   ```
-
-7. If this repository's own DevContainer needs the command, add it to the
+6. If this repository's own DevContainer needs the command, add it to the
    `repository-devcontainer` selection in `tools/environments.json`.
 
 For a Python command-line tool, add its package definition to
@@ -158,22 +152,9 @@ named lockfile, but an explicit `--lockfile` remains available for ambiguous
 cases.
 
 To remove a command, remove it from the same integration points, including
-its `description` field. Then run `sync_readme.py` (see below); it rejects
-lockfile entries without a description.
+its `description` field.
 
 ## Validation and release alignment
-
-Regenerate the user-facing command table after changing a lockfile or a
-description:
-
-```console
-$ python3 tools/internal/sync_readme.py
-```
-
-The pre-commit hook also validates selection names, provider groups, direct
-dependencies and tool references.
-It runs the same command; pre-commit rejects the commit if
-running it changes `tools/README.md`, so a stale table cannot be committed.
 
 Run the feature test for every installer changed. The feature tests read their
 expected versions from the catalog, which verifies that the DevContainer and
