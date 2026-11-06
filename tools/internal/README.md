@@ -154,6 +154,21 @@ cases.
 To remove a command, remove it from the same integration points, including
 its `description` field.
 
+## Automated version updates
+
+Renovate updates native pins in `lockfiles/*.lock.json` and Python pins in
+`providers.json`. The regex managers expect the native `version` before
+`binaries`, and Python `provider`, `package`, `version` fields in that order.
+APT and special release/setup providers remain maintained separately.
+
+For a manual native update, edit the `version` fields while keeping the old
+URLs, then run `python3 tools/internal/refresh_lockfile_digests.py <lockfile>`.
+It refreshes URLs, archive paths and GitHub SHA256 digests for every platform;
+missing assets or invalid digests fail without writing the file. Upstream
+asset renames or archive layout changes need manual adjustment. Renovate runs
+this command only for the affected lockfile and reports failures as artifact
+errors to resolve before merging.
+
 ## Validation and release alignment
 
 Run the feature test for every installer changed. The feature tests read their
