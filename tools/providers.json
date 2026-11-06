@@ -226,6 +226,19 @@
     "setup_script": "codeql.sh",
     "requires": ["zstd"]
   },
+  "dive": {
+    "provider": "release",
+    "policy": "exact",
+    "platforms": ["linux/x86_64", "linux/arm64"],
+    "version": "0.13.1",
+    "amd64": {
+      "sha256": "0c20d18f0cc87e6e982a3289712ac3aa9fc364ba973109d1da3a473232640571"
+    },
+    "arm64": {
+      "sha256": "80203401b3d7c4feffd13575755a07834a2d2f35f49e8612f0749b318c3f2fa5"
+    },
+    "setup_script": "dive.sh"
+  },
   "codeql_coding_standards": {
     "provider": "release",
     "policy": "exact",

@@ -337,7 +337,8 @@ class EnvironmentTest(unittest.TestCase):
         system, npm = [call.args[0] for call in run.call_args_list]
         self.assertEqual(system[:2], ["sudo", sys.executable])
         self.assertEqual(
-            system[system.index("--providers") + 1 :], ["native", "python"]
+            system[system.index("--providers") + 1 :],
+            ["native", "python", "setup"],
         )
         self.assertIn("/usr/local/bin", system)
         self.assertIn("/usr/local/share/uv/tools", system)
@@ -365,9 +366,17 @@ class EnvironmentTest(unittest.TestCase):
         self.assertEqual(result, 0)
         native.assert_called_once()
         python.assert_called_once()
-        run.assert_called_once_with(
-            ["npm", "install", "-g", "@devcontainers/cli"], check=True
+        self.assertEqual(
+            [call.args[0] for call in run.call_args_list],
+            [
+                ["npm", "install", "-g", "@devcontainers/cli"],
+                [
+                    "bash",
+                    str(TOOLS_DIR / "internal" / "devcontainer" / "setup" / "dive.sh"),
+                ],
+            ],
         )
+        self.assertEqual(run.call_args_list[1].kwargs["env"]["dive_version"], "0.13.1")
 
     def test_failed_system_installation_stops_before_npm(self) -> None:
         with (

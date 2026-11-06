@@ -89,6 +89,9 @@
     "python": [
       "pre-commit"
     ],
+    "setup": [
+      "dive"
+    ],
     "npm": [
       "devcontainers-cli"
     ]
