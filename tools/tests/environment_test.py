@@ -337,7 +337,8 @@ class EnvironmentTest(unittest.TestCase):
         system, npm = [call.args[0] for call in run.call_args_list]
         self.assertEqual(system[:2], ["sudo", sys.executable])
         self.assertEqual(
-            system[system.index("--providers") + 1 :], ["native", "python"]
+            system[system.index("--providers") + 1 :],
+            ["native", "python", "setup"],
         )
         self.assertIn("/usr/local/bin", system)
         self.assertIn("/usr/local/share/uv/tools", system)
