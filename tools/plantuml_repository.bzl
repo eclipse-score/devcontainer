@@ -27,34 +27,21 @@ def _plantuml_repository_impl(ctx):
         type = binary["type"],
         output = "bundle",
     )
-    for name, mode in [("plantuml", "cwd"), ("plantuml_binary", "action")]:
-        ctx.template(
-            name + ".sh",
-            ctx.path(ctx.attr._launcher),
-            {
-                "@MODE@": mode,
-                "@BINARY@": ctx.name + "/bundle/" + binary["file"],
-            },
-        )
-    ctx.file("BUILD.bazel", """
-load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 
-package(default_visibility = ["//visibility:public"])
-
-[
-    sh_binary(
-        name = name,
-        srcs = [name + ".sh"],
-        data = glob(["bundle/**"]) + ["@bazel_tools//tools/bash/runfiles"],
+    # The canonical repository name is known here, so the launcher can locate
+    # the bundle in runfiles even when this module is used by another repository.
+    ctx.template(
+        "plantuml_binary.sh",
+        ctx.path(ctx.attr._launcher),
+        {"@BINARY@": ctx.name + "/bundle/" + binary["file"]},
     )
-    for name in ["plantuml", "plantuml_binary"]
-]
-""")
+    ctx.symlink(ctx.path(ctx.attr._build_file), "BUILD.bazel")
 
 plantuml_repository = repository_rule(
     implementation = _plantuml_repository_impl,
     attrs = {
         "lockfile": attr.label(mandatory = True, allow_single_file = True),
+        "_build_file": attr.label(default = Label("//tools:internal/plantuml.BUILD.bazel"), allow_single_file = True),
         "_launcher": attr.label(default = Label("//tools:internal/run_plantuml.sh"), allow_single_file = True),
     },
 )

@@ -14,6 +14,12 @@
 
 set -uo pipefail
 
+# The cwd wrapper invokes this launcher inside its own runfiles tree without
+# exporting RUNFILES_DIR. Recover that tree before loading the runfiles library.
+if [[ -z "${RUNFILES_DIR:-}" && "$0" == *.runfiles/* ]]; then
+    export RUNFILES_DIR="${0%%.runfiles/*}.runfiles"
+fi
+
 # Locate Bazel's runfiles library in both directory and manifest layouts.
 runfiles_library="bazel_tools/tools/bash/runfiles/runfiles.bash"
 # shellcheck disable=SC1090
@@ -24,12 +30,7 @@ source "${RUNFILES_DIR:-/dev/null}/${runfiles_library}" 2>/dev/null ||
     { echo "Cannot locate Bazel runfiles library" >&2; exit 1; }
 set -e
 
-mode="@MODE@"
 binary="$(rlocation "@BINARY@")"
-
-if [[ "${mode}" == "cwd" && -n "${BUILD_WORKING_DIRECTORY:-}" ]]; then
-    cd "${BUILD_WORKING_DIRECTORY}"
-fi
 
 # The executable and its native libraries remain siblings in the runfiles bundle.
 exec "${binary}" "$@"

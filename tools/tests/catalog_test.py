@@ -39,7 +39,7 @@ class CatalogTest(unittest.TestCase):
         template = (TOOLS_DIR / "internal/run_plantuml.sh").read_text()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            runfiles = root / "runfiles"
+            runfiles = root / "launcher.runfiles"
             library = runfiles / "bazel_tools/tools/bash/runfiles/runfiles.bash"
             library.parent.mkdir(parents=True)
             library.write_text(
@@ -58,50 +58,49 @@ class CatalogTest(unittest.TestCase):
             caller.mkdir()
             launcher = root / "launcher.sh"
             launcher.with_suffix(".sh.runfiles").symlink_to(runfiles)
+            wrapped_launcher = runfiles / "native_plantuml/launcher.sh"
+            wrapped_launcher.symlink_to(launcher)
             manifest = root / "MANIFEST"
             manifest.write_text(
                 f"bazel_tools/tools/bash/runfiles/runfiles.bash {library}\n"
             )
-            for mode, expected_directory in (("cwd", caller), ("action", root)):
-                for layout in ("directory", "manifest", "adjacent"):
-                    with self.subTest(mode=mode, layout=layout):
-                        launcher.write_text(
-                            template.replace("@MODE@", mode).replace(
-                                "@BINARY@", "native_plantuml/bundle/plantuml"
-                            )
-                        )
-                        environment = {
-                            **os.environ,
-                            "TEST_RUNFILES": str(runfiles),
-                            "BUILD_WORKING_DIRECTORY": str(caller),
-                        }
-                        for variable in ("RUNFILES_DIR", "RUNFILES_MANIFEST_FILE"):
-                            environment.pop(variable, None)
-                        if layout == "directory":
-                            environment["RUNFILES_DIR"] = str(runfiles)
-                        elif layout == "manifest":
-                            environment["RUNFILES_MANIFEST_FILE"] = str(manifest)
-                        result = subprocess.run(
-                            [
-                                "bash",
-                                str(launcher),
-                                "diagram with spaces.puml",
-                                "-tsvg",
-                            ],
-                            cwd=root,
-                            env=environment,
-                            check=True,
-                            capture_output=True,
-                            text=True,
-                        )
-                        self.assertEqual(
-                            result.stdout.splitlines(),
-                            [
-                                str(expected_directory),
-                                "diagram with spaces.puml",
-                                "-tsvg",
-                            ],
-                        )
+            for layout in ("directory", "manifest", "adjacent", "wrapped"):
+                with self.subTest(layout=layout):
+                    launcher.write_text(
+                        template.replace("@BINARY@", "native_plantuml/bundle/plantuml")
+                    )
+                    environment = {
+                        **os.environ,
+                        "TEST_RUNFILES": str(runfiles),
+                        "BUILD_WORKING_DIRECTORY": str(caller),
+                    }
+                    for variable in ("RUNFILES_DIR", "RUNFILES_MANIFEST_FILE"):
+                        environment.pop(variable, None)
+                    if layout == "directory":
+                        environment["RUNFILES_DIR"] = str(runfiles)
+                    elif layout == "manifest":
+                        environment["RUNFILES_MANIFEST_FILE"] = str(manifest)
+                    result = subprocess.run(
+                        [
+                            "bash",
+                            str(wrapped_launcher if layout == "wrapped" else launcher),
+                            "diagram with spaces.puml",
+                            "-tsvg",
+                        ],
+                        cwd=root,
+                        env=environment,
+                        check=True,
+                        capture_output=True,
+                        text=True,
+                    )
+                    self.assertEqual(
+                        result.stdout.splitlines(),
+                        [
+                            str(root),
+                            "diagram with spaces.puml",
+                            "-tsvg",
+                        ],
+                    )
 
     def test_plantuml_uses_native_release_archives(self) -> None:
         metadata = catalog.load_tool("plantuml", "plantuml")

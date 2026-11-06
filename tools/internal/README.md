@@ -55,7 +55,9 @@ Native tools with upstream release artifacts use
 
 PlantUML is an exception: [`plantuml_repository.bzl`](../plantuml_repository.bzl)
 reads its lockfile and preserves the complete native archive in Bazel runfiles,
-including Linux rendering libraries. Its targets select the Bazel host platform;
+including Linux rendering libraries. The bundle's targets are defined in
+[`plantuml.BUILD.bazel`](plantuml.BUILD.bazel); interactive calls use the shared
+`rules_multitool` cwd wrapper. Its targets select the Bazel host platform;
 `plantuml_binary` preserves the action's working directory. Pass its
 `FilesToRunProvider` to actions so the bundled libraries are included.
 
