@@ -47,6 +47,9 @@
       "matchFileNames": [
         "tools/lockfiles/*.lock.json"
       ],
+      // The match reaches into binaries to discover the release repository.
+      // Replace only the first version occurrence; refresh owns archive paths.
+      "autoReplaceGlobalMatch": false,
       "postUpgradeTasks": {
         "commands": [
           "tools/internal/refresh_lockfile_digests.py {{{packageFile}}}"
@@ -61,39 +64,25 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/apm\\.lock\\.json$"
+      "managerFilePatterns": [
+        "/^tools/lockfiles/[^/]+\\.lock\\.json$/"
       ],
       "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\"[\\s\\S]*?\"url\":\\s*\"https://github.com/(?<depName>[^/]+/[^/]+)/releases/download/"
       ],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/apm",
       "versioningTemplate": "semver"
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/opencode\\.lock\\.json$"
+      "managerFilePatterns": [
+        "/^tools/providers\\.json$/"
       ],
       "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+        "\"provider\":\\s*\"python\",\\s*\"package\":\\s*\"(?<depName>[^\"]+)\",\\s*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
       ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "anomalyco/opencode",
-      "versioningTemplate": "semver"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^tools/lockfiles/uv\\.lock\\.json$"
-      ],
-      "matchStrings": [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "astral-sh/uv",
-      "versioningTemplate": "semver"
+      "datasourceTemplate": "pypi",
+      "versioningTemplate": "pep440"
     }
   ],
   "enabledManagers": [
