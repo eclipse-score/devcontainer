@@ -62,7 +62,7 @@
     "packages": ["openjdk-21-jdk-headless"],
     "policy": "prefix",
     "platforms": ["linux/x86_64", "linux/arm64"],
-    "version": "21.0.12",
+    "version": "21.0.13",
     "setup_script": "java.sh"
   },
   "valgrind": {
