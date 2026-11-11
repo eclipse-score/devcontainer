@@ -51,14 +51,14 @@ updates:
           - "patch"
   # DevContainer
   - package-ecosystem: devcontainers
-    directory: /.devcontainer
+    directory: /
     schedule:
       interval: daily
     commit-message:
       prefix: chore
       include: scope
   - package-ecosystem: devcontainers
-    directory: /src/s-core-devcontainer/.devcontainer
+    directory: /src/s-core-devcontainer
     schedule:
       interval: daily
     commit-message:
