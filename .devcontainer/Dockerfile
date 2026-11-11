@@ -12,4 +12,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Use Dockerfile to get dependabot version bumps after new image is released
 FROM mcr.microsoft.com/devcontainers/javascript-node:4-24
