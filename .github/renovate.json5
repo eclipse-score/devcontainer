@@ -18,7 +18,7 @@
   // It overrides this setting with RENOVATE_FORCE to avoid competing runners.
   "enabled": false,
   "extends": [
-    "config:base",
+    "config:recommended",
     ":dependencyDashboard",
     ":semanticCommits"
   ],
@@ -33,7 +33,7 @@
     ]
   },
   "semanticCommits": "enabled",
-  "commitMessagePrefix": "chore(deps):",
+  "commitMessagePrefix": "feat(deps):",
   "prConcurrentLimit": 5,
   "prCreation": "immediate",
   "automerge": false,
