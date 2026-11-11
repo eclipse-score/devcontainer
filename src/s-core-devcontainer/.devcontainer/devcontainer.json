@@ -28,15 +28,15 @@
         },
         "./s-core-local": {},
         "./bazel-feature": {},
-        "ghcr.io/eclipse-score/mcp-servers/agent-context:0": {}
+        "ghcr.io/eclipse-score/mcp-servers/agent-context:0.2.7": {}
     },
     "overrideFeatureInstallOrder": [
-        // this order makes it more convenient to develop the local features, since they will be installed last
-        // which means changes to it will be applied without needing to rebuild all other features
+        // Keep local features near the end to make their development more convenient.
+        // s-core-local must fix config volume ownership before agent-context registers MCP servers.
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers-community/features/llvm",
-        "ghcr.io/eclipse-score/mcp-servers/agent-context:0",
         "./s-core-local",
+        "ghcr.io/eclipse-score/mcp-servers/agent-context:0.2.7",
         "./bazel-feature"
     ],
     "remoteUser": "vscode",

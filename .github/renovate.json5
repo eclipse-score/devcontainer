@@ -59,6 +59,23 @@
         ],
         "executionMode": "update"
       }
+    },
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchFileNames": [
+        "src/s-core-devcontainer/.devcontainer/devcontainer.json"
+      ],
+      "postUpgradeTasks": {
+        "commands": [
+          "npx --yes @devcontainers/cli upgrade --workspace-folder src/s-core-devcontainer"
+        ],
+        "fileFilters": [
+          "src/s-core-devcontainer/.devcontainer/devcontainer-lock.json"
+        ],
+        "executionMode": "update"
+      }
     }
   ],
   "customManagers": [
@@ -71,6 +88,18 @@
         "\"version\":\\s*\"(?<currentValue>[^\"]+)\"[\\s\\S]*?\"url\":\\s*\"https://github.com/(?<depName>[^/]+/[^/]+)/releases/download/"
       ],
       "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^src\\/s-core-devcontainer\\/\\.devcontainer\\/devcontainer\\.json$/"
+      ],
+      "matchStrings": [
+        "ghcr\\.io/eclipse-score/mcp-servers/agent-context:(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "eclipse-score/mcp-servers",
       "versioningTemplate": "semver"
     },
     {

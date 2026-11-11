@@ -53,7 +53,8 @@ jobs:
           # Allow the post-upgrade task that refreshes lockfile URLs and sha256
           # digests (allowedCommands is a global-only option, so it must be set
           # here rather than in renovate.json5).
-          RENOVATE_ALLOWED_COMMANDS: '["^tools/internal/refresh_lockfile_digests\\.py tools/lockfiles/[A-Za-z0-9_-]+\\.lock\\.json$"]'
+          RENOVATE_ALLOWED_COMMANDS: >-
+            ["^npx --yes @devcontainers/cli upgrade --workspace-folder src/s-core-devcontainer$", "^tools/internal/refresh_lockfile_digests\\.py tools/lockfiles/[A-Za-z0-9_-]+\\.lock\\.json$"]
   validate-renovate-config:
     name: Validate Renovate config
     runs-on: ubuntu-24.04
