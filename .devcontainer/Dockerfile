@@ -13,4 +13,4 @@
 # *******************************************************************************
 
 # Use Dockerfile to get dependabot version bumps after new image is released
-FROM mcr.microsoft.com/devcontainers/javascript-node:4-24
+FROM mcr.microsoft.com/devcontainers/javascript-node:5-26
