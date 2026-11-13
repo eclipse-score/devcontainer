@@ -6,14 +6,14 @@
       "integrity": "sha256:4f464ab97a59439286a55490b55ba9851616f6f76ac3025e134127ac08ad79e2"
     },
     "ghcr.io/devcontainers/features/common-utils": {
-      "version": "2.5.4",
-      "resolved": "ghcr.io/devcontainers/features/common-utils@sha256:00fd45550f578d9d515044d9e2226e908dbc3d7aa6fcb9dee4d8bdb60be114cf",
-      "integrity": "sha256:00fd45550f578d9d515044d9e2226e908dbc3d7aa6fcb9dee4d8bdb60be114cf"
+      "version": "2.7.1",
+      "resolved": "ghcr.io/devcontainers/features/common-utils@sha256:e76a6a8a35d1ad824daad1540725e0ec9f8ed2dc00d2850e990a9830013c7d08",
+      "integrity": "sha256:e76a6a8a35d1ad824daad1540725e0ec9f8ed2dc00d2850e990a9830013c7d08"
     },
     "ghcr.io/eclipse-score/mcp-servers/agent-context:0": {
-      "version": "0.2.7",
-      "resolved": "ghcr.io/eclipse-score/mcp-servers/agent-context@sha256:57a757f4a175c4bae33fdac0dfffc2a895a7ed427a3466e439f9c7ed901b7260",
-      "integrity": "sha256:57a757f4a175c4bae33fdac0dfffc2a895a7ed427a3466e439f9c7ed901b7260"
+      "version": "0.2.8",
+      "resolved": "ghcr.io/eclipse-score/mcp-servers/agent-context@sha256:39743d6b50f28630d4bb9b447085cf068595f4e46f7db87710f4709d92bcd04e",
+      "integrity": "sha256:39743d6b50f28630d4bb9b447085cf068595f4e46f7db87710f4709d92bcd04e"
     }
   }
 }
