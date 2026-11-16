@@ -46,7 +46,9 @@ If these shall be run in the pull request add the **`test-consumer`** label to a
 ## Release Automation
 
 Releases are cut automatically once per week from `main`, but only if commits were added since the latest `v<major>.<minor>.<patch>` tag.
-The scheduled workflow creates the git tag and GitHub release, and the existing tag-triggered release workflow then builds, tests and publishes the matching container image.
+The release workflow creates the git tag and GitHub release, then builds, tests and publishes the matching container image for both architectures and merges their manifests.
+
+If the release workflow fails, the [retry workflow](../.github/workflows/retry-release.yaml) automatically reruns all failed jobs and their dependents in the original release run, up to three times (four attempts in total).
 
 The next semantic version is derived from commit messages since the previous release:
 
