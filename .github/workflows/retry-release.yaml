@@ -1,0 +1,37 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Retry Failed Release Builds
+on:
+  workflow_run:
+    workflows: ['DevContainer Release & Validate & Publish']
+    types: [completed]
+    branches: [main]
+permissions:
+  actions: write
+jobs:
+  retry:
+    if: >-
+      github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.run_attempt <= 3
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Retry all failed release workflow jobs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          set -euo pipefail
+
+          echo "Retrying failed jobs and their dependents for release run ${RUN_ID} (attempt ${RUN_ATTEMPT})."
+          gh run rerun "${RUN_ID}" --repo "${GH_REPO}" --failed
