@@ -333,7 +333,7 @@
   "pytest": {
     "provider": "python",
     "package": "pytest",
-    "version": "9.0.2",
+    "version": "9.2.0",
     "entrypoint": "pytest",
     "description": "Run Python tests",
     "requires": ["uv"]
