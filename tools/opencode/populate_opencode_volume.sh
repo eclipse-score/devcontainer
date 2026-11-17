@@ -13,12 +13,47 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# Copies the host OpenCode configuration (plugins, MCP servers, agents, ...) into
-# $HOME/.config/opencode. Run by populate_opencode_volume.sh, which bind-mounts the
-# host directory read-only at ${host_dir}. Machine-specific and secret files are not
-# copied, and dependencies are installed inside the container so native modules match
-# its OS.
+# Fills the OpenCode volume that every devcontainer on this machine shares with the
+# host's OpenCode configuration and plugins. Run it once per machine, and again after
+# changing plugins or configuration in ~/.config/opencode.
+#
+# This file is shipped inside the devcontainer image, so it can be run without cloning
+# this repository. It needs only Docker and bash on the host:
+#
+#   docker run --rm --entrypoint cat <devcontainer-image> \
+#     /usr/local/share/score-tools/opencode/populate_opencode_volume.sh | bash
+#
+# Nothing is mounted into devcontainers. The copy happens in a throwaway container,
+# so the devcontainer.json files of the repositories do not need any changes.
+#
+# Environment overrides:
+#   OPENCODE_VOLUME          volume to populate (default: opencode-config)
+#   OPENCODE_POPULATE_IMAGE  helper image that runs the copy (default: a Node image)
 
+set -euo pipefail
+
+volume="${OPENCODE_VOLUME:-opencode-config}"
+image="${OPENCODE_POPULATE_IMAGE:-mcr.microsoft.com/devcontainers/javascript-node:5-26}"
+host_config="${HOME}/.config/opencode"
+
+if ! command -v docker >/dev/null 2>&1 || ! docker info >/dev/null 2>&1; then
+  echo "Error: Docker is not running or not installed."
+  exit 1
+fi
+
+if [ ! -d "${host_config}" ]; then
+  echo "Error: ${host_config} does not exist. Set up OpenCode on this machine first."
+  exit 1
+fi
+
+# The copy must match the devcontainer's platform, because the plugin's native modules
+# are platform-specific. Use the daemon's native platform, not DOCKER_DEFAULT_PLATFORM.
+platform="$(docker version --format '{{.Server.Os}}/{{.Server.Arch}}')"
+
+# Runs inside the helper container. It copies the host configuration from /opt/host-opencode
+# into the volume, which is mounted at $HOME/.config/opencode. Machine-specific and secret
+# files are not copied, and dependencies are installed for the container's OS and architecture.
+IFS= read -r -d '' copy_script <<'COPY_SCRIPT_EOF' || true
 set -uo pipefail
 
 host_dir="/opt/host-opencode"
@@ -57,7 +92,7 @@ done
 
 if [ -n "${host_config}" ]; then
   # The container's own global config (for example its MCP servers) is kept as an overlay,
-  # so the host config can be regenerated on each start without losing it.
+  # so the host config can be regenerated on each run without losing it.
   if [ ! -f "${overlay_file}" ] && [ -f "${config_dir}/opencode.json" ]; then
     cp "${config_dir}/opencode.json" "${overlay_file}"
   fi
@@ -137,4 +172,17 @@ for plugin_dir in "${config_dir}"/plugins/*/; do
   [ -d "${plugin_dir}" ] && install_dependencies "${plugin_dir%/}"
 done
 
-exit 0
+# The devcontainer user (vscode) has uid 1000 in the devcontainer images. Files copied
+# from the host are owned by the host user, so the volume is chowned to that uid.
+chown -R 1000:1000 "${config_dir}"
+COPY_SCRIPT_EOF
+
+docker run --rm \
+  --platform "${platform}" \
+  -e HOME=/root \
+  -v "${host_config}:/opt/host-opencode:ro" \
+  -v "${volume}:/root/.config/opencode" \
+  "${image}" \
+  bash -c "${copy_script}"
+
+echo "OpenCode volume '${volume}' is populated from ${host_config}."

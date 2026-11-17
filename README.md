@@ -203,17 +203,18 @@ For further details on OpenCode, see the [OpenCode documentation](https://openco
   - `$HOME/.config/opencode`
   - `$HOME/.local/share/opencode`
 
-Your host OpenCode configuration and plugins are copied into this volume with
-`scripts/populate_opencode_volume.sh`. The volume is shared by all devcontainers on this machine,
-so the copy is done once per machine and no `devcontainer.json` changes are needed.
+Your host OpenCode configuration and plugins are copied into this volume by a script that ships inside
+the devcontainer image. The volume is shared by all devcontainers on this machine, so the copy is done
+once per machine and no `devcontainer.json` changes are needed. Run this on the host (macOS, WSL2 or
+Linux), with Docker running and `~/.config/opencode` present:
 
 ```bash
-# Run from the repository root on the host (macOS, WSL2 or Linux), with Docker running.
-# Requires ~/.config/opencode, which OpenCode creates on first use.
-./scripts/populate_opencode_volume.sh
+docker run --rm --entrypoint cat ghcr.io/eclipse-score/devcontainer:<version> \
+  /usr/local/share/score-tools/opencode/populate_opencode_volume.sh | bash
 ```
 
-Run the script again after changing plugins or configuration in `~/.config/opencode` on the host.
+Use the same devcontainer image tag you use for your repositories. Run the command again after changing
+plugins or configuration in `~/.config/opencode` on the host.
 Files removed on the host are not removed from the volume. To reset it, remove the volume with
 `docker volume rm opencode-config`.
 
