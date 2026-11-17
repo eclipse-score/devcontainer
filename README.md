@@ -203,18 +203,23 @@ For further details on OpenCode, see the [OpenCode documentation](https://openco
   - `$HOME/.config/opencode`
   - `$HOME/.local/share/opencode`
 
-Setup example:
+Your host OpenCode configuration and plugins are copied into this volume with
+`scripts/populate_opencode_volume.sh`. The volume is shared by all devcontainers on this machine,
+so the copy is done once per machine and no `devcontainer.json` changes are needed.
 
 ```bash
-# Use your usual opencode configuration flow
-opencode --help
-
-# Optional quick check that directories exist.
-# If the config directory does not exist yet, start OpenCode once or create it manually;
-# OpenCode typically creates it on first use.
-ls -la "$HOME/.config/opencode"
-ls -la "$HOME/.local/share/opencode"
+# Run from the repository root on the host (macOS, WSL2 or Linux), with Docker running.
+# Requires ~/.config/opencode, which OpenCode creates on first use.
+./scripts/populate_opencode_volume.sh
 ```
+
+Run the script again after changing plugins or configuration in `~/.config/opencode` on the host.
+Files removed on the host are not removed from the volume. To reset it, remove the volume with
+`docker volume rm opencode-config`.
+
+Inside the devcontainer, the plugin's dependencies are installed for the container's OS, so the
+same plugin works on macOS, WSL2 and Linux. Local MCP servers must be installed in the container.
+Remote MCP servers work anywhere.
 
 #### APM
 
