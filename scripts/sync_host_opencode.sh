@@ -116,8 +116,10 @@ install_dependencies() {
   local lock="${dir}/package-lock.json"
   [ -f "${lock}" ] || return 0
 
+  # The architecture is part of the stamp: native modules must be reinstalled when the
+  # same volume is used on a different platform.
   local sum
-  sum="$(sha256sum "${lock}" | cut -d' ' -f1)"
+  sum="$(sha256sum "${lock}" | cut -d' ' -f1)-$(uname -m)"
   if [ -f "${dir}/node_modules/.lock-sha256" ] && [ "$(cat "${dir}/node_modules/.lock-sha256")" = "${sum}" ]; then
     return 0
   fi

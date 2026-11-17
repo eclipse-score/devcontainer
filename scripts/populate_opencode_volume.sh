@@ -44,9 +44,14 @@ if [ ! -d "${host_config}" ]; then
   exit 1
 fi
 
+# The copy must match the devcontainer's platform, because the plugin's native modules
+# are platform-specific. Use the daemon's native platform, not DOCKER_DEFAULT_PLATFORM.
+platform="$(docker version --format '{{.Server.Os}}/{{.Server.Arch}}')"
+
 # The devcontainer user (vscode) has uid 1000 in the devcontainer images. Files copied
 # from the host are owned by the host user, so the copy is chowned to that uid.
 docker run --rm \
+  --platform "${platform}" \
   -e HOME=/root \
   -v "${host_config}:/opt/host-opencode:ro" \
   -v "${sync_script}:/opt/sync_host_opencode.sh:ro" \
