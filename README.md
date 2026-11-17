@@ -217,6 +217,11 @@ Run the script again after changing plugins or configuration in `~/.config/openc
 Files removed on the host are not removed from the volume. To reset it, remove the volume with
 `docker volume rm opencode-config`.
 
+> [!NOTE]
+> - The script needs the Docker daemon on the host and pulls `mcr.microsoft.com/devcontainers/javascript-node:5-26` on first use.
+> - The copy runs on the daemon's native platform (for example `linux/arm64` on Apple silicon), because the plugin's native modules are platform-specific. `DOCKER_DEFAULT_PLATFORM` is ignored for this step.
+> - Dependencies are reinstalled automatically when the lockfile or the architecture changes. Re-running the script is always safe.
+
 Inside the devcontainer, the plugin's dependencies are installed for the container's OS, so the
 same plugin works on macOS, WSL2 and Linux. Local MCP servers must be installed in the container.
 Remote MCP servers work anywhere.
