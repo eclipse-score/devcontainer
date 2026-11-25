@@ -1,10 +1,5 @@
 {
   "features": {
-    "ghcr.io/devcontainers-community/features/llvm": {
-      "version": "3.2.0",
-      "resolved": "ghcr.io/devcontainers-community/features/llvm@sha256:4f464ab97a59439286a55490b55ba9851616f6f76ac3025e134127ac08ad79e2",
-      "integrity": "sha256:4f464ab97a59439286a55490b55ba9851616f6f76ac3025e134127ac08ad79e2"
-    },
     "ghcr.io/devcontainers/features/common-utils": {
       "version": "2.5.4",
       "resolved": "ghcr.io/devcontainers/features/common-utils@sha256:00fd45550f578d9d515044d9e2226e908dbc3d7aa6fcb9dee4d8bdb60be114cf",

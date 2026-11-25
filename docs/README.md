@@ -38,7 +38,7 @@ One has to take ones own medicin and for that reason the [S-CORE devcontainer](.
 │  ┌─────────────────────────────────────────────────────────────────┐  │
 │  │ Build S-CORE DevContainer (src/s-core-devcontainer)             │  │
 │  │  - Dockerfile (Ubuntu base image)                               │  │
-│  │  - Pre-existing features (Git, LLVM/Clang, Rust, pre-commit, …) │  │
+│  │  - Pre-existing Dev Container features                         │  │
 │  │  - bazel feature (available at /devcontainer/features/…)        │  │
 │  │  - S-CORE local feature (available at /devcontainer/features/…) │  │
 │  └─────────────────────────────────────────────────────────────────┘  │

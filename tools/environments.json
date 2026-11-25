@@ -30,6 +30,8 @@
       "lcov",
       "pkg_config",
       "libcairo2_dev",
+      "libstdcxx_dev",
+      "libc_dev",
       "python",
       "python3-pip",
       "python3-venv",

@@ -100,6 +100,20 @@
     "platforms": ["linux/x86_64", "linux/arm64"],
     "version": "1.18.0"
   },
+  "libstdcxx_dev": {
+    "provider": "apt",
+    "packages": ["libstdc++-13-dev"],
+    "policy": "distribution",
+    "install_recommends": false,
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
+  "libc_dev": {
+    "provider": "apt",
+    "packages": ["libc6-dev"],
+    "policy": "distribution",
+    "install_recommends": false,
+    "platforms": ["linux/x86_64", "linux/arm64"]
+  },
   "python": {
     "provider": "apt",
     "description": "Distribution Python interpreter",

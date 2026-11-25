@@ -20,11 +20,12 @@ SCRIPT_DIR=$(dirname -- "${SCRIPT_PATH}")
 
 source "${SCRIPT_DIR}/test-utils.sh" vscode
 
-# C++ tooling
-check "validate clangd is working and has the correct version" bash -c "clangd --version | grep '20.1.8'"
-check "validate clang-format is working and has the correct version" bash -c "clang-format --version | grep '20.1.8'"
-check "validate clang-tidy is working and has the correct version" bash -c "clang-tidy --version | grep '20.1.8'"
-check "validate clang is working and has the correct version" bash -c "clang --version | grep '20.1.8'"
+# System headers for non-hermetic Bazel toolchains
+package_installed() {
+    test "$(dpkg-query -W -f='${db:Status-Status}' "$1")" = installed
+}
+check "validate libstdc++ development package is installed" package_installed libstdc++-13-dev
+check "validate libc development package is installed" package_installed libc6-dev
 
 # System trust store. Verifies the Dockerfile's CA refresh, so it is sourced
 # explicitly here rather than being discovered; forgetting this line skips it.
