@@ -35,9 +35,6 @@ check_config_volume_ownership() (
 
 check "config volume parents belong to the user and retain private permissions" check_config_volume_ownership
 
-ARCHITECTURE=$(dpkg --print-architecture)
-KERNEL=$(uname -s)
-
 # Read tool versions + metadata into environment variables
 eval "$(/usr/local/share/score-tools/internal/devcontainer/install.py shell-metadata)"
 
@@ -109,10 +106,6 @@ check "validate gh is working and has the correct version" bash -c "gh --version
 # ${value#*:} removes that prefix; the executable reports only 3.22.0.
 check "validate valgrind is working and has the correct version" bash -c "valgrind --version | grep '${valgrind_version#*:}'"
 check "validate ripgrep is working and has the correct version" bash -c "rg --version | grep '${ripgrep_version}'"
-if [ "${ARCHITECTURE}" = "amd64" ] || { [ "${ARCHITECTURE}" = "arm64" ] && [ "${KERNEL}" = "Darwin" ]; }; then
-    check "validate codeql is working and has the correct version" bash -c "codeql --version | grep '${codeql_version}'"
-    check "validate CODEQL_HOME is set correctly" bash -c "echo ${CODEQL_HOME} | grep \"/usr/local/codeql\""
-fi
 
 # lcov
 check "validate lcov is working and has the correct version" bash -c "lcov --version | grep '${lcov_version}'"

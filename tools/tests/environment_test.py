@@ -534,12 +534,12 @@ class EnvironmentTest(unittest.TestCase):
                     text=True,
                 )
 
-            self.assertEqual(run("selected", "s-core-local", "codeql").returncode, 0)
+            self.assertEqual(run("selected", "codeql", "codeql").returncode, 0)
             selection_path = tools / "environments.json"
             selections = json.loads(selection_path.read_text())
-            selections["s-core-local"]["setup"] = []
+            selections["codeql"]["setup"] = []
             selection_path.write_text(json.dumps(selections))
-            self.assertEqual(run("selected", "s-core-local", "codeql").returncode, 1)
+            self.assertEqual(run("selected", "codeql", "codeql").returncode, 1)
             packs = run("items", "codeql_coding_standards", "packs")
             self.assertEqual(packs.returncode, 0, packs.stderr)
             definitions = json.loads((tools / "providers.json").read_text())
@@ -591,7 +591,7 @@ class EnvironmentTest(unittest.TestCase):
             tools = self._copy_tools(root)
             path = tools / "environments.json"
             selections = json.loads(path.read_text())
-            selections["s-core-local"]["build-apt"].remove("zstd")
+            selections["codeql"]["build-apt"].remove("zstd")
             path.write_text(json.dumps(selections))
             marker = root / "apt-was-called"
             fake_bin = root / "fake-bin"
@@ -605,7 +605,7 @@ class EnvironmentTest(unittest.TestCase):
             result = self._run(
                 tools,
                 root,
-                "s-core-local",
+                "codeql",
                 root / "bin",
                 "--phase",
                 "build",

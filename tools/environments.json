@@ -53,13 +53,8 @@
       "manpages-posix",
       "manpages-posix-dev"
     ],
-    "setup": [
-      "codeql",
-      "codeql_coding_standards"
-    ],
     "build-apt": [
-      "apt-transport-https",
-      "zstd"
+      "apt-transport-https"
     ]
   },
   "bazel-feature": {
@@ -75,6 +70,15 @@
     ],
     "build-apt": [
       "apt-transport-https"
+    ]
+  },
+  "codeql": {
+    "setup": [
+      "codeql",
+      "codeql_coding_standards"
+    ],
+    "build-apt": [
+      "zstd"
     ]
   },
   "repository-devcontainer": {
