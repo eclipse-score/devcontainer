@@ -65,15 +65,16 @@ require `sudo`. `--destination` and `--tool-dir` select these directories.
 | `npm` | `providers.json` | Install npm packages in the caller's environment |
 | `setup` | `providers.json` | Run the declared tool-specific setup |
 
-Definitions can name a script in [`setup/`](setup) with `setup_script`, including
-APT tools. Each script explains its purpose and inputs at the top.
+Definitions can name a script in [`setup/`](setup) with `setup_script`. This also
+applies to APT tools: OpenJDK needs `java.sh` to configure `JAVA_HOME` after
+installation. Each script explains its purpose and inputs at the top.
 `install.py` passes metadata as environment variables, not command-line flags.
 Scripts can query `selected ENVIRONMENT TOOL` and `items TOOL FIELD` for optional
 bundle membership. CodeQL, for example, selects its C/C++ packs from the catalog
 and declares zstd as a direct build dependency.
 
-A child process cannot set variables in the shell that launched it. CodeQL
-therefore writes a profile file for later terminals. Feature tests use
+A child process cannot set variables in the shell that launched it. Java and
+CodeQL therefore write profile files for later terminals. Feature tests use
 `eval "$(.../install.py shell-metadata)"` to read quoted version assignments from
 all catalogs in a single call.
 

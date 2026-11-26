@@ -70,6 +70,12 @@ check "validate flake8 is working" bash -c "flake8 --version"
 check "validate pytest is working" bash -c "pytest --version"
 check "validate pylint is working" bash -c "pylint --version"
 
+# OpenJDK
+check "validate java is working and has the correct version" bash -c "java -version 2>&1 | grep '${openjdk_version}'"
+# Expansion belongs to the child shell that performs the check.
+# shellcheck disable=SC2016
+check "validate JAVA_HOME matches javac" bash -c 'test "$(readlink -f "$JAVA_HOME")" = "$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"'
+
 # ruff
 check "validate ruff is working and has the correct version" bash -c "ruff --version | grep '${ruff_version}'"
 

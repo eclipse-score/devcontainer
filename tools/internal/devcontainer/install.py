@@ -353,7 +353,8 @@ def _cmd_install_environment(args: argparse.Namespace) -> int:
                 ] and system not in definition.get("omissions", {}):
                     raise SystemExit(f"Tool '{name}' is unsupported on {system}")
 
-    # Only setup scripts shipped next to this installer can be selected.
+    # Some tools need extra configuration, such as setting JAVA_HOME. Only
+    # setup scripts shipped next to this installer can be selected.
     setup_scripts = []
     setup_root = Path(__file__).resolve().parent / "setup"
     for name in selection.get("apt", []) + selection.get("setup", []):

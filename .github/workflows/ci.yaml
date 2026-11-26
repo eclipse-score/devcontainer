@@ -105,7 +105,7 @@ jobs:
             # Test consumer repository, arm64 is skipped because not all bazel dependencies are available for arm64
             # By default this is skipped in pull requests, unless the label "test-consumer" is added
             if [ "${{ matrix.os }}" = "amd64" ] && ( [ "${{ github.event_name }}" != "pull_request" ] || echo "${{ toJSON(github.event.pull_request.labels) }}" | grep -q "test-consumer" ); then
-              ./scripts/test_consumer.sh "https://github.com/eclipse-score/inc_someip_gateway.git" "66c793f43a9bbbd5b254a7354b2c8178f4c9ad26"
+              ./scripts/test_consumer.sh "https://github.com/eclipse-score/inc_someip_gateway.git" "568af2cdd3ceade100079c540b6b4302b3e50d93"
               ./scripts/test_consumer.sh "https://github.com/eclipse-score/score.git" "b72d06766669047458d3fd2e874694655f22e4c3"
             fi
 
