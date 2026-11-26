@@ -237,8 +237,7 @@
     "omissions": {
       "linux/arm64": "The selected bundle has no supported Linux arm64 artifact"
     },
-    "setup_script": "codeql.sh",
-    "requires": ["zstd"]
+    "setup_script": "codeql.sh"
   },
   "dive": {
     "provider": "release",
@@ -303,8 +302,7 @@
     "description": "Temporary container build dependency (removed after setup)",
     "packages": ["zstd"],
     "policy": "distribution",
-    "platforms": ["linux/x86_64", "linux/arm64"],
-    "phase": "build-only"
+    "platforms": ["linux/x86_64", "linux/arm64"]
   },
   "devcontainers-cli": {
     "provider": "npm",
