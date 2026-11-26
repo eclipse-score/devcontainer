@@ -45,6 +45,7 @@
       "bandit",
       "pipenv",
       "virtualenv",
+      "zstd",
       "pylint",
       "ca-certificates-java",
       "man-db",
@@ -76,9 +77,6 @@
     "setup": [
       "codeql",
       "codeql_coding_standards"
-    ],
-    "build-apt": [
-      "zstd"
     ]
   },
   "repository-devcontainer": {
