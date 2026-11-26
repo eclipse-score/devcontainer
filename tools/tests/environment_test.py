@@ -509,7 +509,10 @@ class EnvironmentTest(unittest.TestCase):
             with patch.object(catalog, "ENVIRONMENTS_PATH", path):
                 for data, message in (
                     ({"ci": {"python": ["pre-commit"]}}, "requires 'uv'"),
-                    ({"ci": {"apt": ["zstd"]}}, "Wrong installation phase"),
+                    (
+                        {"ci": {"apt": ["apt-transport-https"]}},
+                        "Wrong installation phase",
+                    ),
                     (
                         {"ci": {"setup": ["codeql_coding_standards"]}},
                         "requires 'codeql'",
@@ -534,12 +537,12 @@ class EnvironmentTest(unittest.TestCase):
                     text=True,
                 )
 
-            self.assertEqual(run("selected", "s-core-local", "codeql").returncode, 0)
+            self.assertEqual(run("selected", "codeql", "codeql").returncode, 0)
             selection_path = tools / "environments.json"
             selections = json.loads(selection_path.read_text())
-            selections["s-core-local"]["setup"] = []
+            selections["codeql"]["setup"] = []
             selection_path.write_text(json.dumps(selections))
-            self.assertEqual(run("selected", "s-core-local", "codeql").returncode, 1)
+            self.assertEqual(run("selected", "codeql", "codeql").returncode, 1)
             packs = run("items", "codeql_coding_standards", "packs")
             self.assertEqual(packs.returncode, 0, packs.stderr)
             definitions = json.loads((tools / "providers.json").read_text())
@@ -583,36 +586,6 @@ class EnvironmentTest(unittest.TestCase):
                 text=True,
             )
             self.assertEqual(check.returncode, 0, check.stderr)
-            self.assertFalse(marker.exists())
-
-    def test_missing_codeql_build_dependency_is_rejected_before_build(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            tools = self._copy_tools(root)
-            path = tools / "environments.json"
-            selections = json.loads(path.read_text())
-            selections["s-core-local"]["build-apt"].remove("zstd")
-            path.write_text(json.dumps(selections))
-            marker = root / "apt-was-called"
-            fake_bin = root / "fake-bin"
-            fake_bin.mkdir()
-            apt = fake_bin / "apt-get"
-            apt.write_text(f"#!/bin/sh\ntouch '{marker}'\n")
-            apt.chmod(0o755)
-            environment = dict(
-                os.environ, PATH=str(fake_bin) + os.pathsep + os.environ["PATH"]
-            )
-            result = self._run(
-                tools,
-                root,
-                "s-core-local",
-                root / "bin",
-                "--phase",
-                "build",
-                env=environment,
-            )
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("Tool 'codeql' requires 'zstd'", result.stderr)
             self.assertFalse(marker.exists())
 
     def test_declared_setup_receives_metadata_without_changing_the_parent_shell(

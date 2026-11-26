@@ -261,8 +261,20 @@ Removing a volume permanently deletes the stored configuration/history for that 
 
 ### How to use: codeql
 
-The devcontainer codeql installation supports C, C++ and Rust source code analysis. All publicly available
-"coding standards" are preloaded and codeql is already in PATH.
+CodeQL is not installed in the image by default. To install the pinned CodeQL
+bundle and the selected C/C++ coding-standard packs into a running container,
+run:
+
+```sh
+/usr/local/share/score-tools/internal/devcontainer/install.py install-environment codeql
+```
+
+The install uses the same CodeQL version, checksum, and query-pack pins as the
+image's tool catalog. It requires Linux x86_64 and installs CodeQL on the
+container's shared PATH. New terminals load `CODEQL_HOME` automatically; in
+the current terminal, run `source /etc/profile.d/codeql.sh`.
+
+The bundle supports C, C++, and Rust source analysis.
 
 Example:
 
@@ -375,7 +387,7 @@ and "Reopen in Container".
 Ordered by importance:
 
 * `src/s-core-devcontainer/` contains the sources for the Eclipse S-CORE DevContainer.
-It uses pre-existing [DevContainer features](https://containers.dev/implementors/features/) to provide some standard tools like Git, LLVM, and others.
+It uses pre-existing [DevContainer features](https://containers.dev/implementors/features/) alongside its own tools and configuration.
 In addition, it uses so-called "local" features (cf. `src/s-core-devcontainer/.devcontainer/s-core-local`) for the remaining tools and configuration.
 * `scripts/` contains scripts to build and test the container.
 * `.devcontainer/` contains the definition of the DevContainer for **this** repository, i.e. the "devcontainer devcontainer".

@@ -23,6 +23,7 @@ selection from [`environments.json`](../../environments.json):
 | --- | --- |
 | `s-core-local` | The published image's `s-core-local` feature |
 | `bazel-feature` | The published image's `bazel-feature` feature |
+| `codeql` | Optional CodeQL installation in a running container |
 | `repository-devcontainer` | This repository's post-create setup |
 
 These lists record the existing callers' tool choices. A future image can add
@@ -77,6 +78,11 @@ CodeQL therefore write profile files for later terminals. Feature tests use
 `eval "$(.../install.py shell-metadata)"` to read quoted version assignments from
 all catalogs in a single call.
 
+CodeQL is intentionally excluded from the `s-core-local` image selection. Users
+can install it after the container starts with
+`install.py install-environment codeql`; this selection uses the same pinned
+version and checksum in `providers.json` as the image's tool catalog.
+
 ## APT policies and platform limits
 
 APT `distribution` follows Ubuntu's selected version; `prefix` includes any
@@ -88,8 +94,8 @@ and removal of the APT copies.
 
 `packages` and `platforms` are independent lists. All listed packages are
 installed on each supported host; apt selects the host build. Both QEMU guest
-emulators, for example, are installed on both Linux host CPUs. CodeQL explicitly
-omits Linux ARM64 because its selected bundle has no artifact for that platform.
+emulators, for example, are installed on both Linux host CPUs. CodeQL supports
+only Linux x86_64 because its selected bundle has no Linux ARM64 artifact.
 
 `ca-certificates-java` populates Java's trust store from system certificates.
 Pinning the helper alone would not freeze CA data or imported company CAs.

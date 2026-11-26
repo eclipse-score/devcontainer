@@ -30,6 +30,8 @@
       "lcov",
       "pkg_config",
       "libcairo2_dev",
+      "libstdcxx_dev",
+      "libc_dev",
       "python",
       "python3-pip",
       "python3-venv",
@@ -43,6 +45,7 @@
       "bandit",
       "pipenv",
       "virtualenv",
+      "zstd",
       "pylint",
       "ca-certificates-java",
       "man-db",
@@ -51,13 +54,8 @@
       "manpages-posix",
       "manpages-posix-dev"
     ],
-    "setup": [
-      "codeql",
-      "codeql_coding_standards"
-    ],
     "build-apt": [
-      "apt-transport-https",
-      "zstd"
+      "apt-transport-https"
     ]
   },
   "bazel-feature": {
@@ -73,6 +71,12 @@
     ],
     "build-apt": [
       "apt-transport-https"
+    ]
+  },
+  "codeql": {
+    "setup": [
+      "codeql",
+      "codeql_coding_standards"
     ]
   },
   "repository-devcontainer": {
