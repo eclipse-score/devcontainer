@@ -435,8 +435,8 @@ class EnvironmentTest(unittest.TestCase):
         )
 
     def test_apt_tool_setup_is_retained_when_installation_is_delegated(self) -> None:
-        # Java is selected through APT, but also needs java.sh to set JAVA_HOME.
-        # Both an image build and a normal user must execute that setup.
+        definitions = installer.all_definitions()
+        definitions["graphviz"] = {**definitions["graphviz"], "setup_script": "dive.sh"}
         for uid in (0, 1000):
             with (
                 self.subTest(uid=uid),
@@ -444,14 +444,15 @@ class EnvironmentTest(unittest.TestCase):
                 patch.object(
                     installer,
                     "load_environments",
-                    return_value={"java-only": {"apt": ["openjdk"]}},
+                    return_value={"apt-fixture": {"apt": ["graphviz"]}},
                 ),
+                patch.object(installer, "all_definitions", return_value=definitions),
                 patch.object(installer.subprocess, "run") as run,
             ):
                 installer.main(
                     [
                         "install-environment",
-                        "java-only",
+                        "apt-fixture",
                         "--os",
                         "linux",
                         "--cpu",
@@ -462,7 +463,7 @@ class EnvironmentTest(unittest.TestCase):
                 if uid == 0:
                     self.assertEqual(commands[0][0], "apt-get")
                     self.assertEqual(commands[1][0], "bash")
-                    self.assertEqual(Path(commands[1][1]).name, "java.sh")
+                    self.assertEqual(Path(commands[1][1]).name, "dive.sh")
                 else:
                     self.assertEqual(len(commands), 1)
                     self.assertEqual(commands[0][0], "sudo")

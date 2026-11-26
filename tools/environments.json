@@ -24,7 +24,6 @@
       "git",
       "git_lfs",
       "gh",
-      "openjdk",
       "valgrind",
       "ripgrep",
       "lcov",
