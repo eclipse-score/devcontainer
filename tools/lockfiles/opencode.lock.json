@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "opencode": {
-    "version": "2.3.2",
+    "version": "2.4.2",
     "description": "Run the OpenCode CLI",
     "binaries": [
       {
         "kind": "archive",
         "file": "opencode",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v2.3.2/opencode-darwin-arm64.zip",
-        "sha256": "31ab5a06a29edc7e49b895f35c2b64ebfe7c7f0437b0f2581b006efcd79fee1a",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-darwin-arm64.zip",
+        "sha256": "d5a8c9fb4b121ebd531d9369d7ba6ce8af91c9d4d51d6685dbb4e0c7224fa5f3",
         "type": "zip",
         "os": "macos",
         "cpu": "arm64"
@@ -16,8 +16,8 @@
       {
         "kind": "archive",
         "file": "opencode",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v2.3.2/opencode-darwin-x64.zip",
-        "sha256": "1875a6d1106702f04c9468831563c061bd00337f891a1b4a6cd151155e6aaf5c",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-darwin-x64.zip",
+        "sha256": "ea4204a75602ce4f1d2121c781a15fa3af6d1c4285cf8b6ae81f61a76deca2a2",
         "type": "zip",
         "os": "macos",
         "cpu": "x86_64"
@@ -25,8 +25,8 @@
       {
         "kind": "archive",
         "file": "opencode",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v2.3.2/opencode-linux-x64.tar.gz",
-        "sha256": "563b5d663637226b6e3bb4bb6803281bc39b0d2cd88db06d674b6420aab009b0",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-linux-x64.tar.gz",
+        "sha256": "452912288f934d1771bd5bd0d8611ba3a6adc3db3ac3333c37facf373770ba66",
         "type": "tar.gz",
         "os": "linux",
         "cpu": "x86_64"
@@ -34,8 +34,8 @@
       {
         "kind": "archive",
         "file": "opencode",
-        "url": "https://github.com/anomalyco/opencode/releases/download/v2.3.2/opencode-linux-arm64.tar.gz",
-        "sha256": "9d10185acdb72336e086e699ca363a6065f410fd3c1caed0dc8046e95ac06ccb",
+        "url": "https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-linux-arm64.tar.gz",
+        "sha256": "bf8d18dde87224629341ff398e76c7c17216b9b406affc728b6c1a5c136abf93",
         "type": "tar.gz",
         "os": "linux",
         "cpu": "arm64"
