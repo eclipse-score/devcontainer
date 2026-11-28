@@ -1,27 +1,27 @@
 {
   "$schema": "https://raw.githubusercontent.com/bazel-contrib/rules_multitool/main/lockfile.schema.json",
   "bazelisk": {
-    "version": "1.30.0",
+    "version": "1.31.0",
     "description": "Run the Bazel version selected by a repository",
     "binaries": [
       {
         "kind": "file",
-        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.30.0/bazelisk-darwin-arm64",
-        "sha256": "555d2ff912ccd336d0060bdb5251ef2f62629c6f8fbadb59005a45d5625793ec",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.31.0/bazelisk-darwin-arm64",
+        "sha256": "c3e737c6728970d967a9b0a06d1314fe1b829224f13ffc2360b9b97dae8db0d8",
         "os": "macos",
         "cpu": "arm64"
       },
       {
         "kind": "file",
-        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.30.0/bazelisk-linux-amd64",
-        "sha256": "a248ae2b2b62b5baebb748f6fba7203bff1a27e5d01b55399a8406744cb539e8",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.31.0/bazelisk-linux-amd64",
+        "sha256": "37c6c243a5a0d2cb6a16a74012c108c47ae9eb5c0455251881e66e7f393a4ce1",
         "os": "linux",
         "cpu": "x86_64"
       },
       {
         "kind": "file",
-        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.30.0/bazelisk-linux-arm64",
-        "sha256": "b2bcc040c213b44586b121bda6d983c35df121b917c3a7a66fb16f2fa0df1a4f",
+        "url": "https://github.com/bazelbuild/bazelisk/releases/download/v1.31.0/bazelisk-linux-arm64",
+        "sha256": "202bd85dfd6b427187ffa0cf4892dbae7796ddd37a66f69c75519260492c4aaf",
         "os": "linux",
         "cpu": "arm64"
       }
